@@ -1,4 +1,5 @@
-﻿; (function (root, $) {
+﻿// Login via Controller to FullStackTestDB
+; (function (root, $) {
     $('#login').on('submit', function (ev) {
         ev.preventDefault();
         var email = $('#inputEmail').val();
@@ -12,7 +13,10 @@
         }
 
         $.post('/api/Authentication', { email: email, password: pswd }, function (data) {
+
+            window.location.href = 'Index'; // Return to Index where Rides Joined will be displayed
             // TODO: Navigate away...
+
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");

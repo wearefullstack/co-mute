@@ -1,4 +1,5 @@
-﻿; (function (root, $) {
+﻿// Register New User via Controller to DB
+; (function (root, $) {
     $('#register').on('submit', function (ev) {
         ev.preventDefault();
 
@@ -28,12 +29,14 @@
         }
 
         var cpswd = $('#confirm-password').val();
-        if (!email) {
+        if (!pswd) { // Previously (!email) for some reason
             return;
         }
 
         $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
+
             // TODO: Navigate away...
+
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");

@@ -2,19 +2,28 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using DataLibrary;
+using System.Linq;
 
 namespace CoMute.Web.Controllers.API
 {
     public class AuthenticationController : ApiController
     {
-        /// <summary>
-        /// Logs a user into the application.
-        /// </summary>
-        /// <param name="loginRequest">The user's login details</param>
-        /// <returns></returns>
-        public HttpResponseMessage Post(LoginRequest loginRequest)
+        public HttpResponseMessage Post(LoginRequest loginRequest) // User Authentication through DB, better authentication methods available
         {
-            return Request.CreateResponse(HttpStatusCode.NotFound);
+            using (FullStackTestEntities entities = new FullStackTestEntities())
+            {
+                var user = entities.Users.FirstOrDefault(x => x.Password == loginRequest.Password && x.EmailAddress == loginRequest.Email);
+
+                if (user != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK,user);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
+                }
+            }         
         }
     }
 }
