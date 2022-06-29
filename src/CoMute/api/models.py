@@ -4,7 +4,7 @@ from django.db import models
 class User(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    phone = models.CharField(max_length=10, default='')
+    phone = models.CharField(max_length=10, null=True, blank=True)
     email = models.EmailField(max_length=50)
     password = models.CharField(max_length=8)
     
@@ -22,7 +22,7 @@ class Carpool(models.Model):
     Destination = models.CharField(max_length=50)
     SeatsAvailable = models.PositiveIntegerField()
     User = models.ForeignKey(User, on_delete=models.CASCADE)
-    Notes = models.CharField(max_length=50)
+    Notes = models.CharField(max_length=50, null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
