@@ -1,6 +1,24 @@
-﻿(function (root, $) {
-    $('#register').on('submit', function (ev) {
+(function (root, $) {
+    var emailData = $('#emailData').val();
+    $.get('/api/user/get', { email: emailData }, function (data) {
+        $("#Id").val(data.Id);
+        $("#name").val(data.Name);
+        $("#surname").val(data.Surname);
+        $("#phone").val(data.PhoneNumber);
+        $("#email").val(data.EmailAddress);
+    }).fail(function (data) {
+    });
+
+
+
+    $('#updateProfile').on('submit', function (ev) {
         ev.preventDefault();
+
+        var id = $('#Id').val();
+        if (!id) {
+            return;
+        }
+
         var name = $('#name').val();
         if (!name) {
             return;
@@ -31,13 +49,13 @@
             return;
         }
 
-        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
+        $.post('/api/user/update', { id: id, name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
             window.location.href = '/Home/MainPool?email=' + email;
             // TODO: Navigate away...
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");
-            $p.text('Registration failed');
+            $p.text('update failed');
             $alert.removeClass('hidden');
 
             setTimeout(function () {

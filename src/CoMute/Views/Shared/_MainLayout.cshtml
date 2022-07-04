@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,12 +16,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Co-Mute", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Co-Mute", "MainPool", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+
+                    <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
+                    <li>@Html.ActionLink("My Car Pool", "MainPool", "Home")</li>
+                    <li>@Html.ActionLink("Create Car Pool", "CreatePool", "Home")</li>
+                    <li>@Html.ActionLink("Search", "Search", "Home")</li>
                 </ul>
             </div>
         </div>
@@ -37,5 +40,11 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/dataTables.min.js"></script>
+    <link href="~/Content/css/dataTables.min.css" rel="stylesheet" />
+    <script type="text/javascript">$(document).ready(function ()
+    {
+        $('#myTable').DataTable();
+    });</script>
 </body>
 </html>

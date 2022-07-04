@@ -1,0 +1,62 @@
+@model IEnumerable<CoMute.Web.Models.Dto.CarPool>
+@{
+    ViewBag.Title = "MainPool";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2 align="center">My Car Pool</h2>
+<table id="myTable" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Departure Time")
+            </th>
+            <th>
+                @Html.DisplayName("Arrival Time")
+            </th>
+            <th>
+                @Html.DisplayName("Origin")
+            </th>
+            <th>
+                @Html.DisplayName("DaysAvailable")
+            </th>
+            <th>
+                @Html.DisplayName("Destination")
+            </th>
+            <th>
+                @Html.DisplayName("AvailableSeats")
+            </th>
+            <th>
+                @Html.DisplayName("Notes")
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArrivalTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Origin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DaysAvailable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableSeats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+
+    </tr>
+        }
+
+</table>

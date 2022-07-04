@@ -2,6 +2,7 @@
     $('#login').on('submit', function (ev) {
         ev.preventDefault();
         var email = $('#inputEmail').val();
+
         if (!email) {
             return;
         }
@@ -12,6 +13,7 @@
         }
 
         $.post('/api/Authentication', { email: email, password: pswd }, function (data) {
+            window.location.href = '/Home/MainPool?email=' + email;
             // TODO: Navigate away...
         }).fail(function (data) {
             var $alert = $("#error");

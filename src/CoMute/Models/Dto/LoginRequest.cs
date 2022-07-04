@@ -1,5 +1,4 @@
-﻿
-namespace CoMute.Web.Models.Dto
+﻿namespace CoMute.Web.Models.Dto
 {
     public sealed class LoginRequest
     {
