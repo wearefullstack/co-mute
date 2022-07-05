@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
-//namespace BookStore.Models
+
 namespace Mutestore.Models
 {
     public class DatabaseContext : DbContext
