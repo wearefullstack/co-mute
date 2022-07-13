@@ -11,7 +11,7 @@ namespace co_mute_be.Models
         public string Origin { get; set; }
         public List<Days> DaysAvailable { get; set; }
         public int AvailableSeats { get; set; }
-        public int Owner { get; set; }
+        public string Owner { get; set; }
         public string Notes { get; set; }
     }
 

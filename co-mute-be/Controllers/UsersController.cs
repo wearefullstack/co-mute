@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using co_mute_be.Database;
 using co_mute_be.Models;
 using co_mute_be.Models.Dto;
+using co_mute_be.Abstractions.Utils;
 
 namespace co_mute_be.Controllers
 {
@@ -26,22 +23,22 @@ namespace co_mute_be.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetCarPoolOpps()
         {
-            if (_context.CarPoolOpps == null)
+            if (_context.Users == null)
             {
                 return NotFound();
             }
-            return await _context.CarPoolOpps.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
         {
-            if (_context.CarPoolOpps == null)
+            if (_context.Users == null)
             {
                 return NotFound();
             }
-            var user = await _context.CarPoolOpps.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -54,9 +51,9 @@ namespace co_mute_be.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(Guid id, User user)
+        public async Task<IActionResult> PutUser(string id, User user)
         {
-            if (id != user.Id)
+            if (!id.Equals(user.Id))
             {
                 return BadRequest();
             }
@@ -87,23 +84,14 @@ namespace co_mute_be.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(CreateUserDto userDto)
         {
-            if (_context.CarPoolOpps == null)
+            if (_context.Users == null)
             {
-                return Problem("Entity set 'UserContext.CarPoolOpps' is null.");
+                return Problem("Entity set 'UserContext.Users' is null.");
             }
 
-            var user = new User();
-            user.Id = Guid.NewGuid();
-            user.Name = userDto.Name;
-            user.Surname = userDto.Surname;
-            user.Email = userDto.Email;
-            user.Phone = userDto.Phone;
-            user.Password = userDto.Password;
-            user.PasswordHash = GetPasswordHash(userDto.Password);
-
-            _context.CarPoolOpps.Add(user);
+            var user = Models.User.FromDto(userDto);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            var list = await _context.CarPoolOpps.ToListAsync();
     
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
@@ -112,30 +100,26 @@ namespace co_mute_be.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(long id)
         {
-            if (_context.CarPoolOpps == null)
+            if (_context.Users == null)
             {
                 return NotFound();
             }
-            var user = await _context.CarPoolOpps.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.CarPoolOpps.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(Guid id)
+        private bool UserExists(string id)
         {
-            return (_context.CarPoolOpps?.Any(e => e.Id.Equals(id))).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.Id.Equals(id))).GetValueOrDefault();
         }
-
-        private string GetPasswordHash(string password)
-        {
-            return $"###{password}###"; // Super secret hash algo here...
-        }
+    
     }
 }

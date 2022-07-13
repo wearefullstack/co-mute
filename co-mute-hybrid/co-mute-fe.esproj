@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.26-alpha">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.26-alpha">
   <PropertyGroup Label="Globals">
     <ProjectGuid>45559d2f-47d5-48ea-85f9-f4b6a49cc377</ProjectGuid>
   </PropertyGroup>
@@ -6,4 +6,7 @@
     <StartupCommand>npm start</StartupCommand>
     <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\assets\fonts\" />
+  </ItemGroup>
 </Project>
