@@ -1,0 +1,43 @@
+<form [formGroup]="registerForm" id="register">
+    <h2>Register</h2>
+
+    <div *ngIf="registerForm.invalid && registerForm.errors "  id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="form-group" [formGroup]="registerForm">
+        <label for="name">Name</label>
+        <input formControlName="name" type="text" id="name" class="form-control" placeholder="First name" required autofocus>
+    </div>
+
+    <div class="form-group">
+        <label for="surname">Surname</label>
+        <input formControlName="surname" type="text" id="surname" class="form-control" placeholder="Surname" required>
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input formControlName="phone" type="text" id="phone" class="form-control" placeholder="Phone number" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input formControlName="email" type="email" id="email" class="form-control" placeholder="Email address" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" id="password" class="form-control" placeholder="Password" required>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input formControlName="confirmPassword" type="password" id="confirm-password" class="form-control" placeholder="Confirm password">
+    </div>
+
+    <div class="form-group">
+        <button (click)="registerUser_async()" [disabled]=registerForm.invalid class="btn btn-primary" type="submit" id="sign-in">Register</button>
+    </div>
+</form>
