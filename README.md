@@ -33,6 +33,7 @@
  - Integration with a SQL data provider for persistence between app-restarts
  - Ability to specify days availability, currently only full dates are provided in a car-pool setup
  - A lot of iteration on user-feedback and usability + general styling
+ - Some best practice refactoring and code styling to make sure a standard is followed. A few gaps were left for the sake of time
 
  ## Original instructions
 
