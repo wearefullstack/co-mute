@@ -43,7 +43,7 @@
         <small *ngIf="getControl('confirmPassword')?.dirty && getControl('confirmPassword')?.getError('notMatch')" class="field-error">Passwords must match</small>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mt-2">
         <button (click)="registerUser_async()" [disabled]=registerForm.invalid class="btn btn-primary" type="submit" id="sign-in">Register</button>
     </div>
 </form>

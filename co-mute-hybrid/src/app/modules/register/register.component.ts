@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ICreateUserDto, UserService } from 'src/app/services/user/user.service';
@@ -32,7 +33,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _userManager: UserService
+    private _userManager: UserService,
+    private _authManager : AuthService
   ) { }
 
   private registerPasswordMatch() {
@@ -76,7 +78,15 @@ export class RegisterComponent implements OnInit {
     try {
       const data = this.registerForm.value
       delete data.confirmPassword;
-      await this._userManager.registerUser_async(this.registerForm.value as ICreateUserDto)
+      const res = await this._userManager.registerUser_async(this.registerForm.value as ICreateUserDto)
+
+      if(!res?.success){
+        this.registerForm.reset();
+        alert("Error in registration, please try again!");
+      }
+
+      this._authManager.goToLogin();
+
     } catch (error) {
       console.error(error);
     }

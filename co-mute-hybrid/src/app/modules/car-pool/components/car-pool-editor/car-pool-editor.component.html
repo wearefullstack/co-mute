@@ -1,0 +1,125 @@
+<form [formGroup]="carPoolForm" id="register">
+    <h2>Register new ride</h2>
+
+    <div *ngIf="carPoolForm.invalid && carPoolForm.errors" id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p>Errors in form, please verify all fields are correct</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="name">Departure Date*</label>
+                <div class="d-flex align-items-center">
+                    <input formControlName="departureDate" class="w-25" class="form-control" type="text" ngbDatepicker #d="ngbDatepicker" />
+                    <button class="btn btn-sm" (click)="d.toggle()">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </button>
+                    <ngb-timepicker formControlName="departureTime"></ngb-timepicker>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="expectedArrivalDate">Arrival Date*</label>
+                <div class="d-flex align-items-center">
+                    <input formControlName="expectedArrivalDate" class="w-25" class="form-control" type="text" ngbDatepicker #d2="ngbDatepicker" />
+                    <button class="btn btn-sm" (click)="d2.toggle()">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </button>
+                    <ngb-timepicker formControlName="expectedArrivalTime"></ngb-timepicker>
+                    <!-- <pre>Selected time: {{getControl('arrivalTime')?.value | json}}</pre> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="origin">Origin</label>
+                <select formControlName="origin" class="form-select" aria-label="Default select example">
+                    <option *ngFor="let place of PLACES" [value]="place">{{place}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <select formControlName="destination" class="form-select" aria-label="Default select example">
+                    <option *ngFor="let place of PLACES" [value]="place" >{{place}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- <div class="col-12">
+            <div class="form-group">
+                <label for="daysAvailable">Days available (optional)</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option *ngFor="let day of DAYS_AVAILABLE">{{getDay(day)}}</option>
+                </select>
+            </div>
+        </div> -->
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="availableSeats">Available Seats</label>
+                <input formControlName="availableSeats" type="number" id="availableSeats" class="form-control" placeholder="availableSeats">
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea formControlName="notes" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <div class="form-group">
+        <label for="surname">Surname*</label>
+        <input formControlName="surname" type="text" id="surname" class="form-control" placeholder="Surname" required>
+        <small *ngIf="getControl('surname')?.dirty && getControl('surname')?.errors" class="field-error">Surname is required</small>
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Phone (optional)</label>
+        <input formControlName="phone" type="text" id="phone" class="form-control" placeholder="Phone number">
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email*</label>
+        <input formControlName="email" type="email" id="email" class="form-control" placeholder="Email address" required>
+        <small *ngIf="emailCtrl?.dirty && emailCtrl?.errors" class="field-error">Email must be valid</small>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password*</label>
+        <input formControlName="password" type="password" id="password" class="form-control" placeholder="Password" required>
+        <small *ngIf="!getControl('password')?.value && getControl('password')?.dirty && getControl('password')?.errors" class="field-error">Password is required</small>
+        <small *ngIf="getControl('password')?.dirty && getControl('password')?.getError('minlength')" class="field-error">Password must be atleast {{PASSWORD_LENGTH}} characters</small>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm-password">Confirm Password*</label>
+        <input formControlName="confirmPassword" type="password" id="confirm-password" class="form-control" placeholder="Confirm password">
+        <small *ngIf="getControl('confirmPassword')?.dirty && getControl('confirmPassword')?.getError('notMatch')" class="field-error">Passwords must match</small>
+    </div> -->
+
+        <div class="form-group">
+            <button (click)="postCarPool_async()" class="btn btn-primary" type="submit"
+                id="sign-in">Create</button>
+        </div>
+</form>

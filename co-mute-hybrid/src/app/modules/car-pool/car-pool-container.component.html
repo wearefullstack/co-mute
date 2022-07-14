@@ -1,0 +1,37 @@
+<div class="d-flex flex-column justify-content-center align-content-center">
+
+    <form>
+        <div class="mb-3 row">
+          <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Search</label>
+          <div class="col-xs-3 col-sm-auto">
+            <input id="table-filtering-search" class="form-control" type="text" name="filter" [(ngModel)]="filter">
+          </div>
+        </div>
+      </form>
+      
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Origin</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Depart</th>
+          <th scope="col">Arrive</th>
+          <th scope="col">Duration</th>
+          <th scope="col">Capacity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let pool of carPools | carPoolSearch:filter ; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{pool.origin}}</td>
+          <td>{{pool.destination}}</td>
+          <td>{{pool.depart}}</td>
+          <td>{{pool.arrive}}</td>
+          <td>{{getDuration(pool.depart,pool.arrive)}}</td>
+          <td>{{pool.availableSeats}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+</div>

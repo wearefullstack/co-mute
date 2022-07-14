@@ -7,6 +7,7 @@ import { Route, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Route[] = [
   {
@@ -19,11 +20,21 @@ const routes: Route[] = [
   },
   {
     path: 'dashboard',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {
     path: 'about',
     loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule),
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
+  },
+  {
+    path: 'car-pool',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/car-pool/car-pool.module').then(m => m.CarPoolModule),
   },
   {
     path: "**",

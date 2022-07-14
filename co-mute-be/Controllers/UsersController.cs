@@ -5,6 +5,7 @@ using co_mute_be.Database;
 using co_mute_be.Models;
 using co_mute_be.Models.Dto;
 using co_mute_be.Abstractions.Utils;
+using co_mute_be.Abstractions.Models;
 
 namespace co_mute_be.Controllers
 {
@@ -12,9 +13,9 @@ namespace co_mute_be.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserContext _context;
+        private readonly DataContext _context;
 
-        public UsersController(UserContext context)
+        public UsersController(DataContext context)
         {
             _context = context;
         }
@@ -32,13 +33,13 @@ namespace co_mute_be.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(long id)
+        public async Task<ActionResult<User>> GetUser(string id)
         {
             if (_context.Users == null)
             {
                 return NotFound();
             }
-            var user = await _context.Users.FindAsync(id);
+            var user = _context.Users.Where(x => x.UserId.Equals(id)).FirstOrDefault();
 
             if (user == null)
             {
@@ -53,7 +54,7 @@ namespace co_mute_be.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(string id, User user)
         {
-            if (!id.Equals(user.Id))
+            if (!id.Equals(user.UserId))
             {
                 return BadRequest();
             }
@@ -82,18 +83,34 @@ namespace co_mute_be.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(CreateUserDto userDto)
+        public async Task<ActionResult<ApiResult<User>>> CreateUser(CreateUserDto userDto)
         {
-            if (_context.Users == null)
+            try
             {
-                return Problem("Entity set 'UserContext.Users' is null.");
+                if (_context.Users == null)
+                {
+                    return Problem($"Entity set 'DataContext.Users' is null.");
+                }
+
+                var user = Models.User.FromDto(userDto);
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                return Ok(new ApiResult<User>
+                {
+                    Success = true,
+                    Result = user
+                });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new ApiResult<User>
+                {
+                    Success = true,
+                    Error = ex.Message
+                });
             }
 
-            var user = Models.User.FromDto(userDto);
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-    
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/5
@@ -118,7 +135,7 @@ namespace co_mute_be.Controllers
 
         private bool UserExists(string id)
         {
-            return (_context.Users?.Any(e => e.Id.Equals(id))).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.UserId.Equals(id))).GetValueOrDefault();
         }
     
     }

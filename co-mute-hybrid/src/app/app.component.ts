@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
@@ -7,12 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public forecasts?: WeatherForecast[];
 
-  constructor(http: HttpClient) {
-    // http.get<WeatherForecast[]>('/weatherforecast').subscribe(result => {
-    //   this.forecasts = result;
-    // }, error => console.error(error));
+  constructor(private _authManager : AuthService) {
+
+  }
+
+  isSignedIn(){
+    return this._authManager.isAuthenticated();
   }
 
   title = 'co-mute-hybrid';
@@ -20,11 +22,8 @@ export class AppComponent {
   public getDate(): number {
     return new Date().getFullYear();
   }
-}
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  public signOut(){
+    this._authManager.logOut();
+  }
 }

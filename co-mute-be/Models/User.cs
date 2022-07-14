@@ -3,14 +3,15 @@ using co_mute_be.Models.Dto;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace co_mute_be.Models
 {
     [Table("Users")]
     public class User
     {
-        public string Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -19,11 +20,14 @@ namespace co_mute_be.Models
 
         public string PasswordHash { get; set; }
 
+        //Relationships
+        public List<CarPoolOpp> CarPoolOpps { get; set; } = new List<CarPoolOpp>();
+
+        #region Utils
         public static User FromDto(CreateUserDto dto)
         {
             var user = new User
             {
-                Id = Guid.NewGuid().ToString(),
                 Name = dto.Name,
                 Surname = dto.Surname,
                 Email = dto.Email,
@@ -38,6 +42,6 @@ namespace co_mute_be.Models
             user.PasswordHash = null;
             return user;
         }
-
+        #endregion
     }
 }

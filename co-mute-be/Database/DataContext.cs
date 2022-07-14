@@ -3,14 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace co_mute_be.Database
 {
-    public class UserContext : DbContext
+    public class DataContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> options)
+        public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
         }
 
         public DbSet<User> Users { get; set; } = null!;
+
+        public DbSet<CarPoolOpp> CarPoolOpps { get; set; } = null!;
+
+        public DbSet<CarPoolBooking> CarPoolBookings { get; set; } = null!;
 
         //#region Required
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

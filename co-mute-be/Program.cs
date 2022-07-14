@@ -5,30 +5,13 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.AllowAnyHeader();
-                          policy.AllowAnyMethod();
-                          policy.WithOrigins("http://localhost:4200", "https://localhost:4200");
-                      });
-});
-
+SetupCors(builder.Services,MyAllowSpecificOrigins);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 //Register db instances
 RegisterDb(builder.Services);
-//builder.Services.AddDbContext<CarPoolOppContext>(opt =>
-//{
-//    opt.UseInMemoryDatabase("CarPoolOpps");
-//});
-
-//builder.Services.AddSingleton
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -51,19 +34,30 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
-
 app.Run();
 
+#region Setup
 static void RegisterDb(IServiceCollection services)
 {
-    services.AddDbContext<CarPoolOppContext>(opt =>
+    services.AddDbContext<DataContext>(opt =>
     {
-        opt.UseInMemoryDatabase("CarPoolOpps");
-    });
-
-    services.AddDbContext<UserContext>(opt =>
-    {
-        opt.UseInMemoryDatabase("Users");
+        opt.UseInMemoryDatabase("CoMute");
     });
 }
+
+static void SetupCors(IServiceCollection services, string policyName)
+{
+    services.AddCors(options =>
+    {
+        options.AddPolicy(name: policyName,
+                          policy =>
+                          {
+                              policy.AllowAnyHeader();
+                              policy.AllowAnyMethod();
+                              policy.WithOrigins("http://localhost:4200", "https://localhost:4200");
+                          });
+    });
+}
+#endregion
+
+

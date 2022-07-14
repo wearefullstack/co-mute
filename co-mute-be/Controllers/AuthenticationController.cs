@@ -3,7 +3,6 @@ using co_mute_be.Abstractions.Utils;
 using co_mute_be.Database;
 using co_mute_be.Models;
 using co_mute_be.Models.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace co_mute_be.Controllers
@@ -13,9 +12,9 @@ namespace co_mute_be.Controllers
     public class AuthenticationController : ControllerBase
     {
 
-        private readonly UserContext _context;
+        private readonly DataContext _context;
 
-        public AuthenticationController(UserContext context)
+        public AuthenticationController(DataContext context)
         {
             _context = context;
         }
@@ -46,7 +45,7 @@ namespace co_mute_be.Controllers
             return new ApiResult<User>()
             {
                 Success = true,
-                Result = co_mute_be.Models.User.ToFoundUser(user)
+                Result = Models.User.ToFoundUser(user)
             };
         }
 
