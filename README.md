@@ -1,4 +1,40 @@
-# co-mute
+# CO-MUTE [ DEMO ]
+
+## Now operating between major city centres! ( CPT,DBN,JHB,PTA,PE )
+
+### Running the demo
+  - Clone repo onto local : `git clone <repoUrl>`
+  - Switch to `arno-bornman` branch
+  - In terminal at root of repo, navigate to `./co-mute-hybrid`
+  - Run `npm install` to resolve all required client-side dependencies
+  - Open `co-mute-hybrid/co-mute-hybrid.sln` in Visual Studio 2022 (used for development)
+  - Rebuild solution and ensure all Nuget Packages resolve
+  - Hit `F5` and have fun!
+
+### Current MVP features
+ - Register a new user account ( with form validation & semi-strong password )
+ - Sign-in with user account once profile created
+ - Register a new car pool with intuitive controls
+ - Basic CRUD on User and CarPool entities 
+ - View and basic search for all car-pool entries created
+
+### Tech details
+ - The client side is developed in Angular (version 14)
+ - The API is developed in C# / .NET Core (version 6)
+ - Bootstrap CSS is used for styling
+ - Each client-side feature module is "lazy-loaded" to increase initial load-time and save on bandwidth for features not accessed
+ - Certain app routes are guarded/blocked for authentication on a basic level to enforce sign-on
+ - The Data-Model is composed with EF Core allowing abstraction of data queries and a good level of database provider agnostics
+ - Current Data uses an "in-memory" provider (time constraints prevented a SQL implementation). Any standard SQL provider should be easily configured with a future iteration where the DBContext of EFCore is hooked up to SQLServer,MySQL,SQLite etc
+
+ ### TODO's
+ - Ability to book and edit bookings for car-pool
+ - Ability to edit profile details (currently view-only)
+ - Integration with a SQL data provider for persistence between app-restarts
+ - Ability to specify days availability, currently only full dates are provided in a car-pool setup
+ - A lot of iteration on user-feedback and usability + general styling
+
+ ## Original instructions
 
 ### Please note: You can branch and create a Node.JS, Java or Python implementation if you are not familiar with C#, but Full Stack does use C# as our primary language.
 

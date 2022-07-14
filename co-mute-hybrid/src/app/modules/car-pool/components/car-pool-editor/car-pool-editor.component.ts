@@ -33,7 +33,7 @@ enum EDaysOfWeek {
 })
 export class CarPoolEditorComponent implements OnInit {
 
-  public readonly PLACES = ['CPT', 'JHB', 'PE'];
+  public readonly PLACES = ['Cape Town', 'Johannesburg', 'Pretoria', 'Durban', 'Port Elizabeth'];
 
   public DAYS_AVAILABLE = Object.values(EDaysOfWeek).filter(value => typeof value === 'number') as number[];
 
