@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CarPoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CarPoolList">
+    <Key>
+      <PropertyRef Name="CarPoolId" />
+    </Key>
+    <Property Name="Destination" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ArrivalTime" Type="datetime" Nullable="false" />
+    <Property Name="DepartureTime" Type="datetime" Nullable="false" />
+    <Property Name="Origin" Type="varchar" MaxLength="50" />
+    <Property Name="AvailableSeats" Type="int" Nullable="false" />
+    <Property Name="Owner" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Notes" Type="varchar(max)" />
+    <Property Name="CarPoolId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarPoolUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CarPoolList_CarPoolUser">
+    <End Role="CarPoolUser" Type="Self.CarPoolUser" Multiplicity="1" />
+    <End Role="CarPoolList" Type="Self.CarPoolList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarPoolUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CarPoolList">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CarPoolModelStoreContainer">
+    <EntitySet Name="CarPoolList" EntityType="Self.CarPoolList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CarPoolUser" EntityType="Self.CarPoolUser" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CarPoolList_CarPoolUser" Association="Self.FK_CarPoolList_CarPoolUser">
+      <End Role="CarPoolUser" EntitySet="CarPoolUser" />
+      <End Role="CarPoolList" EntitySet="CarPoolList" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

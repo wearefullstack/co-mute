@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CarPoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CarPoolList">
+    <Key>
+      <PropertyRef Name="CarPoolId" />
+    </Key>
+    <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ArrivalTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DepartureTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Origin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AvailableSeats" Type="Int32" Nullable="false" />
+    <Property Name="Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CarPoolId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CarPoolUser" Relationship="Self.FK_CarPoolList_CarPoolUser" FromRole="CarPoolList" ToRole="CarPoolUser" />
+  </EntityType>
+  <EntityType Name="CarPoolUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CarPoolLists" Relationship="Self.FK_CarPoolList_CarPoolUser" FromRole="CarPoolUser" ToRole="CarPoolList" />
+  </EntityType>
+  <Association Name="FK_CarPoolList_CarPoolUser">
+    <End Role="CarPoolUser" Type="Self.CarPoolUser" Multiplicity="1" />
+    <End Role="CarPoolList" Type="Self.CarPoolList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarPoolUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CarPoolList">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CarPoolEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CarPoolLists" EntityType="Self.CarPoolList" />
+    <EntitySet Name="CarPoolUsers" EntityType="Self.CarPoolUser" />
+    <AssociationSet Name="FK_CarPoolList_CarPoolUser" Association="Self.FK_CarPoolList_CarPoolUser">
+      <End Role="CarPoolUser" EntitySet="CarPoolUsers" />
+      <End Role="CarPoolList" EntitySet="CarPoolLists" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

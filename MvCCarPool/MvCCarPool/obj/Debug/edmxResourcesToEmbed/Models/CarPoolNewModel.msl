@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CarPoolModel1StoreContainer" CdmEntityContainer="CarPoolEntities1">
+    <EntitySetMapping Name="CarPoolLists">
+      <EntityTypeMapping TypeName="CarPoolModel1.CarPoolList">
+        <MappingFragment StoreEntitySet="CarPoolList">
+          <ScalarProperty Name="Destination" ColumnName="Destination" />
+          <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
+          <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+          <ScalarProperty Name="Origin" ColumnName="Origin" />
+          <ScalarProperty Name="AvailableSeats" ColumnName="AvailableSeats" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="CarPoolId" ColumnName="CarPoolId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarPoolUsers">
+      <EntityTypeMapping TypeName="CarPoolModel1.CarPoolUser">
+        <MappingFragment StoreEntitySet="CarPoolUser">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="SName" ColumnName="SName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarPoolUserLists">
+      <EntityTypeMapping TypeName="CarPoolModel1.CarPoolUserList">
+        <MappingFragment StoreEntitySet="CarPoolUserList">
+          <ScalarProperty Name="Idx" ColumnName="Idx" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CarPoolId" ColumnName="CarPoolId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MvCCarPool.Models.CarPoolUserList>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Available CarPools</h2>
+
+@*<p>
+    @Html.ActionLink("Join an oportunity", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CarPoolList.Owner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarPoolList.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarPoolList.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarPoolUser.FName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CarPoolList.Owner)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CarPoolList.Origin)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CarPoolList.Destination)
+    </td>
+       
+    </td>
+</tr>
+}
+
+</table>
