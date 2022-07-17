@@ -1,24 +1,43 @@
-﻿@{
+﻿@model CoMute.Web.Models.Users
+
+@{
     ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
-        <form id="login">
+        <form id="login" method="post">
             <h2 class="text-center">Sign In</h2>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+            @*<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>*@
+            <div>
+                @Html.TextBoxFor(model => model.Email, new { @Class = "form-control", id = "inputEmail", placeholder = "Email address" })
+                @Html.PasswordFor(model => model.Password, new { @Class = "form-control", id = "inputPassword", placeholder = "Password" })
+            </div>
             <button class="btn btn-primary btn-block" type="submit" id="sign-in">Sign in</button>
         </form>
     </div>
+    <br />
+    <br />
 </div>
 
 <div id="error" class="row row-margin hidden">
     <div class="col-md-4 col-md-offset-4 alert alert-danger">
         <p></p>
     </div>
+
 </div>
 
-@section scripts {
-    <script type="text/javascript" src="~/Content/js/login.js"></script>
-}
+<div>
+        <div style="color:red;">
+            @ViewBag.Message
+        </div>
+</div>
+
+@*@section scripts {
+        <script type="text/javascript" src="~/Content/js/login.js"></script>
+    }*@
+

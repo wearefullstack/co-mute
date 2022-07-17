@@ -1,0 +1,70 @@
+﻿@model CoMute.Web.Models.CarPools
+
+@{
+    ViewBag.Title = "RegisterPool";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="registerNewPool" method="post">
+    <h2>Register New Car Pool</h2>
+
+    <div class="form-group">
+        <label for="departureTime">Departure time</label>
+        @*<input type="text" id="departureTime" class="form-control" placeholder="Departure time" required autofocus>*@
+        @Html.TextBoxFor(model => model.DepartureTime, new { @Class = "form-control", id = "departureTime", placeholder = "Departure time" })
+    </div>
+
+    <div class="form-group">
+        <label for="expecteArrivalTime">Expected Arrival time</label>
+        @*<input type="text" id="expecteArrivalTime" class="form-control" placeholder="Expected Arrival time" required>*@
+        @Html.TextBoxFor(model => model.ExpectA_Time, new { @Class = "form-control", id = "expecteArrivalTime", placeholder = "Expected Arrival time" })
+    </div>
+
+    <div class="form-group">
+        <label for="origin">Origin</label>
+        @*<input type="text" id="origin" class="form-control" placeholder="Origin" required>*@
+        @Html.TextBoxFor(model => model.Origin, new { @Class = "form-control", id = "origin", placeholder = "Origin" })
+    </div>
+
+    <div class="form-group">
+        <label for="daysAvailable">Days available</label>
+        @*<input type="text" id="daysAvailable" class="form-control" placeholder="Days available">*@
+        @Html.TextBoxFor(model => model.DaysAvailable, new { @Class = "form-control", id = "daysAvailable", placeholder = "Days available" })
+    </div>
+
+    <div class="form-group">
+        <label for="destination">Destination</label>
+        @*<input type="text" id="destination" class="form-control" placeholder="Destination" required>*@
+        @Html.TextBoxFor(model => model.Destination, new { @Class = "form-control", id = "destination", placeholder = "Destination" })
+    </div>
+
+    <div class="form-group">
+        <label for="availableSeats">Available seats</label>
+        @*<input type="text" id="availableSeats" class="form-control" placeholder="Available seats" required>*@
+        @Html.TextBoxFor(model => model.Avail_Seats, new { @Class = "form-control", id = "availableSeats", placeholder = "Available seats" })
+    </div>
+
+    <div class="form-group">
+        <label for="ownerLeader">Owner/Leader</label>
+        @*<input type="text" id="ownerLeader" class="form-control" placeholder="Owner/Leader" required>*@
+        @Html.TextBoxFor(model => model.Owner_Leader, new { @Class = "form-control", id = "ownerLeader", placeholder = "Owner/Leader" })
+    </div>
+
+    <div class="form-group">
+        <label for="notes">Notes</label>
+        @*<input type="text" id="notes" class="form-control" placeholder="Notes" required>*@
+        @Html.TextAreaFor(model => model.Notes, new { @Class = "form-control", id = "notes", placeholder = "Notes" })
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="registerPool">Create Car Pool</button>
+    </div>
+
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+</form>
+
+

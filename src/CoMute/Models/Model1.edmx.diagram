@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="088b935a37834785948a88596d4570c6" Name="Diagram1">
+        <EntityTypeShape EntityType="CoMuteModel.CarPools" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoMuteModel.JoinedCarPools" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoMuteModel.Users" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="CoMuteModel.FK__CarPools__Email__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="CoMuteModel.FK__JoinedCar__Owner__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="CoMuteModel.FK__JoinedCar__Depar__48CFD27E" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

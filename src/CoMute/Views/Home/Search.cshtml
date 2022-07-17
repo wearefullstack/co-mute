@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CoMute.Web.Models.CarPools>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <label for="searchPool">Search</label>
+    <input type="search" name="searchPool" placeholder="Search Car Pools" />
+</div>
+
+<br />
+<br />
+
+<div class="searchPools text-center">
+    @if (Model != null)
+    {
+        <table id="gridTable" class="poolCreatedTable table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="1">
+            <thead>
+                <tr>
+                    <th>DepartureTime</th>
+                    <th>ExpectA_Time</th>
+                    <th>Origin</th>
+                    <th>DaysAvail</th>
+                    <th>Destination</th>
+                    <th>Avail_Seats</th>
+                    <th>Owner_Leader</th>
+                    <th>Creation Pool Date</th>
+                    <th>Notes</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var poolsCreated in Model)
+                    {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.DepartureTime)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.ExpectA_Time)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.Origin)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.DaysAvailable)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.Destination)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.Avail_Seats)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.Owner_Leader)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.PoolCreationDate)</td>
+                    <td>@Html.DisplayFor(modelItem => poolsCreated.Notes)</td>
+                    <td>
+                        @Html.ActionLink("Join", "Join", "Home"); |
+                        @Html.ActionLink("Leave", "Leave", "Home");
+                    </td>
+                </tr>
+                    }
+                }
+                else
+                {
+                    <tr class="text-center">NO DATA AVAILABLE!</tr>
+                }
+            </tbody>
+        </table><br />
+        @*<div class="align-content-center">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Desktop", new
+                {
+                    page,
+                    pageSize = Model.PageSize
+                }))
+            </div>*@
+    }
+    <br />
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+    <div>
+        <div style="color:red;">
+            @ViewBag.Message
+        </div>
+    </div>
+</div>
+
+
+
+

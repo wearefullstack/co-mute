@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CoMuteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CarPools">
+          <Key>
+            <PropertyRef Name="DepartureTime" />
+          </Key>
+          <Property Name="DepartureTime" Type="date" Nullable="false" />
+          <Property Name="ExpectA_Time" Type="date" Nullable="false" />
+          <Property Name="Origin" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Avail_Seats" Type="int" Nullable="false" />
+          <Property Name="Owner_Leader" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PoolCreationDate" Type="date" Nullable="false" />
+          <Property Name="DaysAvailable" Type="int" />
+          <Property Name="Notes" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <EntityType Name="JoinedCarPools">
+          <Key>
+            <PropertyRef Name="JoinerEmail" />
+          </Key>
+          <Property Name="DepartureTime" Type="date" Nullable="false" />
+          <Property Name="ExpectA_Time" Type="date" Nullable="false" />
+          <Property Name="Origin" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Avail_Seats" Type="int" Nullable="false" />
+          <Property Name="Owner_Leader" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="JoinerEmail" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="JoinedDate" Type="date" Nullable="false" />
+          <Property Name="OwnerEmail" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="8000" />
+          <Property Name="DaysAvailable" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="124" Nullable="false" />
+          <Property Name="ConfirmPassword" Type="varchar" MaxLength="124" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__CarPools__Email__2A4B4B5E">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CarPools" Type="Self.CarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="CarPools">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarPools__Email__37A5467C">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CarPools" Type="Self.CarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="CarPools">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JoinedCar__Depar__48CFD27E">
+          <End Role="CarPools" Type="Self.CarPools" Multiplicity="1" />
+          <End Role="JoinedCarPools" Type="Self.JoinedCarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarPools">
+              <PropertyRef Name="DepartureTime" />
+            </Principal>
+            <Dependent Role="JoinedCarPools">
+              <PropertyRef Name="DepartureTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JoinedCar__Owner__3A81B327">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="JoinedCarPools" Type="Self.JoinedCarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="JoinedCarPools">
+              <PropertyRef Name="OwnerEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CoMuteModelStoreContainer">
+          <EntitySet Name="CarPools" EntityType="Self.CarPools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JoinedCarPools" EntityType="Self.JoinedCarPools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CarPools__Email__2A4B4B5E" Association="Self.FK__CarPools__Email__2A4B4B5E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarPools" EntitySet="CarPools" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarPools__Email__37A5467C" Association="Self.FK__CarPools__Email__37A5467C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarPools" EntitySet="CarPools" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JoinedCar__Depar__48CFD27E" Association="Self.FK__JoinedCar__Depar__48CFD27E">
+            <End Role="CarPools" EntitySet="CarPools" />
+            <End Role="JoinedCarPools" EntitySet="JoinedCarPools" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JoinedCar__Owner__3A81B327" Association="Self.FK__JoinedCar__Owner__3A81B327">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="JoinedCarPools" EntitySet="JoinedCarPools" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CoMuteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CarPools">
+          <Key>
+            <PropertyRef Name="DepartureTime" />
+          </Key>
+          <Property Name="DepartureTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpectA_Time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Origin" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Avail_Seats" Type="Int32" Nullable="false" />
+          <Property Name="Owner_Leader" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PoolCreationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DaysAvailable" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__CarPools__Email__2A4B4B5E" FromRole="CarPools" ToRole="Users" />
+          <NavigationProperty Name="JoinedCarPools" Relationship="CoMuteModel.FK__JoinedCar__Depar__48CFD27E" FromRole="CarPools" ToRole="JoinedCarPools" />
+        </EntityType>
+        <EntityType Name="JoinedCarPools">
+          <Key>
+            <PropertyRef Name="JoinerEmail" />
+          </Key>
+          <Property Name="DepartureTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpectA_Time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Origin" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Avail_Seats" Type="Int32" Nullable="false" />
+          <Property Name="Owner_Leader" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JoinerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JoinedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="OwnerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="DaysAvailable" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__JoinedCar__Owner__3A81B327" FromRole="JoinedCarPools" ToRole="Users" />
+          <NavigationProperty Name="CarPools" Relationship="CoMuteModel.FK__JoinedCar__Depar__48CFD27E" FromRole="JoinedCarPools" ToRole="CarPools" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="124" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ConfirmPassword" Type="String" MaxLength="124" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CarPools" Relationship="Self.FK__CarPools__Email__2A4B4B5E" FromRole="Users" ToRole="CarPools" />
+          <NavigationProperty Name="JoinedCarPools" Relationship="Self.FK__JoinedCar__Owner__3A81B327" FromRole="Users" ToRole="JoinedCarPools" />
+        </EntityType>
+        <Association Name="FK__CarPools__Email__2A4B4B5E">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CarPools" Type="Self.CarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="CarPools">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JoinedCar__Owner__3A81B327">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="JoinedCarPools" Type="Self.JoinedCarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="JoinedCarPools">
+              <PropertyRef Name="OwnerEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CoMuteEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CarPools" EntityType="Self.CarPools" />
+          <EntitySet Name="JoinedCarPools" EntityType="Self.JoinedCarPools" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__CarPools__Email__2A4B4B5E" Association="Self.FK__CarPools__Email__2A4B4B5E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarPools" EntitySet="CarPools" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JoinedCar__Owner__3A81B327" Association="Self.FK__JoinedCar__Owner__3A81B327">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="JoinedCarPools" EntitySet="JoinedCarPools" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JoinedCar__Depar__48CFD27E" Association="CoMuteModel.FK__JoinedCar__Depar__48CFD27E">
+            <End Role="CarPools" EntitySet="CarPools" />
+            <End Role="JoinedCarPools" EntitySet="JoinedCarPools" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK__JoinedCar__Depar__48CFD27E">
+          <End Type="CoMuteModel.CarPools" Role="CarPools" Multiplicity="1" />
+          <End Type="CoMuteModel.JoinedCarPools" Role="JoinedCarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarPools">
+              <PropertyRef Name="DepartureTime" />
+            </Principal>
+            <Dependent Role="JoinedCarPools">
+              <PropertyRef Name="DepartureTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CoMuteModelStoreContainer" CdmEntityContainer="CoMuteEntities1">
+          <EntitySetMapping Name="CarPools">
+            <EntityTypeMapping TypeName="CoMuteModel.CarPools">
+              <MappingFragment StoreEntitySet="CarPools">
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="ExpectA_Time" ColumnName="ExpectA_Time" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Avail_Seats" ColumnName="Avail_Seats" />
+                <ScalarProperty Name="Owner_Leader" ColumnName="Owner_Leader" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PoolCreationDate" ColumnName="PoolCreationDate" />
+                <ScalarProperty Name="DaysAvailable" ColumnName="DaysAvailable" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JoinedCarPools">
+            <EntityTypeMapping TypeName="CoMuteModel.JoinedCarPools">
+              <MappingFragment StoreEntitySet="JoinedCarPools">
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="ExpectA_Time" ColumnName="ExpectA_Time" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Avail_Seats" ColumnName="Avail_Seats" />
+                <ScalarProperty Name="Owner_Leader" ColumnName="Owner_Leader" />
+                <ScalarProperty Name="JoinerEmail" ColumnName="JoinerEmail" />
+                <ScalarProperty Name="JoinedDate" ColumnName="JoinedDate" />
+                <ScalarProperty Name="OwnerEmail" ColumnName="OwnerEmail" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="DaysAvailable" ColumnName="DaysAvailable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CoMuteModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ConfirmPassword" ColumnName="ConfirmPassword" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

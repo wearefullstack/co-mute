@@ -1,6 +1,11 @@
-﻿
+﻿using System.Data.Entity;
+
 namespace CoMute.Web.Models.Dto
 {
+    public class CoMute : DbContext
+    {
+        DbSet<RegistrationRequest> RegistrationRequest { get; set; }
+    }
     public class RegistrationRequest
     {
         public string Name { get; set; }

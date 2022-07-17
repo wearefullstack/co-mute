@@ -1,6 +1,8 @@
-﻿
+﻿using System.Data.Entity;
+
 namespace CoMute.Web.Models.Dto
 {
+
     public sealed class LoginRequest
     {
         public string Email { get; set; }

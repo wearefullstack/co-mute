@@ -14,11 +14,11 @@ namespace CoMute.Web.Controllers.API
         [Route("user/add")]
         public HttpResponseMessage Post(RegistrationRequest registrationRequest)
         {
-            var user = new User()
+            var user = new Users()
             {
                 Name = registrationRequest.Name,
                 Surname = registrationRequest.Surname,
-                EmailAddress = registrationRequest.EmailAddress
+                Email = registrationRequest.EmailAddress
             };
 
             return Request.CreateResponse(HttpStatusCode.Created, user);

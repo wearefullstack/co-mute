@@ -1,31 +1,17 @@
 ﻿@model CoMute.Web.Models.Users
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "My Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form id="register" method="post">
-    <h2>Register Account</h2>
-
-    <br />
-    <div id="error" class="row row-margin hidden">
-        <div class="col-md-4 col-md-offset-4 alert alert-danger">
-            <p></p>
-        </div>
-    </div>
-    <div>
-        <div style="color:red;">
-            @ViewBag.Message
-        </div>
-    </div>
-
-    <br />
+<form id="profile" method="post">
+    <h2>My Profile</h2>
 
     <div class="form-group">
         <label for="name">Name</label>
         @*<input type="text" id="name" class="form-control" placeholder="First name" required autofocus />*@
-        @Html.TextBoxFor(model => model.Name, new { @Class = "form-control", id = "name", placeholder = "First name" })
+        @Html.TextBoxFor(model => model.Name, new { @Class = "form-control", id = "name", placeholder = "Surname" })
     </div>
 
     <div class="form-group">
@@ -60,11 +46,16 @@
     </div>
 
     <div class="form-group">
-        <button class="btn btn-primary" type="submit" id="register-btn">Register</button>
+        <button class="btn btn-primary" type="submit" id="update">Update</button>
+    </div>
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+    <div>
+            <div style="color:red;">
+                @ViewBag.Message
+            </div>
     </div>
 </form>
-
-@*@section scripts {
-        <script type="text/javascript" src="~/Content/js/register.js"></script>
-    }*@
-
