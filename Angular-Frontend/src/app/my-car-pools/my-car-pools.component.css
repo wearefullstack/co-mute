@@ -1,0 +1,16 @@
+.mat-table{
+    width: 100%;
+}
+th{
+    background-color: rgba(45,47,143,255);
+    color: white;
+   
+}
+.addButton{
+    float: right; 
+    background-color: rgba(45,47,143,255);
+    border-radius: 30px;
+    margin-bottom: 10px;
+    border-color: rgba(45,47,143,255);
+}
+

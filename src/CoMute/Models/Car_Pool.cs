@@ -12,24 +12,25 @@ namespace CoMute.Web.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Car_Pool
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Car_Pool()
         {
-            this.Car_Pool = new HashSet<Car_Pool>();
             this.Joined_Car_Pool = new HashSet<Joined_Car_Pool>();
         }
     
+        public int Car_Pool_ID { get; set; }
+        public System.TimeSpan Departure_Time { get; set; }
+        public System.TimeSpan Expected_Arrival_Time { get; set; }
+        public string Origin { get; set; }
+        public string Days_Available { get; set; }
+        public string Destination { get; set; }
+        public int Available_Seats { get; set; }
         public int User_ID { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Notes { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Car_Pool> Car_Pool { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Joined_Car_Pool> Joined_Car_Pool { get; set; }
     }

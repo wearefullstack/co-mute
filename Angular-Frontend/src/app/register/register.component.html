@@ -1,0 +1,72 @@
+      <div>
+      <form [formGroup]="validationForm">
+      
+      
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input name="Name" formControlName="Name" 
+                            [(ngModel)]="userData.Name" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Name', 'required') && validationForm.get('Name').touched"> Name is required</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Name', 'maxlength') && validationForm.get('Name').touched">You have more than 50 characters</mat-error>
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Surname:</label>
+                        <input name="Surname" formControlName="Surname" 
+                            [(ngModel)]="userData.Surname" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Surname', 'required') && validationForm.get('Surname').touched"> Surname is required</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Surname', 'maxlength') && validationForm.get('Surname').touched">You have more than 50 characters</mat-error>
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Phone:</label>
+                        <input name="Phone" formControlName="Phone" 
+                            [(ngModel)]="userData.Phone" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Phone', 'required') && validationForm.get('Phone').touched"> Phone number is required</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Phone', 'maxlength') && validationForm.get('Phone').touched">You have more than 10 characters</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Phone', 'minlength') && validationForm.get('Phone').touched">You have less than 10 characters</mat-error>
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input name="Email" formControlName="Email" 
+                            [(ngModel)]="userData.Email" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Email', 'required') && validationForm.get('Email').touched"> Email is required</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Email', 'maxlength') && validationForm.get('Email').touched">You have more than 50 characters</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Email', 'email') && validationForm.get('Email').touched">Please enter a valid email address</mat-error>
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input name="Password" formControlName="Password" 
+                            [(ngModel)]="userData.Password" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Password', 'required') && validationForm.get('Password').touched"> Password is required</mat-error>
+                       
+                    </div>
+                </div>
+
+     
+            <div class="modal-footer">
+                <button (click)="submit()" class="btn btn-success" [disabled]="!validationForm.valid"
+                    data-dismiss="modal">Submit</button>
+                <!-- <button type="button" class="btn btn-default" (click)="resetForm(); refreshList()"
+                    data-dismiss="modal">Close</button> -->
+            </div>
+        
+    
+    </form>
+</div>

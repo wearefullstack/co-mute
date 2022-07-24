@@ -1,0 +1,266 @@
+<app-navbar></app-navbar>
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Created Car Pools">
+        <div >
+            <br>
+            <h1>My Created Car Pools</h1>
+            <br>
+        
+            <div>
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-success addButton">Add Car Pool</a>
+            </div>
+        
+            <div fxLayout fxLayoutAlign="center center">
+        
+                <input class="form-control" matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="search..."
+                    style="background-color: white; width: 30%; border-radius: 25px;" ><br>
+        
+            </div>
+        
+            <table mat-table [dataSource]="dataSource" matSort>
+        
+                <ng-container matColumnDef="Origin">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Origin</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Origin}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Destination">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Destination </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Destination}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Departure Time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Departure Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Departure_Time}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Arrival Time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Arrival Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Expected_Arrival_Time}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Days">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Days </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Days_Available}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Available Seats">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Available Seats</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Available_Seats}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Owner/Leader">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Owner}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Notes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Notes</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Notes}} </td>
+                </ng-container>
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        
+        
+        </div>
+    </mat-tab>
+    <mat-tab label="Joined Car Pools">
+        <div >
+            <br>
+            <h1>My Joined Car Pools</h1>
+            <br>
+ 
+        
+            <div fxLayout fxLayoutAlign="center center">
+        
+                <input class="form-control" matInput type="text" (keyup)="filter($event.target.value)" placeholder="search..."
+                    style="background-color: white; width: 30%; border-radius: 25px;" ><br>
+        
+            </div>
+        
+            <table mat-table [dataSource]="joinedOpps" matSort>
+        
+                <ng-container matColumnDef="Origin">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Origin</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Origin}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Destination">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Destination </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Destination}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Departure Time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Departure Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Departure_Time}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Arrival Time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Arrival Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Expected_Arrival_Time}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Days">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Days </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Days_Available}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Available Seats">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Available Seats</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Available_Seats}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Owner/Leader">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Owner}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Notes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Notes</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Notes}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Leave">
+                    <th mat-header-cell *matHeaderCellDef> Leave </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button class="btn btn-danger btn-sm" color="warn" (click)="getCarPoolID(element.Joined_Car_Pool_ID); leave()" >  Leave                       
+                        </button>
+                    </td>
+                </ng-container>
+        
+                <tr mat-header-row *matHeaderRowDef="joinedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: joinedColumns;"></tr>
+            </table>
+        
+        
+        </div>
+    </mat-tab>
+  </mat-tab-group>
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" >
+
+        <!-- Modal content-->
+        <form [formGroup]="validationForm">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: rgba(45,47,143,255); color: white;">
+                <h4 class="col-12 modal-title">Add Car Pool</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body" >
+
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Origin:</label>
+                        <input name="Origin"  formControlName="Origin"
+                            [(ngModel)]="carpoolData.Origin" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Origin', 'required') && validationForm.get('Origin').touched"> Origin is required</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Origin', 'maxlength')  && validationForm.get('Origin').touched">You have more than 20 characters</mat-error>
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Destination:</label>
+                        <input name="Destination"  formControlName="Destination"
+                            [(ngModel)]="carpoolData.Destination" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Destination', 'required') && validationForm.get('Destination').touched"> Destination is required</mat-error>
+                            <mat-error style="float: left;" *ngIf="hasError('Destination', 'maxlength')  && validationForm.get('Destination').touched">You have more than 20 characters</mat-error>
+                      
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Departure Time:</label>
+                        <input name="Departure_Time"  formControlName="Departure_Time"
+                            [(ngModel)]="carpoolData.Departure_Time" class="form-control" type="time">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Departure_Time', 'required') && validationForm.get('Departure_Time').touched"> Departure Time is required</mat-error>
+                      
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Arrival Time:</label>
+                        <input name="Expected_Arrival_Time"  formControlName="Expected_Arrival_Time"
+                            [(ngModel)]="carpoolData.Expected_Arrival_Time" class="form-control" type="time">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Expected_Arrival_Time', 'required') && validationForm.get('Expected_Arrival_Time').touched"> Arrival Time is required</mat-error>
+                      
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Days:</label>
+                        <input name="Days_Available"  formControlName="Days_Available"
+                            [(ngModel)]="carpoolData.Days_Available" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Days_Available', 'required') && validationForm.get('Days_Available').touched"> Days are required</mat-error>
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Available Seats:</label>
+                        <input name="Available_Seats"  formControlName="Available_Seats"
+                            [(ngModel)]="carpoolData.Available_Seats" class="form-control" type="number">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Available_Seats', 'required') && validationForm.get('Available_Seats').touched"> Days are required</mat-error>
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Available_Seats', 'min') && validationForm.get('Available_Seats').touched">Enter valid number </mat-error>
+                          
+                    </div>
+                </div>
+
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label>Notes:</label>
+                        <input name="Notes"  formControlName="Notes"
+                            [(ngModel)]="carpoolData.Notes" class="form-control" type="text">
+                            <mat-error style="float: left;" class="text-danger" *ngIf="hasError('Notes', 'maxlength') && validationForm.get('Notes').touched">You have more than 250 characters</mat-error>
+                     
+                    </div>
+                </div>
+
+
+
+       
+
+
+            </div>
+            <div class="modal-footer" >
+                <button (click)="submit()" [disabled]="!validationForm.valid" class="btn btn-success addButton" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-default" (click)="resetForm(); refreshList()"
+                    data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </form>
+
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div id="leaveModal" class="modal fade" role="dialog">
+    <div class="modal-dialog " >
+
+        <!-- Modal content-->
+      
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: rgba(45,47,143,255); color: white;">
+                <h4 class="col-12 modal-title">Join Car Pool</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+           
+            <div class="modal-body" >
+
+                <h6>Are you sure you want to leave this Car Pool?</h6>
+
+
+
+
+            </div>
+            <div class="modal-footer" >
+                <button (click)="leaveCarPool()"  class="btn btn-success addButton" data-dismiss="modal">I'm Sure</button>
+                <button type="button" class="btn btn-outline-dark"
+                    data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
