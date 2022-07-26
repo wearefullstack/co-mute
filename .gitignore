@@ -1,3 +1,5 @@
 venv
 .vscode
 .DS_STORE
+test.py
+__pycache__
