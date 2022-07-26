@@ -1,6 +1,3 @@
-bin/
-obj/
-src/packages/
-/src/CoMute/CoMute.Web.csproj.user
-/.vs
-/src/.vs/CoMute/config/applicationhost.config
+venv
+.vscode
+.DS_STORE
