@@ -2,7 +2,7 @@ from flask import Flask
 from auth import auth
 from routes import routes
 from db import db
-from models.user_carpool import UserCarpool
+# from models.user_carpool import UserCarpool
 from models.user import User
 from models.carpool import Carpool
 

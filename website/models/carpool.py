@@ -1,4 +1,5 @@
 from db import db
+from datetime import datetime
 
 
 class Carpool(db.Model):
@@ -15,5 +16,9 @@ class Carpool(db.Model):
     owner = db.Column(db.String(30))
     notes = db.Column(db.String(30))
 
-    users = db.relationship("UserCarpool", back_populates="carpools")
-    carpools = db.relationship("UserCarpool", back_populates="users")
+    # required when viewing car pools
+    # "Logged in users should be view all carpools and the date they were created"
+    date_created = db.Column(db.DateTime(timezone=True), default=datetime.now())
+
+    # users = db.relationship("UserCarpool", back_populates="carpools")
+    # carpools = db.relationship("UserCarpool", back_populates="users")

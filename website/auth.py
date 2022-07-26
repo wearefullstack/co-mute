@@ -1,5 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, flash
 from forms import UserRegistrationForm, UserLoginForm
+from models.user import User
+from db import db
+
 
 """
 Handles endpoints relating to authentication
@@ -8,13 +11,14 @@ Handles endpoints relating to authentication
 auth = Blueprint("auth", __name__)
 
 
+@auth.route("/")
 @auth.route("/login", methods=["GET", "POST"])
 def loginUser():
 
     form = UserLoginForm()
 
     if form.validate_on_submit():  # if all fields valid
-        print("success!")
+        print("success")
     else:
         print("failure")
 
@@ -26,7 +30,19 @@ def registerUser():
     form = UserRegistrationForm()
 
     if form.validate_on_submit():  # if all fields valid
-        print("success!")
+        # todo , encrypt password with bcrypt
+        new_user = User(
+            name=form.name.data,
+            surname=form.email.data,
+            phone=form.phone.data,
+            email=form.email.data,
+            password=form.password.data,
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("Success , your account has been created")
     else:
         print("failure")
 

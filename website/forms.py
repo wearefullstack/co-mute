@@ -2,6 +2,7 @@ from tokenize import String
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, StringField, PasswordField, EmailField
 from wtforms.validators import DataRequired, Email, Length, ValidationError
+from models.user import User
 
 
 class UserRegistrationForm(FlaskForm):
@@ -15,9 +16,14 @@ class UserRegistrationForm(FlaskForm):
     )
     submit = SubmitField("Register")
 
+    # assigned to the email field , by identifying a variable name after _
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError("Email already exists")
+
     # todo:
     # improved validation on data inputed
-    # check if username already exists in db
     # check if email already exists in db
 
 
