@@ -1,1 +1,39 @@
 {% extends 'base.html' %}
+
+{% block main_content %}
+
+{% for carpool in data %}
+
+<div class="container" align="center">
+    <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+        <div class="card-header">id = {{ carpool[0] }}</div>
+        <div class="card-body">
+            <h5 class="card-title">Departure Time :</h5>
+            <p class="card-text">{{ carpool[1] }}</p>
+            <h5 class="card-title">Arrival Time : </h5>
+            <p class="card-text">{{ carpool[2] }}</p>
+            <h5 class="card-title">Origin :</h5>
+            <p class="card-text">{{ carpool[3] }}</p>
+            <h5 class="card-title">Destination :</h5>
+            <p class="card-text">{{ carpool[5] }}</p>
+            <h5 class="card-title">Days Available :</h5>
+            <p class="card-text">{{ carpool[5] }}</p>
+            <h5 class="card-title">Available Seats :</h5>
+            <p class="card-text">{{ carpool[6] }}</p>
+            <h5 class="card-title">Owner :</h5>
+            <p class="card-text">{{ carpool[7] }}</p>
+            <h5 class="card-title">Notes :</h5>
+            <p class="card-text"> {{ carpool[8] }}</p>
+        </div>
+        <button class="btn btn-danger" onClick="leaveCarpool({{ carpool[0] }})">
+            <span>Leave Carpool</span>
+        </button>
+    </div>
+</div>
+
+{% endfor %}
+
+<script src="{{ url_for('static', filename='utils.js') }}"></script>
+
+
+{% endblock %}

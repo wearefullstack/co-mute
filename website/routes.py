@@ -1,10 +1,10 @@
-from flask import Blueprint, redirect, render_template, flash, request
+from flask import Blueprint, redirect, render_template, flash, request, json, jsonify
 from flask_login import current_user, login_required
-from forms import UpdateUserProfileForm, CarpoolRegistrationForm
+from forms import UpdateUserProfileForm, CarpoolRegistrationForm, LeaveCarPoolForm
 from models.carpool import Carpool
 from models.user_carpool import UserCarpool
 from models.user import User
-from db import db
+from db import db, connection, cursor
 import datetime
 
 """
@@ -19,50 +19,58 @@ def convertDate(strDate):
     convertedDate = datetime.datetime.strptime(strDate, format)
     return convertedDate
 
-
 @routes.route("/joined_carpools")
 @login_required
 def joined_carpools():
 
-    user = User.query.filter_by(id=current_user.id).first()
-    user_carpools = UserCarpool.query.filter_by(user_id=user.id).all()
+    # fetch all carpools that the user is a member of
 
+    user_id = current_user.id
+
+    cursor.execute(
+        """
+        SELECT c.id ,c.departure_time, c.arrival_time,c.origin,
+        c.days_available,c.destination,c.available_seats,c.owner,c.notes
+        FROM carpool as c
+        INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
+        INNER JOIN user as u ON u.id = uc.user_id
+        WHERE u.id = %s
     """
-    [
-        Date Joined
-        Starting Location
-        Ending Location
-        Starting Time
-        Ending Time
-        Seats 
-        Car Owner  
-    ]
-    """
+        % user_id
+    )
 
-    carpools = []
-    # # get list of joined carpools
-    # for carpool in user_carpools:
-    #     converted_date = convertDate(str(carpool.date_joined))
-    #     carpools.append([carpool, str(converted_date.date())])
+    raw_data = cursor.fetchall()
 
-    # for relationship in user_carpools:
-    #     carpools.append([relationship.carpools.id,relationship.carpools.departure_time,relationship.carpools.departure_time,])
-
-    print(carpools)
-
-    # print(carpools)
-
-    # for i in user_carpools:
-    #     converted_date = convertDate(str(i.date_joined))
-    #     carpools.append(str(converted_date.date()))
-
-    # print(carpools)
+    # convert list of tuples to 2d array
+    carpools_data = [list(carpool) for carpool in raw_data]
 
     return render_template(
         "joined_carpools.html",
         title="Joined car pools",
+        data=carpools_data,
         user=current_user,
     )
+
+
+@routes.route("/leave_carpool", methods=["POST"])
+@login_required
+def leave_carpool():
+    carpool_id = json.loads(request.data)['carpoolId']
+
+    # Delete from user_carpool table where carpool_id = carpool_id and user_id = current_user.id
+    cursor.execute(
+        """
+        DELETE FROM user_carpool
+        WHERE carpool_id = %s AND user_id = %s
+    """
+        % (carpool_id, current_user.id)
+    )
+    
+    db.commit()
+
+    flash('You have successfully left the carpool')
+
+    return jsonify({})
 
 
 @routes.route("register_new_carpool", methods=["GET", "POST"])

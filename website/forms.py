@@ -77,3 +77,7 @@ class CarpoolRegistrationForm(FlaskForm):
     # def validate_time(self, departure_time, arrival_time):
     #     # if departure_time ->  arrival_time clash with any other carpool the owner has joined
     #     pass
+
+ 
+class LeaveCarPoolForm(FlaskForm):
+    submit = SubmitField("Leave Carpool")
