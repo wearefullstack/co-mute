@@ -55,7 +55,7 @@ def joined_carpools():
 @routes.route("/leave_carpool", methods=["POST"])
 @login_required
 def leave_carpool():
-    carpool_id = json.loads(request.data)['carpoolId']
+    carpool_id = json.loads(request.data)['carpool_id']
 
     # Delete from user_carpool table where carpool_id = carpool_id and user_id = current_user.id
     cursor.execute(
@@ -66,7 +66,7 @@ def leave_carpool():
         % (carpool_id, current_user.id)
     )
     
-    db.commit()
+    connection.commit()
 
     flash('You have successfully left the carpool')
 
