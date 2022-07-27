@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block main_content %}
+
+
+<div class="container">
+    <form method="POST" action="#">
+        {{ form.hidden_tag() }}
+        <div>{{ form.departure_time.label }}: {{ form.departure_time(class="form-control") }}</div>
+
+        {% if form.departure_time.errors %}
+        <ul class="errors">
+            {% for error in form.departure_time.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div>{{ form.arrival_time.label }}: {{ form.arrival_time(class="form-control") }}</div>
+        {% if form.arrival_time.errors %}
+        <ul class="errors">{% for error in form.arrival_time.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+
+        <div>{{ form.origin.label(class="form-label") }}: {{ form.origin(class="form-control") }}</div>
+        {% if form.origin.errors %}
+        <ul class="errors">{% for error in form.origin.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+
+        <div>{{ form.days_available.label }}: {{ form.days_available(class="form-control") }}</div>
+        {% if form.days_available.errors %}
+        <ul class="errors">{% for error in form.days_available.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+
+        <div>{{ form.destination.label }}: {{ form.destination(class="form-control") }}</div>
+        {% if form.destination.errors %}
+        <ul class="errors">{% for error in form.destination.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+
+        <div>{{ form.available_seats.label }}: {{ form.available_seats(class="form-control") }}</div>
+        {% if form.available_seats.errors %}
+        <ul class="errors">{% for error in form.available_seats.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+
+        <div>{{ form.notes.label }}: {{ form.notes(class="form-control") }}</div>
+        {% if form.notes.errors %}
+        <ul class="errors">{% for error in form.notes.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+
+        <div class="my-3">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+</div>
+</form>
+
+
+
+{% endblock %}
