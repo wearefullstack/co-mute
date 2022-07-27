@@ -13,3 +13,6 @@ class UserCarpool(db.Model):
 
     users = db.relationship("User", back_populates="carpools")
     carpools = db.relationship("Carpool", back_populates="users")
+
+    def __repr__(self):
+        return f"<UserCarpool carpool_id={self.carpool_id} user_id={self.user_id} date_joined={self.date_joined} >"

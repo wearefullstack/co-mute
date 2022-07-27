@@ -5,9 +5,8 @@ from wtforms import (
     StringField,
     PasswordField,
     EmailField,
-    DateTimeLocalField,
     IntegerField,
-    TimeField
+    TimeField,
 )
 from wtforms.validators import DataRequired, Email, Length, ValidationError, NumberRange
 from models.user import User
