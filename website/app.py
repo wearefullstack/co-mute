@@ -1,8 +1,9 @@
 from flask import Flask
+from flask_login import LoginManager
 from auth import auth
 from routes import routes
 from db import db
-# from models.user_carpool import UserCarpool
+from models.user_carpool import UserCarpool
 from models.user import User
 from models.carpool import Carpool
 
@@ -22,6 +23,16 @@ def create_tables():  # creates all tables , unless they exist already
 
 if __name__ == "__main__":
     db.init_app(app)
+
+    login_manager = LoginManager()
+    # where should redirect if not logged in and @login_required decorator function called
+    login_manager.login_view = 'auth.loginUser'
+    login_manager.init_app(app)
+
+    # how a user is loaded
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     app.register_blueprint(auth, url_prefix="/")
     app.register_blueprint(routes, url_prefix="/")

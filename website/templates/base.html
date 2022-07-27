@@ -26,12 +26,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
-                    </li>
+
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <!-- View joined car pools for user (Homepage) -->
                         <a class="nav-link" href="/joined_carpools">Joined</a>
@@ -48,6 +44,18 @@
                         <!-- Search?? -->
                         <a class="nav-link" href="#">Search</a>
                     </li>
+                    <li class="nav-item">
+                        <!-- Search?? -->
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

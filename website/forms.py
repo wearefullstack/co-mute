@@ -22,10 +22,6 @@ class UserRegistrationForm(FlaskForm):
         if user:
             raise ValidationError("Email already exists")
 
-    # todo:
-    # improved validation on data inputed
-    # check if email already exists in db
-
 
 class UserLoginForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired(), Email()])

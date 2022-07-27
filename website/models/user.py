@@ -2,7 +2,7 @@ from db import db
 from flask_login import UserMixin
 
 
-class User(UserMixin, db.Model):
+class User(db.Model,UserMixin):
 
     __tablename__ = "user"
 
@@ -13,4 +13,5 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(50))
     password = db.Column(db.String(30))
 
-    # carpools = db.relationship("UserCarpool", back_populates="users")
+    #links to the association table
+    carpools = db.relationship('UserCarpool',back_populates='users')

@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, flash
+from inspect import currentframe
+from flask import Blueprint, redirect, render_template, flash, url_for
+from flask_login import current_user, login_required, logout_user, login_user
 from forms import UserRegistrationForm, UserLoginForm
 from models.user import User
 from db import db
@@ -18,19 +20,27 @@ def loginUser():
     form = UserLoginForm()
 
     if form.validate_on_submit():  # if all fields valid
-        print("success")
-    else:
-        print("failure")
+        user = User.query.filter_by(
+            email=form.email.data, password=form.password.data
+        ).first()
 
-    return render_template("auth/login.html", title="Login", form=form)
+        if user:
+            login_user(user, remember=True)  # set active logged in user for flask-login
+            flash('Successfully logged in')
+            return redirect("/joined_carpools")
+
+    return render_template(
+        "auth/login.html", title="Login", form=form, user=current_user
+    )
 
 
 @auth.route("/register", methods=["GET", "POST"])
 def registerUser():
     form = UserRegistrationForm()
 
-    if form.validate_on_submit():  # if all fields valid
-        # todo , encrypt password with bcrypt
+    # if all fields valid
+    if form.validate_on_submit():
+
         new_user = User(
             name=form.name.data,
             surname=form.email.data,
@@ -42,8 +52,23 @@ def registerUser():
         db.session.add(new_user)
         db.session.commit()
 
-        flash("Success , your account has been created")
-    else:
-        print("failure")
+        # log in new created user
 
-    return render_template("auth/register.html", title="Register", form=form)
+        user = User.query.filter_by(
+            email=form.email.data, password=form.password.data
+        ).first()
+
+        login_user(user, remember=True)
+        flash("Account successfully created")
+        redirect("/joined_carpools")
+
+    return render_template(
+        "auth/register.html", title="Register", form=form, user=current_user
+    )
+
+
+@login_required
+@auth.route("/logout")
+def logout():
+    logout_user()
+    return redirect("/login")
