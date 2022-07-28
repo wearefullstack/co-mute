@@ -4,28 +4,21 @@
 
 {% for carpool in data %}
 
+<!--  0          1                2            3            4               5                   6            7      8          9-->
+<!-- c.id, c.departure_time, c.arrival_time,c.origin, c.destination, c.days_available, c.available_seats, u.name,c.notes,uc.date_joined -->
 <div class="container" align="center">
     <div class="card text-bg-light mb-3" style="max-width: 18rem;">
         <div class="card-header">id = {{ carpool[0] }}</div>
         <div class="card-body">
-            <h5 class="card-title">Date Joined :</h5>
-            <p class="card-text"> {{ carpool[9] }}</p>
-            <h5 class="card-title">Departure Time :</h5>
-            <p class="card-text">{{ carpool[1] }}</p>
-            <h5 class="card-title">Arrival Time : </h5>
-            <p class="card-text">{{ carpool[2] }}</p>
-            <h5 class="card-title">Origin :</h5>
-            <p class="card-text">{{ carpool[3] }}</p>
-            <h5 class="card-title">Destination :</h5>
-            <p class="card-text">{{ carpool[5] }}</p>
-            <h5 class="card-title">Days Available :</h5>
-            <p class="card-text">{{ carpool[5] }}</p>
-            <h5 class="card-title">Available Seats :</h5>
-            <p class="card-text">{{ carpool[6] }}</p>
-            <h5 class="card-title">Owner :</h5>
-            <p class="card-text">{{ carpool[7] }}</p>
-            <h5 class="card-title">Notes :</h5>
-            <p class="card-text"> {{ carpool[8] }}</p>
+            <p class="card-title">Date Joined : {{ carpool[9] }}</p>
+            <p class="card-title">Departure Time : {{ carpool[1] }}</p>
+            <p class="card-title">Arrival Time : {{ carpool[2] }}</p>
+            <p class="card-title">Origin : {{ carpool[3] }}</p>
+            <p class="card-title">Destination : {{ carpool[4] }}</p>
+            <p class="card-title">Days Available : {{ carpool[5] }}</p>
+            <p class="card-title">Available Seats : {{ carpool[6] }}</p>
+            <p class="card-title">Owner : {{ carpool[7] }}</p>
+            <p class="card-title">Notes : {{ carpool[8] }}</p>
         </div>
         <!-- Not an error , Jinja2 bug -->
         <button class="btn btn-danger" onClick="leaveCarpool({{ carpool[0]}})">

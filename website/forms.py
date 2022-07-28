@@ -7,6 +7,8 @@ from wtforms import (
     EmailField,
     IntegerField,
     TimeField,
+    widgets,
+    SelectMultipleField,
 )
 from wtforms.validators import DataRequired, Email, Length, ValidationError, NumberRange
 from models.user import User
@@ -58,14 +60,33 @@ class UpdateUserProfileForm(FlaskForm):
                 raise ValidationError("Email already exists")
 
 
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
 class CarpoolRegistrationForm(FlaskForm):
 
     departure_time = TimeField("Departure Time", validators=[DataRequired()])
     arrival_time = TimeField("Expected Arrival", validators=[DataRequired()])
     origin = StringField("Origin", validators=[DataRequired()])
-    days_available = StringField(
-        "Days Available", validators=[DataRequired()]
-    )  # M,T,W,Th,F,Sa,Su
+
+    days_available = MultiCheckboxField(
+        "Days Available",
+        choices=[
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+        ],
+    )
+
+    # days_available = StringField(
+    #     "Days Available", validators=[DataRequired()]
+    # )  # M,T,W,Th,F,Sa,Su
 
     destination = StringField("Destination", validators=[DataRequired()])
     available_seats = IntegerField(

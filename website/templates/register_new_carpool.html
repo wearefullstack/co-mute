@@ -2,7 +2,7 @@
 {% block main_content %}
 
 
-<div class="container">
+<div class="container" style="max-width: 35rem;">
     <form method="POST" action="#">
         {{ form.hidden_tag() }}
         <div>{{ form.departure_time.label }}: {{ form.departure_time(class="form-control") }}</div>

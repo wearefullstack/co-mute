@@ -1,5 +1,4 @@
-from nis import cat
-from sqlite3 import connect
+from curses import raw
 from flask import Blueprint, redirect, render_template, flash, request, json, jsonify
 from flask_login import current_user, login_required
 from forms import UpdateUserProfileForm, CarpoolRegistrationForm, LeaveCarPoolForm
@@ -12,6 +11,7 @@ from datetime import datetime
 """
 Endpoints relating to logged in user routes
 """
+
 
 routes = Blueprint("routes", __name__)
 
@@ -30,13 +30,28 @@ def joined_carpools():
 
     user_id = current_user.id
 
-    # fetch all carpools that the user is a member of and owner field doesnt match the user_id
+    # fetch all carpools that the user is a member of and owner field doesnt match the user_id and username of the owner
     cursor.execute(
-        """SELECT * FROM carpool
-        WHERE owner != ? 
-        AND id IN (SELECT carpool_id FROM user_carpool WHERE user_id = ?)""",
-        (user_id, user_id),
+        """
+        SELECT c.id, c.departure_time, c.arrival_time,c.origin, c.destination, c.days_available, c.available_seats, u.name,c.notes,uc.date_joined
+        FROM carpool as c
+        INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
+        INNER JOIN user as u ON u.id = uc.user_id
+        WHERE uc.user_id = %s AND c.owner != %s
+    """
+        % (user_id, user_id)
     )
+
+
+
+
+    # # fetch all carpools that the user is a member of and owner field doesnt match the user_id
+    # cursor.execute(
+    #     """SELECT * FROM carpool
+    #     WHERE owner != ?
+    #     AND id IN (SELECT carpool_id FROM user_carpool WHERE user_id = ?)""",
+    #     (user_id, user_id),
+    # )
 
     raw_data = cursor.fetchall()
 
@@ -51,9 +66,9 @@ def joined_carpools():
     )
 
 
-@routes.route("/view_created_carpools")
+@routes.route("/created_carpools")
 @login_required
-def view_created_carpools():
+def created_carpools():
 
     # fetch all carpools that the user created
 
@@ -63,8 +78,10 @@ def view_created_carpools():
     cursor.execute(
         """
         SELECT c.id ,c.departure_time, c.arrival_time,c.origin,
-        c.days_available,c.destination,c.available_seats,c.owner,c.notes
+        c.days_available,c.destination,c.available_seats,c.owner,c.notes,u.name,c.date_created
         FROM carpool as c
+        INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
+        INNER JOIN user as u ON u.id = uc.user_id
         WHERE c.owner = %s
     """
         % user_id
@@ -72,18 +89,20 @@ def view_created_carpools():
 
     raw_data = cursor.fetchall()
 
+    print(raw_data)
+
     # convert list of tuples to 2d array
     carpools_data = [list(carpool) for carpool in raw_data]
 
     return render_template(
-        "view_created_carpools.html",
+        "created_carpools.html",
         title="Created carpools",
         data=carpools_data,
         user=current_user,
     )
 
 
-@routes.route("register_new_carpool", methods=["GET", "POST"])
+@routes.route("/register_new_carpool", methods=["GET", "POST"])
 @login_required
 def register_new_carpool():
 
@@ -91,43 +110,66 @@ def register_new_carpool():
 
     if form.validate_on_submit and request.method == "POST":
 
-        time_now = datetime.now().date()
-        date_joined = time_now.strftime("%Y-%m-%d")
+        days_selected = form.days_available.data
 
-        # create new carpool
-        cursor.execute(
-            "INSERT INTO carpool (departure_time,arrival_time,origin,days_available,destination,available_seats,owner,notes,date_created) values "
-            + "(?,?,?,?,?,?,?,?,?)",
-            (
-                str(form.departure_time.data),
-                str(form.arrival_time.data),
-                form.origin.data,
-                form.days_available.data,
-                form.destination.data,
-                form.available_seats.data,
-                current_user.id,
-                form.notes.data,
-                date_joined,
-            ),
-        )
+        # check if at least 1 day checkbox is selected
+        if len(days_selected) > 0:
 
-        connection.commit()
+            day_map = {
+                "Monday": "Mo",
+                "Tuesday": "Tu",
+                "Wednesday": "We",
+                "Thursday": "Th",
+                "Friday": "Fr",
+                "Saturday": "Sa",
+                "Sunday": "Su",
+            }
 
-        # create connection for owner and carpool
-        cursor.execute(
-            "INSERT INTO user_carpool (user_id,carpool_id,date_joined) values "
-            + "(?,?,?)",
-            (
-                current_user.id,
-                cursor.lastrowid,
-                date_joined,
-            ),
-        )
+            days_string = ""
 
-        connection.commit()
+            # build the days_string
+            for day in days_selected:
+                days_string += day_map[day]
 
-        flash("Carpool joined successfully")
-        return redirect("/view_created_carpools")
+            time_now = datetime.now().date()
+            date_joined = time_now.strftime("%Y-%m-%d")
+
+            # create new carpool
+            cursor.execute(
+                "INSERT INTO carpool (departure_time,arrival_time,origin,days_available,destination,available_seats,owner,notes,date_created) values "
+                + "(?,?,?,?,?,?,?,?,?)",
+                (
+                    str(form.departure_time.data),
+                    str(form.arrival_time.data),
+                    form.origin.data,
+                    days_string,
+                    form.destination.data,
+                    form.available_seats.data,
+                    current_user.id,
+                    form.notes.data,
+                    date_joined,
+                ),
+            )
+
+            connection.commit()
+
+            # create connection for owner and carpool
+            cursor.execute(
+                "INSERT INTO user_carpool (user_id,carpool_id,date_joined) values "
+                + "(?,?,?)",
+                (
+                    current_user.id,
+                    cursor.lastrowid,
+                    date_joined,
+                ),
+            )
+
+            connection.commit()
+
+            flash("Carpool joined successfully")
+            return redirect("/created_carpools")
+        else:
+            flash("Please select at least one day", category="invalid")
 
     return render_template(
         "register_new_carpool.html",
@@ -197,9 +239,42 @@ def profile():
     )
 
 
+# create a timetable schedule dictionary for a user based on each carpool they are in and its days available and departure and arrival time
+def create_timetable_schedule(user_id):
+
+    #################################################
+
+    # fetch all carpools the user is currently in , including their own created
+    cursor.execute(
+        """
+        SELECT c.departure_time, c.arrival_time,
+        c.days_available
+        FROM carpool as c
+        INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
+        INNER JOIN user as u ON u.id = uc.user_id
+        WHERE u.id = %s
+    """
+        % current_user.id
+    )
+
+    raw_data = cursor.fetchall()
+
+    carpool_schedule_data = [list(carpool) for carpool in raw_data]
+
+    # convert '12:03:00' string of date to datetime object
+    for carpool in carpool_schedule_data:
+        converted_departure_time = datetime.strptime(carpool[0], "%H:%M:%S").time()
+        converted_departure_time = datetime.strptime(carpool[1], "%H:%M:%S").time()
+
+    print(carpool_schedule_data)
+    schedule = {}
+    
+
 @routes.route("/join_carpool", methods=["POST"])
 @login_required
 def join_carpool():
+
+    create_timetable_schedule(current_user.id)
 
     # check if the user is already in the carpool
     data = json.loads(request.data)
