@@ -4,11 +4,10 @@
 
 {% for carpool in data %}
 
-<!--  0          1                2            3            4               5                   6            7      8          9-->
-<!-- c.id, c.departure_time, c.arrival_time,c.origin, c.destination, c.days_available, c.available_seats, u.name,c.notes,uc.date_joined -->
+
 <div class="container" align="center">
     <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-        <div class="card-header">id = {{ carpool[0] }}</div>
+        <div class="card-header"># = {{ carpool[0] }}</div>
         <div class="card-body">
             <p class="card-title">Date Joined : {{ carpool[9] }}</p>
             <p class="card-title">Departure Time : {{ carpool[1] }}</p>

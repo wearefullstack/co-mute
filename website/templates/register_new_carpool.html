@@ -25,9 +25,9 @@
         <ul class="errors">{% for error in form.origin.errors %}<li>{{ error }}</li>{% endfor %}</ul>
         {% endif %}
 
-        <div>{{ form.days_available.label }}: {{ form.days_available(class="form-control") }}</div>
+        <div>{{ form.days_available.label }}: {{ form.days_available(class="form-control list-unstyled") }}</div>
         {% if form.days_available.errors %}
-        <ul class="errors">{% for error in form.days_available.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        <ul class="errors" style="list-style:none;">{% for error in form.days_available.errors %}<li>{{ error }}</li>{% endfor %}</ul>
         {% endif %}
 
         <div>{{ form.destination.label }}: {{ form.destination(class="form-control") }}</div>

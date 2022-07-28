@@ -84,10 +84,6 @@ class CarpoolRegistrationForm(FlaskForm):
         ],
     )
 
-    # days_available = StringField(
-    #     "Days Available", validators=[DataRequired()]
-    # )  # M,T,W,Th,F,Sa,Su
-
     destination = StringField("Destination", validators=[DataRequired()])
     available_seats = IntegerField(
         "Available Seats", validators=[DataRequired(), NumberRange(min=1)]
