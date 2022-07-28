@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CoMuteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CarPool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartureTime" Type="datetime" Nullable="false" />
+          <Property Name="ExpectedArrivalTime" Type="datetime" Nullable="false" />
+          <Property Name="Origin" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DaysAvailable" Type="int" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AvilableSeats" Type="int" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CarPoolUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarPoolId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__CarPool__OwnerId__267ABA7A">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CarPool" Type="Self.CarPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPool">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarPoolUs__CarPo__29572725">
+          <End Role="CarPool" Type="Self.CarPool" Multiplicity="1" />
+          <End Role="CarPoolUsers" Type="Self.CarPoolUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarPool">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPoolUsers">
+              <PropertyRef Name="CarPoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarPoolUs__UserI__2A4B4B5E">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CarPoolUsers" Type="Self.CarPoolUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPoolUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CoMuteModelStoreContainer">
+          <EntitySet Name="CarPool" EntityType="Self.CarPool" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarPoolUsers" EntityType="Self.CarPoolUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CarPool__OwnerId__267ABA7A" Association="Self.FK__CarPool__OwnerId__267ABA7A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarPool" EntitySet="CarPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarPoolUs__CarPo__29572725" Association="Self.FK__CarPoolUs__CarPo__29572725">
+            <End Role="CarPool" EntitySet="CarPool" />
+            <End Role="CarPoolUsers" EntitySet="CarPoolUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarPoolUs__UserI__2A4B4B5E" Association="Self.FK__CarPoolUs__UserI__2A4B4B5E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarPoolUsers" EntitySet="CarPoolUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CoMuteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CarPool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartureTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpectedArrivalTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Origin" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DaysAvailable" Type="Int32" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AvilableSeats" Type="Int32" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__CarPool__OwnerId__267ABA7A" FromRole="CarPool" ToRole="Users" />
+          <NavigationProperty Name="CarPoolUsers" Relationship="Self.FK__CarPoolUs__CarPo__29572725" FromRole="CarPool" ToRole="CarPoolUsers" />
+        </EntityType>
+        <EntityType Name="CarPoolUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarPoolId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarPool" Relationship="Self.FK__CarPoolUs__CarPo__29572725" FromRole="CarPoolUsers" ToRole="CarPool" />
+          <NavigationProperty Name="User" Relationship="Self.FK__CarPoolUs__UserI__2A4B4B5E" FromRole="CarPoolUsers" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CarPools" Relationship="Self.FK__CarPool__OwnerId__267ABA7A" FromRole="Users" ToRole="CarPool" />
+          <NavigationProperty Name="CarPoolUsers" Relationship="Self.FK__CarPoolUs__UserI__2A4B4B5E" FromRole="Users" ToRole="CarPoolUsers" />
+        </EntityType>
+        <Association Name="FK__CarPool__OwnerId__267ABA7A">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="CarPool" Type="Self.CarPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPool">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarPoolUs__CarPo__29572725">
+          <End Role="CarPool" Type="Self.CarPool" Multiplicity="1" />
+          <End Role="CarPoolUsers" Type="Self.CarPoolUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarPool">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPoolUsers">
+              <PropertyRef Name="CarPoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarPoolUs__UserI__2A4B4B5E">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="CarPoolUsers" Type="Self.CarPoolUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPoolUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CoMuteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CarPools" EntityType="Self.CarPool" />
+          <EntitySet Name="CarPoolUsers" EntityType="Self.CarPoolUser" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__CarPool__OwnerId__267ABA7A" Association="Self.FK__CarPool__OwnerId__267ABA7A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarPool" EntitySet="CarPools" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarPoolUs__CarPo__29572725" Association="Self.FK__CarPoolUs__CarPo__29572725">
+            <End Role="CarPool" EntitySet="CarPools" />
+            <End Role="CarPoolUsers" EntitySet="CarPoolUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarPoolUs__UserI__2A4B4B5E" Association="Self.FK__CarPoolUs__UserI__2A4B4B5E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarPoolUsers" EntitySet="CarPoolUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CoMuteModelStoreContainer" CdmEntityContainer="CoMuteEntities">
+          <EntitySetMapping Name="CarPools">
+            <EntityTypeMapping TypeName="CoMuteModel.CarPool">
+              <MappingFragment StoreEntitySet="CarPool">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="ExpectedArrivalTime" ColumnName="ExpectedArrivalTime" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="DaysAvailable" ColumnName="DaysAvailable" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="AvilableSeats" ColumnName="AvilableSeats" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarPoolUsers">
+            <EntityTypeMapping TypeName="CoMuteModel.CarPoolUser">
+              <MappingFragment StoreEntitySet="CarPoolUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CarPoolId" ColumnName="CarPoolId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CoMuteModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

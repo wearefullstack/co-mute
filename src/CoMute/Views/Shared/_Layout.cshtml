@@ -6,6 +6,9 @@
     <title>@ViewBag.Title - Co-Mute</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
@@ -22,7 +25,15 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
                     <li>@Html.ActionLink("Register", "Register", "Home")</li>
-                    <li>@Html.ActionLink("Search", "Index", "Search")</li>
+                    <li>@Html.ActionLink("Add Car Pool", "Create", "CarPool")</li>
+                    <li>@Html.ActionLink("Search", "Index", "CarPool")</li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Joined Carpool", "Joined", "CarPool")</li>
+                        <li>@Html.ActionLink("Available Carpool", "Available", "CarPool")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                    }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
             </div>

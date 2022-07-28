@@ -32,7 +32,7 @@
             return;
         }
 
-        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
+        $.post('/user/add', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
             // TODO: Navigate away...
         }).fail(function (data) {
             var $alert = $("#error");
