@@ -2,31 +2,37 @@
 
 {% block main_content %}
 
-{% for carpool in data %}
 
 
 <div class="container" align="center">
-    <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-        <div class="card-header"># = {{ carpool[0] }}</div>
-        <div class="card-body">
-            <p class="card-title">Date Joined : {{ carpool[9] }}</p>
-            <p class="card-title">Departure Time : {{ carpool[1] }}</p>
-            <p class="card-title">Arrival Time : {{ carpool[2] }}</p>
-            <p class="card-title">Origin : {{ carpool[3] }}</p>
-            <p class="card-title">Destination : {{ carpool[4] }}</p>
-            <p class="card-title">Days Available : {{ carpool[5] }}</p>
-            <p class="card-title">Available Seats : {{ carpool[6] }}</p>
-            <p class="card-title">Owner : {{ carpool[7] }}</p>
-            <p class="card-title">Notes : {{ carpool[8] }}</p>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        {% for carpool in data %}
+
+        <div class="col">
+            <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+                <div class="card-header"># = {{ carpool[0] }}</div>
+                <div class="card-body">
+                    <p class="card-title">Date Joined : {{ carpool[9] }}</p>
+                    <p class="card-title">Departure Time : {{ carpool[1] }}</p>
+                    <p class="card-title">Arrival Time : {{ carpool[2] }}</p>
+                    <p class="card-title">Origin : {{ carpool[3] }}</p>
+                    <p class="card-title">Destination : {{ carpool[4] }}</p>
+                    <p class="card-title">Days Available : {{ carpool[5] }}</p>
+                    <p class="card-title">Available Seats : {{ carpool[6] }}</p>
+                    <p class="card-title">Owner : {{ carpool[7] }}</p>
+                    <p class="card-title">Notes : {{ carpool[8] }}</p>
+                </div>
+                <!-- Not an error , Jinja2 bug -->
+                <button class="btn btn-danger" onClick="leaveCarpool({{ carpool[0]}})">
+                    <span>Leave Carpool</span>
+                </button>
+            </div>
         </div>
-        <!-- Not an error , Jinja2 bug -->
-        <button class="btn btn-danger" onClick="leaveCarpool({{ carpool[0]}})">
-            <span>Leave Carpool</span>
-        </button>
+
+        {% endfor %}
     </div>
 </div>
-
-{% endfor %}
 
 <script src="{{ url_for('static', filename='utils.js') }}"></script>
 
