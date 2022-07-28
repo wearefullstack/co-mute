@@ -8,8 +8,6 @@
     <div class="card text-bg-light mb-3" style="max-width: 18rem;">
         <div class="card-header">id = {{ carpool[0] }}</div>
         <div class="card-body">
-            <h5 class="card-title">Date Joined :</h5>
-            <p class="card-text"> {{ carpool[9] }}</p>
             <h5 class="card-title">Departure Time :</h5>
             <p class="card-text">{{ carpool[1] }}</p>
             <h5 class="card-title">Arrival Time : </h5>
@@ -28,8 +26,9 @@
             <p class="card-text"> {{ carpool[8] }}</p>
         </div>
         <!-- Not an error , Jinja2 bug -->
-        <button class="btn btn-danger" onClick="leaveCarpool({{ carpool[0]}})">
-            <span>Leave Carpool</span>
+        <!-- Pass carpool id and available_seats -->
+        <button class="btn btn-success" onClick="joinCarpool( {{ carpool[0] }} , {{ carpool[6] }})">
+            <span>Join Carpool</span>
         </button>
     </div>
 </div>

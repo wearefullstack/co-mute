@@ -5,11 +5,12 @@ from datetime import datetime
 class UserCarpool(db.Model):
 
     __tablename__ = "user_carpool"
-    carpool_id = db.Column(db.Integer, db.ForeignKey("carpool.id"), primary_key=True)
+
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    carpool_id = db.Column(db.Integer, db.ForeignKey("carpool.id"), primary_key=True)
 
     # auto created , when a user joins a car pool
-    date_joined = db.Column(db.DateTime(timezone=True), default=datetime.now())
+    date_joined = db.Column(db.String(50))
 
     users = db.relationship("User", back_populates="carpools")
     carpools = db.relationship("Carpool", back_populates="users")

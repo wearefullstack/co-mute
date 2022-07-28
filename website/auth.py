@@ -30,9 +30,11 @@ def loginUser():
 
         if user:
             login_user(user, remember=True)  # set active logged in user for flask-login
-            flash("Successfully logged in")
+            flash("Successfully logged in", category="valid")
             return redirect("/joined_carpools")
-
+        else:
+            flash("Invalid email or password", category="invalid")
+            
     return render_template(
         "auth/login.html",
         title="Login",
@@ -54,7 +56,7 @@ def registerUser():
 
         new_user = User(
             name=form.name.data,
-            surname=form.email.data,
+            surname=form.surname.data,
             phone=form.phone.data,
             email=form.email.data,
             password=form.password.data,
@@ -69,7 +71,7 @@ def registerUser():
         ).first()
 
         login_user(user, remember=True)
-        flash("Account successfully created")
+        flash("Account successfully created", category="valid")
         return redirect("/joined_carpools")
 
     return render_template(

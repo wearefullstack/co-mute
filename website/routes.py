@@ -1,3 +1,5 @@
+from nis import cat
+from sqlite3 import connect
 from flask import Blueprint, redirect, render_template, flash, request, json, jsonify
 from flask_login import current_user, login_required
 from forms import UpdateUserProfileForm, CarpoolRegistrationForm, LeaveCarPoolForm
@@ -5,7 +7,7 @@ from models.carpool import Carpool
 from models.user_carpool import UserCarpool
 from models.user import User
 from db import db, connection, cursor
-import datetime
+from datetime import datetime
 
 """
 Endpoints relating to logged in user routes
@@ -19,6 +21,7 @@ def convertDate(strDate):
     convertedDate = datetime.datetime.strptime(strDate, format)
     return convertedDate
 
+
 @routes.route("/joined_carpools")
 @login_required
 def joined_carpools():
@@ -27,16 +30,12 @@ def joined_carpools():
 
     user_id = current_user.id
 
+    # fetch all carpools that the user is a member of and owner field doesnt match the user_id
     cursor.execute(
-        """
-        SELECT c.id ,c.departure_time, c.arrival_time,c.origin,
-        c.days_available,c.destination,c.available_seats,c.owner,c.notes
-        FROM carpool as c
-        INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
-        INNER JOIN user as u ON u.id = uc.user_id
-        WHERE u.id = %s
-    """
-        % user_id
+        """SELECT * FROM carpool
+        WHERE owner != ? 
+        AND id IN (SELECT carpool_id FROM user_carpool WHERE user_id = ?)""",
+        (user_id, user_id),
     )
 
     raw_data = cursor.fetchall()
@@ -52,25 +51,36 @@ def joined_carpools():
     )
 
 
-@routes.route("/leave_carpool", methods=["POST"])
+@routes.route("/view_created_carpools")
 @login_required
-def leave_carpool():
-    carpool_id = json.loads(request.data)['carpool_id']
+def view_created_carpools():
 
-    # Delete from user_carpool table where carpool_id = carpool_id and user_id = current_user.id
+    # fetch all carpools that the user created
+
+    user_id = current_user.id
+
+    # fetch all carpools where the user is the owner
     cursor.execute(
         """
-        DELETE FROM user_carpool
-        WHERE carpool_id = %s AND user_id = %s
+        SELECT c.id ,c.departure_time, c.arrival_time,c.origin,
+        c.days_available,c.destination,c.available_seats,c.owner,c.notes
+        FROM carpool as c
+        WHERE c.owner = %s
     """
-        % (carpool_id, current_user.id)
+        % user_id
     )
-    
-    connection.commit()
 
-    flash('You have successfully left the carpool')
+    raw_data = cursor.fetchall()
 
-    return jsonify({})
+    # convert list of tuples to 2d array
+    carpools_data = [list(carpool) for carpool in raw_data]
+
+    return render_template(
+        "view_created_carpools.html",
+        title="Created carpools",
+        data=carpools_data,
+        user=current_user,
+    )
 
 
 @routes.route("register_new_carpool", methods=["GET", "POST"])
@@ -80,33 +90,44 @@ def register_new_carpool():
     form = CarpoolRegistrationForm()
 
     if form.validate_on_submit and request.method == "POST":
-        new_carpool = Carpool(
-            departure_time=str(form.departure_time.data),
-            arrival_time=str(form.arrival_time.data),
-            origin=form.origin.data,
-            days_available=form.days_available.data,
-            destination=form.destination.data,
-            available_seats=form.available_seats.data,
-            owner=current_user.id,
-            notes=form.notes.data,
+
+        time_now = datetime.now().date()
+        date_joined = time_now.strftime("%Y-%m-%d")
+
+        # create new carpool
+        cursor.execute(
+            "INSERT INTO carpool (departure_time,arrival_time,origin,days_available,destination,available_seats,owner,notes,date_created) values "
+            + "(?,?,?,?,?,?,?,?,?)",
+            (
+                str(form.departure_time.data),
+                str(form.arrival_time.data),
+                form.origin.data,
+                form.days_available.data,
+                form.destination.data,
+                form.available_seats.data,
+                current_user.id,
+                form.notes.data,
+                date_joined,
+            ),
         )
 
-        # add new carpool and retrieve id
-        db.session.add(new_carpool)
-        db.session.commit()
+        connection.commit()
 
-        # fetch user details from db
-        user = User.query.filter_by(id=current_user.id).first()
+        # create connection for owner and carpool
+        cursor.execute(
+            "INSERT INTO user_carpool (user_id,carpool_id,date_joined) values "
+            + "(?,?,?)",
+            (
+                current_user.id,
+                cursor.lastrowid,
+                date_joined,
+            ),
+        )
 
-        # for linking the owner to the carpool in the joining table (UserCarpool)
-        user_carpool = UserCarpool(carpool_id=new_carpool.id, user_id=user.id)
+        connection.commit()
 
-        # add link of user to carpool
-        db.session.add(user_carpool)
-        db.session.commit()
-
-        flash("Carpool registered")
-        return redirect("/joined_carpools")
+        flash("Carpool joined successfully")
+        return redirect("/view_created_carpools")
 
     return render_template(
         "register_new_carpool.html",
@@ -116,12 +137,26 @@ def register_new_carpool():
     )
 
 
-@routes.route("/view_all")
+@routes.route("/search_all")
 @login_required
-def view_all():
+def search_all():
+
+    # fetch all carpools
+    cursor.execute(
+        """
+        SELECT * FROM carpool as c
+        """
+    )
+
+    raw_data = cursor.fetchall()
+
+    # convert list of tuples to 2d array
+    carpools_data = [list(carpool) for carpool in raw_data]
+
     return render_template(
-        "view_all.html",
-        title="All created car pools",
+        "search_all.html",
+        title="Search Carpools",
+        data=carpools_data,
         user=current_user,
     )
 
@@ -148,7 +183,7 @@ def profile():
             current_user.password = form.password.data
             db.session.commit()
 
-            flash("Profile successfully updated")
+            flash("Profile successfully updated", category="valid")
 
             redirect("/joined_users")  # reload the page
         else:
@@ -160,3 +195,93 @@ def profile():
         form=form,
         user=current_user,
     )
+
+
+@routes.route("/join_carpool", methods=["POST"])
+@login_required
+def join_carpool():
+
+    # check if the user is already in the carpool
+    data = json.loads(request.data)
+    carpool_id = data["carpool_id"]
+    available_seats = data["available_seats"]
+
+    cursor.execute(
+        """
+        SELECT * FROM user_carpool
+        WHERE user_id = %s AND carpool_id = %s
+        """
+        % (current_user.id, carpool_id)
+    )
+
+    raw_data = cursor.fetchall()
+
+    # if the user is not in the carpool
+    if len(raw_data) > 0:
+        flash("You are already in the carpool", category="invalid")
+    else:
+        if available_seats > 0:
+            time_now = datetime.now().date()
+            date_joined = time_now.strftime("%Y-%m-%d")
+
+            # create connection for user and carpool
+            cursor.execute(
+                "INSERT INTO user_carpool (user_id,carpool_id,date_joined) values "
+                + "(?,?,?)",
+                (
+                    current_user.id,
+                    carpool_id,
+                    date_joined,
+                ),
+            )
+
+            connection.commit()
+
+            # decrement the carpool seat count
+            cursor.execute(
+                """
+                UPDATE carpool
+                SET available_seats = available_seats - 1
+                WHERE id = %s
+                """
+                % carpool_id
+            )
+
+            connection.commit()
+
+            flash("Successfully joined carpool", category="valid")
+        else:
+            flash("No seats available", category="invalid")
+
+    return jsonify({})
+
+
+@routes.route("/leave_carpool", methods=["POST"])
+@login_required
+def leave_carpool():
+    carpool_id = json.loads(request.data)["carpool_id"]
+
+    # Delete from user_carpool table where carpool_id = carpool_id and user_id = current_user.id
+    cursor.execute(
+        """
+        DELETE FROM user_carpool
+        WHERE carpool_id = %s AND user_id = %s
+        """
+        % (carpool_id, current_user.id)
+    )
+
+    # increment the carpool available_seats
+    cursor.execute(
+        """
+        UPDATE carpool
+        SET available_seats = available_seats + 1
+        WHERE id = %s
+        """
+        % carpool_id
+    )
+
+    connection.commit()
+
+    flash("You have successfully left the carpool", category="valid")
+
+    return jsonify({})

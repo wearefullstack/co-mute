@@ -30,7 +30,11 @@
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <!-- View joined car pools for user (Homepage) -->
-                        <a class="nav-link" href="/joined_carpools">Joined</a>
+                        <a class="nav-link" href="/joined_carpools">View Joined</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Search?? -->
+                        <a class="nav-link" href="/view_created_carpools">View Created</a>
                     </li>
                     <li class="nav-item">
                         <!-- View all car pools -->
@@ -38,16 +42,13 @@
                     </li>
                     <li class="nav-item">
                         <!-- View all car pools -->
-                        <a class="nav-link" href="/view_all">View All</a>
+                        <a class="nav-link" href="/search_all">Search</a>
                     </li>
                     <li class="nav-item">
                         <!-- View Profile Page -->
                         <a class="nav-link" href="/profile">Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <!-- Search?? -->
-                        <a class="nav-link" href="#">Search</a>
-                    </li>
+
                     <li class="nav-item">
                         <!-- Search?? -->
                         <a class="nav-link" href="/logout">Logout</a>
@@ -64,6 +65,26 @@
             </div>
         </div>
     </nav>
+
+    <!-- Handles category and messages flashed for form input validation -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category,message in messages %}
+    {% if category == 'valid' %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>{{ message }}</strong>
+    </div>
+    {% elif category == "invalid" %}
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>{{ message }}</strong>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
 
 
     {% if title %}

@@ -69,15 +69,10 @@ class CarpoolRegistrationForm(FlaskForm):
 
     destination = StringField("Destination", validators=[DataRequired()])
     available_seats = IntegerField(
-        "Available Seats", validators=[DataRequired(), NumberRange(min=2)]
+        "Available Seats", validators=[DataRequired(), NumberRange(min=1)]
     )
     notes = StringField("Notes", validators=[DataRequired()])
     submit = SubmitField("Register Carpool")
 
-    # def validate_time(self, departure_time, arrival_time):
-    #     # if departure_time ->  arrival_time clash with any other carpool the owner has joined
-    #     pass
-
- 
 class LeaveCarPoolForm(FlaskForm):
     submit = SubmitField("Leave Carpool")
