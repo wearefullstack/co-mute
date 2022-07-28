@@ -42,17 +42,6 @@ def joined_carpools():
         % (user_id, user_id)
     )
 
-
-
-
-    # # fetch all carpools that the user is a member of and owner field doesnt match the user_id
-    # cursor.execute(
-    #     """SELECT * FROM carpool
-    #     WHERE owner != ?
-    #     AND id IN (SELECT carpool_id FROM user_carpool WHERE user_id = ?)""",
-    #     (user_id, user_id),
-    # )
-
     raw_data = cursor.fetchall()
 
     # convert list of tuples to 2d array
@@ -77,19 +66,17 @@ def created_carpools():
     # fetch all carpools where the user is the owner
     cursor.execute(
         """
-        SELECT c.id ,c.departure_time, c.arrival_time,c.origin,
-        c.days_available,c.destination,c.available_seats,c.owner,c.notes,u.name,c.date_created
+        SELECT c.id, c.departure_time, c.arrival_time,c.origin,
+        c.days_available, c.destination,c.available_seats, c.owner,c.notes,u.name,c.date_created
         FROM carpool as c
         INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
         INNER JOIN user as u ON u.id = uc.user_id
-        WHERE c.owner = %s
+        WHERE u.id = %s AND c.owner = %s
     """
-        % user_id
+        % (user_id, user_id)
     )
 
     raw_data = cursor.fetchall()
-
-    print(raw_data)
 
     # convert list of tuples to 2d array
     carpools_data = [list(carpool) for carpool in raw_data]
@@ -266,9 +253,8 @@ def create_timetable_schedule(user_id):
         converted_departure_time = datetime.strptime(carpool[0], "%H:%M:%S").time()
         converted_departure_time = datetime.strptime(carpool[1], "%H:%M:%S").time()
 
-    print(carpool_schedule_data)
     schedule = {}
-    
+
 
 @routes.route("/join_carpool", methods=["POST"])
 @login_required
