@@ -16,8 +16,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comute-database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # creates db with tables if doesnt exist
+# uses the models files
 @app.before_first_request
-def create_tables():  # creates all tables , unless they exist already
+def create_tables():
     db.create_all()
 
 
@@ -26,7 +27,7 @@ if __name__ == "__main__":
 
     login_manager = LoginManager()
     # where should redirect if not logged in and @login_required decorator function called
-    login_manager.login_view = 'auth.loginUser'
+    login_manager.login_view = "auth.loginUser"
     login_manager.init_app(app)
 
     # how a user is loaded

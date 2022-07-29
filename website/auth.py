@@ -6,7 +6,7 @@ from db import db
 
 
 """
-Handles endpoints relating to authentication
+Endpoints relating to authentication
 """
 
 auth = Blueprint("auth", __name__)
