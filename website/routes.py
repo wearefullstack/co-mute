@@ -1,15 +1,11 @@
-from curses import raw
 from flask import Blueprint, redirect, render_template, flash, request, json, jsonify
 from flask_login import current_user, login_required
-from forms import UpdateUserProfileForm, CarpoolRegistrationForm, LeaveCarPoolForm
-from models.carpool import Carpool
-from models.user_carpool import UserCarpool
-from models.user import User
+from forms import UpdateUserProfileForm, CarpoolRegistrationForm
 from db import db, connection, cursor
 from datetime import datetime
 
 """
-Endpoints relating to logged in user routes
+Endpoints for a logged in user
 """
 
 
@@ -27,7 +23,6 @@ def convertDate(strDate):
 def joined_carpools():
 
     # fetch all carpools that the user is a member of
-
     user_id = current_user.id
 
     # fetch all carpools that the user is a member of and owner field doesnt match the user_id and username of the owner
@@ -60,7 +55,6 @@ def joined_carpools():
 def created_carpools():
 
     # fetch all carpools that the user created
-
     user_id = current_user.id
 
     # fetch all carpools where the user is the owner
@@ -216,7 +210,7 @@ def profile():
 
             redirect("/joined_users")  # reload the page
         else:
-            print("error updating profile!")
+            flash("Error updating profile", category="invalid")
 
     return render_template(
         "profile.html",
@@ -226,41 +220,9 @@ def profile():
     )
 
 
-# create a timetable schedule dictionary for a user based on each carpool they are in and its days available and departure and arrival time
-def create_timetable_schedule(user_id):
-
-    #################################################
-
-    # fetch all carpools the user is currently in , including their own created
-    cursor.execute(
-        """
-        SELECT c.departure_time, c.arrival_time,
-        c.days_available
-        FROM carpool as c
-        INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
-        INNER JOIN user as u ON u.id = uc.user_id
-        WHERE u.id = %s
-    """
-        % current_user.id
-    )
-
-    raw_data = cursor.fetchall()
-
-    carpool_schedule_data = [list(carpool) for carpool in raw_data]
-
-    # convert '12:03:00' string of date to datetime object
-    for carpool in carpool_schedule_data:
-        converted_departure_time = datetime.strptime(carpool[0], "%H:%M:%S").time()
-        converted_departure_time = datetime.strptime(carpool[1], "%H:%M:%S").time()
-
-    schedule = {}
-
-
 @routes.route("/join_carpool", methods=["POST"])
 @login_required
 def join_carpool():
-
-    create_timetable_schedule(current_user.id)
 
     # check if the user is already in the carpool
     data = json.loads(request.data)

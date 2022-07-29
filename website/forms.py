@@ -90,6 +90,3 @@ class CarpoolRegistrationForm(FlaskForm):
     )
     notes = StringField("Notes", validators=[DataRequired()])
     submit = SubmitField("Register Carpool")
-
-class LeaveCarPoolForm(FlaskForm):
-    submit = SubmitField("Leave Carpool")
