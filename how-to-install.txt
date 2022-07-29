@@ -1,0 +1,9 @@
+1. Install required modules
+    - pip install -r requirements.txt
+
+2. Run Program 
+    - navigate to website folder
+    - run app.py file
+        - in website folder directory type "python app.py" in terminal/cmd
+
+3. Program should now be running
