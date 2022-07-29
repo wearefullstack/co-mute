@@ -164,10 +164,14 @@ def register_new_carpool():
 @login_required
 def search_all():
 
-    # fetch all carpools
+    # fetch all carpools and the owner name
     cursor.execute(
         """
-        SELECT * FROM carpool as c
+        SELECT c.id, c.departure_time, c.arrival_time, c.origin, c.destination,
+        c.days_available, c.available_seats,c.date_created, u.name, c.notes
+        FROM carpool as c
+        INNER JOIN user_carpool as uc ON uc.carpool_id = c.id
+        INNER JOIN user as u ON u.id = uc.user_id
         """
     )
 
