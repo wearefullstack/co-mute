@@ -13,6 +13,13 @@ auth = Blueprint("auth", __name__)
 
 
 @auth.route("/")
+def home():
+    if current_user.is_authenticated:
+        return redirect("/joined_carpools")
+    else:
+        return redirect('/login')
+
+
 @auth.route("/login", methods=["GET", "POST"])
 def loginUser():
 
@@ -34,6 +41,8 @@ def loginUser():
             return redirect("/joined_carpools")
         else:
             flash("Invalid email or password", category="invalid")
+            return redirect("/joined_carpools")
+
             
     return render_template(
         "auth/login.html",
