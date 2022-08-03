@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoMute.Web", "CoMute\CoMute.Web.csproj", "{9E59C0D9-8F90-4EF5-9EC5-484DF075E6B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoMute.Core", "CoMute.Core\CoMute.Core.csproj", "{1537B9C6-71AD-46CA-8649-524F1E9C823C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoMute.DB.Migrations", "CoMute.DB.Migrations\CoMute.DB.Migrations.csproj", "{95CC4812-C8F1-4020-9655-BA640AB88DA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoMute.DB", "CoMute.DB\CoMute.DB.csproj", "{702BB4FB-367D-4893-9BE6-7087019C0805}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,23 @@ Global
 		{9E59C0D9-8F90-4EF5-9EC5-484DF075E6B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E59C0D9-8F90-4EF5-9EC5-484DF075E6B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E59C0D9-8F90-4EF5-9EC5-484DF075E6B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1537B9C6-71AD-46CA-8649-524F1E9C823C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1537B9C6-71AD-46CA-8649-524F1E9C823C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1537B9C6-71AD-46CA-8649-524F1E9C823C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1537B9C6-71AD-46CA-8649-524F1E9C823C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95CC4812-C8F1-4020-9655-BA640AB88DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95CC4812-C8F1-4020-9655-BA640AB88DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95CC4812-C8F1-4020-9655-BA640AB88DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95CC4812-C8F1-4020-9655-BA640AB88DA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{702BB4FB-367D-4893-9BE6-7087019C0805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{702BB4FB-367D-4893-9BE6-7087019C0805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{702BB4FB-367D-4893-9BE6-7087019C0805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{702BB4FB-367D-4893-9BE6-7087019C0805}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1ED77649-DA1E-4338-8726-CC701E10ADE4}
 	EndGlobalSection
 EndGlobal

@@ -12,10 +12,7 @@
             return;
         }
 
-        var phone = $('#phone').val();
-        if (!phone) {
-            return;
-        }
+        var phone = $('#phone').val();   
 
         var email = $('#email').val();
         if (!email) {
@@ -28,12 +25,13 @@
         }
 
         var cpswd = $('#confirm-password').val();
-        if (!email) {
+        if (!cpswd) {
             return;
         }
 
-        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
-            // TODO: Navigate away...
+        $.post('/api/user/add', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
+            var redirectUrl = '/';
+            window.location.href = redirectUrl;
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");

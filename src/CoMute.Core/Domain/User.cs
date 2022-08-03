@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoMute.Web.Models.Dto
+namespace CoMute.Core.Domain
 {
-    public class RegistrationRequest
+    public class User
     {
         public Guid UserId { get; set; }
         [Required]
