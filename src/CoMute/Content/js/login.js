@@ -11,8 +11,9 @@
             return;
         }
 
-        $.post('/api/Authentication', { email: email, password: pswd }, function (data) {
-            // TODO: Navigate away...
+        $.post('/api/Authentication', { email: email, password: pswd }, function (data) {            
+            var redirectUrl = '/CarPoolOpportunity/Index';            
+            window.location.href = redirectUrl;
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");

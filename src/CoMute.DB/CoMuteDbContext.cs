@@ -7,6 +7,8 @@ namespace CoMute.DB
     public interface ICoMuteDbContext
     {
         IDbSet<User> Users { get; set; }
+        IDbSet<CarPoolOpportunity> CarPoolOpportunities { get; set; }
+        IDbSet<JoinCarPoolsOpportunity> JoinCarPoolsOpportunities { get; set; }
         int SaveChanges();
     }
     public class CoMuteDbContext : DbContext, ICoMuteDbContext
@@ -21,13 +23,16 @@ namespace CoMute.DB
         {            
         }
 
-        public IDbSet<User> Users { get; set; }  
+        public IDbSet<User> Users { get; set; }
+        public IDbSet<CarPoolOpportunity> CarPoolOpportunities { get; set; }
+        public IDbSet<JoinCarPoolsOpportunity> JoinCarPoolsOpportunities { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
             var config = modelBuilder.Configurations;
             config.Add(new UserMap());
+            config.Add(new CarPoolOpportunityMap());
+            config.Add(new JoinCarPoolsOpportunityMap());
         }
     }
 }

@@ -9,6 +9,7 @@ namespace CoMute.Web.App_Start.Bootstrappers.Ioc.AutoMapperProfiles
         protected override void Configure()
         {
             CreateMap<User, RegistrationRequest>().ReverseMap();
+            CreateMap<User, UserRequest>().ReverseMap();
         }
     }
 }

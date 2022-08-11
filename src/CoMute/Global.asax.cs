@@ -6,6 +6,8 @@ using System.Web.Optimization;
 using Castle.MicroKernel.Registration;
 using CoMute.Web.App_Start;
 using System.Web.Routing;
+using System.Configuration;
+using CoMute.DB.Migrations;
 
 namespace CoMute.Web
 {
@@ -19,9 +21,9 @@ namespace CoMute.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //var connectionStringSettings = ConfigurationManager.ConnectionStrings["LendingLibraryWebContext"];
-            //DBMigrationsRunner runner = new DBMigrationsRunner(connectionStringSettings.ConnectionString);
-            //runner.MigrateToLatest();
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings["CoMuteWebContext"];
+            DBMigrationsRunner runner = new DBMigrationsRunner(connectionStringSettings.ConnectionString);
+            runner.MigrateToLatest();
             Boostrap();
         }
         private IWindsorContainer Boostrap()

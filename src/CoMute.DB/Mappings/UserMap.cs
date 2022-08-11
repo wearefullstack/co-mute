@@ -16,7 +16,8 @@ namespace CoMute.DB.Mappings
             Property(p => p.Surname).HasColumnName(UserTable.Columns.Surname);
             Property(p => p.EmailAddress).HasColumnName(UserTable.Columns.EmailAddress);
             Property(p => p.PhoneNumber).HasColumnName(UserTable.Columns.PhoneNumber);
-            Property(p => p.Password).HasColumnName(UserTable.Columns.Password);
+            Property(p => p.PasswordHash).HasColumnName(UserTable.Columns.PasswordHash);
+            Property(p => p.PasswordSalt).HasColumnName(UserTable.Columns.PasswordSalt);
         }
     }
 }

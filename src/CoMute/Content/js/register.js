@@ -29,19 +29,29 @@
             return;
         }
 
+        if (cpswd !== pswd) {
+            displayError($, 'Password and confirm password are not the same!');
+            return;
+        }
+
         $.post('/api/user/add', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
             var redirectUrl = '/';
             window.location.href = redirectUrl;
         }).fail(function (data) {
-            var $alert = $("#error");
-            var $p = $alert.find("p");
-            $p.text('Registration failed');
-            $alert.removeClass('hidden');
-
-            setTimeout(function () {
-                $p.text('');
-                $alert.addClass('hidden');
-            }, 3000);
+            console.log(data);
+            displayError($, 'Registration failed, ' + data.responseJSON);
         });
     });
 })(window, jQuery);
+
+function displayError($, message) {
+    var $alert = $("#error");
+    var $p = $alert.find("p");
+    $p.text();
+    $alert.removeClass('hidden');
+
+    setTimeout(function() {
+        $p.text(message);
+        $alert.addClass('hidden');
+    }, 3000);
+}

@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Co-Mute</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqueryui")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
@@ -23,6 +25,7 @@
                     <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
                     <li>@Html.ActionLink("Register", "Register", "Home")</li>
                     <li>@Html.ActionLink("Search", "Index", "Search")</li>
+                    <li>@Html.ActionLink("Car-Pool Opportunities", "Index", "CarPoolOpportunity")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
             </div>
@@ -38,6 +41,25 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+    <script>
+        $(function () {
+            $(".jqueryui-marker-datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                changeYear: true,
+                showOn: "button",
+                buttonImage: "/Content/images/cal.png"
+            }).css("display", "inline-block")
+                .next("button").button ({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Select a date",
+                    text: false
+                });
+        });
+    </script>
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

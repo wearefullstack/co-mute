@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CoMute.Web</RootNamespace>
     <AssemblyName>CoMute.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -64,6 +64,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.DynamicData" />
@@ -72,6 +75,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.9\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -125,20 +134,12 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Bootstrappers\Installers\AutoMapperInstaller.cs" />
     <Compile Include="App_Start\Bootstrappers\Installers\EntityFrameworkInstaller.cs" />
     <Compile Include="App_Start\Bootstrappers\Installers\RepositoryInstallers.cs" />
+    <Compile Include="App_Start\Bootstrappers\Ioc\AutoMapperProfiles\CarPoolMappings.cs" />
     <Compile Include="App_Start\Bootstrappers\Ioc\AutoMapperProfiles\UsersMappings.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DependencyScope.cs" />
@@ -148,29 +149,67 @@
     <Compile Include="App_Start\WindsorControllerFactory.cs" />
     <Compile Include="App_Start\DependencyResolver.cs" />
     <Compile Include="Controllers\API\AuthenticationController.cs" />
+    <Compile Include="Controllers\API\CarPoolOpportunityController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\Web\CarPoolOpportunityController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
+    <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Controllers\Web\SearchController.cs" />
+    <Compile Include="Controllers\Web\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dto\CarPoolsOpportunityRequest.cs" />
+    <Compile Include="Models\Dto\JoinCarPoolsOpportunityRequest.cs" />
     <Compile Include="Models\Dto\LoginRequest.cs" />
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
+    <Compile Include="Models\Dto\UserRequest.cs" />
+    <Compile Include="Models\Providers\AuthProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\accordion.css" />
+    <Content Include="Content\css\all.css" />
+    <Content Include="Content\css\autocomplete.css" />
+    <Content Include="Content\css\base.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\button.css" />
+    <Content Include="Content\css\core.css" />
+    <Content Include="Content\css\datepicker.css" />
+    <Content Include="Content\css\dialog.css" />
+    <Content Include="Content\css\draggable.css" />
+    <Content Include="Content\css\menu.css" />
+    <Content Include="Content\css\progressbar.css" />
+    <Content Include="Content\css\resizable.css" />
+    <Content Include="Content\css\selectable.css" />
+    <Content Include="Content\css\selectmenu.css" />
     <Content Include="Content\css\Site.css" />
+    <Content Include="Content\css\slider.css" />
+    <Content Include="Content\css\sortable.css" />
+    <Content Include="Content\css\spinner.css" />
+    <Content Include="Content\css\tabs.css" />
+    <Content Include="Content\css\theme.css" />
+    <Content Include="Content\css\tooltip.css" />
+    <Content Include="Content\images\cal.png" />
+    <Content Include="Content\images\calendar.ico" />
+    <Content Include="Content\js\carpool.js" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\register.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.3.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -192,8 +231,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\CarPoolOpportunity\Index.cshtml" />
+    <Content Include="Views\CarPoolOpportunity\Create.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -208,6 +252,10 @@
     <ProjectReference Include="..\CoMute.Core\CoMute.Core.csproj">
       <Project>{1537b9c6-71ad-46ca-8649-524f1e9c823c}</Project>
       <Name>CoMute.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoMute.DB.Migrations\CoMute.DB.Migrations.csproj">
+      <Project>{95cc4812-c8f1-4020-9655-ba640ab88da0}</Project>
+      <Name>CoMute.DB.Migrations</Name>
     </ProjectReference>
     <ProjectReference Include="..\CoMute.DB\CoMute.DB.csproj">
       <Project>{702bb4fb-367d-4893-9be6-7087019c0805}</Project>

@@ -25,7 +25,13 @@ namespace CoMute.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/bootstrap.css",
+                      "~/Content/css/datepicker.css",
                       "~/Content/css/site.css"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include("~/Scripts/jquery-ui-{version}.js"));
+            bundles.Add(new StyleBundle("~/Content/jqueryui").Include("~/Content/css/all.css"));
+
         }
     }
 }
