@@ -12,7 +12,7 @@
         }
 
         $.post('/api/Authentication', { email: email, password: pswd }, function (data) {            
-            var redirectUrl = '/CarPoolOpportunity/Index';            
+            var redirectUrl = '/CarPoolOpportunity/JoinedCarPoolsOpportunities';
             window.location.href = redirectUrl;
         }).fail(function (data) {
             var $alert = $("#error");

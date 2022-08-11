@@ -5,17 +5,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{702BB4FB-367D-4893-9BE6-7087019C0805}</ProjectGuid>
+    <ProjectGuid>{5ED570F8-B814-4D31-8A33-5113DD17913C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CoMute.DB</RootNamespace>
-    <AssemblyName>CoMute.DB</AssemblyName>
+    <RootNamespace>CoMute.Tests.Common</RootNamespace>
+    <AssemblyName>CoMute.Tests.Common</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +40,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="PeanutButter.RandomGenerators, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PeanutButter.RandomGenerators.3.0.4\lib\net462\PeanutButter.RandomGenerators.dll</HintPath>
+    </Reference>
+    <Reference Include="PeanutButter.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PeanutButter.Utils.3.0.4\lib\net462\PeanutButter.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,17 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoMuteDbContext.cs" />
-    <Compile Include="DbConstants.cs" />
-    <Compile Include="FakeRepository\FakeUsersRepository.cs" />
-    <Compile Include="Mappings\CarPoolOpportunityMap.cs" />
-    <Compile Include="Mappings\JoinCarPoolsOpportunityMap.cs" />
-    <Compile Include="Mappings\UserMap.cs" />
+    <Compile Include="Builders\Domain\CarPoolOpportunityBuilder.cs" />
+    <Compile Include="Helpers\FakeDbSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\CarPoolOpportunityRepository.cs" />
-    <Compile Include="Repository\JoinedCarPoolsOpportunityRepository.cs" />
-    <Compile Include="Repository\UserRepository.cs" />
-    <Compile Include="TempDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoMute.Core\CoMute.Core.csproj">
@@ -70,7 +67,6 @@
       <Name>CoMute.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

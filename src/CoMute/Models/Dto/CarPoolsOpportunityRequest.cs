@@ -29,5 +29,8 @@ namespace CoMute.Web.Models.Dto
         public string Notes { get; set; }
         [Display(Name = "Owner/Leader")]
         public string OwnerOrLeader { get; set; }
+        public bool CanJoin { get; set; }
+        public string UserId { get; set; }
+        public bool HasAvailableSeats { get; set; }
     }
 }

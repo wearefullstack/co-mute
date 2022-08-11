@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CoMute.Web.Models.Dto.JoinCarPoolsOpportunityRequest>
+
+@{
+    ViewBag.Title = "Joined Car Pools Opportunities";
+}
+
+<h2>Joined Car-Pools Opportunities</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DateJoined)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+           Action
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateJoined)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Origin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.ActionLink("Leave", "Leave", new { id = item.CarPoolId })                
+            </td>
+        </tr>
+    }
+
+</table>

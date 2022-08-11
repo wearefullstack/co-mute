@@ -43,7 +43,7 @@
             availableSeats: availableSeats,
             notes: notes
         }, function (data) {
-            var redirectUrl = '/';
+            var redirectUrl = '/CarPoolOpportunity/Index';
             window.location.href = redirectUrl;
         }).fail(function (data) {
             displayError($, 'could not create a pool opportunity.');

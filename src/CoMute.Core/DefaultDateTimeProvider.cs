@@ -4,6 +4,6 @@ namespace CoMute.Core
 {
     public class DefaultDateTimeProvider : IDateTimeProvider
     {
-        public DateTime UtcNow => DateTime.UtcNow;
+        public DateTime UtcNow => DateTime.Now;
     }
 }

@@ -20,4 +20,14 @@ Please make sure to push your branch to GitHub once you are satisfied with your 
 
 Looking forward to hearing from you. When you are done, just mail codetest@fullstack.co.za and let us know your branch name. 
 
+
+# musa's notes
+
+* please run the bootstrap.sql script found under CoMute.DB.Migrations project before running the application
+
+# NOTE
+
+* You can only join car-pools opportunity where seats available are more then 0, if seats available is 0 then you wont see the button to join.
+* if unit tests are not running please install NUnit 3 Test Adapter 
+
  

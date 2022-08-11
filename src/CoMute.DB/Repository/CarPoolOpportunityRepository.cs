@@ -2,9 +2,8 @@
 using CoMute.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoMute.DB.Repository
 {
@@ -17,7 +16,10 @@ namespace CoMute.DB.Repository
         }
         public void DeleteCarPoolOpportunity(CarPoolOpportunity carPoolOpportunity)
         {
-            throw new NotImplementedException();
+            if (carPoolOpportunity == null) throw new ArgumentNullException(nameof(carPoolOpportunity));
+
+            _coMuteDbContext.CarPoolOpportunities.Remove(carPoolOpportunity);
+            _coMuteDbContext.SaveChanges();
         }
 
         public List<CarPoolOpportunity> GetAllCarPools()
@@ -27,7 +29,8 @@ namespace CoMute.DB.Repository
 
         public CarPoolOpportunity GetById(Guid? carPoolOpportunityId)
         {
-            throw new NotImplementedException();
+            if (carPoolOpportunityId == Guid.Empty) throw new ArgumentNullException(nameof(carPoolOpportunityId));
+            return _coMuteDbContext.CarPoolOpportunities.FirstOrDefault(x => x.CarPoolId == carPoolOpportunityId);
         }
 
         public void Save(CarPoolOpportunity carPoolOpportunity)
@@ -40,7 +43,9 @@ namespace CoMute.DB.Repository
 
         public void Update(CarPoolOpportunity carPoolOpportunity)
         {
-            throw new NotImplementedException();
+            if (carPoolOpportunity == null) throw new ArgumentNullException(nameof(carPoolOpportunity));
+            _coMuteDbContext.CarPoolOpportunities.AddOrUpdate(carPoolOpportunity);
+            _coMuteDbContext.SaveChanges();
         }
     }
 }

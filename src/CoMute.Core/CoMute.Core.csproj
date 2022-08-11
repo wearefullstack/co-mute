@@ -49,6 +49,7 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="IDateTimeProvider.cs" />
     <Compile Include="Interfaces\Repositories\ICarPoolOpportunityRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IJoinedCarPoolsOpportunityRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -140,6 +140,7 @@
     <Compile Include="App_Start\Bootstrappers\Installers\EntityFrameworkInstaller.cs" />
     <Compile Include="App_Start\Bootstrappers\Installers\RepositoryInstallers.cs" />
     <Compile Include="App_Start\Bootstrappers\Ioc\AutoMapperProfiles\CarPoolMappings.cs" />
+    <Compile Include="App_Start\Bootstrappers\Ioc\AutoMapperProfiles\JoinCarPoolsOpportunityMappings.cs" />
     <Compile Include="App_Start\Bootstrappers\Ioc\AutoMapperProfiles\UsersMappings.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DependencyScope.cs" />
@@ -238,6 +239,7 @@
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\CarPoolOpportunity\JoinedCarPoolsOpportunities.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,6 +17,11 @@ namespace CoMute.Web.App_Start.Bootstrappers.Installers
             container.Register(Component.For<ICarPoolOpportunityRepository>()
                 .ImplementedBy<CarPoolOpportunityRepository>()
                 .LifestylePerWebRequest());
+
+
+            container.Register(Component.For<IJoinedCarPoolsOpportunityRepository>()
+                .ImplementedBy<JoinedCarPoolsOpportunityRepository>()
+                .LifestylePerWebRequest());
         }
     }
 }

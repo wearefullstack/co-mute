@@ -21,6 +21,6 @@ namespace CoMute.Core.Domain
         public string Notes { get; set; }
         [Required]
         public string OwnerOrLeader { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }        
     }
 }

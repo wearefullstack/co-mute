@@ -62,8 +62,8 @@ namespace CoMute.Web.Controllers.Web
         [HttpPost]
         public async Task<ActionResult> Edit(UserRequest userRequest)
         {      
-            await new HttpHelper<List<CarPoolsOpportunityRequest>>()
-                .PostRestServiceDataAsync("user/update", userRequest);
+            await new HttpHelper<UserRequest>()
+                .PutRestServiceDataAsync("user/update", userRequest);
             
             return RedirectToAction("Profile");
         }
