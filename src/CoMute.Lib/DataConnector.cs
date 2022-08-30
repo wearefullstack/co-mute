@@ -15,7 +15,7 @@ namespace CoMute.Lib
 
     class DataConnector : IDataConnector
     {
-        const string connString = "Data Source=localhost;User Id=root;Password=tp0506r1892;Port=40044;Database=comute; Convert Zero Datetime=true; Use Compression=true; Allow User Variables=True;";
+        const string connString = "Data Source=localhost;User Id=root;Password=;Port=40044;Database=comute; Convert Zero Datetime=true; Use Compression=true; Allow User Variables=True;";
 
         public IDbConnection GetConnection()
         {
