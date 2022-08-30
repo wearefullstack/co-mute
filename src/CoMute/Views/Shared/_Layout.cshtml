@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using CoMute.Lib.Dto
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,6 +8,10 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
+@{
+    var me = Context.Session["me"] as UserDto;
+}
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -20,15 +25,23 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
-                    <li>@Html.ActionLink("Search", "Index", "Search")</li>
+
+                    @if (me == null)
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("My Profile", "MyProfile", "Home")</li>
+                    }
+
+                    @*<li>@Html.ActionLink("Search", "Index", "Search")</li>*@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding-top: 25px">
         @RenderBody()
         <hr />
         <footer class="container">

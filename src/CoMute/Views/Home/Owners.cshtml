@@ -1,0 +1,42 @@
+﻿@model CoMute.Lib.Model.UserPageModel
+
+@{
+}
+
+<div class="row">
+    @if (Model.Owners.Any())
+    {
+        <div class="col-xs-12">
+            <fieldset>
+                <legend>Car Pools Owners</legend>
+
+                @*<p>You already joined the following car pools.</p>*@
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px">#</th>
+                            <th style="width: 200px">Email</th>
+                            <th style="width: 100px">Phone</th>
+                            <th>Owner Full Name</th>
+                            <th style="width: 60px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var it in Model.Owners)
+                        {
+                            <tr>
+                                <td>@it.Sn</td>
+                                <td>@it.Email</td>
+                                <td>@it.Phone</td>
+                                <td>@it.FullName</td>
+                                <td><a href="@Url.Action("OwnedPools", new {id = it.UserId})">Open</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    }
+</div>
+

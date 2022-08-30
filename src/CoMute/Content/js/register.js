@@ -1,4 +1,4 @@
-﻿; (function (root, $) {
+﻿(function (root, $) {
     $('#register').on('submit', function (ev) {
         ev.preventDefault();
 
@@ -13,9 +13,9 @@
         }
 
         var phone = $('#phone').val();
-        if (!phone) {
-            return;
-        }
+        //if (!phone) {
+        //    return;
+        //}
 
         var email = $('#email').val();
         if (!email) {
@@ -28,12 +28,21 @@
         }
 
         var cpswd = $('#confirm-password').val();
-        if (!email) {
+        console.log(name);
+        console.log(surname);
+        console.log(email);
+        console.log(pswd);
+        console.log(cpswd);
+        console.log(pswd != cpswd);
+
+        if (pswd != cpswd) {
             return;
         }
 
-        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
+        var data = { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd };
+        $.post('/api/user', data, function (op) {
             // TODO: Navigate away...
+            window.location.href = "/home/login";
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");
@@ -46,4 +55,12 @@
             }, 3000);
         });
     });
+
+    $('#name').val('Edima');
+    $('#surname').val('Inyang');
+    $('#email').val('wumi.inyang@gmail.com');
+    $('#password').val('abcd1234');
+    $('#confirm-password').val('abcd1234');
+
+
 })(window, jQuery);

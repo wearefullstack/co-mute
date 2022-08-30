@@ -1,0 +1,61 @@
+﻿@model CoMute.Lib.Model.UserPageModel
+
+@{
+    var user = Model.User;
+}
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-xs-12">
+        <fieldset>
+            <legend>Owner Information</legend>
+            <dl class="row">
+                <dt class="col-sm-3">Full Name</dt>
+                <dd class="col-sm-9">@user.FullName</dd>
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@user.Email</dd>
+            </dl>
+        </fieldset>
+    </div>
+</div>
+
+@if (Model.OwnedPools.Any())
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <fieldset>
+                <legend>Car Pools Owned</legend>
+
+                <p>@user.FullName registered the following car pools.</p>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width: 30px">#</th>
+                        <th style="width: 250px">Trip Route</th>
+                        <th style="width: 120px">Duration</th>
+                        <th>Available Days</th>
+                        <th style="width: 120px">Available Seats</th>
+                        <th style="width: 100px">Date Joined</th>
+                        <th style="width: 40px"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var pool in Model.OwnedPools)
+                    {
+                        <tr>
+                            <td>@pool.Sn</td>
+                            <td>@pool.Route</td>
+                            <td>@pool.Duration</td>
+                            <td>@string.Join(", ", pool.AvailableDays)</td>
+                            <td>@pool.AvailableSeats seats</td>
+                            <td>@pool.CreatedDate</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+            </fieldset>
+        </div>
+    </div>
+}
+

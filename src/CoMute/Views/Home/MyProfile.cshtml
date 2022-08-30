@@ -1,0 +1,43 @@
+﻿@model CoMute.Lib.Model.UserPageModel
+
+@{
+    var user = Model.User;
+}
+
+<form method="post" action="@Url.Action("MyProfilePost")">
+    <h2>Profile</h2>
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="First name" required autofocus value="@user.Name">
+    </div>
+
+    <div class="form-group">
+        <label for="surname">Surname</label>
+        <input type="text" id="surname" name="surname" class="form-control" placeholder="Surname" required value="@user.Surname">
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone number" value="@user.Phone">
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required value="@user.Email">
+    </div>
+
+    @*<div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" class="form-control" placeholder="Confirm password">
+        </div>*@
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="sign-in">Update Profile</button>
+    </div>
+</form>

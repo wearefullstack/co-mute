@@ -1,0 +1,70 @@
+﻿
+@model CoMute.Lib.Dto.PoolDto
+@{
+    ViewBag.Title = "Register";
+
+    var errorMessage = TempData.ContainsKey("Error") ? TempData["Error"].ToString() : null;
+}
+
+<form id="register" method="post">
+    <h2>Register</h2>
+
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+
+    @if (errorMessage != null)
+    {
+        <div class="row row-margin">
+            <div class="col-md-4 col-md-offset-4 alert alert-danger">
+                <p>@errorMessage</p>
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <label for="departtime">Departure Time</label>
+        <input type="text" id="departtime" name="departtime" class="form-control" placeholder="HH:mm" maxlength="5" required autofocus value="@Model.DepartTime">
+    </div>
+
+    <div class="form-group">
+        <label for="arrivetime">Expected ArrivalTime</label>
+        <input type="text" id="arrivetime" name="arrivetime" class="form-control" placeholder="HH:mm" maxlength="5" required value="@Model.ArriveTime">
+    </div>
+
+    <div class="form-group">
+        <label for="origin">Origin</label>
+        <input type="text" id="origin" name="origin" class="form-control" placeholder="Point of Departure" required value="@Model.Origin">
+    </div>
+
+    <div class="form-group">
+        <label for="destination">Destination</label>
+        <input type="text" id="destination" name="destination" class="form-control" placeholder="Point of Arrival" required value="@Model.Destination">
+    </div>
+
+    <div class="checkbox">
+        <label><input type="checkbox" name="availabledays" value="Monday">Monday</label>
+        <label><input type="checkbox" name="availabledays" value="Tuesday">Tuesday</label>
+        <label><input type="checkbox" name="availabledays" value="Wednesday">Wednesday</label>
+        <label><input type="checkbox" name="availabledays" value="Thursday">Thursday</label>
+        <label><input type="checkbox" name="availabledays" value="Friday">Friday</label>
+        <label><input type="checkbox" name="availabledays" value="Saturday">Saturday</label>
+        <label><input type="checkbox" name="availabledays" value="Sunday">Sunday</label>
+    </div>
+
+    <div class="form-group">
+        <label for="availableseats">Available Seats</label>
+        <input type="number" min="1" max="20" id="availableseats" name="availableseats" class="form-control" placeholder="Available Seats" required value="@Model.AvailableSeats">
+    </div>
+
+    <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" class="form-control">@Model.Notes</textarea>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="sign-in">Register</button>
+    </div>
+</form>

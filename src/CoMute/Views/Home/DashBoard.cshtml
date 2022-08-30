@@ -1,0 +1,124 @@
+﻿@model CoMute.Lib.Model.UserPageModel
+
+@{
+    var user = Model.User;
+    var errorMessage = TempData.ContainsKey("Error") ? TempData["Error"].ToString() : null;
+}
+
+@if (errorMessage != null)
+{
+    <div class="row row-margin">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p>@errorMessage</p>
+        </div>
+    </div>
+}
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-xs-12">
+        <fieldset>
+            <legend>Basic Information</legend>
+            <dl class="row">
+                <dt class="col-sm-3">Full Name</dt>
+                <dd class="col-sm-9">@user.FullName</dd>
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@user.Email</dd>
+                <dt class="col-sm-3">&nbsp;</dt>
+                <dd class="col-sm-9"><a href="@Url.Action("MyProfile")">Edit Profile</a></dd>
+            </dl>
+        </fieldset>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <ul>
+            <li><a href="@Url.Action("RegisterCarPool")">Register New Car Pool</a></li>
+            <li><a href="@Url.Action("OwnedPools")">Car Pools Registered By You</a></li>
+            <li><a href="@Url.Action("Owners")">All Car Pools Owners</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    @if (Model.JoinedPools.Any())
+    {
+        <div class="col-xs-12">
+            <fieldset>
+                <legend>Car Pools You Joined</legend>
+
+                <p>You already joined the following car pools.</p>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px">#</th>
+                            <th style="width: 250px">Trip Route</th>
+                            <th style="width: 120px">Duration</th>
+                            <th>Available Days</th>
+                            <th style="width: 120px">Available Seats</th>
+                            <th style="width: 100px">Date Joined</th>
+                            <th style="width: 40px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var it in Model.JoinedPools)
+                        {
+                            var pool = it.Pool;
+
+                            <tr>
+                                <td>@pool.Sn</td>
+                                <td>@pool.Route</td>
+                                <td>@pool.Duration</td>
+                                <td>@string.Join(", ", pool.AvailableDays)</td>
+                                <td>@pool.AvailableSeats seats</td>
+                                <td>@it.JoinedDate</td>
+                                <td><a href="@Url.Action("LeaveCarPool", new {id = pool.PoolId})">Leave</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    }
+</div>
+
+<div class="row">
+    @if (Model.OtherPools.Any())
+    {
+        <div class="col-xs-12">
+            <fieldset>
+                <legend>Other Car Pools</legend>
+
+                <p>You can join any of the following car pools.</p>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px">#</th>
+                            <th style="width: 250px">Trip Route</th>
+                            <th style="width: 120px">Duration</th>
+                            <th>Available Days</th>
+                            <th style="width: 120px">Available Seats</th>
+                            <th style="width: 40px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pool in Model.OtherPools)
+                        {
+                            <tr>
+                                <td>@pool.Sn</td>
+                                <td>@pool.Route</td>
+                                <td>@pool.Duration</td>
+                                <td>@string.Join(", ", pool.AvailableDays)</td>
+                                <td>@pool.AvailableSeats seats</td>
+                                <td><a href="@Url.Action("JoinCarPool", new {id = pool.PoolId})">Join</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    }
+</div>
+
