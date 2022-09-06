@@ -37,6 +37,10 @@ Update-Package -reinstall
 
 
 
+RAN OUT OF TIME
+MISSING items - accept/decline user request to join car pool ticket,
+Serious Frontend work(style and react functionailty)
+Global error management for API
 
 
 
