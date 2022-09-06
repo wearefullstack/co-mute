@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "983844ca-7455-41bf-a259-c2802516eac0",
+		"name": "Co-Mute",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CarPoolTicket Queries",
+			"item": [
+				{
+					"name": "FindCarPoolTickets",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0QG1haWwuY29tIiwiZXhwIjoxNjYyNDA0NDQ5fQ.f3BQ49UN1IdmZ31IMLZ3GZx5ImtRP54s1jfxEU6GbNfFu01ml0Kq0tpFJX-JgLaOqcMowdIrLIp7UKx3naoQ2w",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"searchText\": \"f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/FindCarPoolTickets/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"FindCarPoolTickets",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCarPoolTicket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJUb255S2F5QG1haWwuY29tIiwiZXhwIjoxNjYyMzYzNjQ5fQ.yOXMFgD9QlikZ5xuDvMGSlmRVsrN1YcuONGGOkOenwXVl5Yh7885kNSBiBaxntCFzIqyDQvdsNROYExaXcaCaQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Origin\": \"yy\",\r\n    \"Destination\": \"x \",\r\n    \"DepartureTime\": \"2023-10-01T09:00\",\r\n    \"ExpectedArrivalTime\": \"2023-10-01T09:30\",\r\n    \"AvailableSeats\": 2,\r\n    \"Notes\": \"cccc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/CreateCarPoolTicket/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"CreateCarPoolTicket",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JoinCarPoolTicket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJUb255S2F5QG1haWwuY29tIiwiZXhwIjoxNjYyMzYzNjQ5fQ.yOXMFgD9QlikZ5xuDvMGSlmRVsrN1YcuONGGOkOenwXVl5Yh7885kNSBiBaxntCFzIqyDQvdsNROYExaXcaCaQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"OwnerId\": 1016,\r\n    \"PassengerNote\": \"aaaa\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/JoinCarPoolTicket/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"JoinCarPoolTicket",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CancelJoinCarPoolTicket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJUb255S2F5QG1haWwuY29tIiwiZXhwIjoxNjYyMzYzNjQ5fQ.yOXMFgD9QlikZ5xuDvMGSlmRVsrN1YcuONGGOkOenwXVl5Yh7885kNSBiBaxntCFzIqyDQvdsNROYExaXcaCaQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"OwnerId\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/CancelJoinCarPoolTicket/12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"CancelJoinCarPoolTicket",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCarPoolTicketDetailsById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJyYXlvQG1haWwuY29tIiwiZXhwIjoxNjYyMjk4NDk4fQ.Ft-On4MA7sdteAnzB9IjljYCWs2mg2LRtd_tQEGAcA7yl3I_362bFhvdfipnkAYVKo0FRndem79nRh9L1OEn6A",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/GetCarPoolTicketDetailsById/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"GetCarPoolTicketDetailsById",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CancelCreatedCarPoolTicketID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0QG1haWwuY29tIiwiZXhwIjoxNjYyNDA0NDQ5fQ.f3BQ49UN1IdmZ31IMLZ3GZx5ImtRP54s1jfxEU6GbNfFu01ml0Kq0tpFJX-JgLaOqcMowdIrLIp7UKx3naoQ2w",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserId\" : 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/CancelCreatedCarPoolTicketID/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"CancelCreatedCarPoolTicketID",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCarPoolTicketDetails",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0QG1haWwuY29tIiwiZXhwIjoxNjYyNDA0NDQ5fQ.f3BQ49UN1IdmZ31IMLZ3GZx5ImtRP54s1jfxEU6GbNfFu01ml0Kq0tpFJX-JgLaOqcMowdIrLIp7UKx3naoQ2w",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Origin\": \"bbbbbbbb\",\r\n    \"Destination\": \"xxxxxxxxxx\",\r\n    \"ExpectedArrivalTime\": \"2024-10-01T09:00\",\r\n    \"DepartureTime\": \"2024-10-01T09:00\",\r\n    \"AvailableSeats\": 9000,\r\n    \"Notes\": \"weeeeeee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/UpdateCarPoolTicketDetails/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"UpdateCarPoolTicketDetails",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRegisteredCarPoolTicketsByUserId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer yJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0QG1haWwuY29tIiwiZXhwIjoxNjYyNDM2MTUzfQ.0aWbVfJAc3bY21K-1evJAaAgSR2GbY3rFvCsmRvhfjHPP8sSo2Tf4RdGt7iLe92A_uYB-f-l3-WxtFV3I2HbTA",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/GetRegisteredCarPoolTicketsByUserId/30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"GetRegisteredCarPoolTicketsByUserId",
+								"30"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Queries",
+			"item": [
+				{
+					"name": "LoginUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"test@mail.com\",\r\n    \"Password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/User/LoginUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"User",
+								"LoginUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterNewUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Tony\",\r\n    \"Surname\": \"Kay\",\r\n    \"Email\": \"rayo@mail.com\",\r\n    \"Phone\": \"00000000\",\r\n    \"Password\": \"ray47o\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/CarPoolTickets/GetAllCarPoolTickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"CarPoolTickets",
+								"GetAllCarPoolTickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUserDetails",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJyYXlvQG1haWwuY29tIiwiZXhwIjoxNjYyMzUyOTMxfQ._2Zm1sK46JQW8j7youPfySDdH1JqgaO232xEJfzK5N-hFuWRDNkURQaux0d5fkxahoMJDJE402j4ZJ84aHG3fg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tony\",\r\n    \"surname\": \"Kay\",\r\n    \"email\": \"TonyKay@mail.com\",\r\n    \"phone\": \"0625883143\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5196/api/User/UpdateUserDetails/19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5196",
+							"path": [
+								"api",
+								"User",
+								"UpdateUserDetails",
+								"19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

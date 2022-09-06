@@ -1,0 +1,114 @@
+.CommuteContainer
+{
+    flex:1;
+    display:flex;
+    padding: 1em;
+    flex-direction: column;
+
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+    }
+    
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(127, 219, 157, 0.445);
+        border-radius: 10px;
+    }
+
+    .SectionCard{
+        padding:1em;
+        overflow-y: auto;
+
+        max-height: 36vh;
+        min-height: 32vh;
+        background-color: rgba(64, 73, 73, 0.158);
+        border-radius: 15px;
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+        gap: 4%;
+
+
+  
+    }
+}
+
+.Ticket{
+    border-radius: 15px;
+    display: grid;
+    height: 60%;
+    background-color: rgba(0, 0, 0, 0.075);
+    padding:1.5em;
+    margin-left: 1%;
+
+
+    button{
+        border-radius: 25px;
+        border: none;
+        background-color:rgba(127, 219, 157, 0.445);
+        width:35%;
+        font-weight: 600;
+        justify-self: center;
+    }
+
+    .ItemSpace{
+        display:flex;
+        justify-content: space-between;
+    }
+}
+
+.TicketDetail
+{
+
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    background-color: rgba(0, 0, 0, 0.075);
+    border-radius: 10px;
+    padding: .5em;
+
+    .statuslabel{
+        color: rgba(127, 219, 158, 0.747);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    }
+
+    .label{
+        color: rgb(127, 219, 158);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .textBox{
+        border: none;
+        border-bottom: 1px solid rgba(29, 28, 28, 0.747);
+        border-radius: 2px;
+        padding-left: 10px;
+        margin-top: 1%;
+
+    }
+    .textArea{
+        border: none;
+        border-bottom: 1px solid rgba(29, 28, 28, 0.747);
+        border-radius: 2px;
+        padding-left: 10px;
+        height: 5em;
+
+    }
+
+    button{
+        border-radius: 25px;
+        border: none;
+        background-color:rgba(127, 219, 157, 0.445);
+        width: 75%;
+        font-weight: 600;
+        justify-self: center;
+    }
+
+    p{
+        font-family: 'Courier New', Courier, monospace;
+    }
+}

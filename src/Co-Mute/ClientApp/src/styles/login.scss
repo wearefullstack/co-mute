@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding:0;
+}
+
+.Page{
+    height: 100vh;
+    display: flex;
+    background-color: rgb(48, 78, 138);
+    justify-content: center;
+    background-image: url('https://cdn.wallpapersafari.com/0/15/uOB5kJ.jpg');
+    background-size: cover;
+
+    .Card{
+        max-width: 50%;
+        flex:1;
+        
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+
+        
+        
+        .Header{
+            font-weight: bolder;
+            font-style: oblique;
+            
+
+        }
+
+        .TextBox{
+            height:2em;
+            border-style: none;
+            border-radius: 10px;
+            padding-left: 10px;
+            background-color: rgb(133, 175, 236);
+        }
+
+        .Link{
+            color:rgba(255, 63, 4, 0.911);
+            font-weight: 400;
+        }
+        .Label{
+            margin-top: 1em;;
+            font-weight: 900;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+            color: rgb(50, 65, 62);
+        }
+        .Password{
+            display: flex;
+            justify-content: space-between;
+            .paswordInput{
+                height:2em;
+                width: 70%;
+                border-style: none;
+                border-radius: 10px;
+                padding-left: 10px;
+                background-color: rgb(133, 175, 236);
+            }
+            .pwdShow{
+                border: none;
+                background-color: rgb(127, 187, 255);
+                color: rgb(158, 255, 158);
+            }
+        }
+
+        .Button{
+            border-radius: 25px;
+            border: none;
+            width: 25%;
+            padding:2px;
+            
+        }
+    }
+}

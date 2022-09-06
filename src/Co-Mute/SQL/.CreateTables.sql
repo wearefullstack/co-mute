@@ -1,0 +1,51 @@
+﻿USE [Co-mute] ---UPDATE before submission
+
+IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Users')
+BEGIN
+	CREATE TABLE Users(
+		UserId INT IDENTITY(1, 1) PRIMARY KEY,
+		Name VARCHAR(50) NOT NULL,
+		Surname VARCHAR(50) NOT NULL,
+		Phone VARCHAR(10),
+		Email VARCHAR(50) NOT NULL,
+		Password VARCHAR(MAX) NOT NULL
+	)
+END
+
+
+IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Owners')
+BEGIN
+	CREATE TABLE Owners(
+		OwnerId INT FOREIGN KEY REFERENCES Users(UserId),
+		Name VARCHAR(50) NOT NULL
+	)
+END
+
+IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CarPoolTickets')
+BEGIN
+	CREATE TABLE CarPoolTickets(
+		CarPoolTicketId INT IDENTITY(0,1) PRIMARY KEY,
+		OwnerId INT NOT NULL,
+        Origin VARCHAR(50) NOT NULL,
+        Destination VARCHAR(50) NOT NULL,
+		CreationDate DATETIME NOT NULL,
+        DepartureTime DATETIME NOT NULL,
+        ExpectedArrivalTime DATETIME NOT NULL,
+        AvailableSeats INT NOT NULL,
+        DaysAvailable INT,
+        Notes VARCHAR(500)
+	)
+END
+
+
+IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CarPoolTicketAllocation')
+BEGIN
+	CREATE TABLE CarPoolTicketAllocation(
+		CarPoolTicketAllocationId INT IDENTITY (1, 1) PRIMARY KEY NOT NULL,
+		CarPoolTicketId INT FOREIGN KEY REFERENCES CarPoolTickets(CarPoolTicketId),
+		CarPoolTicketPassengerID INT NOT NULL,
+		DepartureTime DATETIME,
+		ExpectedArrivalTime DATETIME,
+		PassengerNote VARCHAR(500)
+	)
+END

@@ -1,0 +1,34 @@
+.CreateComtainer
+{
+    flex:1;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    .content
+    {        
+        display: grid;
+        width: 50%;
+
+        .textBox{
+            border: none;
+            border-bottom: 1px solid rgba(29, 28, 28, 0.747);
+            border-radius: 2px;
+            padding-left: 10px;
+            height: 20px;
+        }
+
+        button{
+            
+            border-radius: 25px;
+            border: none;
+            background-color:rgba(127, 219, 157, 0.445);
+            width: 75%;
+            height: 40px;
+            font-weight: 600;
+            font-size: larger;
+            justify-self: center;
+            
+        }
+    }
+}
