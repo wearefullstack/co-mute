@@ -1,7 +1,6 @@
-import { stringify } from 'ajv';
 import React, { useState } from 'react'
 
-function JoinCarPoolTicket({data}) {
+function JoinCarPoolTicket({data, Action}) {
 
   const query = "http://localhost:5196/api/CarPoolTickets/JoinCarPoolTicket/"+data.id;
   const token = JSON.parse(localStorage.getItem('token'));  
@@ -13,7 +12,7 @@ function JoinCarPoolTicket({data}) {
     setSartApply(!startApply);
   }
 
-  const doTicketApplication = async () =>{
+  const doTicketApplication = async (id) =>{
     try{
       const response = await fetch(query, {
         method: 'POST',
@@ -29,7 +28,7 @@ function JoinCarPoolTicket({data}) {
         let data = await response.json();
         throw new Error(data)
       }
-
+      Action(id);
     }
     catch(err)
     {
@@ -44,8 +43,9 @@ function JoinCarPoolTicket({data}) {
 
   return (
 
-        <div className='Ticket'>
-            <h4>{data.fullName}</h4><label>{data.status}</label>
+        <div className='TicketDetail'>
+            <h4>{data.fullName}</h4><label className=''>{data.status}</label>
+            
             <p>Start Time: {data.departureTime}</p> <p>Expected Arrival Time: {data.expectedArrivalTime}</p>
             <p>From: {data.origin}</p> <p>To: {data.destination}</p>
             <p>Seats Available: {data.availableSeats}</p> <p>Days Available: {data.daysAvailable}</p>

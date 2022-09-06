@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Passenger from './Passenger';
 import '../../styles/myCommutes.scss'
 
-function CarPoolTicketDetails({CarPoolTicketDetails}) {
+function CarPoolTicketDetails({data}) {
     const [isEdit, setIsEdit] = useState(false);
     const [editDetails, setEditDetails] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [status, setStatus] = useState(CarPoolTicketDetails.status)
+    const [status, setStatus] = useState(data.status)
     const [err, seterr] = useState('');
     
     const deletelink = "http://localhost:5196/api/CarPoolTickets/CancelCreatedCarPoolTicketID/" + CarPoolTicketDetails.cid;
@@ -14,7 +14,7 @@ function CarPoolTicketDetails({CarPoolTicketDetails}) {
     const token = localStorage.getItem('token');
     
     useEffect(() => {
-      setEditDetails(CarPoolTicketDetails);
+      setEditDetails(data);
     }, [])
     
 
@@ -93,31 +93,31 @@ function CarPoolTicketDetails({CarPoolTicketDetails}) {
     <div>
         {isLoading && <h2>loading</h2>}
         {
-          CarPoolTicketDetails &&
+          data &&
           
         <div className='TicketDetail'>
         <button onClick={CancelTicket}>Cancel this ticket</button>
         <button onClick={setEdit}>{isEdit? "cancel edit" : "Update Details"}</button>
         <label className='statuslabel'>{status}</label>
-        <label className='label'>{CarPoolTicketDetails.creationDate}</label>
-        <br/>
+        <label className='label'>{data.creationDate}</label>
+        
         <label>From</label>
-        <input className='textBox' type="text" name="origin" onChange={handleinputChange} defaultValue={CarPoolTicketDetails.origin} readOnly={!isEdit}/>
+        <input className='textBox' type="text" name="origin" onChange={handleinputChange} defaultValue={data.origin} readOnly={!isEdit}/>
 
         <label>To</label>
-        <input className='textBox' type="text" name="destination" onChange={handleinputChange} defaultValue={CarPoolTicketDetails.destination} readOnly={!isEdit}/>
+        <input className='textBox' type="text" name="destination" onChange={handleinputChange} defaultValue={data.destination} readOnly={!isEdit}/>
 
         <label>Start Time</label>
-        <input className='textBox' type="text" name="departureTime" onChange={handleinputChange} defaultValue={CarPoolTicketDetails.departureTime} readOnly={!isEdit}/>
+        <input className='textBox' type="text" name="departureTime" onChange={handleinputChange} defaultValue={data.departureTime} readOnly={!isEdit}/>
 
         <label>End time</label>
-        <input className='textBox' type="text" name="expectedArrivalTime" onChange={handleinputChange} defaultValue={CarPoolTicketDetails.expectedArrivalTime} readOnly={!isEdit}/>
+        <input className='textBox' type="text" name="expectedArrivalTime" onChange={handleinputChange} defaultValue={data.expectedArrivalTime} readOnly={!isEdit}/>
 
         <label>SeatsAvailable</label>
-        <input className='textBox' type="text" name="availableSeats" onChange={handleinputChange} defaultValue={CarPoolTicketDetails.availableSeats} readOnly={!isEdit}/>
+        <input className='textBox' type="text" name="availableSeats" onChange={handleinputChange} defaultValue={data.availableSeats} readOnly={!isEdit}/>
 
         <label>Note</label>
-        <textarea className='textArea'  name="notes" onChange={handleinputChange} defaultValue={CarPoolTicketDetails.notes} readOnly={!isEdit}/>
+        <textarea className='textArea'  name="notes" onChange={handleinputChange} defaultValue={data.notes} readOnly={!isEdit}/>
         <div>
         {
           isEdit ?
@@ -126,8 +126,8 @@ function CarPoolTicketDetails({CarPoolTicketDetails}) {
         }
           <h4>List of passengers</h4>
         {
-             CarPoolTicketDetails.passengers.length > 0  ?
-                 CarPoolTicketDetails.passengers.map((passengerItem) => <Passenger data={passengerItem}/>):
+             data.passengers.length > 0  ?
+                 data.passengers.map((passengerItem) => <Passenger data={passengerItem}/>):
                  <p>no passengers yet</p>
              
         }

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import "../../styles/createTicket.scss"
 import {StyledPageHeader} from '../Styled/Page.styled';
+import {useNavigate} from 'react-router-dom';
 
 function Profile() {
     const [profileDto, setProfileDto] = useState({});  
     const [passwordShown, setPasswordShown] = useState(false);
     const [edit, setEdit] = useState(true);
+    const navigate = useNavigate();
 
     const query = "http://localhost:5196/api/User/UpdateUserDetails/" + localStorage.getItem('id');
     const token = JSON.parse(localStorage.getItem('token'));
 
     const handleinputChange = e => {
         setProfileDto({...profileDto, [e.target.name]: e.target.value});
-        console.log(profileDto);
+        
     }
 
     const togglePassword = () => {setPasswordShown(!passwordShown)};
@@ -35,7 +37,8 @@ function Profile() {
           let data = await response.json();
           throw new Error(data)
         }
-  
+        setProfileDto({});
+        navigate("/");
       }
       catch(err)
       {

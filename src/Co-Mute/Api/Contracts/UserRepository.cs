@@ -85,12 +85,12 @@ namespace Co_Mute.Api.Contracts
 
             string sProcedureName = "RegisterNewUser";
             var oParameters = new DynamicParameters();
-            oParameters.Add("Name", oCreateUser.Name, DbType.String);
-            oParameters.Add("Surname", oCreateUser.Surname, DbType.String);
-            oParameters.Add("Email", oCreateUser.Email, DbType.String);
-            oParameters.Add("Phone", oCreateUser.Phone, DbType.String);
-            oParameters.Add("Password", passwordHash, DbType.Binary);
-            oParameters.Add("Salt", passwordSalt, DbType.Binary);
+            oParameters.Add("@Name", oCreateUser.Name, DbType.String);
+            oParameters.Add("@Surname", oCreateUser.Surname, DbType.String);
+            oParameters.Add("@Email", oCreateUser.Email, DbType.String);
+            oParameters.Add("@Phone", oCreateUser.Phone, DbType.String);
+            oParameters.Add("@Password", passwordHash, DbType.Binary);
+            oParameters.Add("@Salt", passwordSalt, DbType.Binary);
 
             using (var sConnection = _oSqlConnectionContext.CreateConnection())
             {

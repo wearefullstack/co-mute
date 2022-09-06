@@ -25,7 +25,7 @@ function MyCo_Mutes() {
         'Accept': 'application/json',
         'Authorization': JSON.parse(token)
        }
-    }).then(res => {return res.json()}).then(data => setMyCommutes(data)); 
+    }).then(res => {return res.json()}).then(data => { setMyCommutes(data)}); 
 
     fetch(registeredlinks , {
       method: 'GET',
@@ -47,7 +47,22 @@ function MyCo_Mutes() {
   return (
     <div className="CommuteContainer">
         <StyledPageHeader text="My Co-Mutes" />
-          <section className="SectionCard">
+        <section className="SectionCard">
+          {
+       
+            myCommutes === [] || myCommutes === null ?
+            <p>none</p> :
+              myCommutes.map(ticket => {
+                
+              return <CarPoolTicketDetails key={ticket.cid} data={ticket}/>})
+  
+          }
+          
+        </section>
+         
+          <br/>
+        <StyledPageHeader text="Registered Co-Mutes" />
+        <section className="SectionCard">
             {
               registeredCommutes === [] ?
               <p>load</p>:
@@ -56,20 +71,6 @@ function MyCo_Mutes() {
               return <CarPoolTicket key={regticket.id} data={regticket} Action={() => removeRegisterItem(regticket.id)}/>})
             }
           </section>
-          <br/>
-        <StyledPageHeader text="Registered Co-Mutes" />
-        <section className="SectionCard">
-          {
-            myCommutes === [] ?
-            <p>load</p> :
-              myCommutes.map(ticket => {
-                
-              return <CarPoolTicketDetails key={ticket.cid} CarPoolTicketDetails={ticket}/>})
-             
-              
-          }
-          
-        </section>
     </div>
   )
 }

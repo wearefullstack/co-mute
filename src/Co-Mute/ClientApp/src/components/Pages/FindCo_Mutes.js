@@ -46,6 +46,13 @@ function FindCo_Mutes() {
       }
   }
 
+  const removeSearchItem = (id) =>
+  {
+    const newArr = carPoolTickets.filter(o => {
+      return o.id !== id 
+    })
+   setCarPoolTickets(newArr)
+  }
   return (
     <>
       <StyledPageHeader text="FindCo_Mutes"/> 
@@ -60,7 +67,7 @@ function FindCo_Mutes() {
         </div>
         <div className="FindContainer">
         {
-          carPoolTickets.map(ticket => <JoinCarPoolTicket key={ticket.id} data={ticket}/>)
+          carPoolTickets.map(ticket => <JoinCarPoolTicket key={ticket.id} data={ticket} Action={() => removeSearchItem(ticket.id)}/>)
         }
         </div>
     </>
