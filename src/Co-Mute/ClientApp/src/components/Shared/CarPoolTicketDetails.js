@@ -9,8 +9,8 @@ function CarPoolTicketDetails({data}) {
     const [status, setStatus] = useState(data.status)
     const [err, seterr] = useState('');
     
-    const deletelink = "http://localhost:5196/api/CarPoolTickets/CancelCreatedCarPoolTicketID/" + CarPoolTicketDetails.cid;
-    const updatelink = "http://localhost:5196/api/CarPoolTickets/UpdateCarPoolTicketDetails/" + CarPoolTicketDetails.cid;
+    const deletelink = "http://localhost:5196/api/CarPoolTickets/CancelCreatedCarPoolTicketID/" + data.cid;
+    const updatelink = "http://localhost:5196/api/CarPoolTickets/UpdateCarPoolTicketDetails/" + data.cid;
     const token = localStorage.getItem('token');
     
     useEffect(() => {
