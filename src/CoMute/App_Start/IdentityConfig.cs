@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
-namespace CoMute.Web.App_Start
+namespace CoMute.Web
 {
     public class ApplicationUserManager : UserManager<User>
     {

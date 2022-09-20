@@ -11,9 +11,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 
-namespace CoMute
+namespace CoMute.Web
 {
-	public class Startup
+	public partial class Startup
 	{
 	    public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
