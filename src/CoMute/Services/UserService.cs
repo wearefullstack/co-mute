@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -21,6 +22,30 @@ namespace CoMute.Web.Services
             _coMuteDbContext = new CoMuteDbContext();
         }
 
+        public Profile GetUserProfileByEmail(string email)
+        {
+            var user = _coMuteDbContext.Users.Where(x => x.UserName == email).FirstOrDefault();
+            return new Profile
+            {
+                EmailAddress = user.Email,
+                Name = user.Name,
+                PhoneNumber = user.PhoneNumber,
+                Surname = user.Surname,
+                UserId = user.Id
+            };
+        }
+
+        public async Task UpdateUserProfile(Profile profile)
+        {
+            var user = _coMuteDbContext.Users.Where(x => x.Id == profile.UserId).FirstOrDefault();
+            user.PhoneNumber = profile.PhoneNumber;
+            user.Surname = profile.Surname;
+            user.Name = profile.Name;
+            user.Email = profile.EmailAddress;
+            _coMuteDbContext.Entry(user).State = EntityState.Modified;
+            await _coMuteDbContext.SaveChangesAsync();
+        }
+
         public async Task<bool> RegisterNewUser(RegistrationRequest request)
         {
             try
@@ -38,8 +63,8 @@ namespace CoMute.Web.Services
                 return true;
             }
             catch { return false; }
-            
-          
+
+
         }
 
         #region Private Methods

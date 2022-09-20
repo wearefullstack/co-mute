@@ -6,3 +6,9 @@
      if(!localStorage.getItem('access_token')) window.location.replace('/home/login');
 
 });
+
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization':`Bearer ${localStorage.getItem('access_token')}`,
+    'Accept': 'application/json'
+}

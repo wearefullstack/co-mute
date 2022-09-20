@@ -210,6 +210,7 @@
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\Web\CarPoolController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
+    <Compile Include="Controllers\Web\ProfileController.cs" />
     <Compile Include="Data\CoMuteDbContext.cs" />
     <Compile Include="Data\Entities\CarPool.cs" />
     <Compile Include="Data\Entities\UserCarPool.cs" />
@@ -219,6 +220,7 @@
     </Compile>
     <Compile Include="Models\Dto\CreateCarPoolRequest.cs" />
     <Compile Include="Models\Dto\LoginRequest.cs" />
+    <Compile Include="Models\Dto\Profile.cs" />
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -234,6 +236,7 @@
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\main.js" />
+    <Content Include="Content\js\profile.js" />
     <Content Include="Content\js\register.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -269,6 +272,7 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\CarPool\Create.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
