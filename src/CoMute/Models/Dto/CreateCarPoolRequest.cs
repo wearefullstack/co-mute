@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace CoMute.Web.Data.Entities
+namespace CoMute.Web.Models.Dto
 {
-    public class CarPool
+    public class CreateCarPoolRequest
     {
-        [Key]
-        public int Id { get; set; }
         public DateTime DepartureTime { get; set; }
         public DateTime ExpectA_Time { get; set; }
         public string Origin { get; set; }

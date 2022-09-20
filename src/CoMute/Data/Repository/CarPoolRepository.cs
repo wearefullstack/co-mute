@@ -14,10 +14,18 @@ namespace CoMute.Web.Data.Repository
         {
             _coMuteDbContext = new CoMuteDbContext(); 
         }
+
         public async Task AddCarPool(CarPool model)
         {
             _coMuteDbContext.CarPools.Add(model);
             await _coMuteDbContext.SaveChangesAsync();
         }
+        
+        public async Task JoinCarPool(int carPoolId, string userId)
+        {
+            _coMuteDbContext.UserCarPool.Add(new UserCarPool { CarPoolId=carPoolId, UserId=userId});
+            await _coMuteDbContext.SaveChangesAsync();
+        }
+
     }
 }
