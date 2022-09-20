@@ -16,6 +16,11 @@ namespace CoMute.Web.Data
 
          public virtual DbSet<CarPool>  CarPools { get; set; }
          public virtual DbSet<UserCarPool> UserCarPool { get; set; }
+
+        public static CoMuteDbContext Create()
+        {
+            return new CoMuteDbContext();
+        }
     }
 
 
