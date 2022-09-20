@@ -17,6 +17,11 @@ namespace CoMute.Web.Controllers.Web
         {
             return View();
         }
+        
+        public ActionResult Login()
+        {
+            return View();
+        }
 
         public ActionResult Register()
         {

@@ -11,7 +11,7 @@ namespace CoMute.Web.Data.Entities
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Product")]
+        [ForeignKey("CarPool")]
         public int CarPoolId { get; set; }
         public string UserId { get; set; }
         public CarPool CarPool { get; set; }

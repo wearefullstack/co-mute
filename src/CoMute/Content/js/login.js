@@ -12,7 +12,8 @@
         }
 
         $.post('/api/Authentication', { email: email, password: pswd }, function (data) {
-            // TODO: Navigate away...
+            localStorage.setItem('access_token', data.token);
+            window.location.replace('/');
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");
