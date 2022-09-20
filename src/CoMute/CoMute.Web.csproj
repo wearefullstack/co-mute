@@ -147,6 +147,8 @@
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
     <Compile Include="Data\CoMuteDbContext.cs" />
+    <Compile Include="Data\Entities\CarPool.cs" />
+    <Compile Include="Data\Repository\CarPoolRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -154,8 +156,8 @@
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CarPoolService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap.css" />
@@ -197,7 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\Entities\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,27 +1,33 @@
 ﻿using CoMute.Web.Models;
 using CoMute.Web.Models.Dto;
+using CoMute.Web.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CoMute.Web.Controllers.API
 {
     public class UserController : ApiController
     {
-        [Route("user/add")]
-        public HttpResponseMessage Post(RegistrationRequest registrationRequest)
-        {
-            var user = new User()
-            {
-                Name = registrationRequest.Name,
-                Surname = registrationRequest.Surname,
-                Email = registrationRequest.EmailAddress
-            };
+        private readonly UserService _userService;
 
-            return Request.CreateResponse(HttpStatusCode.Created, user);
+        public UserController()
+        {
+            _userService = new UserService();
+        }
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> Post(RegistrationRequest request)
+        {
+            var registerUser = await _userService.RegisterNewUser(request);
+
+            if (registerUser)
+                return Request.CreateResponse(HttpStatusCode.Created, new User { Name = request.Name, Surname = request.Surname, Email= request.EmailAddress  });
+            else return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
     }
 }
