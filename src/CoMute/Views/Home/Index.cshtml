@@ -2,6 +2,31 @@
     ViewBag.Title = "Home";
 }
 
-<a href="/Carpool/create" class="btn btn-primary">
-    Create Commute
-</a>
+<div class="container">
+    <a href="/Carpool/create" style="margin:20px" class="btn btn-primary">
+        Create new car pool
+    </a>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2>My Car Pools</h2>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2"> <strong>Origin</strong> </div>
+                <div class="col-md-2"><strong>Destination</strong></div>
+                <div class="col-md-1"><strong>Departure Time</strong></div>
+                <div class="col-md-1"><strong>Expected Arival Time</strong></div>
+                <div class="col-md-1"><strong>Available Seats</strong></div>
+                <div class="col-md-1"><strong>Days Available</strong></div>
+                <div class="col-md-2"><strong>Notes</strong></div>
+                <div class="col-md-2"><strong>CreationDate</strong></div>
+            </div>
+            <div id="item_body">
+                <p class="text-center">Loading ....</p>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/Content/js/carpool.js"></script>
+}

@@ -47,12 +47,12 @@ $(function () {
             headers: headers,
             data: `{\"Notes\":\"${notes}\",\"DepartureTime\":\"${departureTime}\",\"ExpectArivalTime\":\"${arivalTime}\",\"Origin\":\"${origin}\",\"Destination\":\"${destination}\",\"DaysAvailable\":${days_available},\"AvailableSeats\":${seats}`,
             success: function (data) {
-                window.location.reload('/');
+                window.location.replace('/');
             },
             fail: function (data) {
                 var $alert = $("#error");
                 var $p = $alert.find("p");
-                $p.text('profile update failed');
+                $p.text('failed');
                 $alert.removeClass('hidden');
 
                 setTimeout(function () {
