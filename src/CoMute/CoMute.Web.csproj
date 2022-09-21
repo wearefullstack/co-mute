@@ -211,6 +211,7 @@
     <Compile Include="Controllers\Web\CarPoolController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
     <Compile Include="Controllers\Web\ProfileController.cs" />
+    <Compile Include="Controllers\Web\SearchController.cs" />
     <Compile Include="Data\CoMuteDbContext.cs" />
     <Compile Include="Data\Entities\CarPool.cs" />
     <Compile Include="Data\Entities\UserCarPool.cs" />
@@ -276,6 +277,7 @@
     <Content Include="Views\CarPool\Create.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

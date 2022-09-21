@@ -1,6 +1,7 @@
 ﻿using CoMute.Web.Data.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -30,11 +31,21 @@ namespace CoMute.Web.Data.Repository
         {
             return _coMuteDbContext.CarPools.Where(x=>x.Owner_Leader==userName).ToList();
         }
+        
+        public List<CarPool> GetAllCarPools()
+        {
+            return _coMuteDbContext.CarPools.ToList();
+        }
 
         public async Task JoinCarPool(int carPoolId, string userId)
         {
-            _coMuteDbContext.UserCarPool.Add(new UserCarPool { CarPoolId=carPoolId, UserId=userId});
+            _coMuteDbContext.UserCarPool.Add(new UserCarPool { CarPoolId=carPoolId, UserId=userId, DateJoined = DateTime.Now});
             await _coMuteDbContext.SaveChangesAsync();
+        }
+
+        public List<UserCarPool> GetCarPoolsUserJoined(string userId)
+        {
+            return _coMuteDbContext.UserCarPool.Where(x => x.UserId == userId).Include(x => x.CarPool).ToList();
         }
 
     }

@@ -14,6 +14,7 @@ namespace CoMute.Web.Data.Entities
         [ForeignKey("CarPool")]
         public int CarPoolId { get; set; }
         public string UserId { get; set; }
+        public DateTime DateJoined { get; set; }
         public CarPool CarPool { get; set; }
     }
 }

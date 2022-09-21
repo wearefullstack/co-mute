@@ -37,8 +37,24 @@ namespace CoMute.Web.Services
 
         public List<CarPoolRequest> GetCarPool(string userName)
         {
+            return MapCarPoolList(_carPoolRepository.GetCarPoolsByUserName(userName));
+        }
+        
+        public List<CarPoolRequest> GetAllCarPools()
+        {
+            return MapCarPoolList(_carPoolRepository.GetAllCarPools());
+        }
+        
+        public List<CarPoolRequest> SearchCarPools(string keyword)
+        {
+            return MapCarPoolList(_carPoolRepository.GetAllCarPools()).Where(x=>x.Origin.Contains(keyword)
+             || x.Owner_Leader.Contains(keyword)|| x.Destination.Contains(keyword)).ToList();
+        }
+        
+        private List<CarPoolRequest> MapCarPoolList(List<CarPool> carPools)
+        {
             var returnedList  = new List<CarPoolRequest>();
-            foreach (var item in _carPoolRepository.GetCarPoolsByUserName(userName)) returnedList.Add(GetCarPoolById(item.Id));
+            foreach (var item in carPools) returnedList.Add(GetCarPoolById(item.Id));
             return returnedList;
         }
 

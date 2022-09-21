@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CoMute.Web.Models.Dto.CarPoolRequest>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Search car pools</h2>
+
+<div class="container center-block">
+    <form method="post" class="form-inline">
+        <div class="form-group row">
+            <input name="keyword" class="form-control col-md-10" required placeholder="seach here..." />
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<hr />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpectArivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableSeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner_Leader)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DaysAvailable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.DepartureTime.ToShortTimeString()
+        </td>
+        <td>
+         @item.ExpectArivalTime.ToShortTimeString()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Origin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableSeats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner_Leader)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DaysAvailable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.ActionLink("Join", "Edit", new { id=item.Id }) 
+          
+        </td>
+    </tr>
+}
+
+</table>
