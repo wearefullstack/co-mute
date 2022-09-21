@@ -13,10 +13,12 @@ namespace CoMute.Web.Services
     public class CarPoolService
     {
         private readonly CarPoolRepository _carPoolRepository;
+        private readonly UserService _userService;
 
         public CarPoolService()
         {
             _carPoolRepository = new CarPoolRepository();
+            _userService = new UserService();    
         }
 
         public async Task addCarPool(CreateCarPoolRequest request)
@@ -33,6 +35,12 @@ namespace CoMute.Web.Services
                 Owner_Leader =request.Owner_Leader,
                 PoolCreationDate = DateTime.Now,
             });   
+        }
+        
+        public async Task JoinCarPool(int carPoolId, string userName)
+        {
+            var userProfile = _userService.GetUserProfileByEmail(userName);
+            await _carPoolRepository.JoinCarPool(carPoolId, userProfile.UserId);
         }
 
         public List<CarPoolRequest> GetCarPool(string userName)

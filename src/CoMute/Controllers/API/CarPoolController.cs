@@ -34,5 +34,26 @@ namespace CoMute.Web.Controllers.API
             var useName = User.Identity.Name;
             return Request.CreateResponse(HttpStatusCode.OK, _carPoolService.GetCarPool(useName));
         }
+        
+        [HttpGet,Route("GetAll")]
+        public HttpResponseMessage GetAllCarPools()
+        {
+            
+            return Request.CreateResponse(HttpStatusCode.OK, _carPoolService.GetAllCarPools());
+        }
+        
+        [HttpPost,Route("Search")]
+        public HttpResponseMessage SearchCarPools(string keyword)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _carPoolService.SearchCarPools(keyword));
+        }
+        
+        [HttpPost,Route("Join")]
+        public async Task<HttpResponseMessage> JoinCarPool(int carpoolId)
+        {
+            var useName = User.Identity.Name;
+            await _carPoolService.JoinCarPool(carpoolId, useName);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }
