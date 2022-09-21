@@ -3,7 +3,7 @@
     ViewBag.Title = "Create Car Pool";
 }
 
-<form id="register">
+<form id="createCarPool">
     <h2>Create Car Pool</h2>
 
     <div id="error" class="row row-margin hidden">
@@ -11,42 +11,46 @@
             <p></p>
         </div>
     </div>
+    <div class="form-group">
+        <label for="origin">Origin</label>
+        <input type="text" id="origin" class="form-control" placeholder="Origin" required autofocus>
+    </div>
+
 
     <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" class="form-control" placeholder="First name" required autofocus>
+        <label for="departureTime">Departure Time</label>
+        <input type="time" id="departureTime" class="form-control" required >
+    </div>
+    <div class="form-group">
+        <label for="arivalTime">Expected Arival Time</label>
+        <input type="time" id="arivalTime" class="form-control" required >
     </div>
 
     <div class="form-group">
-        <label for="surname">Surname</label>
-        <input type="text" id="surname" class="form-control" placeholder="Surname" required>
+        <label for="destination">Destination</label>
+        <input type="text" id="destination" class="form-control" placeholder="Destination" required>
     </div>
 
     <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="text" id="phone" class="form-control" placeholder="Phone number" required>
+        <label for="seats">Available Seats</label>
+        <input type="number" id="seats" value="1" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="days_available">Days Available</label>
+        <input type="number" id="days_available" value="1" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea id="notes" placeholder="Notes here ..." class="form-control"></textarea>
     </div>
 
     <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" placeholder="Email address" required>
-    </div>
-
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Password" required>
-    </div>
-
-    <div class="form-group">
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" id="confirm-password" class="form-control" placeholder="Confirm password">
-    </div>
-
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit" id="sign-in">Register</button>
+        <button class="btn btn-primary" type="submit" id="sign-in">Create</button>
     </div>
 </form>
 
 @section scripts {
-    <script type="text/javascript" src="~/Content/js/register.js"></script>
+    <script type="text/javascript" src="~/Content/js/CreateCarPool.js"></script>
 }

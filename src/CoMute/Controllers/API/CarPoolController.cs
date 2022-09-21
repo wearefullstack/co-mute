@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace CoMute.Web.Controllers.API
 {
+    [RoutePrefix("api/carpool")]
     public class CarPoolController : ApiController
     {
         private readonly CarPoolService _carPoolService;
@@ -19,11 +20,19 @@ namespace CoMute.Web.Controllers.API
             _carPoolService = new CarPoolService();
         }
 
-        [HttpPost]
+        [HttpPost,Authorize]
         public async Task<HttpResponseMessage> Post(CreateCarPoolRequest request)
         {
-            await _carPoolService.addCarPool(request);
+            request.Owner_Leader = User.Identity.Name;
+           await _carPoolService.addCarPool(request);
            return Request.CreateResponse(HttpStatusCode.Created);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetUserProfile()
+        {
+            var useName = User.Identity.Name;
+            return Request.CreateResponse(HttpStatusCode.OK, _carPoolService.GetCarPool(useName));
         }
     }
 }

@@ -5,8 +5,9 @@ using System.Web;
 
 namespace CoMute.Web.Models.Dto
 {
-    public class CreateCarPoolRequest
+    public class CarPoolRequest
     {
+        public int Id { get; set; }
         public DateTime DepartureTime { get; set; }
         public DateTime ExpectArivalTime { get; set; }
         public string Origin { get; set; }

@@ -218,6 +218,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dto\CarPoolRequest.cs" />
     <Compile Include="Models\Dto\CreateCarPoolRequest.cs" />
     <Compile Include="Models\Dto\LoginRequest.cs" />
     <Compile Include="Models\Dto\Profile.cs" />
@@ -234,6 +235,8 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\Site.css" />
+    <Content Include="Content\js\carpool.js" />
+    <Content Include="Content\js\CreateCarPool.js" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\profile.js" />

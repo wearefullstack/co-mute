@@ -21,6 +21,16 @@ namespace CoMute.Web.Data.Repository
             await _coMuteDbContext.SaveChangesAsync();
         }
         
+        public CarPool GetCarPoolById(int Id)
+        {
+            return _coMuteDbContext.CarPools.Find(Id);
+        }
+        
+        public List<CarPool> GetCarPoolsByUserName(string userName)
+        {
+            return _coMuteDbContext.CarPools.Where(x=>x.Owner_Leader==userName).ToList();
+        }
+
         public async Task JoinCarPool(int carPoolId, string userId)
         {
             _coMuteDbContext.UserCarPool.Add(new UserCarPool { CarPoolId=carPoolId, UserId=userId});
