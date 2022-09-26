@@ -1,23 +1,81 @@
-﻿@{
+﻿@model CoMute.Web.Models.Dto.LoginRequest
+
+@{
     ViewBag.Title = "Home";
 }
 
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <form id="login">
-            <h2 class="text-center">Sign In</h2>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <button class="btn btn-primary btn-block" type="submit" id="sign-in">Sign in</button>
-        </form>
-    </div>
-</div>
+<head>
 
-<div id="error" class="row row-margin hidden">
-    <div class="col-md-4 col-md-offset-4 alert alert-danger">
-        <p></p>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+@*<div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form id="login">
+                <h2 class="text-center">Sign In</h2>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <button class="btn btn-primary btn-block" type="submit" id="sign-in">Sign in</button>
+            </form>
+        </div>
+    </div>*@
+
+<h2 class="text-center">Sign In</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group" id="inputEmail">
+                @* @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "Email Address", @class = "form-control", id = "inputEmail", type = "email", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <br />
+            <br />
+
+
+            <div class="form-group">
+                @* @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { placeholder = "Password", @class = "form-control", id = "inputPassword" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+            <br />
+
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button class="btn btn-primary btn-block" value="Search" type="submit" id="sign-in">Sign in</button>
+                </div>
+            </div>
+
+            <div id="error" class="row row-margin hidden">
+                <div class="col-md-4 col-md-offset-4 alert alert-danger">
+                    <p></p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+}
+
+
+
 
 @section scripts {
     <script type="text/javascript" src="~/Content/js/login.js"></script>

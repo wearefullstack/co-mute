@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CarPoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Passenger_Pool">
+          <Key>
+            <PropertyRef Name="Passenger_Pool_ID" />
+          </Key>
+          <Property Name="Passenger_Pool_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Register_ID" Type="int" />
+          <Property Name="User_Car_Pool_ID" Type="int" />
+          <Property Name="Status_ID" Type="int" />
+          <Property Name="Date_Joined" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Register">
+          <Key>
+            <PropertyRef Name="Register_ID" />
+          </Key>
+          <Property Name="Register_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="Status_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status_Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User_Car_Pool">
+          <Key>
+            <PropertyRef Name="User_Car_Pool_ID" />
+          </Key>
+          <Property Name="User_Car_Pool_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Departure" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Expected_Arrival" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Origin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Days" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Available_Seats" Type="int" Nullable="false" />
+          <Property Name="Number_Of_Passengers" Type="int" />
+          <Property Name="Notes" Type="varchar" MaxLength="50" />
+          <Property Name="Register_ID" Type="int" />
+          <Property Name="Date_Created" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Passenger__Regis__2B3F6F97">
+          <End Role="Register" Type="Self.Register" Multiplicity="0..1" />
+          <End Role="Passenger_Pool" Type="Self.Passenger_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Register">
+              <PropertyRef Name="Register_ID" />
+            </Principal>
+            <Dependent Role="Passenger_Pool">
+              <PropertyRef Name="Register_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Passenger__Statu__2D27B809">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Passenger_Pool" Type="Self.Passenger_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status_ID" />
+            </Principal>
+            <Dependent Role="Passenger_Pool">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Passenger__User___2C3393D0">
+          <End Role="User_Car_Pool" Type="Self.User_Car_Pool" Multiplicity="0..1" />
+          <End Role="Passenger_Pool" Type="Self.Passenger_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Car_Pool">
+              <PropertyRef Name="User_Car_Pool_ID" />
+            </Principal>
+            <Dependent Role="Passenger_Pool">
+              <PropertyRef Name="User_Car_Pool_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Car___Regis__267ABA7A">
+          <End Role="Register" Type="Self.Register" Multiplicity="0..1" />
+          <End Role="User_Car_Pool" Type="Self.User_Car_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Register">
+              <PropertyRef Name="Register_ID" />
+            </Principal>
+            <Dependent Role="User_Car_Pool">
+              <PropertyRef Name="Register_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarPoolModelStoreContainer">
+          <EntitySet Name="Passenger_Pool" EntityType="Self.Passenger_Pool" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Register" EntityType="Self.Register" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Car_Pool" EntityType="Self.User_Car_Pool" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Passenger__Regis__2B3F6F97" Association="Self.FK__Passenger__Regis__2B3F6F97">
+            <End Role="Register" EntitySet="Register" />
+            <End Role="Passenger_Pool" EntitySet="Passenger_Pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Passenger__Statu__2D27B809" Association="Self.FK__Passenger__Statu__2D27B809">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Passenger_Pool" EntitySet="Passenger_Pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Passenger__User___2C3393D0" Association="Self.FK__Passenger__User___2C3393D0">
+            <End Role="User_Car_Pool" EntitySet="User_Car_Pool" />
+            <End Role="Passenger_Pool" EntitySet="Passenger_Pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Car___Regis__267ABA7A" Association="Self.FK__User_Car___Regis__267ABA7A">
+            <End Role="Register" EntitySet="Register" />
+            <End Role="User_Car_Pool" EntitySet="User_Car_Pool" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarPoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Passenger_Pool">
+          <Key>
+            <PropertyRef Name="Passenger_Pool_ID" />
+          </Key>
+          <Property Name="Passenger_Pool_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Register_ID" Type="Int32" />
+          <Property Name="User_Car_Pool_ID" Type="Int32" />
+          <Property Name="Status_ID" Type="Int32" />
+          <Property Name="Date_Joined" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Register" Relationship="Self.FK__Passenger__Regis__2B3F6F97" FromRole="Passenger_Pool" ToRole="Register" />
+          <NavigationProperty Name="Status" Relationship="Self.FK__Passenger__Statu__2D27B809" FromRole="Passenger_Pool" ToRole="Status" />
+          <NavigationProperty Name="User_Car_Pool" Relationship="Self.FK__Passenger__User___2C3393D0" FromRole="Passenger_Pool" ToRole="User_Car_Pool" />
+        </EntityType>
+        <EntityType Name="Register">
+          <Key>
+            <PropertyRef Name="Register_ID" />
+          </Key>
+          <Property Name="Register_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Passenger_Pool" Relationship="Self.FK__Passenger__Regis__2B3F6F97" FromRole="Register" ToRole="Passenger_Pool" />
+          <NavigationProperty Name="User_Car_Pool" Relationship="Self.FK__User_Car___Regis__267ABA7A" FromRole="Register" ToRole="User_Car_Pool" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="Status_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Passenger_Pool" Relationship="Self.FK__Passenger__Statu__2D27B809" FromRole="Status" ToRole="Passenger_Pool" />
+        </EntityType>
+        <EntityType Name="User_Car_Pool">
+          <Key>
+            <PropertyRef Name="User_Car_Pool_ID" />
+          </Key>
+          <Property Name="User_Car_Pool_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Departure" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Expected_Arrival" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Origin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Days" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Available_Seats" Type="Int32" Nullable="false" />
+          <Property Name="Number_Of_Passengers" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Register_ID" Type="Int32" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Passenger_Pool" Relationship="Self.FK__Passenger__User___2C3393D0" FromRole="User_Car_Pool" ToRole="Passenger_Pool" />
+          <NavigationProperty Name="Register" Relationship="Self.FK__User_Car___Regis__267ABA7A" FromRole="User_Car_Pool" ToRole="Register" />
+        </EntityType>
+        <Association Name="FK__Passenger__Regis__2B3F6F97">
+          <End Role="Register" Type="Self.Register" Multiplicity="0..1" />
+          <End Role="Passenger_Pool" Type="Self.Passenger_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Register">
+              <PropertyRef Name="Register_ID" />
+            </Principal>
+            <Dependent Role="Passenger_Pool">
+              <PropertyRef Name="Register_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Passenger__Statu__2D27B809">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Passenger_Pool" Type="Self.Passenger_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status_ID" />
+            </Principal>
+            <Dependent Role="Passenger_Pool">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Passenger__User___2C3393D0">
+          <End Role="User_Car_Pool" Type="Self.User_Car_Pool" Multiplicity="0..1" />
+          <End Role="Passenger_Pool" Type="Self.Passenger_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Car_Pool">
+              <PropertyRef Name="User_Car_Pool_ID" />
+            </Principal>
+            <Dependent Role="Passenger_Pool">
+              <PropertyRef Name="User_Car_Pool_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Car___Regis__267ABA7A">
+          <End Role="Register" Type="Self.Register" Multiplicity="0..1" />
+          <End Role="User_Car_Pool" Type="Self.User_Car_Pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Register">
+              <PropertyRef Name="Register_ID" />
+            </Principal>
+            <Dependent Role="User_Car_Pool">
+              <PropertyRef Name="Register_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarPoolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Passenger_Pool" EntityType="Self.Passenger_Pool" />
+          <EntitySet Name="Registers" EntityType="Self.Register" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="User_Car_Pool" EntityType="Self.User_Car_Pool" />
+          <AssociationSet Name="FK__Passenger__Regis__2B3F6F97" Association="Self.FK__Passenger__Regis__2B3F6F97">
+            <End Role="Register" EntitySet="Registers" />
+            <End Role="Passenger_Pool" EntitySet="Passenger_Pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Passenger__Statu__2D27B809" Association="Self.FK__Passenger__Statu__2D27B809">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Passenger_Pool" EntitySet="Passenger_Pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Passenger__User___2C3393D0" Association="Self.FK__Passenger__User___2C3393D0">
+            <End Role="User_Car_Pool" EntitySet="User_Car_Pool" />
+            <End Role="Passenger_Pool" EntitySet="Passenger_Pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Car___Regis__267ABA7A" Association="Self.FK__User_Car___Regis__267ABA7A">
+            <End Role="Register" EntitySet="Registers" />
+            <End Role="User_Car_Pool" EntitySet="User_Car_Pool" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CarPoolModelStoreContainer" CdmEntityContainer="CarPoolEntities">
+          <EntitySetMapping Name="Passenger_Pool">
+            <EntityTypeMapping TypeName="CarPoolModel.Passenger_Pool">
+              <MappingFragment StoreEntitySet="Passenger_Pool">
+                <ScalarProperty Name="Passenger_Pool_ID" ColumnName="Passenger_Pool_ID" />
+                <ScalarProperty Name="Register_ID" ColumnName="Register_ID" />
+                <ScalarProperty Name="User_Car_Pool_ID" ColumnName="User_Car_Pool_ID" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Date_Joined" ColumnName="Date_Joined" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registers">
+            <EntityTypeMapping TypeName="CarPoolModel.Register">
+              <MappingFragment StoreEntitySet="Register">
+                <ScalarProperty Name="Register_ID" ColumnName="Register_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="CarPoolModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Status_Description" ColumnName="Status_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Car_Pool">
+            <EntityTypeMapping TypeName="CarPoolModel.User_Car_Pool">
+              <MappingFragment StoreEntitySet="User_Car_Pool">
+                <ScalarProperty Name="User_Car_Pool_ID" ColumnName="User_Car_Pool_ID" />
+                <ScalarProperty Name="Departure" ColumnName="Departure" />
+                <ScalarProperty Name="Expected_Arrival" ColumnName="Expected_Arrival" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Available_Seats" ColumnName="Available_Seats" />
+                <ScalarProperty Name="Number_Of_Passengers" ColumnName="Number_Of_Passengers" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Register_ID" ColumnName="Register_ID" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

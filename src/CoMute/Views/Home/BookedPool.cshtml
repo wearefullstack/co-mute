@@ -1,0 +1,85 @@
+﻿
+@model  IEnumerable<CoMute.Web.Models.Dto.CarPool>
+
+@{
+    ViewBag.Title = "BookedPool";
+    var message = TempData["MsgChangeStatus"] ?? string.Empty;
+}
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<h2 style="text-align:center">BookedPool</h2>
+<br />
+
+<table id="myTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Joined)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Departure)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Expected_Arrival)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Days)
+        </th>
+       
+        <th>
+            <label>Action</label>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @*  @Html.DisplayFor(modelItem => item.Date_Created)*@
+        @Convert.ToDateTime(item.Date_Joined).ToShortDateString()
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Origin)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Destination)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Departure)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Expected_Arrival)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Days)
+    </td>
+   
+    <td>
+        @using (Html.BeginForm("Cancel", "Home", new { id = item.Passenger_Pool_ID, PoolId = item.User_Car_Pool_ID }, FormMethod.Post))
+        {
+            <button class="btn btn-danger">Leave </button>
+        }
+    </td>
+</tr>
+    }
+
+</table>
+
+<script type="text/javascript">
+var message = '@message';
+if(message)
+    alert(message);
+</script>

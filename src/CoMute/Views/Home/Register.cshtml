@@ -1,6 +1,102 @@
-﻿@{
+﻿@model CoMute.Web.Models.Dto.RegistrationRequest
+@{
     ViewBag.Title = "Register";
 }
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<h2 style="text-align:center">Register User</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" , required = "required" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" , required = "required" } })
+            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", type = "number", min="0" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control", type = "email" , required = "required" } })
+            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "required" , id = "password"  } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" , required = "required", id = "confirm_password"  } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group" style=" margin-left:40%">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Register" class="btn btn-success" onclick="return Validate()" />
+        </div>
+    </div>
+</div>
+}
+
+<script type="text/javascript">
+    function Validate() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirm_password").value;
+        if (password != confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+@*
 
 <form id="register">
     <h2>Register</h2>
@@ -45,7 +141,7 @@
         <button class="btn btn-primary" type="submit" id="sign-in">Register</button>
     </div>
 </form>
-
+*@
 @section scripts {
     <script type="text/javascript" src="~/Content/js/register.js"></script>
 }

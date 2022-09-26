@@ -1,0 +1,117 @@
+﻿@model CoMute.Web.Models.Dto.CarPool
+
+@{
+    ViewBag.Title = "AddPool";
+    var message = TempData["MsgChangeStatus"] ?? string.Empty;
+}
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<h2 style="text-align:center">Add Car-pool Opportunity</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Departure, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" >
+
+            @Html.EditorFor(model => model.Departure, new { htmlAttributes = new { @class = "form-control", type = "time", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Departure, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Expected_Arrival, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Expected_Arrival, new { htmlAttributes = new { @class = "form-control", type = "time", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Expected_Arrival, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Origin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Origin, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Origin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Days, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Days, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Days, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Destination, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Destination, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Available_Seats, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Available_Seats, new { htmlAttributes = new { @class = "form-control", required = "required", type = "number", min = "0" } })
+            @Html.ValidationMessageFor(model => model.Available_Seats, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="width : 60%; margin:auto">
+        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group" style="margin-left:50% " >
+        <div class="col-md-10">
+            <input type="submit" value="Add Pool" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" type="text/css" />
+<script src="https://code.jquery.com/jquery-2.2.2.js"></script>
+<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.css" type="text/css" />
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker').datepicker({
+            showOptions: { speed: 'fast' },
+            changeMonth: false,
+            changeYear: false,
+            dateFormat: 'dd/mm/yy',
+            gotoCurrent: true
+        });
+        $('#timepicker').timepicker();
+    });
+</script>
+
+
+<script type="text/javascript">
+var message = '@message';
+if(message)
+    alert(message);
+</script>

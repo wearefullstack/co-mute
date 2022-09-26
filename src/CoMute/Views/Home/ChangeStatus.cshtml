@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "ChangeStatus";
+    var message = TempData["MsgChangeStatus"] ?? string.Empty;
+}
+
+<h2>ChangeStatus</h2>
+
+<script type="text/javascript">
+var message = '@message';
+if(message)
+    alert(message);
+</script>
