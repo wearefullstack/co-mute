@@ -119,6 +119,7 @@ namespace CoMute.Web.Controllers.Web
             }
             else
             {
+                TempData["logInMessage"] = "Please log in or register to view your profile!";
                 return RedirectToAction("Index");
             }
 
@@ -192,7 +193,7 @@ namespace CoMute.Web.Controllers.Web
                     if (result.IsSuccessStatusCode)
                     {
 
-                        return RedirectToAction("Search");
+                        return RedirectToAction("BookedPool");
                     }
                 }
                 return View(loginRequest);
@@ -381,6 +382,7 @@ namespace CoMute.Web.Controllers.Web
             }
             else
             {
+                TempData["logInMessage"] = "Please log in or register to view car pool opportunities!";
                 return RedirectToAction("Index");
             }
 
@@ -591,6 +593,7 @@ namespace CoMute.Web.Controllers.Web
 
             else
             {
+                TempData["logInMessage"] = "Please log in or register to view joined car pool opportunities!";
                 return RedirectToAction("Index");
             }
         }

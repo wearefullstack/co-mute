@@ -4,19 +4,48 @@
 @{
     ViewBag.Title = "BookedPool";
     var message = TempData["MsgChangeStatus"] ?? string.Empty;
+
 }
 
 <head>
+    <style>
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_desc:before,
+        table.dataTable thead .sorting_desc_disabled:after,
+        table.dataTable thead .sorting_desc_disabled:before {
+            bottom: .5em;
+        }
 
+
+        #myInput {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
-<h2 style="text-align:center">BookedPool</h2>
+<h2 style="text-align:center">Joined Car-Pool Opportunities</h2>
 <br />
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for car pool opportunity.." title="Type in a name">
+
 
 <table id="myTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
     <tr>
@@ -38,7 +67,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Days)
         </th>
-       
+
         <th>
             <label>Action</label>
         </th>
@@ -46,34 +75,34 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @*  @Html.DisplayFor(modelItem => item.Date_Created)*@
-        @Convert.ToDateTime(item.Date_Joined).ToShortDateString()
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Origin)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Destination)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Departure)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Expected_Arrival)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Days)
-    </td>
-   
-    <td>
-        @using (Html.BeginForm("Cancel", "Home", new { id = item.Passenger_Pool_ID, PoolId = item.User_Car_Pool_ID }, FormMethod.Post))
-        {
-            <button class="btn btn-danger">Leave </button>
-        }
-    </td>
-</tr>
+        <tr>
+            <td>
+                @*  @Html.DisplayFor(modelItem => item.Date_Created)*@
+                @Convert.ToDateTime(item.Date_Joined).ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Origin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Expected_Arrival)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Days)
+            </td>
+
+            <td>
+                @using (Html.BeginForm("Cancel", "Home", new { id = item.Passenger_Pool_ID, PoolId = item.User_Car_Pool_ID }, FormMethod.Post))
+                {
+                    <button class="btn btn-danger">Leave </button>
+                }
+            </td>
+        </tr>
     }
 
 </table>
@@ -82,4 +111,15 @@
 var message = '@message';
 if(message)
     alert(message);
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 </script>
