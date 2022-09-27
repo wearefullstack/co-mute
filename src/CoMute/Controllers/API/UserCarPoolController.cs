@@ -27,11 +27,14 @@ namespace CoMute.Web.Controllers.API
                 Departure = zz.User_Car_Pool.Departure,
                 Expected_Arrival = zz.User_Car_Pool.Expected_Arrival,
                 Notes = zz.User_Car_Pool.Notes,
+                Date_Joined=zz.Date_Joined,
                 Origin = zz.User_Car_Pool.Origin,
                 Destination = zz.User_Car_Pool.Destination,
                 Register_ID=zz.Register_ID,
                 Number_Of_Passengers = zz.User_Car_Pool.Number_Of_Passengers,
-                Status_ID=zz.Status_ID
+                Status_ID=zz.Status_ID,
+                Name=zz.Register.Name,
+                Surname=zz.Register.Surname,
 
 
 
