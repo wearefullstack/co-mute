@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Mute | General</title>
+    <link rel="stylesheet" href="general.css">
+</head>
+<body>
+    <header>
+        <!-- <a href="/general" class="logo">
+            <img src="LOGO.png" style="width: 160px; height: 150px; margin: -30px 0 0 -590px;">
+        </a> -->
+        <a href="/general">
+            <img src="twitter.png" style="width: 20px; height: 20px;">
+        </a>
+        <a href="https://www.instagram.com/sibalukhuluu/?hl=en">
+            <img src="instagram.png" style="width: 20px; height: 20px;">
+        </a>
+        <a href="https://github.com/MpumeleloNtuthuko/my-projects">
+            <img src="github.png" style="width: 20px; height: 20px;">
+        </a>
+        <a href="https://www.linkedin.com/in/mpumelelo-mpanza/">
+            <img src="linkedin.png" style="width: 20px; height: 20px;">
+        </a>
+    </header>
+    <main>
+        <div class="welcomeTxt">
+            <h1>CO-MUTE WITH EASE!</h1>
+            <h4>Get started and make your commuting easy. <br>Sign in, find car-pool opportunities <br> and join a lift club.</h4>
+            <a class="search">Search Travel Opportunities</a>
+        </div>
+        <div class="login">
+            <form class="form">
+                <h1>Login:</h1>
+                <label for="email">Email:</label> <br>
+                <input type="email" placeholder="example@gmail.com" name="email" required> <br>
+                <div class="emailError"></div>
+                <label for="password">Password:</label> <br>
+                <input type="password" placeholder="********" name="password" required> <br>
+                <div class="passwordError"></div>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </main>
+    <section class="searchTravelOpps">
+        <div>
+            <button class="close">Close</button>
+        </div>
+        <form action="/notLoggedIn" method="get">
+            <label for="days">Day:</label> <br>
+            <input type="date" name="day" required> <br>
+            <label for="from">From:</label> <br>
+            <input type="text" name="from" placeholder="e.g Observatory"> <br>
+            <label for="to">To:</label> <br>
+            <input type="text" name="to" placeholder="e.g Waterfront"> <br>
+            <label for="depTime">Departure time:</label> <br>
+            <input type="time" name="depTime"> <br>
+            <input type="submit" value="Search">
+        </form>
+    </section>
+    <script>
+        const search = document.querySelector('.searchTravelOpps');
+        const searchBtn = document.querySelector('.search');
+        const main = document.querySelector('.main');
+        const close = document.querySelector('.close');
+
+        const form = document.querySelector('.form');
+        const emailErr = document.querySelector('.emailError');
+        const passwordErr = document.querySelector('.passwordError');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            try {
+                const email = form.email.value;
+                const password = form.password.value;
+
+                const result = await fetch('/main', {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json'},
+                    body: JSON.stringify({email, password})
+                })
+                const res = await result.json();
+                
+                if (res.redirect === "") {
+                    emailErr.textContent = res.email;
+                    passwordErr.textContent = res.password;
+                }
+                else {
+                    window.location.href = res.redirect;
+                }
+            }
+            catch (err) {
+                console.log(err)
+            }
+        })
+
+        close.addEventListener('click', () => {
+            search.classList.toggle('showSearchForm');
+        })
+
+        searchBtn.addEventListener('click', () => {
+            search.classList.toggle('showSearchForm');
+        })
+    </script>
+</body>
+</html>

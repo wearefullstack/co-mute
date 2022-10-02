@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Mute</title>
+    <link rel="stylesheet" href="login(LP).css">
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">
+            <img src="LOGO.png" style="width: 160px; height: 150px; margin-top: -30px;">
+        </a>
+    </header>
+    <main>
+        <div class="welcomeTxt">
+            <h1>Travelling made <br> easy for you!</h1>
+            <h4>A platform for commuters to form, find and join <br> car-pool opportunities. Reduce your carbon footprint, <br> save the world.</h4>
+            <div class="buttons">
+                <a href="/register" class="start">Get Started</a>
+                <a href="/general" class="start">Search Available Opportunities</a>
+            </div>
+        </div>
+        <div class="login">
+            <form>
+                <h1>Login:</h1>
+                <label for="email">Email:</label> <br>
+                <input type="email" placeholder="example@gmail.com" name="email" required> <br>
+                <div class="emailError"></div>
+                <label for="password">Password:</label> <br>
+                <input type="password" placeholder="********" name="password" required> <br>
+                <div class="passwordError"></div>
+                <input type="submit" value="Login">
+            </form>
+            <p href="">Don't have an account? <a href="/register" class="signUp">Sign Up</a></p>
+        </div>
+    </main>
+    <div class="textBox">
+        <p>Are you registered? Enjoy the perks, click here <br> to see all available car-pool opportunities.
+        </p>
+        <div style="background: black; width: 40px; height: 40px; position: absolute; bottom: -12%; border-radius: 0; transform: rotate(45deg)"></div>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const emailErr = document.querySelector('.emailError');
+        const passwordErr = document.querySelector('.passwordError');
+        const text = document.querySelector('.textBox')
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            try {
+                const email = form.email.value;
+                const password = form.password.value;
+
+                const result = await fetch('/main', {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json'},
+                    body: JSON.stringify({email, password})
+                })
+                const res = await result.json();
+                
+                if (res.redirect === "") {
+                    emailErr.textContent = res.email;
+                    passwordErr.textContent = res.password;
+                }
+                else {
+                    window.location.href = res.redirect;
+                }
+            }
+            catch (err) {
+                console.log(err)
+            }
+        })
+
+        setTimeout(() => {
+            text.classList.add('showText')
+            setTimeout(() => {
+                text.classList.remove('showText')
+            },10000)
+        },3000)
+    </script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,400;1,200;1,400&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+    position: relative;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 99;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.logo {
+    margin-left: -70px;
+}
+
+header button {
+    padding: 13px;
+    border: none;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border-radius: 25px;
+}
+
+header button:hover {
+    background: rgb(128, 128, 128);
+    color: black;
+}
+
+.userName {
+    color: rgb(211, 207, 199);
+    text-decoration: none;
+    transition: 0.25s;
+}
+
+.userName:hover {
+    color: rgb(255, 255, 255);
+}
+
+.regNew {
+    position: absolute;
+    top: 15.7%;
+    right: 26.35%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px 50px 20px;
+    color: white;
+    visibility: hidden;
+    border-radius: 10px;
+}
+
+.showCreateForm {
+    visibility: visible;
+}
+
+.regNew input {
+    margin-bottom: 20px;
+    width: 95%;
+    padding: 5px;
+    outline: none;
+    border: none;
+    border-radius: 7px;
+}
+
+.searchTravelOpps {
+    position: absolute;
+    top: 25.2%;
+    right: 40.8%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    width: 250px;
+    color: white;
+    visibility: hidden;
+    border-radius: 10px;
+}
+
+.showSearchForm {
+    visibility: visible;
+}
+
+.searchTravelOpps input[type=date], input[type=text], input[type=time] {
+    padding: 5px;
+    margin: 2px 0 10px;
+    width: 94%;
+    outline: none;
+    border-radius: 7px;
+    border: none;
+}
+
+.searchTravelOpps input[type=submit] {
+    border: none;
+    padding: 10px;
+    border-radius: 7px;
+    border: none;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+}
+
+input[type=date] {
+    margin-top: 10px;
+    width: 46%;
+}
+
+textarea {
+    padding: 10px 0 0 10px;
+    outline: none;
+    border: none;
+    border-radius: 7px;
+    border: none;
+}
+
+.regNew input[type=submit] {
+    padding: 10px;
+    border: none;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+}
+
+.regNew input[type=submit], .searchTravelOpps input[type=submit] {
+    width: 100%;
+    margin-top: 10px;
+    color: white;
+    border: none;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+}
+
+input[type=submit]:hover {
+    background: rgb(128, 128, 128);
+    color: black;
+}
+
+header p {
+    color: white;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding: 200px 100px 100px;
+    height: 62vh;
+    background: url('p.jpg');
+    background-size: cover;
+    text-align: center;
+}
+
+.message h5 {
+    font-size: 20px;
+    line-height: 70px;
+    padding-top: 30px;
+    color: rgb(0, 0, 0);
+}
+
+.top {
+    color: rgb(179, 168, 146);
+}
+
+.message h1 {
+    font-size: 60px;
+    line-height: 70px;
+    padding-top: 30px;
+    color: rgb(0, 0, 0);
+}
+
+.action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+.action button {
+    padding: 13px;
+    margin: 0 20px 30px 0;
+    width: 270px;
+    border: none;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33));
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border-radius: 25px;
+}
+
+.action button:hover {
+    padding: 13px 16px;
+    background: rgb(10, 10, 9)
+}
+
+.car-pools {
+    height: 600px;
+    width: 1000px;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 20%;
+    left: 17.5%;
+    right: 10%;
+    visibility: hidden;
+}
+
+.showPools {
+    visibility: visible;
+}
+
+.joinedBlocks, .viewCreated {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 20%;
+    right: 20%;
+    left: 15%;
+    height: 500px;
+    gap: 15px;
+    width: 1000px;
+    background: rgba(0, 0, 0, 0.8);
+    visibility: hidden;
+    overflow: auto;
+    padding: 80px 50px 20px;
+    border-radius: 10px;
+}
+
+.showCreated {
+    visibility: visible;
+}
+
+.leaveContainer {
+    position: fixed;
+    top: 13%;
+    right: 16.7%;
+    /* padding: 12px; */
+    border: none;
+    z-index: 99;
+    width: 1000px;
+    /* background: black;
+    width: 69%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leaveAll {
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    z-index: 99;
+    cursor: pointer;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    color: white;
+    border-radius: 10px;
+}
+
+.leaveAll:hover {
+    background:rgb(8, 8, 7);
+    transition: 0.1s;
+}
+
+.searchTravelOpps div {
+    position: absolute;
+    top: -40px;
+    right: 10px;
+}
+
+.closee {
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+}
+
+.closee:hover {
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33));
+    color: white;
+}
+
+.creat, .dateJoined {
+    font-size: 12px;
+    color: rgb(255, 241, 209);
+    margin-left: 84%;
+    border-radius: 10px;
+}
+
+.noPoolsAlert, .createdAlert {
+    color: white;
+    margin: auto;
+}
+
+.showCreated::-webkit-scrollbar {
+    display: none;
+}
+
+.leavePool {
+    position: absolute;
+    bottom: 130px;
+    left: -5px;
+    margin-left: 85%;
+    padding: 17px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    /* transition: 0.25s; */
+    border-radius: 10px;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+}
+
+.leavePool:hover {
+    background: rgb(5, 5, 5);
+    transition: 0.25s;
+}
+
+.joinedBlocks::-webkit-scrollbar {
+    display: none;
+}
+
+.showJoinedBlocks {
+    visibility: visible;
+}
+
+.close {
+    position: absolute;
+    top: 25%;
+    right: 45%;
+    left: 50px;
+}
+
+.close * {
+    height: 3px;
+    width: 20px;
+    background: white;
+    margin-bottom: 8px;
+}
+
+.availCarPool {
+    position: relative;
+    padding: 15px;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    border-radius: 10px;
+    color: white;
+}
+
+.availCarPool div {
+    margin-bottom: 8px;
+    border-radius: 10px;
+}

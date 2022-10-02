@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Mute | Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <header>
+        <a href="/main" class="logo">
+            <img src="LOGO.png" style="width: 160px; height: 150px; margin: -30px 0 0 -100px;">
+        </a>
+        <div>
+            <a href="/logout">
+                <button class="view">
+                    <span>Log Out</span>
+                </button>
+            </a>
+            <button data-id="<%= user._id %>" class="create">Delete my Account</button>
+        </div>
+    </header>
+    <main>
+        <section class="details">
+            <div class="pp"></div>
+            <div class="name">
+                <h1><%= user.name %></h1>
+                <h1><%= user.surname %></h1>
+            </div>
+            <div>
+                <h3 class="email"><%= user.email %></h3>
+                <h4 class="phone">0<%= user.cell_number %></h4>
+            </div>
+            <div class="stats">
+                <div>
+                    <span>Number of car-pool opportunities currently listed:</span><span><%= user.createdPools %></span>
+                </div>
+                <div>
+                    <span>Number of car-pool opportunities currently joined:</span><span><%= user.joined_carPools.length %></span>
+                </div>
+                <div class="previous">
+                    <button class="vBtn">View previously joined Car-pool opportunities</button>
+                </div>
+            </div>
+        </section>
+        <div class="profile">
+            <form id="<%= user._id %>">
+                <h1>Update details:</h1>
+                <label for="name">Name:</label> <br>
+                <input type="text" name="name" placeholder="e.g Mpumelelo"> <br>
+                <label for="surname">Surname:</label> <br>
+                <input type="text" name="surname" placeholder="e.g Mpanza"> <br>
+                <label for="phone">Cell number:</label> <br>
+                <input type="number" name="phone" placeholder="e.g 0123456789"> <br>
+                <label for="current_password">Current password:</label> <br>
+                <input type="password" name="current_password" placeholder="********" required> <br>
+                <div class="noMatch"></div>
+                <label for="new_password">New password:</label> <br>
+                <input type="password" placeholder="********" name="new_password"> <br>
+                <div class="pwNoMatch"></div>
+                <label for="confirm_password">Confirm password:</label> <br>
+                <input type="password" name="confirm_password" placeholder="********"> <br>
+                <input type="submit" value="Update details">
+            </form>
+        </div>
+    </main>
+    <div class="prevJoined">
+        <div class="loader">
+            <div class="circle"></div>
+            <p>Please wait...</p>
+        </div> 
+    </div>
+
+    <script>
+        const delBtn = document.querySelector('.create');
+        const form = document.querySelector('form');
+        const error = document.querySelector('.noMatch');
+        const pwNotMatch = document.querySelector('.pwNoMatch');
+        const prev = document.querySelector('.prevJoined');
+        const vBtn = document.querySelector('.vBtn');
+
+        vBtn.addEventListener('click', (event) => {
+            prev.classList.toggle('showPrevJoined');
+
+
+            fetch(`/getPrevJoined/${form.id}`, {method: 'GET'})
+            .then(response => response.json())
+            .then(re => {
+                const previousPools = re.prev;
+
+                prev.innerHTML = "";
+
+                if (previousPools.length === 0 || previousPools[0] === "") {
+                    prev.innerHTML = "";
+
+                    const container = document.createElement('div')
+                    container.className = 'leaveContainer';
+                    container.innerHTML = '<button class="leaveAll" onclick="prev.classList.remove(\'showPrevJoined\');">Close</button>'
+                    prev.appendChild(container);
+
+                    const alert = document.createElement('h1');
+                    alert.className = 'noPoolsAlert'
+                    alert.textContent = 'You have no joined car-pool on record!'
+                    prev.appendChild(alert);
+                }
+                else {
+
+                    const container = document.createElement('div')
+                    container.className = 'leaveContainer';
+                    container.innerHTML = '<button class="leaveAll" onclick="prev.classList.remove(\'showPrevJoined\');">Close</button>'
+                    prev.appendChild(container);
+
+                    previousPools.forEach(pool => {
+                    if (pool.notes === "") {
+                        const joinedCar = document.createElement('div');
+                        joinedCar.className = 'availCarPoolC';
+                        joinedCar.innerHTML = `<div id="${pool.id}" class="availCarPool">
+                                                                <div>Departure time: ${pool.departure_time}</div>
+                                                                    <div>Arrival time: ${pool.arrival_time}</div>
+                                                                    <div>Origin: ${pool.origin}</div>
+                                                                    <div>Available from ${pool.days_available[0]} to ${pool.days_available[1]}</div>
+                                                                    <div>Destination: ${pool.destination}</div>
+                                                                    <div>Seats available: ${pool.available_seats}</div>
+                                                                    <div>Owner: ${pool.owner}</div>
+                                                                    <span class="creat">Date joined: ${pool.dateJoined}</span>
+                                                </div>`
+                        prev.append(joinedCar);
+                    }
+                    else {
+                        const joinedCar = document.createElement('div');
+                        joinedCar.className = 'availCarPoolC';
+                        joinedCar.innerHTML = `<div id="${pool.id}" class="availCarPool">
+                                                                <div>Departure time: ${pool.departure_time}</div>
+                                                                    <div>Arrival time: ${pool.arrival_time}</div>
+                                                                    <div>Origin: ${pool.origin}</div>
+                                                                    <div>Available from ${pool.days_available[0]} to ${pool.days_available[1]}</div>
+                                                                    <div>Destination: ${pool.destination}</div>
+                                                                    <div>Seats available: ${pool.available_seats}</div>
+                                                                    <div>Owner: ${pool.owner}</div>
+                                                                    <div>Notes: ${pool.notes}</div>
+                                                                    <span class="creat">Date joined: ${pool.dateJoined}</span>
+                                                </div>`
+                                                console.log(pool)
+                        prev.append(joinedCar);
+                    }
+                })
+                }
+            })
+        })
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const response = await fetch(`/update/${form.id}`, {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json'},
+                body: JSON.stringify({
+                    name: form.name.value,
+                    surname: form.surname.value,
+                    phone: form.phone.value,
+                    current_password: form.current_password.value,
+                    new_password: form.new_password.value,
+                    confirm_password: form.confirm_password.value
+                })
+            })
+
+            const data = await response.json();
+
+            if (data.alert !== "") {
+                error.innerHTML = "";
+                alert(`${data.alert}`);
+                window.location.reload();
+            }
+            else if (data.noMatch !== "") {
+                error.textContent = `${data.noMatch}`
+            }
+            else {
+                error.innerHTML = "";
+                pwNotMatch.textContent = `${data.pwsNoMatch}`
+            }
+        })
+
+        delBtn.addEventListener('click', (event) => {
+            fetch(`/delete/${delBtn.dataset.id}`, {method: 'DELETE'})
+            .then(response => response.json())
+            .then(resp => window.location.href = resp.redirect)
+            .catch(err => console.log(err))
+        })
+    </script>
+</body>
+</html>

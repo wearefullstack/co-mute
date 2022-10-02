@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Mute | Available car-pools</title>
+    <link rel="stylesheet" href="carPools.css">
+</head>
+<body>
+    <header>
+        <a href="/main" class="logo">
+            <img src="LOGO.png" style="width: 160px; height: 150px; margin-top: -30px;">
+        </a>
+        <ul>
+            <li><a href="/main">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a class="out" href="/logout">Sign Out</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <button class="searchAllPools">Display All Car-Pool opportunities</button>
+        <% if (carPools.length !== 0) { %>
+            <% carPools.forEach(pool => { %>
+                <div class="av" id="<%= pool._id %>">
+                    <span>Origin: <%= pool.origin %> </span> <br>
+                    <span>Destination: <%= pool.destination %></span> <br>
+                    <span>Depature Time: <%= pool.departure_time %></span> <br>
+                    <span>Expected Arrival time: <%= pool.arrival_time %></span> <br>
+                    <span>Available seats: <%= pool.available_seats %></span> <br>
+                    <span>Available from: <%= pool.days_available[0] %> to <%= pool.days_available[1] %></span> <br>
+                    <span>Owner/Leader: <%= pool.owner %></span> <br>
+                    <% if (pool.notes !== "") { %>
+                        <span>Notes: <%= pool.notes %></span> <br>
+                    <% } %>
+                    <span class="dateCreated">Posted on: <%= new Date(pool.createdAt).getDate() + ' ' + months[new Date(pool.createdAt).getMonth()+1] + ' ' + new Date(pool.createdAt).getFullYear() %></span>
+                    <button class="joinBtn" id="<%= pool._id + '-' + user._id %>">Join Car-pool</button>
+                </div>
+                <% }) %>
+        <% } else { %>
+                <h1 class="noPool">No car-pool opportunities available for your selected date.</h1>
+            <% } %>
+    </main>
+    <div class="dummy" id="<%= user._id %>"></div>
+
+    <script>
+        const joinBtn = document.getElementsByClassName('joinBtn');
+        const all = document.querySelector('.searchAllPools');
+        const main = document.querySelector('main');
+        const dum = document.querySelector('.dummy');
+
+        const months = {
+                        1: "Jan",
+                        2: "Feb",
+                        3: "Mar",
+                        4: "Apr",
+                        5: "May",
+                        6: "Jun",
+                        7: "Jul",
+                        8: "Aug",
+                        9: "Sep",
+                        10: "Oct",
+                        11: "Nov",
+                        12: "Dec",
+                        };
+
+        all.addEventListener('click', (event) => {
+            localStorage.clear();
+            fetch('/all', {method: 'GET'})
+            .then(cars => cars.json())
+            .then(a => {
+
+                const allPools = a.allPools;
+                main.innerHTML = "";
+
+                if (allPools.length === 0) {
+                    main.innerHTML = '<h1 class="noPool">There are no car-pool opportunities listed at the moment. Please check again later.</h1>'
+                }
+                else {
+                    allPools.forEach(p => {
+
+                        const btnId = p._id + '-' + dum.id; 
+
+                        if (p.notes !== "") {
+                            main.innerHTML += `<div class="av" id="${p._id}">
+                                    <span>Origin: ${p.origin} </span> <br>
+                                    <span>Destination: ${p.destination} </span> <br>
+                                    <span>Depature Time: ${p.departure_time} </span> <br>
+                                    <span>Expected Arrival time: ${p.arrival_time} </span> <br>
+                                    <span>Available seats: ${p.available_seats} </span> <br>
+                                    <span>Available from: ${p.days_available[0]} to ${p.days_available[1]}</span> <br>
+                                    <span>Owner/Leader: ${p.owner} </span> <br>
+                                    <span>Notes: ${p.notes} </span> <br>
+                                    <span class="dateCreated">Posted on: ${new Date(p.createdAt).getDate()} ${months[new Date(p.createdAt).getMonth()+1]} ${new Date(p.createdAt).getFullYear()}</span> <br>
+                                    <button onclick="show(event)" id="${btnId}">Join Car-pool</button>
+                                </div>`
+                        }
+                        else {
+                            main.innerHTML += `<div class="av" id="${p._id}">
+                                    <span>Origin: ${p.origin} </span> <br>
+                                    <span>Destination: ${p.destination} </span> <br>
+                                    <span>Depature Time: ${p.departure_time} </span> <br>
+                                    <span>Expected Arrival time: ${p.arrival_time} </span> <br>
+                                    <span>Available seats: ${p.available_seats} </span> <br>
+                                    <span>Available from: ${p.days_available[0]} to ${p.days_available[1]}</span> <br>
+                                    <span>Owner/Leader: ${p.owner} </span> <br>
+                                    <span class="dateCreated">Posted on: ${new Date(p.createdAt).getDate()} ${months[new Date(p.createdAt).getMonth()+1]} ${new Date(p.createdAt).getFullYear()}</span> <br>
+                                    <button onclick="show(event)" id="${btnId}">Join Car-pool</button>
+                                </div>`
+                        }
+                    })
+                }
+        })
+    })
+        
+        const show = async (event) => {
+            const combinedId = event.target.id;
+            const splitId_array = combinedId.split('-');
+            const poolId = splitId_array[0];
+
+            const av = document.getElementById(`${poolId}`);
+            
+            await fetch(`/join-pool/${combinedId}`, {method: "POST"})
+            .then(response => response.json())
+            .then(data => {
+                if (data.joined !== "") {
+                    av.innerHTML = `<h3>${data.joined}</h3>`;
+                }
+                else if (data.full !== "") {
+                    alert(`${data.full}`);
+                }
+                else if (data.cannotJoin !== "") {
+                    alert(`${data.cannotJoin}`);
+                }
+                else {
+                    alert(`${data.clash}`);
+                }
+            })
+        }
+
+        [...joinBtn].forEach(button => {
+            button.onclick = show;
+        })
+    </script>
+</body>
+</html>

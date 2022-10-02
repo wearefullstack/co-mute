@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,400;1,200;1,400&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 600px;
+    background: linear-gradient(rgba(116, 114, 106, 0.933), rgb(28, 26, 23));
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+header div button {
+    margin-left: 30px;
+    cursor: pointer;
+    padding: 13px;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    border: none;
+    color: white;
+    transition: 0.35s;
+    border-radius: 25px;
+}
+
+header div button:hover {
+    background: rgb(128, 128, 128);
+    color: black;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;}
+
+.pp {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background: url('pp.png');
+    background-size: cover;
+    border: 1px solid rgb(127, 83, 20);
+    position: absolute;
+    top: 7%;
+    left: 11%;
+    display: inline-block;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.7);
+}
+
+.name {
+    display: flex;
+    gap: 25px;
+    font-size: 30px;
+    margin: 0 0 50px 340px;
+    border-left: 2px dashed rgb(7, 6, 6);
+    padding: 0 0 0 60px;
+    height: 50px;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: auto;
+    
+}
+
+.name::-webkit-scrollbar {
+    display: none;
+}
+
+.details div:nth-child(3) {
+    margin: -40px 0 0 430px;
+    display: flex;
+    font-size: 13px;
+    gap: 40px;
+}
+
+.phone {
+    border-left: 1.5px dashed rgb(7, 6, 6);
+    padding: 0 0 0 32px;
+}
+
+.details {
+    position: relative;
+    background: linear-gradient(rgb(144, 139, 128), rgb(8, 7, 6));
+    /* width: fit-content; */
+    padding: 100px 40px 80px 40px;
+    box-sizing: border-box;
+    /* display: grid; */
+    line-height: 60px;
+    /* text-align: center; */
+}
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 0;
+    height: 600px;
+    background: linear-gradient(rgb(100, 96, 90), rgb(23, 22, 20));
+    box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.7);
+    color: white;
+    /* width: 500px; */
+}
+
+form h1 {
+    margin-bottom: 20px;
+} 
+
+.profile input {
+    padding: 13px;
+    width: 300px;
+    margin-bottom: 15px;
+    outline: none;
+    border-radius: 10px;
+    border: none;
+}
+
+input[type=submit] {
+    width: 100%;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    border: none;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.noMatch, .pwNoMatch {
+    color: red;
+    font-size: 13px;
+    margin: -10px 0 10px
+}
+
+input[type=submit]:hover {
+    background: rgb(128, 128, 128);
+    color: black;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    margin: 100px 80px 0;
+    border-top: 2px solid gray;
+    padding-top: 30px;
+    /* gap: 40px; */
+}
+
+.previous button {
+    padding: 13px;
+    border-radius: 25px;
+    margin: 100px 0 0 -150px;
+    border: none;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    transition: 0.35s;
+    color: white;
+}
+
+.previous button:hover {
+    background: rgb(128, 128, 128);
+    color: black;
+}
+
+.stats div:nth-child(1), .stats div:nth-child(2) {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(231, 222, 193);
+}
+
+.view img {
+    width: 20px;
+    height: 20px;
+}
+
+.view {
+    vertical-align: middle;
+}
+
+.prevJoined {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.85);
+    top: 20%;
+    right: 20%;
+    left: auto;
+    height: 400px;
+    width: 800px;
+    padding: 50px;
+    border-radius: 13px;
+    overflow: auto;
+    visibility: hidden;
+}
+
+.prevJoined::-webkit-scrollbar {
+    display: none;
+}
+
+.showPrevJoined {
+    visibility: visible;
+}
+
+.availCarPoolC {
+    position: relative;
+    padding: 15px;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.availCarPool {
+    position: relative;
+    padding: 15px;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    border-radius: 10px;
+    color: white;
+}
+
+.creat, .dateJoined {
+    font-size: 12px;
+    color: rgb(255, 241, 209);
+    margin-left: 81%;
+    border-radius: 10px;
+}
+
+.leaveContainer {
+    position: fixed;
+    top: 13%;
+    left: 24%;
+    /* padding: 12px; */
+    border: none;
+    z-index: 99;
+    width: 1000px;
+    /* background: black;
+    width: 69%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leaveAll {
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    z-index: 99;
+    cursor: pointer;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    color: white;
+    border-radius: 10px;
+}
+
+.leaveAll:hover {
+    background:rgb(8, 8, 7);
+    transition: 0.1s;
+}
+
+.noPoolsAlert {
+    color: white;
+    margin-left: 16%;
+    margin-top: 25%;
+}

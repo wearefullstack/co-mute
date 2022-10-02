@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,400;1,200;1,400&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 99;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    margin-left: -220px;
+}
+
+header ul li {
+    list-style: none;
+    /* transition: 0.25s; */
+}
+
+header ul {
+    display: flex;
+    /* justify-content: space-around; */
+    gap: 100px;
+    align-items: center;
+    margin-right: -200px;
+    padding: 13px 20px;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: white;
+    transition: 0.25s;
+}
+
+header ul li:nth-child(1) a:hover, header ul li:nth-child(2) a:hover {
+    color: black;
+}
+
+.out {
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    padding: 13px 20px;
+    transition: 0.45s;
+    margin-left: 50px;
+    border-radius: 25px;
+}
+
+.out:hover {
+    background: rgb(12, 11, 11);
+    color: white;
+}
+
+.userName {
+    color: rgb(238, 231, 217);
+    text-decoration: none;
+    transition: 0.25s;
+}
+
+.userName:hover {
+    color: rgb(53, 43, 27);
+}
+
+main {
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    flex-direction: column;
+    margin-top: 8.08%;
+    background: linear-gradient(rgb(227, 225, 221), rgb(86, 83, 83));
+    height: 84.4vh;
+    overflow: auto;
+}
+
+main::-webkit-scrollbar {
+    display: none;
+}
+
+main div {
+    position: relative;
+    padding: 25px;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    border-radius: 10px;
+    color: white;
+    margin: 20px;
+}
+
+
+main div span {
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.dateCreated {
+    position: absolute;
+    bottom: -9px;
+    right: 2px;
+    color: gray;
+    font-size: 13px;
+}
+
+main div button {
+    position: absolute;
+    top: 20px; 
+    right: 20px;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+    color: white;
+    transition: 0.4s ease-in-out;
+}
+
+main div button:hover {
+    background: rgb(12, 11, 11);
+    color: white;
+}
+
+.noPool {
+    margin: auto;
+    color: white;
+}
+
+.searchAllPools {
+    padding: 13px;
+    width: 400px;
+    margin-left: 36%;
+    margin-top: 20px;
+    border-radius: 23px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.35s;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33), rgb(34, 33, 33));
+}
+
+.searchAllPools:hover {
+    background: rgb(128, 128, 128);
+    color: black;
+}

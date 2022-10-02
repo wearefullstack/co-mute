@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,400;1,200;1,400&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+body {
+    position: relative;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 40px;
+    gap: 80px;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 100px;
+    padding: 40px;
+    color: white;
+    background: url('generalP.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 90vh;
+    border-radius: 0;
+}
+
+.welcomeTxt {
+    line-height: 150px;
+    height: 75%;
+    color: rgb(0, 0, 0);
+}
+
+.welcomeTxt h1 {
+    font-size: 65px;
+    margin-top: 10%;
+}
+
+.welcomeTxt h4 {
+    font-size: 30px;
+    line-height: 40px;
+}
+
+.welcomeTxt a {
+    text-decoration: none;
+    color: white;
+    padding: 15px 40px;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33));
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.welcomeTxt a:hover {
+    padding: 15px 60px;
+}
+
+.login {
+        background: rgba(0, 0, 0, 0.8);
+        height: 450px;
+        width: 500px;
+        /* padding: 20px 200px; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        position: relative;
+        border-radius: 10px;
+}
+
+form h1 {
+    margin: -40px 0 30px 0;
+}
+
+input[type=email], input[type=password] {
+    width: 380px;
+    padding: 12px;
+    outline: none;
+    border: none;
+    margin: 10px 0 10px 0;
+    border-radius: 10px;
+}
+
+.login form input[type=submit] {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33));
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.login form input[type=submit]:hover {
+    opacity: 0.8;
+}
+
+.login p {
+    position: absolute;
+    bottom: 90px;
+    left: 220px;
+    text-decoration: none;
+} 
+
+.login a {
+    color: blue;
+}
+
+.searchTravelOpps {
+    position: absolute;
+    top: 20%;
+    left: 23%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    width: 250px;
+    color: white;
+    visibility: hidden;
+    /* visibility: hidden; */
+    border-radius: 10px;
+}
+
+.showSearchForm {
+    visibility: visible;
+}
+
+.searchTravelOpps input[type=date], input[type=text], input[type=time] {
+    padding: 5px;
+    margin: 2px 0 10px;
+    width: 94%;
+    outline: none;
+    border-radius: 7px;
+    border: none;
+}
+
+.searchTravelOpps input[type=submit] {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33));
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.searchTravelOpps input[type=submit]:hover {
+    opacity: 0.8;
+}
+
+section div {
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: -70px;
+    right: -25px;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+}
+
+.close:hover {
+    background: linear-gradient(rgb(170, 165, 154),rgb(34, 33, 33));
+    color: white;
+}
+
+.emailError, .passwordError {
+    color: red;
+    font-size: 12px;
+}
+
+.emailError {
+    margin-bottom: 10px;
+}

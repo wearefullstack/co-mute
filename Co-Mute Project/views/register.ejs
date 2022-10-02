@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Mute | <%= title %></title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <main>
+        <div class="register">
+            <form>
+                <h1>Register as a new user</h1>
+                <label for="name">Name:</label> <br>
+                <input type="text" name="name" placeholder="e.g Mpumelelo" required> <br>
+                <label for="surname">Surname:</label> <br>
+                <input type="text" name="surname" placeholder="e.g Mpanza" required> <br>
+                <label for="phone">Cell number:</label> <br>
+                <input type="number" name="number" placeholder="e.g 0123456789"> <br>
+                <label for="email">Email:</label> <br>
+                <input type="email" name="email" placeholder="example@gmail.com" required> <br>
+                <div class="emailError"></div>
+                <label for="password">Password <span style="font-size: 15px; color: gray;">(6 or more characters)</span>:</label> <br>
+                <input type="password" name="password" placeholder="********" required>
+                <div class="passwordError"></div>
+                <input type="submit" value="Register">
+            </form> 
+            <a href="/">Back to Login page</a>
+        </div>
+        <div class="img">
+            <img src="fuel.jpg" style="width: 100%; height: 100%;">
+        </div>
+    </main>
+
+    <script>
+        const form = document.querySelector('form');
+        const emailErr = document.querySelector('.emailError');
+        const passwordErr = document.querySelector('.passwordError')
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const response = await fetch('/general', {
+                method: 'POST',
+                headers: { "Content-type": "application/json"},
+                body: JSON.stringify({
+                    name: form.name.value,
+                    surname: form.surname.value,
+                    number: form.number.value,
+                    email: form.email.value,
+                    password: form.password.value
+                })
+            })
+
+            const data = await response.json();
+
+            if (data.redirect === "") {
+                emailErr.textContent = data.email;
+                passwordErr.textContent = data.password;
+            }
+            else {
+                window.location.href = data.redirect;
+            }
+        })
+    </script>
+</body>
+</html>

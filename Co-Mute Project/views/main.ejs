@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Mute | Home</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <a href="/main" class="logo">
+            <img src="LOGO.png" style="width: 160px; height: 150px; margin-top: -30px;">
+        </a>
+        <button class="view">View My Car-pool List</button>
+        <button class="create">Register New Car-pool opportunity</button>
+        <p>Welcome, <a href="/profile" class="userName"><span><%= user.name %></span></a>
+    </header>
+    <section class="viewCreated"></section>
+    
+    <main class="main">
+        <div class="message">
+            <h1><span class="top">Alleviate the press<span style="color: black;">ures of rising fuel</span> prices <br> so you can</span> save on travelling and vehicle maintenance costs.</h1>
+            <h5>Less Visits to the Petrol Station | <span class="top">Extra saving on vehicle maintenance |</span> More saving on car insurance | <span class="top">More money to you</span></h5>
+        </div>
+        <div class="action">
+            <button class="search">Search Travel Opportunities</button>
+            <button class="joined" id="<%= user._id %>">View all Joined Car-pool Opportunities</button>
+        </div>
+    </main>
+    
+    <section class="regNew">
+        <form class="regform">
+            <label for="departureTime">Depature time:</label> <br>
+            <input type="time" name="departureTime"required> <br>
+            <label for="arrivalTime">Expected Arrival time:</label> <br>
+            <input type="time" name="arrivalTime" required> <br>
+            <label for="origin">Origin:</label> <br>
+            <input type="text" name="origin" placeholder="e.g Observatory" required> <br>
+            <label for="availability">Days available:</label> <br>
+            From: <input type="date" name="fromDate" required> <br>
+            To: <input type="date" name="toDate" required> <br>
+            <label for="destination">Destination:</label> <br>
+            <input type="text" placeholder="e.g Waterfront" name="destination" required> <br>
+            <label for="seats">Available seats:</label> <br>
+            <input type="number" placeholder="e.g 4" name="seats" required> <br>
+            <label for="owner">Owner/Leader:</label> <br>
+            <input type="text" placeholder="e.g Mpumelelo" name="owner" required> <br>
+            <label for="notes">Notes:</label> <br>
+            <textarea name="notes" id="" placeholder="Type notes about your car-pool opportunity here" cols="30" rows="5" maxlength="180"></textarea> <br>
+            <input type="submit" value="Add Car-pool">
+        </form>
+    </section>
+
+    <section class="searchTravelOpps">
+        <div>
+            <button class="closee">Close</button>
+        </div>
+        <form action="/carPools" method="post">
+            <label for="days">Day:</label> <br>
+            <input type="date" name="day" required> <br>
+            <label for="from">From:</label> <br>
+            <input type="text" name="from" class="from" placeholder="e.g Observatory"> <br>
+            <label for="to">To:</label> <br>
+            <input type="text" name="to" placeholder="e.g Waterfront"> <br>
+            <label for="depTime">Departure time:</label> <br>
+            <input type="time" name="depTime"> <br>
+            <input type="submit" class="searchPools" value="Search">
+        </form> 
+    </section>
+
+    <section class="joinedBlocks"></section>
+
+    <script>
+        
+        const reg_form = document.querySelector('.regNew');
+        const create_car_pool = document.querySelector('.create');
+        const search = document.querySelector('.searchTravelOpps');
+        const searchBtn = document.querySelector('.search');
+        const main = document.querySelector('.main');
+        const joined = document.querySelector('.joined');
+        const joinedBlocks = document.querySelector('.joinedBlocks');
+        const created = document.querySelector('.view');
+        const viewCreated = document.querySelector('.viewCreated')
+        const form = document.querySelector('.regform');
+        const closee = document.querySelector('.closee')
+
+        // registration of new car-pool
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const response = await fetch(`/regNew/${joined.id}`, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json'},
+                body: JSON.stringify({
+                    departureTime: form.departureTime.value,
+                    arrivalTime: form.arrivalTime.value,
+                    origin: form.origin.value,
+                    fromDate: form.fromDate.value,
+                    toDate: form.toDate.value,
+                    destination: form.destination.value,
+                    seats: form.seats.value,
+                    owner: form.owner.value,
+                    notes: form.notes.value
+                })
+            })
+
+            const data = await response.json();
+
+            
+            if (data.poolClash === "") { /* if there is no clash of time-frames*/
+                reg_form.classList.remove('showCreateForm');
+                alert(`${data.alert}`)
+
+            }
+            else { /* if there is clash of time-frames*/
+                alert(`${data.poolClash}`)
+            }
+        })
+
+        closee.addEventListener('click', () => {
+            search.classList.remove('showSearchForm');
+        })
+
+        searchBtn.addEventListener('click', () => {
+            search.classList.toggle('showSearchForm');
+            if (reg_form.classList.contains('showCreateForm')) {
+                reg_form.classList.remove('showCreateForm')
+            }
+            if (joinedBlocks.classList.contains('showJoinedBlocks')) {
+                joinedBlocks.classList.remove('showJoinedBlocks')
+            }
+            if(viewCreated.classList.contains('showCreated')) {
+                viewCreated.classList.remove('showCreated');
+            }
+        })
+
+        create_car_pool.addEventListener('click', () => {
+            reg_form.classList.toggle('showCreateForm');
+            viewCreated.classList.remove('showCreated');
+            if (search.classList.contains('showSearchForm') || joinedBlocks.classList.contains('showJoinedBlocks')) {
+                search.classList.remove('showSearchForm')
+            }
+            if (joinedBlocks.classList.contains('showJoinedBlocks')) {
+                joinedBlocks.classList.remove('showJoinedBlocks')
+            }
+        })
+
+        main.addEventListener('click', () => {
+
+            viewCreated.classList.remove('showCreated');
+
+            // joinedBlocks.classList.remove('showJoinedBlocks')
+
+            if (reg_form.classList.contains('showCreateForm')) {
+                reg_form.classList.remove('showCreateForm');
+                // joinedBlocks.classList.remove('showJoinedBlocks')
+            }
+        })
+
+        created.addEventListener('click', (event) => {
+            viewCreated.classList.toggle('showCreated');
+            joinedBlocks.classList.remove('showJoinedBlocks');
+            search.classList.remove('showSearchForm');
+            reg_form.classList.remove('showCreateForm');
+
+            viewCreated.innerHTML = "";
+            fetch(`/created/${joined.id}`, {method: "GET"})
+            .then(reply => reply.json())
+            .then(data => {
+                // const user = data.user;
+                // const userJoinedPools = user.joined_carPools;
+                const cars = data.pool;
+
+                const container = document.createElement('div')
+                    container.className = 'leaveContainer';
+                    container.innerHTML = '<button class="leaveAll" onclick="viewCreated.classList.remove(\'showCreated\');">Close</button>'
+                    viewCreated.appendChild(container);
+
+                if (cars.length !== 0) {
+                    cars.forEach(pool => {
+
+                        const months = {
+                                        1: "Jan",
+                                        2: "Feb",
+                                        3: "Mar",
+                                        4: "Apr",
+                                        5: "May",
+                                        6: "Jun",
+                                        7: "Jul",
+                                        8: "Aug",
+                                        9: "Sep",
+                                        10: "Oct",
+                                        11: "Nov",
+                                        12: "Dec",
+                                       };
+
+                        const creationDate = new Date(pool.createdAt).getDate() + ' ' + months[new Date(pool.createdAt).getMonth()+1] + ' ' + new Date(pool.createdAt).getFullYear();
+                        const joinedCar = document.createElement('div');
+                        joinedCar.className = 'availCarPool';
+                        joinedCar.innerHTML = `<div id="${pool.id}" class="availCarPool">
+                                                                <div>Departure time: ${pool.departure_time}</div>
+                                                                    <div>Arrival time: ${pool.arrival_time}</div>
+                                                                    <div>Origin: ${pool.origin}</div>
+                                                                    <div>Available from ${pool.days_available[0]} to ${pool.days_available[1]}</div>
+                                                                    <div>Destination: ${pool.destination}</div>
+                                                                    <div>Seats available: ${pool.available_seats}</div>
+                                                                    <div>Owner: ${pool.owner}</div>
+                                                                    <span class="creat">Date created: ${creationDate}</span>
+                                                </div>`
+                        viewCreated.append(joinedCar);
+                    })
+                }
+                else {
+
+                    const container = document.createElement('div')
+                    container.className = 'leaveContainer';
+                    container.innerHTML = '<button class="leaveAll" onclick="viewCreated.classList.remove(\'showCreated\');">Close</button>'
+                    viewCreated.appendChild(container);
+
+                    viewCreated.innerHTML += '<h1 class="createdAlert">You have not created any car-pool opportunity</h1>'
+                }
+            })
+        })
+
+        joined.addEventListener('click', (event) => {
+
+            joinedBlocks.classList.toggle('showJoinedBlocks');
+            viewCreated.classList.toggle('showCreated');
+
+            if (search.classList.contains('showSearchForm') || joinedBlocks.classList.contains('showJoinedBlocks')) {
+                search.classList.remove('showSearchForm')
+            }
+
+            joinedBlocks.innerHTML = "";
+
+            fetch(`view-joined/${event.target.id}`, {method: 'POST'})
+            .then(res => res.json())
+            .then(cars => {
+                
+
+                const pools = cars.availCars;
+                
+                if (pools.length === 0 || pools[0] === "") { 
+                    joinedBlocks.innerHTML = "";
+
+                    const container = document.createElement('div')
+                    container.className = 'leaveContainer';
+                    container.innerHTML = '<button class="leaveAll" onclick="joinedBlocks.classList.remove(\'showJoinedBlocks\');">Close</button>'
+                    joinedBlocks.appendChild(container);
+
+                    const alert = document.createElement('h1');
+                    alert.className = 'noPoolsAlert'
+                    alert.textContent = 'You have not joined any car-pool!'
+                    joinedBlocks.appendChild(alert)
+                }
+                else {
+                    joinedBlocks.innerHTML = "";
+
+                    const container = document.createElement('div')
+                    container.className = 'leaveContainer';
+                    container.innerHTML = '<button class="leaveAll" onclick="joinedBlocks.classList.remove(\'showJoinedBlocks\');">Close</button>'
+                    joinedBlocks.appendChild(container);
+
+                    pools.forEach(carPool => {
+
+                        const Poolid = carPool._id;
+                        const id = Poolid + '-' + joined.id
+                
+                        if (carPool.notes === "") {
+                            const car = document.createElement('div');
+                        
+                            car.innerHTML = `<div class="availCarPool" id="${carPool._id}">
+                                                                    <div>Departure time: ${carPool.departure_time}</div>
+                                                                        <div>Arrival time: ${carPool.arrival_time}</div>
+                                                                        <div>Origin: ${carPool.origin}</div>
+                                                                        <div>Available from ${carPool.days_available[0]} to ${carPool.days_available[1]}</div>
+                                                                        <div>Destination: ${carPool.destination}</div>
+                                                                        <div>Owner: ${carPool.owner}</div>
+                                                                        <div class="dateJoined">Date joined: ${carPool.dateJoined}</div>
+                                                                        <button class="leavePool" id="${id}" onclick="deletePool(this)">Leave car-pool</button>
+                                            </div>`;
+                            joinedBlocks.appendChild(car);
+
+                        }
+                        else {
+                            const car = document.createElement('div');
+                            car.innerHTML = `<div id="${carPool._d}" class="availCarPool"><div>Departure time: ${carPool.departure_time}</div>
+                                                                                <div>Arrival time: ${carPool.arrival_time}</div>
+                                                                                <div>Origin: ${carPool.origin}</div>
+                                                                                <div>Available from ${carPool.days_available[0]} to ${carPool.days_available[1]}</div>
+                                                                                <div>Destination: ${carPool.destination}</div>
+                                                                                <div>Owner: ${carPool.owner}</div>
+                                                                                <div>Notes: ${carPool.notes}</div>
+                                                                                <div class="dateJoined">Date joined: ${carPool.dateJoined}</div>
+                                                                                <button class="leavePool" id="${id}" onclick="deletePool(this)">Leave car-pool</button>
+                                            </div>`;
+                            joinedBlocks.append(car);
+                    }
+                  })
+                }
+            })
+        })
+
+        const deletePool = btn => {
+
+            // send a request to leave a car-pool opportunity
+            const poolIdarr = btn.id.split('-');
+            fetch(`/deletePool/${btn.id}`, {method: 'DELETE'})
+
+            document.getElementById(`${poolIdarr[0]}`).remove();
+        }
+    </script>
+</body>
+</html>
