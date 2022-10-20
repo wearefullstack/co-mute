@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Web.Http.ExceptionHandling;
+using Microsoft.Owin.Security.OAuth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -10,6 +12,12 @@ namespace CoMute.Web
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            // Configure Web API to use only bearer token authentication.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+            //TODO GlobalExceptionHandler
+            //config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

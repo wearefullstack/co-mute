@@ -23,5 +23,6 @@ namespace CoMute.Web.Controllers.API
 
             return Request.CreateResponse(HttpStatusCode.Created, user);
         }
+       
     }
 }

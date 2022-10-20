@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CoMuteVersion" Class="EntitiesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-FQ53KOIK\SQL_2019;Initial Catalog=CoMuteVersion;Persist Security Info=True;User ID=sa" SettingsObjectName="CoMute.DL.Properties.Settings" SettingsPropertyName="CoMuteVersionConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="AccessControl.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Pasword" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Association Name="User_CarPool" Member="CarPools" ThisKey="UserId" OtherKey="UserId" Type="CarPool" />
+      <Association Name="User_JoinLeaveCarPool" Member="JoinLeaveCarPools" ThisKey="UserId" OtherKey="UserId" Type="JoinLeaveCarPool" />
+    </Type>
+  </Table>
+  <Table Name="Config.CarPool" Member="CarPools">
+    <Type Name="CarPool">
+      <Column Name="CarPoolId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DepartureTime" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="ExpectedArrivalTime" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="Origin" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DaysAvailable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Destination" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AvailableSeats" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OwnerLeader" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Association Name="CarPool_JoinLeaveCarPool" Member="JoinLeaveCarPools" ThisKey="CarPoolId" OtherKey="CarPoolId" Type="JoinLeaveCarPool" />
+      <Association Name="User_CarPool" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Config.JoinLeaveCarPool" Member="JoinLeaveCarPools">
+    <Type Name="JoinLeaveCarPool">
+      <Column Name="JoinLeaveCarPoolId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CarPoolId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OwnerLeader" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DateAdded" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Association Name="CarPool_JoinLeaveCarPool" Member="CarPool" ThisKey="CarPoolId" OtherKey="CarPoolId" Type="CarPool" IsForeignKey="true" />
+      <Association Name="User_JoinLeaveCarPool" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Entities">
+  <DataContextMoniker Name="/EntitiesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="9377acf2-d9d0-4b4f-990b-68ee60d111bf" absoluteBounds="5.75, 2.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/EntitiesDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b513343d-1c83-469c-9f4f-a4a15842990e" absoluteBounds="5.765, 2.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6153f641-e357-406d-b5bc-38ee3f6e74fc" absoluteBounds="8.625, 1.25, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/EntitiesDataContext/CarPool" />
+      <nestedChildShapes>
+        <elementListCompartment Id="48057b9c-b983-4827-be99-bbdbce656920" absoluteBounds="8.64, 1.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.75 : 3.27485270182292); (8.625 : 3.27485270182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EntitiesDataContext/User/User_CarPool" />
+      <nodes>
+        <classShapeMoniker Id="9377acf2-d9d0-4b4f-990b-68ee60d111bf" />
+        <classShapeMoniker Id="6153f641-e357-406d-b5bc-38ee3f6e74fc" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="404d4873-2802-4406-a729-7a38ea7ca0bc" absoluteBounds="1.75, 4.25, 2, 1.9631982421875">
+      <DataClassMoniker Name="/EntitiesDataContext/JoinLeaveCarPool" />
+      <nestedChildShapes>
+        <elementListCompartment Id="072960fc-ae1c-4ffc-ad6b-683cf43f34f4" absoluteBounds="1.7649999999999997, 4.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.625 : 1.78125); (2.75 : 1.78125); (2.75 : 4.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EntitiesDataContext/CarPool/CarPool_JoinLeaveCarPool" />
+      <nodes>
+        <classShapeMoniker Id="6153f641-e357-406d-b5bc-38ee3f6e74fc" />
+        <classShapeMoniker Id="404d4873-2802-4406-a729-7a38ea7ca0bc" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 3.2812475); (3.2812525 : 3.2812475); (3.2812525 : 4.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EntitiesDataContext/User/User_JoinLeaveCarPool" />
+      <nodes>
+        <classShapeMoniker Id="9377acf2-d9d0-4b4f-990b-68ee60d111bf" />
+        <classShapeMoniker Id="404d4873-2802-4406-a729-7a38ea7ca0bc" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
