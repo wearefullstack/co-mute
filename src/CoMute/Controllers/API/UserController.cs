@@ -1,8 +1,5 @@
 ﻿using CoMute.Web.Models;
 using CoMute.Web.Models.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -18,7 +15,9 @@ namespace CoMute.Web.Controllers.API
             {
                 Name = registrationRequest.Name,
                 Surname = registrationRequest.Surname,
-                EmailAddress = registrationRequest.EmailAddress
+                EmailAddress = registrationRequest.EmailAddress,
+                PhoneNumber = registrationRequest.PhoneNumber,
+                Password = registrationRequest.Password
             };
 
             return Request.CreateResponse(HttpStatusCode.Created, user);
