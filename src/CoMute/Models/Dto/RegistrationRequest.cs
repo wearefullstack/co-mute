@@ -23,6 +23,8 @@ namespace CoMute.Web.Models.Dto
         public string PhoneNumber { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
+        [StringLength(255, ErrorMessage = "Password should have 8 characters minimum", MinimumLength = 8)]
         public string Password { get; set; }
     }
 }

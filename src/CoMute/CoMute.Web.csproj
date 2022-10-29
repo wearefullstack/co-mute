@@ -139,6 +139,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210292234462_UserTable.cs" />
+    <Compile Include="Migrations\202210292234462_UserTable.designer.cs">
+      <DependentUpon>202210292234462_UserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dto\LoginRequest.cs" />
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
     <Compile Include="Models\User.cs" />
@@ -190,6 +195,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202210292234462_UserTable.resx">
+      <DependentUpon>202210292234462_UserTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
