@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoMute.Web.Models
 {
@@ -16,5 +12,7 @@ namespace CoMute.Web.Models
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
+        public virtual ICollection<CarPool> CarPools { get; set; }
+        public virtual ICollection<CarPoolMembership> CarPoolMemberships { get; set; }
     }
 }

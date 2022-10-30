@@ -20,9 +20,26 @@ namespace CoMute.Web.Controllers.Web
         {
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            if (TempData.ContainsKey("LoginRequest"))
+            {
+                LoginRequest loginRequest = (LoginRequest)TempData["LoginRequest"];
+                HttpResponseMessage response = await UserService.LoginUser(loginRequest);
+                if (response.IsSuccessStatusCode)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Login fail");
+                    return View(loginRequest);
+                }
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]

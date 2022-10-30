@@ -21,5 +21,16 @@ namespace CoMute.Web.Service
             HttpResponseMessage response = await _client.PostAsync("user/add", stringContent);
             return response;
         }
+
+        public static async Task<HttpResponseMessage> LoginUser(LoginRequest loginRequest)
+        {
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string content = JsonConvert.SerializeObject(loginRequest);
+            StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync("authentication", stringContent);
+            return response;
+        }
     }
 }
