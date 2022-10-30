@@ -1,4 +1,4 @@
-﻿; (function (root, $) {
+(function (root, $) {
     $('#register').on('submit', function (ev) {
         ev.preventDefault();
 
@@ -32,9 +32,9 @@
             return;
         }
 
-        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
-            // TODO: Navigate away...
-            alert("Data: " + data + "\nStatus: " + status);
+        $.post('/api/User/CreateUser', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
+            alert("User: " + data.name + " created!!!");
+            window.location.replace('/home');
         })
         .fail(function (data) {
             var $alert = $("#error");
