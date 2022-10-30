@@ -26,5 +26,13 @@ namespace CoMute.Web.Models.Dto
         [DataType(DataType.Password)]
         [StringLength(255, ErrorMessage = "Password should have 8 characters minimum", MinimumLength = 8)]
         public string Password { get; set; }
+
+        [Display(Name = "Confirm Password")]
+        [Required(ErrorMessage = "Confirm Password is required")]
+        [DataType(DataType.Password)]
+        [StringLength(255, ErrorMessage = "Password should have 8 characters minimum", MinimumLength = 8)]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
+
     }
 }

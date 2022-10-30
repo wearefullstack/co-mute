@@ -12,6 +12,8 @@ namespace CoMute.Web.Controllers.API
         /// </summary>
         /// <param name="loginRequest">The user's login details</param>
         /// <returns></returns>
+        [Route("api/authentication")]
+        [HttpPost]
         public HttpResponseMessage Post(LoginRequest loginRequest)
         {
             return Request.CreateResponse(HttpStatusCode.NotFound);
