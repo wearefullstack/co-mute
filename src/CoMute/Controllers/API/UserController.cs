@@ -32,8 +32,12 @@ namespace CoMute.Web.Controllers.API
 
             _comuteContext.Users.Add(user);
             await _comuteContext.SaveChangesAsync();
-
-            return Request.CreateResponse(HttpStatusCode.Created, user);
+            LoginRequest loginRequest = new LoginRequest()
+            {
+                Email = user.EmailAddress,
+                Password = user.Password
+            };
+            return Request.CreateResponse(HttpStatusCode.Created, loginRequest);
         }
     }
 }

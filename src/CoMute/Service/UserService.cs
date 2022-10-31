@@ -1,5 +1,6 @@
 ﻿using CoMute.Web.Models.Dto;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -31,6 +32,11 @@ namespace CoMute.Web.Service
             StringContent stringContent = new StringContent(content, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await _client.PostAsync("authentication", stringContent);
             return response;
+        }
+
+        public static async Task<HttpResponseMessage> GetCarPoolMemberships(int UserId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

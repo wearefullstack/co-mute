@@ -20,10 +20,23 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        CoMute.Web.Models.Dto.UserDto profile = Session[CoMute.Web.Models.Constants.PROFILE_DATA] as CoMute.Web.Models.Dto.UserDto;
+                        <li title="Profile">@Html.ActionLink(profile.Name, "Profile", "User")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
+                    }
+                    <li>@Html.ActionLink("Register", "Register", "Account")</li>
                     <li>@Html.ActionLink("Search", "Index", "Search")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+
+                    }
                 </ul>
             </div>
         </div>

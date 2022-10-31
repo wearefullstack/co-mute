@@ -17,6 +17,5 @@ namespace CoMute.Web.Models
         public int UserId { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<AvailableDay> AvailableDays { get; set; }
-        
     }
 }

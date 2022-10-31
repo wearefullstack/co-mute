@@ -31,7 +31,7 @@ namespace CoMute.Web.Models.Dto
         [Required(ErrorMessage = "Confirm Password is required")]
         [DataType(DataType.Password)]
         [StringLength(255, ErrorMessage = "Password should have 8 characters minimum", MinimumLength = 8)]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
     }

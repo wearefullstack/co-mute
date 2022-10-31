@@ -42,8 +42,7 @@ namespace CoMute.Web.Data
             modelBuilder.Entity<CarPool>().Property(c => c.AvailableSeats).IsRequired();
             modelBuilder.Entity<AvailableDay>().Property(d => d.Day).IsRequired();
             modelBuilder.Entity<CarPoolMembership>().Property(m => m.CarPoolId).IsRequired();
-
-
+            modelBuilder.Entity<CarPoolMembership>().Property(m => m.DateJoined).IsRequired();
 
             //Configure optional columns
             modelBuilder.Entity<User>().Property(u => u.PhoneNumber).IsOptional();
