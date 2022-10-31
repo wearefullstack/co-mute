@@ -21,7 +21,7 @@ namespace CoMute.Web.Controllers.API
         [HttpPost]
         public async Task<HttpResponseMessage> Post(RegistrationRequest registrationRequest)
         {
-            var user = new User()
+            User user = new User()
             {
                 Name = registrationRequest.Name,
                 Surname = registrationRequest.Surname,

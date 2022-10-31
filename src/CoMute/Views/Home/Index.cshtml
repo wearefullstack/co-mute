@@ -1,7 +1,59 @@
-﻿
+﻿@using CoMute.Web.Models.Dto
+@model List<CoMute.Web.Models.Dto.CarPoolDto>
 @{
     ViewBag.Title = "Home";
 }
 
-<h2>Home</h2>
+<h2>Car Pools</h2>
+
+@if (Model == null)
+{
+    <p>
+        <strong>You are a member of 0 car pools</strong>
+    </p>
+    <p>
+        <strong>@Html.ActionLink("Find car pools to join", "Index", "Search")</strong>
+    </p>
+}
+else
+{
+    <p>
+        <h3>Joined Car Pools: @Model.Count</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Departure Time</th>
+                    <th>Expected Arrival Time</th>
+                    <th>Available Seats</th>
+                    <th>Date Joined</th>
+                    <th>Available Days</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (CarPoolDto carPool in Model)
+                {
+                    <tr>
+                        <td>@carPool.Origin</td>
+                        <td>@carPool.Destination</td>
+                        <td>@carPool.DepartureTime</td>
+                        <td>@carPool.ExpectedArrivalTime</td>
+                        <td>@carPool.AvailableSeats</td>
+                        <td>@carPool.DateJoined</td>
+                        <td>@carPool.AvailableDaysToString()</td>
+                        <td>@carPool.Notes</td>
+                        <td>@Html.ActionLink("Leave Car Pool", "LeaveCarPool", "Home", new { carpoolMembershipId = carPool.CarPoolMembershipId })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </p>
+
+    <p>
+        <strong>@Html.ActionLink("Find car pools to join", "Index", "Search")</strong>
+    </p>
+}
 

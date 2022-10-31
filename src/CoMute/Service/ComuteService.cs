@@ -1,6 +1,5 @@
 ﻿using CoMute.Web.Models.Dto;
 using Newtonsoft.Json;
-using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CoMute.Web.Service
 {
-    public static class UserService
+    public static class ComuteService
     {
         private static readonly HttpClient _client = ServiceSingleton.GetInstance;
 
@@ -34,9 +33,22 @@ namespace CoMute.Web.Service
             return response;
         }
 
-        public static async Task<HttpResponseMessage> GetCarPoolMemberships(int UserId)
+        public static async Task<HttpResponseMessage> GetCarPoolMemberships(int userId)
         {
-            throw new NotImplementedException();
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await _client.GetAsync($"user/{userId}/carpool/memberships");
+            return response;
+        }
+
+        public static async Task<HttpResponseMessage> GetCarPool(int carpoolId)
+        {
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await _client.GetAsync($"carpool/{carpoolId}");
+            return response;
         }
     }
 }

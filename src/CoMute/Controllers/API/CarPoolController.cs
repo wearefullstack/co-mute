@@ -44,5 +44,28 @@ namespace CoMute.Web.Controllers.API
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
+
+        [Route("api/user/{id}/carpool/memberships")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetCarPoolMemberships(int id)
+        {
+            User user = await _comuteContext.Users.FindAsync(id);
+            if (user != null)
+            {
+                _comuteContext.Entry(user).Collection(s => s.CarPoolMemberships).Load();
+                if (user.CarPoolMemberships.Count == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, user.CarPoolMemberships);
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
     }
 }

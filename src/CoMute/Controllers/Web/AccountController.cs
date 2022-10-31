@@ -21,7 +21,7 @@ namespace CoMute.Web.Controllers.Web
             if (TempData.ContainsKey(Constants.LOGIN_REQUEST))
             {
                 LoginRequest loginRequest = (LoginRequest)TempData[Constants.LOGIN_REQUEST];
-                HttpResponseMessage response = await UserService.LoginUser(loginRequest);
+                HttpResponseMessage response = await Service.ComuteService.LoginUser(loginRequest);
                 if (response.IsSuccessStatusCode)
                 {
                     UserDto userDto = await response.Content.ReadAsAsync<UserDto>();
@@ -47,7 +47,7 @@ namespace CoMute.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                HttpResponseMessage response = await UserService.LoginUser(loginRequest);
+                HttpResponseMessage response = await Service.ComuteService.LoginUser(loginRequest);
                 if (response.IsSuccessStatusCode)
                 {
                     UserDto userDto = await response.Content.ReadAsAsync<UserDto>();
@@ -80,7 +80,7 @@ namespace CoMute.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                HttpResponseMessage response = await UserService.RegisterUser(registrationRequest);
+                HttpResponseMessage response = await Service.ComuteService.RegisterUser(registrationRequest);
                 if (response.IsSuccessStatusCode)
                 {
                     LoginRequest loginRequest = await response.Content.ReadAsAsync<LoginRequest>();

@@ -139,6 +139,7 @@
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\Web\AccountController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
+    <Compile Include="Controllers\Web\SearchController.cs" />
     <Compile Include="Controllers\Web\UserController.cs" />
     <Compile Include="Data\ComuteContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -174,7 +175,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ServiceInitialize.cs" />
     <Compile Include="Service\ServiceSingleton.cs" />
-    <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\ComuteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap.css" />
@@ -214,6 +215,7 @@
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
