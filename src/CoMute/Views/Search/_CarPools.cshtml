@@ -1,0 +1,56 @@
+﻿@{ 
+    Layout = null;
+}
+@using CoMute.Web.Models.Dto
+@model List<CoMute.Web.Models.Dto.CarPoolDto>
+@if (Model.Count == 0)
+{
+<div class="container">
+    <p>
+        <strong>There are 0 car pools</strong>
+    </p>
+    <p>
+        <strong>@Html.ActionLink("Create a car pool", "Create", "Home")</strong>
+    </p>
+</div>
+}
+else
+{
+<div class="container">
+    <p>
+        <h3>Car Pools: @Model.Count</h3>
+        <table class="table table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Origin</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Departure Time</th>
+                    <th scope="col">Expected Arrival Time</th>
+                    <th scope="col">Available Seats</th>
+                    <th scope="col">Available Days</th>
+                    <th scope="col">Notes</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (CarPoolDto carPool in Model)
+                {
+                    <tr>
+                        <td>@carPool.Origin</td>
+                        <td>@carPool.Destination</td>
+                        <td>@carPool.DepartureTime</td>
+                        <td>@carPool.ExpectedArrivalTime</td>
+                        <td>@carPool.AvailableSeats</td>
+                        <td>@carPool.AvailableDaysToString()</td>
+                        <td>@carPool.Notes</td>
+                        <td>@Html.ActionLink("Join Car Pool", "Join", "Home", new { carpoolId = carPool.Id, arrival = carPool.ExpectedArrivalTime, departure = carPool.DepartureTime },null)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </p>
+</div>
+}
+
+

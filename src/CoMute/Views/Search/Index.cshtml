@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+<section>
+    <strong>Search Parameters</strong>
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" id="origin" class="form-control" placeholder="Origin"/>
+            <input type="text" id="destination" class="form-control" placeholder="Destination"/>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row">
+        <div id="carpools"></div>
+    </div>
+</section>
+
+@section scripts{
+<script type="text/javascript" src="~/Scripts/Search/search.js"></script>
+}
+

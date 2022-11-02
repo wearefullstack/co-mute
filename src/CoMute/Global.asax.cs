@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CoMute.Web.Service;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -18,6 +20,8 @@ namespace CoMute.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ServiceInitialize.Init(ConfigurationManager.AppSettings["BaseUrl"]);
         }
     }
 }

@@ -1,24 +1,59 @@
-﻿@{
+﻿@using CoMute.Web.Models.Dto
+@model List<CoMute.Web.Models.Dto.CarPoolDto>
+@{
     ViewBag.Title = "Home";
 }
 
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <form id="login">
-            <h2 class="text-center">Sign In</h2>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <button class="btn btn-primary btn-block" type="submit" id="sign-in">Sign in</button>
-        </form>
-    </div>
-</div>
+<h2>Car Pools</h2>
 
-<div id="error" class="row row-margin hidden">
-    <div class="col-md-4 col-md-offset-4 alert alert-danger">
-        <p></p>
-    </div>
-</div>
-
-@section scripts {
-    <script type="text/javascript" src="~/Content/js/login.js"></script>
+@if (Model.Count == 0)
+{
+    <p>
+        <strong>You are a member of 0 car pools</strong>
+    </p>
+    <p>
+        <strong>@Html.ActionLink("Find car pools to join", "Index", "Search")</strong>
+    </p>
 }
+else
+{
+    <p>
+        <strong>Joined Car Pools: @Model.Count</strong>
+        <table class="table table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Origin</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Departure Time</th>
+                    <th scope="col">Expected Arrival Time</th>
+                    <th scope="col">Available Seats</th>
+                    <th scope="col">Date Joined</th>
+                    <th scope="col">Available Days</th>
+                    <th scope="col">Notes</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (CarPoolDto carPool in Model)
+                {
+                    <tr>
+                        <td>@carPool.Origin</td>
+                        <td>@carPool.Destination</td>
+                        <td>@carPool.DepartureTime</td>
+                        <td>@carPool.ExpectedArrivalTime</td>
+                        <td>@carPool.AvailableSeats</td>
+                        <td>@carPool.DateJoined</td>
+                        <td>@carPool.AvailableDaysToString()</td>
+                        <td>@carPool.Notes</td>
+                        <td>@Html.ActionLink("Leave Car Pool", "Leave", "Home", new { carpoolMembershipId = carPool.CarPoolMembershipId },null)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </p>
+
+    <p>
+        <strong>@Html.ActionLink("Find car pools to join", "Index", "Search")</strong>
+    </p>
+}
+

@@ -20,15 +20,40 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        CoMute.Web.Models.Dto.UserDto profile = Session[CoMute.Web.Models.Constants.PROFILE_DATA] as CoMute.Web.Models.Dto.UserDto;
+                        if (profile == null)
+                        {
+                            FormsAuthentication.SignOut();
+                        }
+                        <li title="Profile">@Html.ActionLink("Hello " + profile.Name, "Account", "User")</li>
+                        <li>@Html.ActionLink("Created Car Pools", "CarPools", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("My Profile", "Account", "User")</li>
+                        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                    }
                     <li>@Html.ActionLink("Search", "Index", "Search")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+
+                    }
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
+        @if (TempData["Status"] != null)
+        {
+            <div class="alert alert-info alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Status: </strong> @TempData["Status"]
+            </div>
+        }
         @RenderBody()
         <hr />
         <footer class="container">
@@ -38,6 +63,16 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript" src="~/Scripts/spinner.js"></script>
+    <script type="text/javascript" src="~/Scripts/Search/select2.min.js"></script>
+
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#selectedDays").select2();
+        });
+    </script>
 </body>
 </html>
