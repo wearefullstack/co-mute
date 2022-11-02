@@ -5,6 +5,11 @@ namespace CoMute.Web.Models
 {
     public class CarPoolMembership
     {
+        public CarPoolMembership()
+        {
+            DateJoined = DateTime.Now;
+        }
+
         [Key]
         public int Id { get; set; }
         public int UserId { get; set; }

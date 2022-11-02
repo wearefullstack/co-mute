@@ -1,5 +1,6 @@
 ﻿namespace CoMute.Web.Migrations
 {
+    using CoMute.Web.Seed;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -18,6 +19,12 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+
+            SeedData.Init(3);
+            context.Users.AddRange(SeedData.Users);
+            context.CarPools.AddRange(SeedData.CarPools);
+            context.AvailableDays.AddRange(SeedData.AvailableDays);
+            context.SaveChanges();
         }
     }
 }

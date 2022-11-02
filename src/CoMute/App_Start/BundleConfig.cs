@@ -25,7 +25,9 @@ namespace CoMute.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/bootstrap.css",
-                      "~/Content/css/site.css"));
+                      "~/Content/css/site.css",
+                      "~/Content/css/select2.min.css",
+                      "~/Content/css/spinner.css"));
         }
     }
 }

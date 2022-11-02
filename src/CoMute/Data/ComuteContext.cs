@@ -39,7 +39,9 @@ namespace CoMute.Web.Data
             modelBuilder.Entity<CarPool>().Property(c => c.ExpectedArrivalTime).IsRequired();
             modelBuilder.Entity<CarPool>().Property(c => c.Origin).IsRequired();
             modelBuilder.Entity<CarPool>().Property(c => c.Destination).IsRequired();
+            modelBuilder.Entity<CarPool>().Property(c => c.MaximumSeats).IsRequired();
             modelBuilder.Entity<CarPool>().Property(c => c.AvailableSeats).IsRequired();
+            modelBuilder.Entity<CarPool>().Property(c => c.CreatedDate).IsRequired();
             modelBuilder.Entity<AvailableDay>().Property(d => d.Day).IsRequired();
             modelBuilder.Entity<CarPoolMembership>().Property(m => m.CarPoolId).IsRequired();
             modelBuilder.Entity<CarPoolMembership>().Property(m => m.DateJoined).IsRequired();

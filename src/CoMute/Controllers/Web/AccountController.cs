@@ -18,10 +18,15 @@ namespace CoMute.Web.Controllers.Web
         [AllowAnonymous]
         public async Task<ActionResult> Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (TempData.ContainsKey(Constants.LOGIN_REQUEST))
             {
                 LoginRequest loginRequest = (LoginRequest)TempData[Constants.LOGIN_REQUEST];
-                HttpResponseMessage response = await Service.ComuteService.LoginUser(loginRequest);
+                HttpResponseMessage response = await ComuteService.LoginUser(loginRequest);
                 if (response.IsSuccessStatusCode)
                 {
                     UserDto userDto = await response.Content.ReadAsAsync<UserDto>();
@@ -42,12 +47,17 @@ namespace CoMute.Web.Controllers.Web
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public async Task<ActionResult> Login([FromBody] LoginRequest loginRequest)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
-                HttpResponseMessage response = await Service.ComuteService.LoginUser(loginRequest);
+                HttpResponseMessage response = await ComuteService.LoginUser(loginRequest);
                 if (response.IsSuccessStatusCode)
                 {
                     UserDto userDto = await response.Content.ReadAsAsync<UserDto>();
@@ -71,6 +81,11 @@ namespace CoMute.Web.Controllers.Web
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -78,9 +93,14 @@ namespace CoMute.Web.Controllers.Web
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] RegistrationRequest registrationRequest)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
-                HttpResponseMessage response = await Service.ComuteService.RegisterUser(registrationRequest);
+                HttpResponseMessage response = await ComuteService.RegisterUser(registrationRequest);
                 if (response.IsSuccessStatusCode)
                 {
                     LoginRequest loginRequest = await response.Content.ReadAsAsync<LoginRequest>();
@@ -101,5 +121,6 @@ namespace CoMute.Web.Controllers.Web
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
+
     }
 }

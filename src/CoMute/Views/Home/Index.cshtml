@@ -6,7 +6,7 @@
 
 <h2>Car Pools</h2>
 
-@if (Model == null)
+@if (Model.Count == 0)
 {
     <p>
         <strong>You are a member of 0 car pools</strong>
@@ -18,18 +18,18 @@
 else
 {
     <p>
-        <h3>Joined Car Pools: @Model.Count</h3>
-        <table>
+        <strong>Joined Car Pools: @Model.Count</strong>
+        <table class="table table table-striped">
             <thead>
                 <tr>
-                    <th>Origin</th>
-                    <th>Destination</th>
-                    <th>Departure Time</th>
-                    <th>Expected Arrival Time</th>
-                    <th>Available Seats</th>
-                    <th>Date Joined</th>
-                    <th>Available Days</th>
-                    <th>Notes</th>
+                    <th scope="col">Origin</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Departure Time</th>
+                    <th scope="col">Expected Arrival Time</th>
+                    <th scope="col">Available Seats</th>
+                    <th scope="col">Date Joined</th>
+                    <th scope="col">Available Days</th>
+                    <th scope="col">Notes</th>
                 </tr>
             </thead>
 
@@ -45,7 +45,7 @@ else
                         <td>@carPool.DateJoined</td>
                         <td>@carPool.AvailableDaysToString()</td>
                         <td>@carPool.Notes</td>
-                        <td>@Html.ActionLink("Leave Car Pool", "LeaveCarPool", "Home", new { carpoolMembershipId = carPool.CarPoolMembershipId })</td>
+                        <td>@Html.ActionLink("Leave Car Pool", "Leave", "Home", new { carpoolMembershipId = carPool.CarPoolMembershipId },null)</td>
                     </tr>
                 }
             </tbody>
