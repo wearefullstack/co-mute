@@ -1,0 +1,12 @@
+C:\co-mute\backend\comute\comute.client\bin\Debug\net6.0\comute.client.deps.json
+C:\co-mute\backend\comute\comute.client\bin\Debug\net6.0\comute.client.dll
+C:\co-mute\backend\comute\comute.client\bin\Debug\net6.0\comute.client.pdb
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\comute.client.csproj.AssemblyReference.cache
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\comute.client.GeneratedMSBuildEditorConfig.editorconfig
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\comute.client.AssemblyInfoInputs.cache
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\comute.client.AssemblyInfo.cs
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\comute.client.csproj.CoreCompileInputs.cache
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\comute.client.dll
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\refint\comute.client.dll
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\comute.client.pdb
+C:\co-mute\backend\comute\comute.client\obj\Debug\net6.0\ref\comute.client.dll
