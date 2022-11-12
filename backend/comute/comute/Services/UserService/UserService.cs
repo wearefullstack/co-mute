@@ -10,7 +10,7 @@ public class UserService : IUserService
     private readonly DataContext _context;
     public UserService(DataContext context) => _context = context;
     public async Task<User> CurrentUser(int userId) =>
-        await Task.Run(()=>_context.Users.FirstOrDefault(user => user.UserId == userId));
+        await Task.Run(() => _context.Users.FirstOrDefault(user => user.UserId == userId));
 
     public async Task RegisterUser(int userId, User user)
     {

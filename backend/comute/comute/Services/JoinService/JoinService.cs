@@ -1,5 +1,6 @@
 ﻿using comute.Data;
 using comute.Models;
+using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 
 namespace comute.Services.JoinService;
@@ -14,12 +15,11 @@ public class JoinService : IJoinService
     public Task<List<JoinInfo>> JoinedCarPools(int userId)
     {
         var results = (from joinedPool in _context.JoinCarPools
-                       join user in _context.Users
-                       on joinedPool.UserId equals user.UserId
                        join carPool in _context.CarPools
-                       on joinedPool.CarPoolId equals carPool.CarPoolId 
-                       where carPool.Owner == user.UserId 
-                       && joinedPool.UserId == user.UserId 
+                       on joinedPool.CarPoolId equals carPool.CarPoolId
+                       join user in _context.Users
+                       on carPool.Owner equals user.UserId 
+                       where joinedPool.UserId == userId
                        select new JoinInfo()
                        { 
                            JoinId = joinedPool.JoinId,
@@ -38,14 +38,35 @@ public class JoinService : IJoinService
     }
 
     public async Task LeaveCarPoolOpportunity(int joinId)
+    
     {
-        var joinedCarPool =await _context.JoinCarPools.SingleAsync(join => join.UserId == joinId);
+        var joinedCarPool = await _context.JoinCarPools.SingleAsync(join => join.JoinId == joinId);
         _context.Remove(joinedCarPool);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public Task<bool> SaveJoinCarPool(int carPoolId, int userId)
+    public async Task<bool> SaveJoinCarPool(int carPoolId, int userId, JoinCarPool joinCarPool)
     {
-        throw new NotImplementedException();
+        bool result = false;
+        bool isOverlapping = false;
+        var carPoolToJoin = _context.CarPools.Single(join => join.CarPoolId == carPoolId);
+        int toJoinCarPoolCount = _context.JoinCarPools.Count(c => c.CarPoolId == carPoolId);
+        if(carPoolToJoin.DepartureTime <= joinCarPool.JoinedOn
+           && carPoolToJoin.ExpectedArrivalTime <= joinCarPool.JoinedOn)
+        {
+            isOverlapping = true;
+        }
+        if (!isOverlapping)
+        {
+            if (carPoolToJoin.AvailableSeats > toJoinCarPoolCount)
+            {
+                result = false;
+                await _context.AddAsync(joinCarPool);
+                await _context.SaveChangesAsync();
+            }
+            else
+                result = true;
+        }
+        return result;
     }
 }

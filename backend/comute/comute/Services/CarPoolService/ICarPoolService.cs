@@ -1,4 +1,5 @@
 ﻿using comute.Models;
+using ErrorOr;
 
 namespace comute.Services.CarPoolService;
 

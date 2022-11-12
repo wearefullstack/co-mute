@@ -35,33 +35,40 @@ public class UserController : Controller
     [HttpPost("save/{userId:int}")]
     public async Task<IActionResult> SaveUserDetails(UserRequest request, int userId = 0)
     {
-        var user = AddUser(request, userId);
-        var allUsers = await _userService.Users();
-        bool isDuplicate = false;
-        
-        if(userId == 0)
+        try
         {
-            foreach (var item in allUsers)
+            var user = AddUser(request, userId);
+            var allUsers = await _userService.Users();
+            bool isDuplicate = false;
+
+            if (userId == 0)
             {
-                if (user.Email == item.Email)
+                foreach (var item in allUsers)
                 {
-                    isDuplicate = true;
-                    break;
+                    if (user.Email == item.Email)
+                    {
+                        isDuplicate = true;
+                        break;
+                    }
                 }
+                if (!isDuplicate)
+                    await _userService.RegisterUser(userId, user);
             }
-            if (!isDuplicate)
-               await _userService.RegisterUser(userId, user);
+            else
+                await _userService.RegisterUser(userId, user);
+
+            var response = !isDuplicate ? UserResponseBack(user) : new User();
+
+            return CreatedAtAction(
+                actionName: nameof(CurrentLoggedInUser),
+                routeValues: new { userId = user.UserId },
+                value: response
+            );
         }
-        else
-           await _userService.RegisterUser(userId, user);
-
-        var response = !isDuplicate ? UserResponseBack(user) : new User();
-
-        return CreatedAtAction(
-            actionName: nameof(CurrentLoggedInUser),
-            routeValues: new { userId = user.UserId },
-            value:response
-        );
+        catch
+        {
+            return Problem();
+        }
     }
 
     [NonAction]
@@ -83,17 +90,24 @@ public class UserController : Controller
     [NonAction]
     private static User UserResponseBack(User user)
     {
-        return new User
+        try
         {
-            UserId = user.UserId,
-            Name = user.Name,
-            Surname = user.Surname,
-            Phone = user.Phone,
-            Email = user.Email,
-            Password = user.Password,
-            Role = user.Role,
-            CreatedOn = user.CreatedOn
-        };
+            return new User
+            {
+                UserId = user.UserId,
+                Name = user.Name,
+                Surname = user.Surname,
+                Phone = user.Phone,
+                Email = user.Email,
+                Password = user.Password,
+                Role = user.Role,
+                CreatedOn = user.CreatedOn
+            };
+        }
+        catch
+        {
+            return new User();
+        }
     }
 
 }

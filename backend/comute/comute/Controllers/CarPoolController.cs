@@ -1,6 +1,8 @@
 ﻿using comute.client.CarPool;
 using comute.Models;
 using comute.Services.CarPoolService;
+using comute.Services.JoinService;
+using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,9 +15,12 @@ namespace comute.Controllers;
 public class CarPoolController : Controller
 {
     private readonly ICarPoolService _carPoolService;
+    private readonly IJoinService _joinService;
 
-    public CarPoolController(ICarPoolService carPoolService) =>
+    public CarPoolController(ICarPoolService carPoolService, IJoinService joinService) {
         _carPoolService = carPoolService;
+        _joinService = joinService;
+    }
 
     [HttpGet("all")]
     public async Task<IActionResult> GetCarPools()
@@ -34,32 +39,48 @@ public class CarPoolController : Controller
     [HttpPost("create/{userId:int}")]
     public async Task<IActionResult> SaveCarPool(int userId, CarPoolRequest request)
     {
-        var carPool = AddCarPool(userId, request);
-        var myExistingCarPools = await _carPoolService.GetCarPoolCurrentUser(userId);
-        var isOverlapping = false;
-
-        if(myExistingCarPools != null || myExistingCarPools.Count > 0)
+        try
         {
-            foreach (var item in myExistingCarPools)
+            var carPool = AddCarPool(userId, request);
+            var myExistingCarPools = await _carPoolService.GetCarPoolCurrentUser(userId);
+            var isOverlapping = false;
+
+            if (myExistingCarPools != null || myExistingCarPools.Count > 0)
             {
-                if (item.ExpectedArrivalTime >= request.DepartureTime
-                    && item.DepartureTime <= request.ExpectedArrivalTime)
+                foreach (var item in myExistingCarPools)
                 {
-                    isOverlapping = true;
-                    break;
+                    if (item.ExpectedArrivalTime >= request.DepartureTime
+                        && item.DepartureTime <= request.ExpectedArrivalTime)
+                    {
+                        isOverlapping = true;
+                        break;
+                    }
                 }
             }
+            if (!isOverlapping)
+                await _carPoolService.SaveCarPool(carPool);
+
+            var response = !isOverlapping ? CarPoolResponseBack(carPool) : CarPoolResponseBack(new CarPool());
+            if (response.CarPoolId > 0)
+            {
+                await _joinService.SaveJoinCarPool(response.CarPoolId, userId, joinCarPool: new JoinCarPool
+                {
+                    JoinId = 0,
+                    UserId = userId,
+                    CarPoolId = response.CarPoolId,
+                    JoinedOn = DateTime.Now
+                });
+            }
+            return CreatedAtAction(
+                        actionName: nameof(GetCarPoolCurrentUser),
+                        routeValues: new { userId = carPool.Owner },
+                        value: response
+                    );
         }
-        if (!isOverlapping)
-           await _carPoolService.SaveCarPool(carPool);
-
-        var response = !isOverlapping ? CarPoolResponseBack(carPool) : CarPoolResponseBack(new CarPool());
-
-        return CreatedAtAction(
-                    actionName: nameof(GetCarPoolCurrentUser),
-                    routeValues: new { userId = carPool.Owner },
-                    value: response
-                );
+        catch
+        {
+            return Problem();
+        }
     }
 
     [NonAction]
@@ -83,20 +104,25 @@ public class CarPoolController : Controller
     [NonAction]
     private static CarPoolResponse CarPoolResponseBack(CarPool carPool)
     {
-#pragma warning disable CS8601 // Possible null reference assignment.
-        return new CarPoolResponse
+        try
         {
-            CarPoolId = carPool.CarPoolId,
-            Origin = carPool.Origin,
-            Destination = carPool.Destination,
-            DepartureTime = carPool.DepartureTime,
-            ExpectedArrivalTime = carPool.ExpectedArrivalTime,
-            DaysAvailable = carPool.DaysAvailable.Split(",").ToList(),
-            AvailableSeats = carPool.AvailableSeats,
-            Owner = carPool.Owner,
-            Notes = carPool.Notes,
-            Active = carPool.Active
-        };
-#pragma warning restore CS8601 // Possible null reference assignment.
+            return new CarPoolResponse
+            {
+                CarPoolId = carPool.CarPoolId,
+                Origin = carPool.Origin,
+                Destination = carPool.Destination,
+                DepartureTime = carPool.DepartureTime,
+                ExpectedArrivalTime = carPool.ExpectedArrivalTime,
+                DaysAvailable = carPool.DaysAvailable.Split(",").ToList(),
+                AvailableSeats = carPool.AvailableSeats,
+                Owner = carPool.Owner,
+                Notes = carPool.Notes,
+                Active = carPool.Active
+            };
+        }
+        catch
+        {
+            return new CarPoolResponse();
+        }
     }
 }

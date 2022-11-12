@@ -1,4 +1,5 @@
-﻿using comute.Services.JoinService;
+﻿using comute.Models;
+using comute.Services.JoinService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +29,37 @@ public class JoinCarPoolController : Controller
     }
 
     [HttpPost("carPool/{carPoolId:int}/user/{userId:int}")]
-    public IActionResult SaveJoinCarPool(int carPoolId, int userId)
+    public async Task<IActionResult> SaveJoinCarPool(int carPoolId, int userId)
     {
-        return Ok(new { CarPool = carPoolId, User = userId });
+        try
+        {
+            var joinCarPool = SaveCarPoolRequest(carPoolId, userId);
+            var existingJoinedPools = await _joinService.JoinedCarPools(userId);
+            bool isOverlapping = false;
+            bool isDuplicate = false;
+
+            if (existingJoinedPools != null || existingJoinedPools.Count > 0)
+                isOverlapping = checkIfOverlapping(existingJoinedPools, joinCarPool);
+
+            if (!isOverlapping)
+                isDuplicate = checkAlreadyExist(carPoolId, existingJoinedPools);
+
+            if (!isDuplicate && !isOverlapping)
+                isDuplicate = await _joinService.SaveJoinCarPool(carPoolId, userId, joinCarPool);
+
+            var response = !isDuplicate && !isOverlapping ?
+                JoinInfoResponse(joinCarPool) : JoinInfoResponse(new JoinCarPool());
+
+            return CreatedAtAction(
+                        actionName: nameof(MyJoinedCarPools),
+                        routeValues: new { userId = joinCarPool.UserId },
+                        value: response
+                    );
+        }
+        catch
+        {
+            return Problem();
+        }
     }
 
     [HttpPost("leave/{joinId:int}")]
@@ -38,5 +67,66 @@ public class JoinCarPoolController : Controller
     {
         await _joinService.LeaveCarPoolOpportunity(joinId);
         return NoContent();
+    }
+
+    [NonAction]
+    private static JoinCarPool SaveCarPoolRequest(int carPoolId, int userId)
+    {
+        return new JoinCarPool
+        {
+            JoinId = 0,
+            UserId = userId,
+            CarPoolId = carPoolId,
+            JoinedOn = DateTime.Now
+        };
+    }
+
+    [NonAction]
+    private static JoinCarPool JoinInfoResponse(JoinCarPool joinCarPool)
+    {
+        try
+        {
+            return new JoinCarPool
+            {
+                JoinId = joinCarPool.JoinId,
+                UserId = joinCarPool.UserId,
+                CarPoolId = joinCarPool.CarPoolId,
+                JoinedOn = joinCarPool.JoinedOn
+            };
+        }
+        catch
+        {
+            return new JoinCarPool();
+        }
+    }
+
+    [NonAction]
+    private static bool checkAlreadyExist(int carPoolId, List<JoinInfo> list)
+    {
+        bool result = false;
+        foreach (var item in list)
+        {
+            if (item.CarPoolId == carPoolId)
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    [NonAction]
+    private static bool checkIfOverlapping(List<JoinInfo> list, JoinCarPool joinCarPool)
+    {
+        bool result = false;
+        foreach (var item in list)
+        {
+            if (item.JoinedOn >= joinCarPool.JoinedOn)
+            {
+                result = true;
+                break; 
+            }
+        }
+        return result;
     }
 }
