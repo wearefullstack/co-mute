@@ -2068,6 +2068,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
+      },
+      "comute.client/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/comute.client.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/comute.client.dll": {}
+        }
       }
     }
   },
@@ -7138,6 +7148,11 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
+    },
+    "comute.client/1.0.0": {
+      "type": "project",
+      "path": "../comute.client/comute.client.csproj",
+      "msbuildProject": "../comute.client/comute.client.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7151,7 +7166,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.11",
       "Microsoft.IdentityModel.Tokens >= 6.25.0",
       "Swashbuckle.AspNetCore >= 6.4.0",
-      "System.IdentityModel.Tokens.Jwt >= 6.25.0"
+      "System.IdentityModel.Tokens.Jwt >= 6.25.0",
+      "comute.client >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -7180,7 +7196,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\co-mute\\backend\\comute\\comute.client\\comute.client.csproj": {
+              "projectPath": "C:\\co-mute\\backend\\comute\\comute.client\\comute.client.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
