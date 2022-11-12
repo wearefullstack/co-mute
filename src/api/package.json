@@ -8,8 +8,16 @@
     "build": "tsc -p .",
     "run": "node ./build/index.js",
     "buildAndRun": "npm run-script build && npm run-script run"
-
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "dotenv": "^16.0.3",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.21",
+    "@types/node": "^18.11.9"
+  }
 }
