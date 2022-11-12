@@ -11,7 +11,7 @@ using comute.Data;
 namespace comute.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221111190613_InitialCreate")]
+    [Migration("20221112081402_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,8 +31,9 @@ namespace comute.Migrations
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DaysAvailable")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("DaysAvailable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("TEXT");

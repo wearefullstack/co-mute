@@ -5,7 +5,7 @@ public record CarPoolRequest(
     string Destination,
     DateTime DepartureTime,
     DateTime ExpectedArrivalTime,
-    int DaysAvailable,
+    List<string> DaysAvailable,
     int AvailableSeats,
     int Owner,
     string? Notes,

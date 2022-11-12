@@ -19,7 +19,7 @@ namespace comute.Migrations
                     Destination = table.Column<string>(type: "TEXT", nullable: false),
                     DepartureTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ExpectedArrivalTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DaysAvailable = table.Column<int>(type: "INTEGER", nullable: false),
+                    DaysAvailable = table.Column<string>(type: "TEXT", nullable: false),
                     AvailableSeats = table.Column<int>(type: "INTEGER", nullable: false),
                     Owner = table.Column<int>(type: "INTEGER", nullable: false),
                     Notes = table.Column<string>(type: "TEXT", nullable: true),

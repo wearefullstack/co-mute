@@ -1,21 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using comute.Services.JoinService;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace comute.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class JoinCarPoolController : Controller
 {
+    private readonly IJoinService _joinService;
+
+    public JoinCarPoolController(IJoinService joinService) => _joinService = joinService;
+
     [HttpGet("all")]
-    public IActionResult GetJoinedCarPools()
+    public async Task<IActionResult> GetJoinedCarPools()
     {
-        return Ok();
+        var list = await _joinService.AllCarPoolsJoined();
+        return Ok(list);
     }
  
-    [HttpGet("myCarPools/{userId:int}")]
-    public IActionResult MyJoinedCarPools(int userId)
+    [HttpGet("user/{userId:int}")]
+    public async Task<IActionResult> MyJoinedCarPools(int userId)
     {
-        return Ok(userId);
+        var list = await _joinService.JoinedCarPools(userId);
+        return Ok(list);
     }
 
     [HttpPost("carPool/{carPoolId:int}/user/{userId:int}")]
@@ -25,8 +34,9 @@ public class JoinCarPoolController : Controller
     }
 
     [HttpPost("leave/{joinId:int}")]
-    public IActionResult LeaveCarPoolOpportunity(int joinId)
+    public async Task<IActionResult> LeaveCarPoolOpportunity(int joinId)
     {
-        return Ok(joinId);
+        await _joinService.LeaveCarPoolOpportunity(joinId);
+        return NoContent();
     }
 }

@@ -11,6 +11,7 @@ public class UserService : IUserService
     public UserService(DataContext context) => _context = context;
     public async Task<User> CurrentUser(int userId) =>
         await Task.Run(()=>_context.Users.FirstOrDefault(user => user.UserId == userId));
+
     public async Task RegisterUser(int userId, User user)
     {
         if (_context.Users.Any(u => u.UserId == userId))
@@ -23,7 +24,7 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<User>> Users() =>
-       await _context.Users.ToListAsync();
+    public Task<List<User>> Users() =>
+        _context.Users.ToListAsync();
 
 }

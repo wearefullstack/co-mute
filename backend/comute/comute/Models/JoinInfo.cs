@@ -6,6 +6,6 @@ public class JoinInfo
     public int UserId { get; set; }
     public User User = new();
     public int CarPoolId { get; set; }
-    public List<CarPool> CarPools = new();
-    public int JoinedOn { get; set; }
+    public List<CarPool> CarPools { get; set; }
+    public DateTime JoinedOn { get; set; }
 }

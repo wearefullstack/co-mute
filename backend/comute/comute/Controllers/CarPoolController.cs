@@ -3,6 +3,7 @@ using comute.Models;
 using comute.Services.CarPoolService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace comute.Controllers;
 
@@ -26,7 +27,7 @@ public class CarPoolController : Controller
     [HttpGet("user/{userId:int}")]
     public async Task<IActionResult> GetCarPoolCurrentUser(int userId)
     {
-        List<CarPool> list = await _carPoolService.GetCarPoolCurrentUser(userId);
+        List<CarPoolInfo> list = await _carPoolService.GetCarPoolCurrentUser(userId);
         return Ok(list);
     }
 
@@ -52,7 +53,7 @@ public class CarPoolController : Controller
         if (!isOverlapping)
            await _carPoolService.SaveCarPool(carPool);
 
-        var response = !isOverlapping ? CarPoolResponseBack(carPool) : new CarPool();
+        var response = !isOverlapping ? CarPoolResponseBack(carPool) : CarPoolResponseBack(new CarPool());
 
         return CreatedAtAction(
                     actionName: nameof(GetCarPoolCurrentUser),
@@ -71,7 +72,7 @@ public class CarPoolController : Controller
             Destination = request.Destination,
             DepartureTime = request.DepartureTime,
             ExpectedArrivalTime = request.ExpectedArrivalTime,
-            DaysAvailable = request.DaysAvailable,
+            DaysAvailable = string.Join(",", request.DaysAvailable),
             AvailableSeats = request.AvailableSeats,
             Owner = userId,
             Notes = request.Notes,
@@ -80,20 +81,22 @@ public class CarPoolController : Controller
     }
 
     [NonAction]
-    private static CarPool CarPoolResponseBack(CarPool carPool)
+    private static CarPoolResponse CarPoolResponseBack(CarPool carPool)
     {
-        return new CarPool
+#pragma warning disable CS8601 // Possible null reference assignment.
+        return new CarPoolResponse
         {
             CarPoolId = carPool.CarPoolId,
             Origin = carPool.Origin,
             Destination = carPool.Destination,
             DepartureTime = carPool.DepartureTime,
             ExpectedArrivalTime = carPool.ExpectedArrivalTime,
-            DaysAvailable = carPool.DaysAvailable,
+            DaysAvailable = carPool.DaysAvailable.Split(",").ToList(),
             AvailableSeats = carPool.AvailableSeats,
             Owner = carPool.Owner,
             Notes = carPool.Notes,
             Active = carPool.Active
         };
+#pragma warning restore CS8601 // Possible null reference assignment.
     }
 }

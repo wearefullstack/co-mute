@@ -7,7 +7,7 @@ public class CarPoolInfo
     public string Destination { get; set; }
     public DateTime DepartureTime { get; set; }
     public DateTime ExpectedArrivalTime { get; set; }
-    public int DaysAvailable { get; set; }
+    public List<string> DaysAvailable { get; set; } = new List<string>();
     public int AvailableSeats { get; set; }
     public int Owner { get; set; }
     public User User { get; set; } = new();

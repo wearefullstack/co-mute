@@ -15,7 +15,7 @@ public class CarPool
     [Required]
     public DateTime ExpectedArrivalTime { get; set; } = DateTime.Now.AddMinutes(20);
     [Required]
-    public int DaysAvailable { get; set; }
+    public string DaysAvailable { get; set; }
     [Required]
     public int AvailableSeats { get; set; }
     [Required]
@@ -30,7 +30,7 @@ public class CarPool
         string destination,
         DateTime departureTime,
         DateTime expectedArrivalTime,
-        int daysAvailable,
+        string daysAvailable,
         int availableSeats,
         int owner,
         string? notes,

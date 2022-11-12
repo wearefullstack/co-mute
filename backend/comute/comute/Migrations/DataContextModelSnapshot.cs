@@ -29,8 +29,9 @@ namespace comute.Migrations
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DaysAvailable")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("DaysAvailable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("TEXT");
