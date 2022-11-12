@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "api for co-mute system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p .",
+    "run": "node ./build/index.js",
+    "buildAndRun": "npm run-script build && npm run-script run"
+
+  },
+  "author": "",
+  "license": "ISC"
+}
