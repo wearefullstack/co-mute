@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { Grid, IconButton, Tooltip } from "@mui/material";
+import { Grid, IconButton, Tooltip, Typography } from "@mui/material";
 
 import CustomToolBar from "../../components/tableGrid/customToolBar";
 import PageContainer from "../../components/custom/pageContainer";
@@ -194,7 +194,25 @@ function Dashboard() {
 			>
 				<CarPoolForm setOpen={setOpen} />
 			</FormModal>
-
+			<Typography
+				variant="h5"
+				sx={{
+					color: "darkslategray",
+					fontWeight: 500,
+					fontSize: "1.25rem",
+					letterSpacing: "2px",
+					textAlign: "left",
+					padding: "10px",
+					boxShadow: "1px 1px #999",
+					height: "60px",
+					marginBlock: "20px",
+					background: "#c8f7c8",
+					borderRadius: "2px",
+					margin: "5px",
+				}}
+			>
+				Car Pools
+			</Typography>
 			<Grid item xs={12}>
 				<DataGrid
 					autoWidth

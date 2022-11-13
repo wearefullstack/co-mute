@@ -20,6 +20,7 @@ function CustomToolBar(
 		>
 			<div>
 				<Button
+					color="success"
 					variant="contained"
 					onClick={create}
 					sx={{ border: "none", fontWeight: "bold" }}
