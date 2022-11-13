@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import { CurrentUser, RegisterUser } from "../../../controllers/user.api";
 import { useAuth } from "../../../auth/authorize";
@@ -34,6 +35,7 @@ function useDebounce(value, delay) {
 }
 
 function Profile() {
+	const navigate = useNavigate();
 	const auth = useAuth();
 	const queryClient = useQueryClient();
 	const [id, setId] = useState(auth.getId());
@@ -69,7 +71,7 @@ function Profile() {
 			toast("Successfully Updated Profile", {
 				type: "success",
 			});
-			// navigate("/dashboard/profile");
+			navigate("/dashboard/profile");
 		},
 		onError: (results) => {
 			toast("Updating Profile Failed", {
@@ -96,8 +98,7 @@ function Profile() {
 			Password: yup.string().required("Required"),
 		}),
 		onSubmit: (values) => {
-			console.log(values);
-			// registerUser(values);
+			registerUser(values);
 		},
 	});
 
@@ -121,7 +122,7 @@ function Profile() {
 						alignItems: "center",
 					}}
 				>
-					<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+					<Avatar sx={{ m: 1, background: "lightgreen" }}>
 						<PersonIcon />
 					</Avatar>
 					<Typography component="h1" variant="h5">
@@ -206,6 +207,7 @@ function Profile() {
 							onClick={submitForm}
 							fullWidth
 							variant="contained"
+							color="success"
 							sx={{ mt: 3, mb: 2 }}
 						>
 							Update Profile

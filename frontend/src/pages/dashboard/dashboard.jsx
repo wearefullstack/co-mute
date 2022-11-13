@@ -70,19 +70,7 @@ function Dashboard() {
 				);
 			},
 		},
-		{
-			field: "owner",
-			headerName: "Owner",
-			editable: false,
-			flex: 1,
-			renderCell: ({ row }) => {
-				return (
-					<strong>
-						{row.user.name} {row.user.surname}
-					</strong>
-				);
-			},
-		},
+
 		{
 			field: "origin",
 			headerName: "Origin",
@@ -105,6 +93,19 @@ function Dashboard() {
 				return (
 					<div>
 						<strong>{row.destination}</strong>
+					</div>
+				);
+			},
+		},
+		{
+			field: "owner",
+			headerName: "Owner",
+			editable: false,
+			flex: 1,
+			renderCell: ({ row }) => {
+				return (
+					<div>
+						{row.user.name} {row.user.surname}
 					</div>
 				);
 			},

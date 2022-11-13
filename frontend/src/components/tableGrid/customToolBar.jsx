@@ -15,24 +15,28 @@ function CustomToolBar(
 				height: "60px",
 				display: "flex",
 				justifyContent: "space-between",
-				padding: 5,
+				padding: 10,
 			}}
 		>
+			<div sx={{ alignItem: "flex-start" }}>
+				<GridToolbarQuickFilter sx={{ color: "white" }} />
+			</div>
 			<div>
 				<Button
 					color="success"
 					variant="contained"
 					onClick={create}
-					sx={{ border: "none", fontWeight: "bold" }}
+					sx={{
+						border: "none",
+						fontWeight: "bold",
+						position: "relative",
+						width: "auto",
+					}}
 					startIcon={<AddCircle />}
 				>
 					Add
 				</Button>
 			</div>
-			<div>
-				<GridToolbarQuickFilter sx={{ color: "white" }} />
-			</div>
-			<div></div>
 		</div>
 	);
 }
