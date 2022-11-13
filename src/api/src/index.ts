@@ -4,7 +4,7 @@ import User, { IUser } from './Models/User';
 import express from 'express';
 import UserController from './Controllers/UserController';
 import Model from './Models/Model';
-import CarPoolOpportunities from './Models/CarPoolOpportunity';
+import CarPoolOpportunity from './Models/CarPoolOpportunity';
 
 const app = express();
 
@@ -46,7 +46,7 @@ async function startServer(){
         email: "b@e.codm",
     }, "test");*/
 
-    console.log(await CarPoolOpportunities.Create({
+    console.log(await CarPoolOpportunity.Create({
         days_available: "SAT ,SUN",
         departure_time: "10:30",
         destination: "Somewhere",

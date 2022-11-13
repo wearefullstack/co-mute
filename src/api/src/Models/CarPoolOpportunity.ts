@@ -1,4 +1,4 @@
-import Model from "./Model";
+import Model, { ModelWithID } from "./Model";
 import moment from 'moment';
 import APIError from "../APIError";
 import { v4 as uuid } from 'uuid';
@@ -25,15 +25,21 @@ export interface IJoinedCarPoolOpportunity{
     users_id: string,
     car_pool_opportunity_id: string,
     on_which_days: string,
-    date_joined: Date
+    date_joined?: Date
 }
 
 export default
-class CarPoolOpportunities extends Model<ICarPoolOpportunity> {
-    public static TABLE_NAME = "car_pool_opportunity";
+class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
+    public static readonly TABLE_NAME = "car_pool_opportunity";
   
     constructor(src: ICarPoolOpportunity){
-        super(CarPoolOpportunities.TABLE_NAME, src)
+        super(CarPoolOpportunity.TABLE_NAME, src)
+    }
+
+    public static async FindOne<TModel>(primaryKey: string, primaryKeyName?: string): Promise<CarPoolOpportunity | null> {
+        const rawCPO = await Model.findOne<ICarPoolOpportunity>(primaryKey, this.TABLE_NAME, primaryKeyName);
+
+        return rawCPO ? new CarPoolOpportunity(rawCPO) : null;
     }
 
     static async Create(src: Omit<ICarPoolOpportunity, "id" | "owner" | "date_created">, owner: string){
@@ -44,10 +50,10 @@ class CarPoolOpportunities extends Model<ICarPoolOpportunity> {
     
             if(mDepTime.isBefore(mEATTime)){
                 const days: string[] = src.days_available.split(",");
-                if(!(await this.hasOverlappingCPOs(src.departure_time, src.expected_arrival_time, days, owner))){
+                if(!(await this.hasOverlappingCPCsOrCPOs(src.departure_time, src.expected_arrival_time, days, owner))){
                     const id: string = uuid();
                     const CPO: ICarPoolOpportunity = {id, owner, ...src };
-                    (new CarPoolOpportunities(CPO)).save("Create");
+                    (new CarPoolOpportunity(CPO)).save("Create");
                     return CPO;
                 }else{
                     return Promise.reject(APIError.eForbidden("This Car Pools time range overlapps with one of your created/join Car Pools", "0x1").toError())
@@ -58,7 +64,7 @@ class CarPoolOpportunities extends Model<ICarPoolOpportunity> {
         })
     }
 
-    static async hasOverlappingCPOs(departure_time: string, expected_arrival_time: string, days: string[], owner: string){
+    static async hasOverlappingCPCsOrCPOs(departure_time: string, expected_arrival_time: string, days: string[], owner: string){
         return await this.hasOverlayingCreatedCPOs(departure_time, expected_arrival_time, days, owner)  || await this.hasOverlayingJoinedCPOs(departure_time, expected_arrival_time, days, owner);
     }
 
@@ -66,9 +72,9 @@ class CarPoolOpportunities extends Model<ICarPoolOpportunity> {
     static async hasOverlayingCreatedCPOs(departure_time: string, expected_arrival_time: string, days: string[], owner: string){
         const args = [ departure_time, departure_time, expected_arrival_time, expected_arrival_time, departure_time, expected_arrival_time, departure_time, expected_arrival_time, owner];
 
-        const whereCondition = `(${ CarPoolOpportunities.createIsOverlayingCondition() }) AND owner=?;`;
+        const whereCondition = `(${ CarPoolOpportunity.createIsOverlayingCondition() }) AND owner=?;`;
         
-        const overlappingCPOs = await Model.find<ICarPoolOpportunity>(CarPoolOpportunities.TABLE_NAME, whereCondition, args);
+        const overlappingCPOs = await Model.find<ICarPoolOpportunity>(CarPoolOpportunity.TABLE_NAME, whereCondition, args);
         if(overlappingCPOs.length > 0){
             return overlappingCPOs.some(overlappingCPO => {
                 return this.hasOverlappingDays(days, overlappingCPO.days_available.split(','));
