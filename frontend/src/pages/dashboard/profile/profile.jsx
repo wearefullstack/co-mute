@@ -141,7 +141,7 @@ function Profile() {
 									autoFocus
 									error={!!errors.Name}
 									helperText={errors.Name}
-									value={values.Name}
+									value={values.Name ?? ""}
 									onChange={handleChange}
 								/>
 							</Grid>
@@ -156,7 +156,7 @@ function Profile() {
 									size="small"
 									error={!!errors.Surname}
 									helperText={errors.Surname}
-									value={values.Surname}
+									value={values.Surname ?? ""}
 									onChange={handleChange}
 								/>
 							</Grid>
@@ -166,7 +166,7 @@ function Profile() {
 									fullWidth
 									size="small"
 									defaultCountry="US"
-									value={phone}
+									value={phone ?? ""}
 									onChange={handlePhoneInput}
 								/>
 							</Grid>
@@ -181,7 +181,7 @@ function Profile() {
 									size="small"
 									error={!!errors.Email}
 									helperText={errors.Email}
-									value={values.Email}
+									value={values.Email ?? ""}
 									onChange={handleChange}
 								/>
 							</Grid>
@@ -197,7 +197,7 @@ function Profile() {
 									size="small"
 									error={!!errors.Password}
 									helperText={errors.Password}
-									value={values.Password}
+									value={values.Password ?? ""}
 									onChange={handleChange}
 								/>
 							</Grid>
