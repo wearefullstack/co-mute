@@ -14,11 +14,12 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 import CarPoolForm from "./forms/carPoolForm";
 import { CarPools } from "../../controllers/carPool.api";
-import { JoinCarPool } from "../../controllers/JoinCarPool.api";
+import { JoinCarPool } from "../../controllers/joinCarPool.api";
 
 import { useAuth } from "../../auth/authorize";
 
 import moment from "moment";
+import { Navigate } from "react-router-dom";
 
 function Dashboard() {
 	const auth = useAuth();
@@ -33,7 +34,12 @@ function Dashboard() {
 	const { mutate: joinCarPool } = useMutation(JoinCarPool, {
 		onSuccess: (results) => {
 			queryClient.invalidateQueries("carPools");
-			toast("Joined Car Pool Opportunity", { type: "success" });
+			if (results.joinId !== 0) {
+				toast("Joined Car Pool Opportunity", { type: "success" });
+				Navigate("/dashboard/carpool");
+			} else {
+				toast("Already Joined Car Pool Opportunity", { type: "warning" });
+			}
 		},
 		onError: (results) => {
 			toast("Something went wrong!!", { type: "error" });
@@ -59,8 +65,7 @@ function Dashboard() {
 								color="primary"
 								fontSize="small"
 								onClick={() => {
-									console.log(row.carPoolId);
-									joinCarPool({ UserId: id, CarPoolId: row.carpoolId });
+									joinCarPool({ UserId: id, CarPoolId: row.carPoolId });
 								}}
 							>
 								<GroupAddIcon color={"success"} />
@@ -150,7 +155,7 @@ function Dashboard() {
 							<div>{row.daysAvailable[0].split(",").join(" ")}</div>
 						) : (
 							<Tooltip
-								placement="right"
+								placement="top"
 								title={row.daysAvailable[0].split(",").join(" ")}
 							>
 								<div>
@@ -179,9 +184,21 @@ function Dashboard() {
 			field: "notes",
 			headerName: "notes",
 			flex: 1,
+			minWidth: 150,
+			maxWidth: 200,
 			editable: false,
 			renderCell: ({ row }) => {
-				return <div>{row.notes}</div>;
+				return (
+					<div>
+						{row.notes.length < 15 ? (
+							<div>{row.notes}</div>
+						) : (
+							<Tooltip placement="top" title={row.notes}>
+								<div>{row.notes.slice(0, 15)}...</div>
+							</Tooltip>
+						)}
+					</div>
+				);
 			},
 		},
 	];
@@ -241,8 +258,8 @@ function Dashboard() {
 						sorting: {
 							sortModel: [
 								{
-									field: "arrivalTime",
-									sort: "asc",
+									field: "action",
+									sort: "desc",
 								},
 							],
 						},
