@@ -8,14 +8,11 @@ export const CarPools = async () => {
 };
 
 //GET SINGLE CAR POOL BY USER
-export const CarPool = async ({ queryKey }) => {
-	console.log("car pool is called");
-	const { UserId, CarPoolId } = queryKey[1];
-	console.log("UserId: " + UserId + " CarPoolId: " + CarPoolId);
-	// const { UserId } = queryKey[1];
-	// const res = await axios.get(`/api/CarPool/User/${UserId}`);
-	// const data = res.data;
-	// return data;
+export const MyCarPools = async ({ queryKey }) => {
+	const { UserId } = queryKey[1];
+	const res = await axios.get(`/api/CarPool/User/${UserId}`);
+	const data = res.data;
+	return data;
 };
 
 //CREATE CAR POOL
