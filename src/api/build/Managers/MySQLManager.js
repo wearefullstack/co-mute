@@ -30,10 +30,10 @@ class MySQLManager {
                     port: parseInt(MYSQL_PORT || this.DEFAULT_MYSQL_PORT),
                     database: MYSQL_DATABASE,
                     user: MYSQL_USER,
-                    password: MYSQL_PASSWORD
+                    password: MYSQL_PASSWORD,
                 });
                 process.on('SIGINT', () => {
-                    console.log(chalk_1.default.blue("Ⓘ Closing connection..."));
+                    console.log(chalk_1.default.red("Ⓘ Closing connection..."));
                     connection.end();
                 });
                 console.log(chalk_1.default.blue("Ⓘ Connecting to MYSQL Server..."));
@@ -48,7 +48,19 @@ class MySQLManager {
             });
         });
     }
-    //help function for creating transactions
+    //helper function for converting the connection.query function into a promise function.
+    query(query, args) {
+        return new Promise((resolve, reject) => {
+            const q = this.connection.query(query, args, (error, results) => {
+                if (error)
+                    reject(error);
+                else
+                    resolve(results);
+            });
+            console.log(chalk_1.default.blue("[i] SQL Query:" + q.sql));
+        });
+    }
+    //helper function for creating transactions
     withTransaction(executor) {
         return new Promise((resolve, reject) => {
             this.connection.beginTransaction((error) => {
@@ -56,7 +68,7 @@ class MySQLManager {
                     reject(error);
                 }
                 else {
-                    executor()
+                    executor(this.connection, this.query.bind(this))
                         .then(result => this.connection.commit(error => {
                         if (error)
                             throw error;

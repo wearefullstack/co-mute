@@ -4,3 +4,5 @@ src/packages/
 /src/CoMute/CoMute.Web.csproj.user
 /.vs
 /src/.vs/CoMute/config/applicationhost.config
+/src/api/node_modules/
+/src/api/.env
