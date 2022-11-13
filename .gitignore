@@ -7,3 +7,12 @@ src/packages/
 /src/api/node_modules/
 /src/api/.env
 /src/api/build/
+
+
+/src/frontend/node_modules
+/src/frontend/.pnp
+/src/frontend/.pnp.js
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
