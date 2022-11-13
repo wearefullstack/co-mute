@@ -181,7 +181,7 @@ function Dashboard() {
 			flex: 1,
 			editable: false,
 			renderCell: ({ row }) => {
-				return <div>{row.Notes}</div>;
+				return <div>{row.notes}</div>;
 			},
 		},
 	];

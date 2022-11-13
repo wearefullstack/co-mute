@@ -21,6 +21,8 @@ import { MuiTelInput } from "mui-tel-input";
 
 import { RegisterUser } from "../../controllers/user.api";
 
+import { useDebounce } from "../../hooks/useDebounce";
+
 const theme = createTheme();
 
 function Copyright(props) {
@@ -39,18 +41,6 @@ function Copyright(props) {
 			{"."}
 		</Typography>
 	);
-}
-
-function useDebounce(value, delay) {
-	const [debouncedValue, setDebouncedValue] = useState(value);
-
-	useEffect(() => {
-		const timeoutId = setTimeout(() => {
-			setDebouncedValue(value);
-		}, delay);
-		return () => clearTimeout(timeoutId);
-	}, [value]);
-	return debouncedValue;
 }
 
 function Register() {

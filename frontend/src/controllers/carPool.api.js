@@ -21,15 +21,14 @@ export const CarPool = async ({ queryKey }) => {
 
 //CREATE CAR POOL
 export const CreateCarPool = async (myForm) => {
-	console.log("create car pool is called");
-	console.log(myForm);
-	// const UserId = myForm.Owner;
-	// const {  } = form;
-	// const res = await axios.post(
-	// 	`/api/CarPool/User/${UserId}`,
-	// 	myForm,
-	// 	{ "Content-Type": "application/json" } }
-	// );
-	// const data = res.data;
-	// return data;
+	try {
+		const UserId = myForm.Owner;
+		const res = await axios.post(`/api/CarPool/create/${UserId}`, myForm, {
+			"Content-Type": "application/json",
+		});
+		const data = res.data;
+		return data;
+	} catch (error) {
+		console.error(error.response.data);
+	}
 };
