@@ -45,16 +45,19 @@ public class CarPoolController : Controller
             var myExistingCarPools = await _carPoolService.GetCarPoolCurrentUser(userId);
             var isOverlapping = false;
 
-            if (myExistingCarPools != null || myExistingCarPools.Count > 0)
+            foreach (var item in myExistingCarPools)
             {
-                foreach (var item in myExistingCarPools)
+                if (item.ExpectedArrivalTime >= request.DepartureTime
+                    && item.DepartureTime <= request.ExpectedArrivalTime)
                 {
-                    if (item.ExpectedArrivalTime >= request.DepartureTime
-                        && item.DepartureTime <= request.ExpectedArrivalTime)
-                    {
-                        isOverlapping = true;
-                        break;
-                    }
+                    isOverlapping = true;
+                    break;
+                }
+                if(item.DepartureTime == request.DepartureTime
+                    && item.ExpectedArrivalTime == request.ExpectedArrivalTime)
+                {
+                    isOverlapping = true;
+                    break;
                 }
             }
             if (!isOverlapping)
