@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,7 +14,7 @@ import { useFormik } from "formik";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
-import { RegisterUser } from "../../../controllers/user.api";
+import { CurrentUser, RegisterUser } from "../../../controllers/user.api";
 import { useAuth } from "../../../auth/authorize";
 
 import { MuiTelInput } from "mui-tel-input";
@@ -47,6 +47,7 @@ function Profile() {
 		{
 			onSuccess: (data) => {
 				setValues({
+					UserId: data.userId ?? id,
 					Name: data.name ?? "",
 					Surname: data.surname ?? "",
 					Phone: data.phone ?? "",
@@ -56,6 +57,8 @@ function Profile() {
 				});
 				setPhone(data.phone);
 			},
+			refetchOnWindowFocus: false,
+			refetchIntervalInBackground: false,
 		}
 	);
 
@@ -66,6 +69,7 @@ function Profile() {
 			toast("Successfully Updated Profile", {
 				type: "success",
 			});
+			// navigate("/dashboard/profile");
 		},
 		onError: (results) => {
 			toast("Updating Profile Failed", {
@@ -97,6 +101,10 @@ function Profile() {
 		},
 	});
 
+	const handlePhoneInput = (value) => {
+		setPhone(value);
+	};
+
 	useEffect(() => {
 		values.Phone = debouncedValue;
 	}, [debouncedValue]);
@@ -107,7 +115,7 @@ function Profile() {
 				<CssBaseline />
 				<Box
 					sx={{
-						marginTop: 8,
+						marginTop: 0,
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",

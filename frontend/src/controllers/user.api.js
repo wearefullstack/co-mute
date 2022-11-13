@@ -21,10 +21,11 @@ export const RegisterUser = async (myForm) => {
 export const CurrentUser = async ({ queryKey }) => {
 	console.log("current user is called");
 	console.log(queryKey);
-	// const { UserId } = queryKey[1];
-	// const res = await axios.get(`/api/Users/${UserId}`);
-	// const data = res.data;
-	// return data;
+	const { UserId } = queryKey[1];
+	const res = await axios.get(`/api/User/currentUser/${UserId}`);
+	const data = res.data;
+	console.log(data);
+	return data;
 };
 
 //All Users

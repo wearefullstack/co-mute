@@ -14,6 +14,7 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import UserButton from "../custom/userButton";
+import MenuList from "../menuList/menuList";
 
 function Copyright(props) {
 	return (
@@ -125,7 +126,8 @@ function DashboardContent({ children }) {
 					<Toolbar
 						sx={{
 							pr: "24px",
-							color: "white", // keep right padding when drawer closed
+							backgroundColor: "white",
+							color: "black", // keep right padding when drawer closed
 						}}
 					>
 						<IconButton

@@ -4,12 +4,21 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "../../styles/home.css";
+
+const theme = createTheme();
 
 function LandingPageButton() {
 	return (
 		<Stack spacing={2} direction="row">
-			<Button component={Link} to="/login" variant="contained" size="medium">
+			<Button
+				component={Link}
+				to="/login"
+				variant="contained"
+				size="medium"
+				sx={{ backgroundColor: "sandybrown" }}
+			>
 				Start Here
 			</Button>
 		</Stack>
@@ -70,7 +79,7 @@ function LandingFrame() {
 				</Link>
 				<div className="left-links">
 					<Link to="/login">Login</Link>
-					<Link href="/register">Register</Link>
+					<Link to="/register">Register</Link>
 					<IconButton className="icon" onClick={handleToggle}>
 						<MenuIcon />
 					</IconButton>
@@ -91,7 +100,11 @@ function handleToggle() {
 }
 
 function Index() {
-	return <LandingFrame />;
+	return (
+		<ThemeProvider theme={theme}>
+			<LandingFrame />
+		</ThemeProvider>
+	);
 }
 
 export default Index;
