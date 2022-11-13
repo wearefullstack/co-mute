@@ -7,7 +7,7 @@ import Model from "./Model";
 
 export default
 class CarPoolConnection {
-    private static TABLE_NAME: string = process.env.CPC_TABLE_NAME || "_";
+    public static readonly TABLE_NAME: string = process.env.CPC_TABLE_NAME || "_";
     
 
     static async join(cpoID: string, userID: string, onWhichDays: string){
@@ -17,7 +17,7 @@ class CarPoolConnection {
             await this.checkEligibility(cpoID, userID, onWhichDays);
             const query = `INSERT INTO ${ CarPoolConnection.TABLE_NAME }(users_id, car_pool_opportunity_id, on_which_day) VALUES(?,?,?)`;
             return queryExecutor(query, [userID, cpoID, onWhichDays]);
-            
+
         })        
     }
 
@@ -30,6 +30,8 @@ class CarPoolConnection {
 
         })
     }
+
+    static async findByUserID
 
     private static async checkEligibility(cpoID: string, userID: string, onWhichDays: string): Promise<true> {
         const cpo: CarPoolOpportunity | null = await CarPoolOpportunity.FindOne(cpoID);

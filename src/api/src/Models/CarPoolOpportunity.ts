@@ -3,6 +3,7 @@ import moment from 'moment';
 import APIError from "../APIError";
 import { v4 as uuid } from 'uuid';
 import MySQLManager from "../Managers/MySQLManager";
+import CarPoolConnection from "./CarPoolConnection";
 export interface Point {
     x: number,
     y: number
@@ -124,15 +125,33 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
     }
 
     static findByOwnerID(ownerID: string){
-        return Model.find(CarPoolOpportunity.TABLE_NAME, "owner=?", [ ownerID ]);
+        return MySQLManager.getInstance()
+        .withTransaction<ICarPoolOpportunity[]>(async (connection, queryExecutor) => {    
+
+            const query: string = `SELECT CPO.*, count(CPC.car_pool_opportunity_id) as joined_users
+            FROM ${ CarPoolOpportunity.TABLE_NAME }  as CPO
+            LEFT JOIN ${ CarPoolConnection.TABLE_NAME } AS CPC ON (CPO.id = CPC.car_pool_opportunity_id)
+            WHERE owner=?
+            GROUP BY CPO.id;`;
+
+            return queryExecutor(query, [ ownerID ]);
+
+        })
     }
 
-    static search(searchTerm: string){
+    static search(searchTerm: string, searcherID: string){
         return MySQLManager.getInstance()
         .withTransaction<ICarPoolOpportunity[]>(async (connection, queryExecutor) => {
             
-            const query: string = `SELECT * FROM ${ CarPoolOpportunity.TABLE_NAME } WHERE (origin LIKE ?) OR (destination LIKE ?);`;
-            return queryExecutor(query, [ searchTerm ]); 
+            const query: string = `SELECT CPO.*, count(CPC.car_pool_opportunity_id) as joined_users, CASE WHEN CPC.users_id = ? THEN
+            'true' ELSE 'false' END AS joined FROM ${ CarPoolOpportunity.TABLE_NAME }  as CPO
+            LEFT JOIN ${ CarPoolConnection.TABLE_NAME } AS CPC ON (CPO.id = CPC.car_pool_opportunity_id)
+            WHERE (origin LIKE ?) OR (destination LIKE ?)
+            GROUP BY CPO.id;`;
+
+            const wildcard: string = `%${ searchTerm }%`
+
+            return queryExecutor(query, [ searcherID, wildcard, wildcard ]); 
         })
     }
 
