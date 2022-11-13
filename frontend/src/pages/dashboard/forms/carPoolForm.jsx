@@ -1,6 +1,6 @@
 import React from "react";
 
-function carPoolForm() {
+function carPoolForm({ setOpen }) {
 	return <div>carPoolForm</div>;
 }
 

@@ -50,7 +50,7 @@ export default function Login() {
 			auth.setToken(results.token);
 			auth.setId(results.user.userId);
 			auth.login(true);
-			navigate("/dashboard/carpool");
+			navigate("/dashboard");
 		},
 		onError: (results) => {
 			toast("Login Failed", {

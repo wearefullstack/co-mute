@@ -10,6 +10,7 @@ const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.text.secondary,
 	height: "100%",
 	lineHeight: "60px",
+	width: "100%",
 }));
 
 const lightTheme = createTheme({ palette: { mode: "light" } });
@@ -23,8 +24,9 @@ function PageContainer({ children }) {
 						p: 2,
 						bgcolor: "background.default",
 						display: "grid",
-						gridTemplateColumns: { md: "1fr 1fr" },
+						gridTemplateColumns: { md: "1fr" },
 						gap: 2,
+						width: "100%",
 					}}
 				>
 					<Item elevation={8}>{children}</Item>

@@ -3,9 +3,10 @@ import axios from "axios";
 //CAR POOLS
 export const CarPools = async () => {
 	console.log("car pools is called");
-	// const res = await axios.get("/api/CarPool/table");
-	// const data = res.data;
-	// return data;
+	const res = await axios.get("/api/CarPool/all");
+	const data = res.data;
+	console.log(data);
+	return data;
 };
 
 //GET SINGLE CAR POOL BY USER

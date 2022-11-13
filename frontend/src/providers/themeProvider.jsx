@@ -148,10 +148,10 @@ const AppTheme = createTheme({
 					"& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
 						color: "white",
 					},
-					// Edit each cell
-					"& .MuiDataGrid-cell": {
-						fontSize: "13px",
-					},
+					// // Edit each cell
+					// "& .MuiDataGrid-cell": {
+					// 	fontSize: "13px",
+					// },
 					"& .MuiDataGrid-cell:focus": {
 						outline: 0,
 					},

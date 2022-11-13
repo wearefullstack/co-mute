@@ -1,7 +1,7 @@
 import AddCircle from "@mui/icons-material/AddCircleOutline";
 import React from "react";
 import { GridToolbarQuickFilter } from "@mui/x-data-grid";
-import { Button } from "@mui/material/Button";
+import Button from "@mui/material/Button";
 
 function CustomToolBar(
 	{ create, csvOptions, rows, printOptions, ColDef, label, ...other },
