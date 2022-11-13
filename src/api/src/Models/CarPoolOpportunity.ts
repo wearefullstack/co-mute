@@ -139,7 +139,7 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
         })
     }
 
-    static search(searchTerm: string, searcherID: string){
+    static search(location: string, searcherID: string){
         return MySQLManager.getInstance()
         .withTransaction<ICarPoolOpportunity[]>(async (connection, queryExecutor) => {
             
@@ -149,7 +149,7 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
             WHERE (origin LIKE ?) OR (destination LIKE ?)
             GROUP BY CPO.id;`;
 
-            const wildcard: string = `%${ searchTerm }%`
+            const wildcard: string = `%${ location }%`
 
             return queryExecutor(query, [ searcherID, wildcard, wildcard ]); 
         })
