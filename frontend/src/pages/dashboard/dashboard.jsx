@@ -38,7 +38,9 @@ function Dashboard() {
 				toast("Joined Car Pool Opportunity", { type: "success" });
 				Navigate("/dashboard/carpool");
 			} else {
-				toast("Already Joined Car Pool Opportunity", { type: "warning" });
+				toast("Already Joined Car Pool Opportunity Or Closed", {
+					type: "warning",
+				});
 			}
 		},
 		onError: (results) => {
