@@ -63,8 +63,7 @@ class UpdateUserRoute extends Route<string> {
     public async handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<string> {
         const { name, surname, phone } = request.body;
         const authentication: IUser  = (request as any).authentication;
-        console.log(authentication, ":::AUTH");
-        
+    
         const user = await (new User({...authentication, name, surname, phone })).updateUser();
 
         try {

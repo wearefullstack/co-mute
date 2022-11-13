@@ -53,7 +53,7 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
                 const days: string[] = src.days_available.split(",");
                 if(!(await this.hasOverlappingCPCsOrCPOs(src.departure_time, src.expected_arrival_time, days, owner))){
                     const id: string = uuid();
-                    const CPO: ICarPoolOpportunity = {id, owner, ...src };
+                    const CPO: ICarPoolOpportunity = {id, owner, ...src};
                     (new CarPoolOpportunity(CPO)).save("Create");
                     return CPO;
                 }else{
@@ -116,10 +116,10 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
 
 
     static createIsOverlayingCondition(){
-        const DTWithin = `departure_time <  ? AND expected_arrival_time > ?`;
-        const EATWithin = `departure_time < ? AND expected_arrival_time > ?`;
-        const _DTWithin = `? < departure_time AND ? > departure_time`;
-        const _EATWithin = `? < expected_arrival_time AND ? > expected_arrival_time`;
+        const DTWithin = `departure_time <=  ? AND expected_arrival_time >= ?`;
+        const EATWithin = `departure_time <= ? AND expected_arrival_time >= ?`;
+        const _DTWithin = `? <= departure_time AND ? >= departure_time`;
+        const _EATWithin = `? <= expected_arrival_time AND ? >= expected_arrival_time`;
         
         return `${ DTWithin } OR ${ EATWithin } OR ${ _DTWithin } OR ${ _EATWithin }`;
     }

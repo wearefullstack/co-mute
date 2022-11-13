@@ -73,7 +73,6 @@ class UpdateUserRoute extends Route_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, surname, phone } = request.body;
             const authentication = request.authentication;
-            console.log(authentication, ":::AUTH");
             const user = yield (new User_1.default(Object.assign(Object.assign({}, authentication), { name, surname, phone }))).updateUser();
             try {
                 return AuthenticationManager_1.default.getInstance().sign(user);

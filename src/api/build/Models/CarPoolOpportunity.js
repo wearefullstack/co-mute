@@ -17,9 +17,16 @@ const moment_1 = __importDefault(require("moment"));
 const APIError_1 = __importDefault(require("../APIError"));
 const uuid_1 = require("uuid");
 const MySQLManager_1 = __importDefault(require("../Managers/MySQLManager"));
-class CarPoolOpportunities extends Model_1.default {
+const CarPoolConnection_1 = __importDefault(require("./CarPoolConnection"));
+class CarPoolOpportunity extends Model_1.default {
     constructor(src) {
-        super(CarPoolOpportunities.TABLE_NAME, src);
+        super(CarPoolOpportunity.TABLE_NAME, src);
+    }
+    static FindOne(primaryKey, primaryKeyName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const rawCPO = yield Model_1.default.findOne(primaryKey, this.TABLE_NAME, primaryKeyName);
+            return rawCPO ? new CarPoolOpportunity(rawCPO) : null;
+        });
     }
     static Create(src, owner) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -28,10 +35,10 @@ class CarPoolOpportunities extends Model_1.default {
                 const mDepTime = moment_1.default(src.departure_time, "HH:mm:ss", false), mEATTime = moment_1.default(src.expected_arrival_time, "HH:mm:ss", false);
                 if (mDepTime.isBefore(mEATTime)) {
                     const days = src.days_available.split(",");
-                    if (!(yield this.hasOverlappingCPOs(src.departure_time, src.expected_arrival_time, days, owner))) {
+                    if (!(yield this.hasOverlappingCPCsOrCPOs(src.departure_time, src.expected_arrival_time, days, owner))) {
                         const id = uuid_1.v4();
                         const CPO = Object.assign({ id, owner }, src);
-                        (new CarPoolOpportunities(CPO)).save("Create");
+                        (new CarPoolOpportunity(CPO)).save("Create");
                         return CPO;
                     }
                     else {
@@ -44,7 +51,7 @@ class CarPoolOpportunities extends Model_1.default {
             }));
         });
     }
-    static hasOverlappingCPOs(departure_time, expected_arrival_time, days, owner) {
+    static hasOverlappingCPCsOrCPOs(departure_time, expected_arrival_time, days, owner) {
         return __awaiter(this, void 0, void 0, function* () {
             return (yield this.hasOverlayingCreatedCPOs(departure_time, expected_arrival_time, days, owner)) || (yield this.hasOverlayingJoinedCPOs(departure_time, expected_arrival_time, days, owner));
         });
@@ -52,8 +59,8 @@ class CarPoolOpportunities extends Model_1.default {
     static hasOverlayingCreatedCPOs(departure_time, expected_arrival_time, days, owner) {
         return __awaiter(this, void 0, void 0, function* () {
             const args = [departure_time, departure_time, expected_arrival_time, expected_arrival_time, departure_time, expected_arrival_time, departure_time, expected_arrival_time, owner];
-            const whereCondition = `(${CarPoolOpportunities.createIsOverlayingCondition()}) AND owner=?;`;
-            const overlappingCPOs = yield Model_1.default.find(CarPoolOpportunities.TABLE_NAME, whereCondition, args);
+            const whereCondition = `(${CarPoolOpportunity.createIsOverlayingCondition()}) AND owner=?;`;
+            const overlappingCPOs = yield Model_1.default.find(CarPoolOpportunity.TABLE_NAME, whereCondition, args);
             if (overlappingCPOs.length > 0) {
                 return overlappingCPOs.some(overlappingCPO => {
                     return this.hasOverlappingDays(days, overlappingCPO.days_available.split(','));
@@ -90,13 +97,36 @@ class CarPoolOpportunities extends Model_1.default {
         });
     }
     static createIsOverlayingCondition() {
-        const DTWithin = `departure_time <  ? AND expected_arrival_time > ?`;
-        const EATWithin = `departure_time < ? AND expected_arrival_time > ?`;
-        const _DTWithin = `? < departure_time AND ? > departure_time`;
-        const _EATWithin = `? < expected_arrival_time AND ? > expected_arrival_time`;
+        const DTWithin = `departure_time <=  ? AND expected_arrival_time >= ?`;
+        const EATWithin = `departure_time <= ? AND expected_arrival_time >= ?`;
+        const _DTWithin = `? <= departure_time AND ? >= departure_time`;
+        const _EATWithin = `? <= expected_arrival_time AND ? >= expected_arrival_time`;
         return `${DTWithin} OR ${EATWithin} OR ${_DTWithin} OR ${_EATWithin}`;
     }
+    static findByOwnerID(ownerID) {
+        return MySQLManager_1.default.getInstance()
+            .withTransaction((connection, queryExecutor) => __awaiter(this, void 0, void 0, function* () {
+            const query = `SELECT CPO.*, count(CPC.car_pool_opportunity_id) as joined_users
+            FROM ${CarPoolOpportunity.TABLE_NAME}  as CPO
+            LEFT JOIN ${CarPoolConnection_1.default.TABLE_NAME} AS CPC ON (CPO.id = CPC.car_pool_opportunity_id)
+            WHERE owner=?
+            GROUP BY CPO.id;`;
+            return queryExecutor(query, [ownerID]);
+        }));
+    }
+    static search(location, searcherID) {
+        return MySQLManager_1.default.getInstance()
+            .withTransaction((connection, queryExecutor) => __awaiter(this, void 0, void 0, function* () {
+            const query = `SELECT CPO.*, count(CPC.car_pool_opportunity_id) as joined_users, CASE WHEN CPC.users_id = ? THEN
+            'true' ELSE 'false' END AS joined FROM ${CarPoolOpportunity.TABLE_NAME}  as CPO
+            LEFT JOIN ${CarPoolConnection_1.default.TABLE_NAME} AS CPC ON (CPO.id = CPC.car_pool_opportunity_id)
+            WHERE (origin LIKE ?) OR (destination LIKE ?)
+            GROUP BY CPO.id;`;
+            const wildcard = `%${location}%`;
+            return queryExecutor(query, [searcherID, wildcard, wildcard]);
+        }));
+    }
 }
-exports.default = CarPoolOpportunities;
-CarPoolOpportunities.TABLE_NAME = "car_pool_opportunity";
+exports.default = CarPoolOpportunity;
+CarPoolOpportunity.TABLE_NAME = "car_pool_opportunity";
 //# sourceMappingURL=CarPoolOpportunity.js.map

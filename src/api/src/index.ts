@@ -5,6 +5,7 @@ import express from 'express';
 import UserController from './Controllers/UserController';
 import Model from './Models/Model';
 import CarPoolOpportunity from './Models/CarPoolOpportunity';
+import CarPoolOpportunityController from './Controllers/CarPoolOpportunity';
 
 const app = express();
 
@@ -14,7 +15,10 @@ dotenv.config();
 
 
 const userController: UserController = new UserController();
+const cpoController: CarPoolOpportunityController = new CarPoolOpportunityController();
 
+
+// user
 const registerControl = userController.control("/register");
 app.post(registerControl.path, ...registerControl.handlers);
 
@@ -23,6 +27,23 @@ app.post(loginControl.path, ...loginControl.handlers);
 
 const updateControl = userController.control("/update", true);
 app.post(updateControl.path, ...updateControl.handlers);
+
+
+//cpo
+const cpoCreateControl = cpoController.control("/create", true);
+app.post(cpoCreateControl.path, ...cpoCreateControl.handlers);
+
+const cpoFindByOwnerIDControl = cpoController.control("/find_by_owner_id", true);
+console.log("::p", cpoFindByOwnerIDControl.path)
+app.post(cpoFindByOwnerIDControl.path, ...cpoFindByOwnerIDControl.handlers);
+
+const cpoSearchControl = cpoController.control("/search", true);
+app.get(cpoSearchControl.path, ...cpoSearchControl.handlers);
+
+
+
+
+
 
 async function startServer(){
     await MySQLManager.init();
@@ -46,14 +67,14 @@ async function startServer(){
         email: "b@e.codm",
     }, "test");*/
 
-    console.log(await CarPoolOpportunity.Create({
+    /*console.log(await CarPoolOpportunity.Create({
         days_available: "SAT ,SUN",
         departure_time: "10:30",
         destination: "Somewhere",
         expected_arrival_time: "15:00",
         origin: "s",
         available_seats: 2,
-    }, "ccc04116-84fa-4d43-94d5-7d2e08efe97a"));
+    }, "ccc04116-84fa-4d43-94d5-7d2e08efe97a"));*/
 
 
 

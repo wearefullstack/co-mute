@@ -30,7 +30,8 @@ class CreateCarPoolOpportunityRoute extends Route<ICarPoolOpportunity>{
     }
 
     validateTime(value: any){
-        const mTime = moment(`${ value }`, "HH:mm:ss", false);
+        const mTime = moment(`${ value }`, "HH:mm:ss", true);
+        
     
         return mTime.isValid();
     }
@@ -52,7 +53,7 @@ class FindByOwnerIDCarPoolOpportunityRoute extends Route<ICarPoolOpportunity[]> 
 
 export 
 class SearchCarPoolOpportunityRoute extends Route<ICarPoolOpportunity[]> {
-    public path: string = "/seach";
+    public path: string = "/search";
     public validator: ValidationChain[] = [];
 
     public handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<ICarPoolOpportunity[]> {

@@ -7,7 +7,7 @@ import Model from "./Model";
 
 export default
 class CarPoolConnection {
-    public static readonly TABLE_NAME: string = process.env.CPC_TABLE_NAME || "_";
+    public static readonly TABLE_NAME: string = process.env.CPC_TABLE_NAME || "users_has_car_pool_opportunity";
     
 
     static async join(cpoID: string, userID: string, onWhichDays: string){
