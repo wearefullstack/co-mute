@@ -16,9 +16,19 @@ class CarPoolConnection {
 
             await this.checkEligibility(cpoID, userID, onWhichDays);
             const query = `INSERT INTO ${ CarPoolConnection.TABLE_NAME }(users_id, car_pool_opportunity_id, on_which_day) VALUES(?,?,?)`;
-            const args: any[] = [userID, cpoID, onWhichDays]
-            return queryExecutor(query, args);
+            return queryExecutor(query, [userID, cpoID, onWhichDays]);
+            
         })        
+    }
+
+    static async leave(cpoID: string, userID: string){
+        return MySQLManager.getInstance()
+        .withTransaction<true>(async (connection, queryExecutor) => {
+            
+            const query: string = `DELETE FROM ${ CarPoolConnection.TABLE_NAME } WHERE users_id=? AND car_pool_opportunity_id=?`;
+            return queryExecutor(query, [ cpoID, userID ])
+
+        })
     }
 
     private static async checkEligibility(cpoID: string, userID: string, onWhichDays: string): Promise<true> {
