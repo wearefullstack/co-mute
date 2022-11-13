@@ -6,3 +6,4 @@ src/packages/
 /src/.vs/CoMute/config/applicationhost.config
 /src/api/node_modules/
 /src/api/.env
+/src/api/build/
