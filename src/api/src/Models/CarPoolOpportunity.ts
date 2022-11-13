@@ -123,5 +123,18 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
         return `${ DTWithin } OR ${ EATWithin } OR ${ _DTWithin } OR ${ _EATWithin }`;
     }
 
+    static findByOwnerID(ownerID: string){
+        return Model.find(CarPoolOpportunity.TABLE_NAME, "owner=?", [ ownerID ]);
+    }
+
+    static search(searchTerm: string){
+        return MySQLManager.getInstance()
+        .withTransaction<ICarPoolOpportunity[]>(async (connection, queryExecutor) => {
+            
+            const query: string = `SELECT * FROM ${ CarPoolOpportunity.TABLE_NAME } WHERE (origin LIKE ?) OR (destination LIKE ?);`;
+            return queryExecutor(query, [ searchTerm ]); 
+        })
+    }
+
 
 }
