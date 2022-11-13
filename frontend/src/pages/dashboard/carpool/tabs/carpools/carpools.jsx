@@ -1,7 +1,7 @@
 import React from "react";
 
-function carpools() {
+function Carpools() {
 	return <div>carpools</div>;
 }
 
-export default carpools;
+export default Carpools;

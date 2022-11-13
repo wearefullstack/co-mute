@@ -1,6 +1,6 @@
 import axios from "axios";
 
-//JOIN CAR POOL TABLE
+//JOINED CAR POOLS
 export const JoinCarPools = async () => {
 	console.log("Joined car pools called");
 	const res = await axios.get("/api/JoinCarPool/all");
@@ -8,19 +8,16 @@ export const JoinCarPools = async () => {
 	return data;
 };
 
-//GET CURRENT USER FOR JOINED CAR POOLS
+//GET JOINED CAR POOLS FOR CURRENT USER
 export const JoinedCarPool = async ({ queryKey }) => {
-	console.log("joined car pool is called");
-	console.log(queryKey);
-	// const { UserId } = queryKey[1];
-	// const res = await axios.get(`/api/Join/${UserId}`);
-	// const data = res.data;
-	// return data;
+	const { UserId } = queryKey[1];
+	const res = await axios.get(`/api/JoinCarPool/user/${UserId}`);
+	const data = res.data;
+	return data;
 };
 
 //JOIN CAR POOL
 export const JoinCarPool = async (queryKey) => {
-	console.log("join car pool is called");
 	try {
 		const UserId = queryKey.UserId;
 		const CarPoolId = queryKey.CarPoolId;
@@ -36,11 +33,9 @@ export const JoinCarPool = async (queryKey) => {
 };
 
 //LEAVE CAR POOL
-export const LeaveCarPool = async ({ queryKey }) => {
-	console.log("leave car pool is called");
-	console.log(queryKey);
-	// const { JoinId } = queryKey[1];
-	// const res = await axios.delete(`/api/Join/${JoinId}`);
-	// const data = res.data;
-	// return data;
+export const LeaveCarPool = async (queryKey) => {
+	const JoinId = queryKey.JoinId;
+	const res = await axios.post(`/api/JoinCarPool/leave/${JoinId}`);
+	const data = res.data;
+	return data;
 };

@@ -41,11 +41,11 @@ function CarPoolForm({ setOpen }) {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const auth = useAuth();
-	const [id, setId] = useState(auth.getId());
-	const [deptTime, setDeptTime] = useState(dayjs(new Date().toJSON()));
-	const [expTime, setExpTime] = useState(
-		dayjs(new Date().toJSON()).add(10, "minutes").toJSON()
+	const [id] = useState(auth.getId());
+	const [deptTime, setDeptTime] = useState(
+		dayjs(new Date().toJSON()).add(15, "minutes").toJSON()
 	);
+	const [expTime, setExpTime] = useState(dayjs(new Date().toJSON()));
 	//Debounce Time
 	const debouncedDeptTime = useDebounce(deptTime, 300);
 	const debouncedExpTime = useDebounce(expTime, 300);
@@ -73,10 +73,8 @@ function CarPoolForm({ setOpen }) {
 	const { values, errors, submitForm, handleChange } = useFormik({
 		initialValues: {
 			Owner: id,
-			DepartureTime: new Date().toJSON(),
-			ExpectedArrivalTime: dayjs(new Date().toJSON())
-				.add(10, "minutes")
-				.toJSON(),
+			ExpectedArrivalTime: new Date().toJSON(),
+			DepartureTime: dayjs(new Date().toJSON()).add(10, "minutes").toJSON(),
 			Origin: "",
 			DaysAvailable: [],
 			Destination: "",
@@ -151,26 +149,25 @@ function CarPoolForm({ setOpen }) {
 						renderInput={(props) => (
 							<TextField fullWidth size="small" {...props} />
 						)}
-						label="Departure Time"
-						value={deptTime}
+						label="Expected Arrival Time"
+						value={expTime}
 						onChange={(newValue) => {
-							setDeptTime(newValue);
+							setExpTime(newValue);
 						}}
 					/>
 				</LocalizationProvider>
 			</Grid>
-
 			<Grid item xs={12}>
 				<LocalizationProvider dateAdapter={AdapterDayjs}>
 					<DateTimePicker
 						renderInput={(props) => (
 							<TextField fullWidth size="small" {...props} />
 						)}
-						label="Expected Arrival Time"
-						minDateTime={deptTime}
-						value={expTime}
+						label="Departure Time"
+						minDateTime={expTime}
+						value={deptTime}
 						onChange={(newValue) => {
-							setExpTime(newValue);
+							setDeptTime(newValue);
 						}}
 					/>
 				</LocalizationProvider>

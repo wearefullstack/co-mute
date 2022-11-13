@@ -38,7 +38,7 @@ function Profile() {
 	const navigate = useNavigate();
 	const auth = useAuth();
 	const queryClient = useQueryClient();
-	const [id, setId] = useState(auth.getId());
+	const [id] = useState(auth.getId());
 	const [phone, setPhone] = useState("");
 
 	const debouncedValue = useDebounce(phone, 300);

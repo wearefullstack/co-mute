@@ -19,16 +19,19 @@ import { JoinCarPool } from "../../controllers/joinCarPool.api";
 import { useAuth } from "../../auth/authorize";
 
 import moment from "moment";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 	const auth = useAuth();
-	const [id, setId] = useState(auth.getId());
+	const navigate = useNavigate();
+	const [id] = useState(auth.getId());
 	const [open, setOpen] = useState(false);
 	const queryClient = useQueryClient();
 
 	// carPools query
-	const { data: carPools = [], isLoading } = useQuery(["carPools"], CarPools);
+	const { data: carPools = [], isLoading } = useQuery(["carPools"], CarPools, {
+		refetchIntervalInBackground: false,
+	});
 
 	//Mutate Car Pool Joining
 	const { mutate: joinCarPool } = useMutation(JoinCarPool, {
@@ -36,7 +39,7 @@ function Dashboard() {
 			queryClient.invalidateQueries("carPools");
 			if (results.joinId !== 0) {
 				toast("Joined Car Pool Opportunity", { type: "success" });
-				Navigate("/dashboard/carpool");
+				navigate("/dashboard/carpool");
 			} else {
 				toast("Already Joined Car Pool Opportunity Or Closed", {
 					type: "warning",
@@ -118,19 +121,6 @@ function Dashboard() {
 			},
 		},
 		{
-			field: "departureTime",
-			headerName: "Dep. Time",
-			flex: 1,
-			editable: false,
-			renderCell: ({ row }) => {
-				return (
-					<Tooltip placement="top" title="Departure Time">
-						<div>{moment(row.departureTime).format("lll")}</div>
-					</Tooltip>
-				);
-			},
-		},
-		{
 			field: "arrivalTime",
 			headerName: "Est. Time",
 			flex: 1,
@@ -139,6 +129,19 @@ function Dashboard() {
 				return (
 					<Tooltip placement="top" title="Expected Arrival Time">
 						<div>{moment(row.expectedArrivalTime).format("lll")}</div>
+					</Tooltip>
+				);
+			},
+		},
+		{
+			field: "departureTime",
+			headerName: "Dep. Time",
+			flex: 1,
+			editable: false,
+			renderCell: ({ row }) => {
+				return (
+					<Tooltip placement="top" title="Departure Time">
+						<div>{moment(row.departureTime).format("lll")}</div>
 					</Tooltip>
 				);
 			},
