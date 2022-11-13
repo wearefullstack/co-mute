@@ -21,6 +21,7 @@ class CarPoolConnection {
         })        
     }
 
+
     static async leave(cpoID: string, userID: string){
         return MySQLManager.getInstance()
         .withTransaction<true>(async (connection, queryExecutor) => {
@@ -31,7 +32,17 @@ class CarPoolConnection {
         })
     }
 
-    static async findByUserID
+
+    static async findByUserID(userID: string){
+        return MySQLManager.getInstance()
+        .withTransaction<IJoinedCarPoolOpportunity[]>(async(connection, queryExecutor) => {
+
+            const query: string = `SELECT * FROM ${ CarPoolConnection.TABLE_NAME } WHERE users_id=?`;
+            return queryExecutor(query, [ userID ]);
+
+        });
+    }
+
 
     private static async checkEligibility(cpoID: string, userID: string, onWhichDays: string): Promise<true> {
         const cpo: CarPoolOpportunity | null = await CarPoolOpportunity.FindOne(cpoID);
@@ -52,13 +63,17 @@ class CarPoolConnection {
         
     }
 
+
     static async hasAvailableSeats(cpoID:string, maxSeats: number){
         const cpos: IJoinedCarPoolOpportunity[] = await CarPoolConnection.find(cpoID);
         return (maxSeats - cpos.length) !== 0;
     }
 
+
     static find(cpoID: string){
         const whereCondition: string = `car_pool_opportunity_id=?`;
         return Model.find<IJoinedCarPoolOpportunity>(CarPoolConnection.TABLE_NAME, whereCondition, [ cpoID ]);
     }
+
+    
 }
