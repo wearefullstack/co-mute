@@ -6,33 +6,33 @@ export const Authorize = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	const setToken = (token) => {
-		sessionStorage.setItem("token", token);
+		localStorage.setItem("token", token);
 	};
 
 	const setId = (id) => {
-		sessionStorage.setItem("id", id);
+		localStorage.setItem("id", id);
 	};
 
 	const getId = () => {
-		return sessionStorage.getItem("id");
+		return Number(localStorage.getItem("id"));
 	};
 
 	const getToken = () => {
-		return sessionStorage.getItem("token");
+		return localStorage.getItem("token");
 	};
 
 	const removeToken = () => {
-		return sessionStorage.removeItem("token");
+		return localStorage.removeItem("token");
 	};
 
 	const removeId = () => {
-		return sessionStorage.removeItem("id");
+		return localStorage.removeItem("id");
 	};
 
-	const login = () => {
+	const login = (value) => {
 		removeToken();
 		removeId();
-		setIsLoggedIn(true);
+		setIsLoggedIn(value);
 	};
 
 	const logout = () => {
@@ -72,4 +72,3 @@ export const Authorize = ({ children }) => {
 export const useAuth = () => {
 	return useContext(AuthContext);
 };
-

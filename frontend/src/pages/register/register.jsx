@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,7 +16,12 @@ import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+
+import { MuiTelInput } from "mui-tel-input";
+
 import { RegisterUser } from "../../controllers/user.api";
+
+const theme = createTheme();
 
 function Copyright(props) {
 	return (
@@ -36,10 +41,23 @@ function Copyright(props) {
 	);
 }
 
-const theme = createTheme();
+function useDebounce(value, delay) {
+	const [debouncedValue, setDebouncedValue] = useState(value);
+
+	useEffect(() => {
+		const timeoutId = setTimeout(() => {
+			setDebouncedValue(value);
+		}, delay);
+		return () => clearTimeout(timeoutId);
+	}, [value]);
+	return debouncedValue;
+}
 
 function Register() {
 	const navigate = useNavigate();
+	const [phone, setPhone] = useState("");
+
+	const debouncedValue = useDebounce(phone, 300);
 
 	//Mutate Register
 	const { mutate: registerUser } = useMutation(RegisterUser, {
@@ -83,6 +101,14 @@ function Register() {
 			registerUser(values);
 		},
 	});
+
+	const handlePhoneInput = (value) => {
+		setPhone(value);
+	};
+
+	useEffect(() => {
+		values.Phone = debouncedValue;
+	}, [debouncedValue]);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -136,15 +162,13 @@ function Register() {
 								/>
 							</Grid>
 							<Grid item xs={12}>
-								<TextField
+								<MuiTelInput
+									aria-label="Phone"
 									fullWidth
-									id="Phone"
-									label="Phone"
-									name="Phone"
-									autoComplete="Phone"
 									size="small"
-									value={values.Phone}
-									onChange={handleChange}
+									defaultCountry="US"
+									value={phone}
+									onChange={handlePhoneInput}
 								/>
 							</Grid>
 							<Grid item xs={12}>

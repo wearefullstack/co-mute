@@ -42,7 +42,7 @@ export function Interceptor() {
 			if (error.response.status === 401 && !originalRequest._retry) {
 				// Code inside this block will refresh the auth token
 				originalRequest._retry = true;
-				const refreshToken = getToken(); // Write the logic or call here the function which is having the login to refresh the token.
+				const refreshToken = "xxxxxxx"; // Write the logic or call here the function which is having the login to refresh the token.
 				return axios
 					.post("/auth/token", {
 						refresh_token: refreshToken,

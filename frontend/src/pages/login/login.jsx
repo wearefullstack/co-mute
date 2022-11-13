@@ -48,7 +48,8 @@ export default function Login() {
 	const { mutate: loginUser } = useMutation(LoginUser, {
 		onSuccess: (results) => {
 			auth.setToken(results.token);
-			auth.login();
+			auth.setId(results.user.userId);
+			auth.login(true);
 			navigate("/dashboard/carpool");
 		},
 		onError: (results) => {

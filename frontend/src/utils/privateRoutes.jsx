@@ -1,9 +1,16 @@
+import { useState } from "react";
+import { useLayoutEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../auth/authorize";
 
-const PrivateRoutes=()=> {
+const PrivateRoutes = () => {
 	const auth = useAuth();
-	return auth.isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
-}
+	const [loggedIn, setLoggedIn] = useState(auth.isLoggedIn);
+	useLayoutEffect(() => {
+		setLoggedIn(loggedIn);
+	}, [loggedIn]);
+
+	return loggedIn ? <Outlet /> : <Navigate to="/login" />;
+};
 
 export default PrivateRoutes;

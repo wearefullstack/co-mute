@@ -4,16 +4,17 @@ import axios from "axios";
 export const RegisterUser = async (myForm) => {
 	console.log("register user is called");
 	console.log(myForm);
-	// const UserId = myForm.UserId;
-	// try {
-	// 	const res = await axios.post(`/api/Users/${UserId}`, myForm, {
-	// 		headers: { "Content-Type": "application/json" },
-	// 	});
-	// 	const data = res.data;
-	// 	return data;
-	// } catch (error) {
-	// 	console.error(error.response.data);
-	// }
+	try {
+		const UserId = myForm.UserId;
+		const res = await axios.post(`/api/User/save/${UserId}`, myForm, {
+			headers: { "Content-Type": "application/json" },
+		});
+		const data = res.data;
+		console.log(data);
+		return data;
+	} catch (error) {
+		console.error(error.response.data);
+	}
 };
 
 //Current User

@@ -17,13 +17,29 @@ import { toast } from "react-toastify";
 import { RegisterUser } from "../../../controllers/user.api";
 import { useAuth } from "../../../auth/authorize";
 
+import { MuiTelInput } from "mui-tel-input";
+
 const theme = createTheme();
+
+function useDebounce(value, delay) {
+	const [debouncedValue, setDebouncedValue] = useState(value);
+
+	useEffect(() => {
+		const timeoutId = setTimeout(() => {
+			setDebouncedValue(value);
+		}, delay);
+		return () => clearTimeout(timeoutId);
+	}, [value]);
+	return debouncedValue;
+}
 
 function Profile() {
 	const auth = useAuth();
 	const queryClient = useQueryClient();
 	const [id, setId] = useState(auth.getId());
+	const [phone, setPhone] = useState("");
 
+	const debouncedValue = useDebounce(phone, 300);
 	//Current User query
 	const { data: currentUser = [] } = useQuery(
 		["currentUser", { UserId: id }],
@@ -38,6 +54,7 @@ function Profile() {
 					Role: data.role ?? "User",
 					CreatedOn: data.createdOn ?? new Date().toJSON(),
 				});
+				setPhone(data.phone);
 			},
 		}
 	);
@@ -80,6 +97,10 @@ function Profile() {
 		},
 	});
 
+	useEffect(() => {
+		values.Phone = debouncedValue;
+	}, [debouncedValue]);
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Container component="main" maxWidth="xs">
@@ -98,9 +119,9 @@ function Profile() {
 					<Typography component="h1" variant="h5">
 						Profile
 					</Typography>
-					<Box component="form" sx={{ mt: 3 }}>
+					<Box sx={{ mt: 3 }}>
 						<Grid container spacing={2}>
-							<Grid item xs={12}>
+							<Grid item xs={12} sm={6}>
 								<TextField
 									autoComplete="given-name"
 									name="Name"
@@ -116,7 +137,7 @@ function Profile() {
 									onChange={handleChange}
 								/>
 							</Grid>
-							<Grid item xs={12}>
+							<Grid item xs={12} sm={6}>
 								<TextField
 									required
 									fullWidth
@@ -132,15 +153,13 @@ function Profile() {
 								/>
 							</Grid>
 							<Grid item xs={12}>
-								<TextField
+								<MuiTelInput
+									aria-label="Phone"
 									fullWidth
-									id="Phone"
-									label="Phone"
-									name="Phone"
-									autoComplete="Phone"
 									size="small"
-									value={values.Phone}
-									onChange={handleChange}
+									defaultCountry="US"
+									value={phone}
+									onChange={handlePhoneInput}
 								/>
 							</Grid>
 							<Grid item xs={12}>
