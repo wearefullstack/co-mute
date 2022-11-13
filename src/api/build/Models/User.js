@@ -41,7 +41,7 @@ class User extends Model_1.default {
             if (!rawUser) {
                 const id = uuid_1.v4();
                 const password_hash = yield bcrypt_1.default.hash(password, User.SALT_ROUNDS);
-                const user = new User(Object.assign({ id, password_hash, password_salt: User.SALT_ROUNDS }, src));
+                const user = new User(Object.assign(Object.assign({ id, password_hash, password_salt: User.SALT_ROUNDS }, src), { date_created: new Date() }));
                 yield user.save("Create");
                 return user.src;
             }

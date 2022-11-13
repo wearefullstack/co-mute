@@ -22,7 +22,7 @@ class CarPoolOpportunity extends Model_1.default {
     constructor(src) {
         super(CarPoolOpportunity.TABLE_NAME, src);
     }
-    static FindOne(primaryKey, primaryKeyName) {
+    static FindOne(primaryKey, primaryKeyName = "id") {
         return __awaiter(this, void 0, void 0, function* () {
             const rawCPO = yield Model_1.default.findOne(primaryKey, this.TABLE_NAME, primaryKeyName);
             return rawCPO ? new CarPoolOpportunity(rawCPO) : null;
@@ -37,7 +37,7 @@ class CarPoolOpportunity extends Model_1.default {
                     const days = src.days_available.split(",");
                     if (!(yield this.hasOverlappingCPCsOrCPOs(src.departure_time, src.expected_arrival_time, days, owner))) {
                         const id = uuid_1.v4();
-                        const CPO = Object.assign({ id, owner }, src);
+                        const CPO = Object.assign(Object.assign({ id, owner }, src), { date_created: new Date() });
                         (new CarPoolOpportunity(CPO)).save("Create");
                         return CPO;
                     }

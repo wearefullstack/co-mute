@@ -46,7 +46,7 @@ class User extends Model<IUser> {
                 const id: string = uuidV4();
                 const password_hash: string = await bcrypt.hash(password, User.SALT_ROUNDS);
 
-                const user: User = new User({ id, password_hash, password_salt: User.SALT_ROUNDS, ...src});
+                const user: User = new User({ id, password_hash, password_salt: User.SALT_ROUNDS, ...src, date_created: new Date()});
                 await user.save("Create");
                 return user.src;
             }else{

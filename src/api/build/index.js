@@ -17,11 +17,13 @@ const MySQLManager_1 = __importDefault(require("./Managers/MySQLManager"));
 const express_1 = __importDefault(require("express"));
 const UserController_1 = __importDefault(require("./Controllers/UserController"));
 const CarPoolOpportunity_1 = __importDefault(require("./Controllers/CarPoolOpportunity"));
+const CarPoolConnection_1 = __importDefault(require("./Controllers/CarPoolConnection"));
 const app = express_1.default();
 app.use(express_1.default.json());
 dotenv_1.default.config();
 const userController = new UserController_1.default();
 const cpoController = new CarPoolOpportunity_1.default();
+const cpcContoller = new CarPoolConnection_1.default();
 // user
 const registerControl = userController.control("/register");
 app.post(registerControl.path, ...registerControl.handlers);
@@ -37,6 +39,13 @@ console.log("::p", cpoFindByOwnerIDControl.path);
 app.post(cpoFindByOwnerIDControl.path, ...cpoFindByOwnerIDControl.handlers);
 const cpoSearchControl = cpoController.control("/search", true);
 app.get(cpoSearchControl.path, ...cpoSearchControl.handlers);
+//cpc
+const cpcCreateControl = cpcContoller.control("/join", true);
+app.post(cpcCreateControl.path, ...cpcCreateControl.handlers);
+const cpcFindByUserIdController = cpcContoller.control("/find_by_user_id", true);
+app.post(cpcFindByUserIdController.path, ...cpcFindByUserIdController.handlers);
+const cpcLeaveController = cpcContoller.control("/leave", true);
+app.post(cpcLeaveController.path, ...cpcLeaveController.handlers);
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         yield MySQLManager_1.default.init();

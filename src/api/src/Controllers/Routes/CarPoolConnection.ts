@@ -20,7 +20,7 @@ class JoinRoute extends Route<IJoinedCarPoolOpportunity> {
 
     public handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<IJoinedCarPoolOpportunity> {
         const { id }: IUser  = (request as any).authentication;
-        const { cpo_id, on_which_days } = request.query;
+        const { cpo_id, on_which_days } = request.body;
 
         return CarPoolConnection.join(`${cpo_id}`, id, `${on_which_days}`)
     }
@@ -37,9 +37,23 @@ class LeaveRoute extends Route<true> {
 
     public handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<true> {
         const { id }: IUser  = (request as any).authentication;
-        const { cpo_id } = request.query;
+        const { cpo_id } = request.body;
 
         return CarPoolConnection.leave(`${cpo_id}`, id)
+    }
+
+}
+
+export
+class FindByUserIDRoute extends Route<IJoinedCarPoolOpportunity[]> {
+    public path: string = "/find_by_user_id";
+
+    public validator: ValidationChain[] = [];
+
+    public handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<IJoinedCarPoolOpportunity[]> {
+        const { id }: IUser  = (request as any).authentication;
+
+        return CarPoolConnection.findByUserID(id);
     }
 
 }

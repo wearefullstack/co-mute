@@ -37,7 +37,7 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
         super(CarPoolOpportunity.TABLE_NAME, src)
     }
 
-    public static async FindOne<TModel>(primaryKey: string, primaryKeyName?: string): Promise<CarPoolOpportunity | null> {
+    public static async FindOne<TModel>(primaryKey: string, primaryKeyName: string = "id"): Promise<CarPoolOpportunity | null> {
         const rawCPO = await Model.findOne<ICarPoolOpportunity>(primaryKey, this.TABLE_NAME, primaryKeyName);
 
         return rawCPO ? new CarPoolOpportunity(rawCPO) : null;
@@ -53,7 +53,7 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
                 const days: string[] = src.days_available.split(",");
                 if(!(await this.hasOverlappingCPCsOrCPOs(src.departure_time, src.expected_arrival_time, days, owner))){
                     const id: string = uuid();
-                    const CPO: ICarPoolOpportunity = {id, owner, ...src};
+                    const CPO: ICarPoolOpportunity = {id, owner, ...src, date_created: new Date()};
                     (new CarPoolOpportunity(CPO)).save("Create");
                     return CPO;
                 }else{

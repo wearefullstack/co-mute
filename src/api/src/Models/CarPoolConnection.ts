@@ -13,10 +13,12 @@ class CarPoolConnection {
     static async join(cpoID: string, userID: string, onWhichDays: string){
         return MySQLManager.getInstance()
         .withTransaction<IJoinedCarPoolOpportunity>(async(connection, queryExecutor) => {
+            const date_joined = new Date();
 
             await this.checkEligibility(cpoID, userID, onWhichDays);
-            const query = `INSERT INTO ${ CarPoolConnection.TABLE_NAME }(users_id, car_pool_opportunity_id, on_which_day) VALUES(?,?,?)`;
-            return queryExecutor(query, [userID, cpoID, onWhichDays]);
+            const query = `INSERT INTO ${ CarPoolConnection.TABLE_NAME }(users_id, car_pool_opportunity_id, on_which_days, date_joined) VALUES(?,?,?,?)`;
+            await queryExecutor(query, [userID, cpoID, onWhichDays, date_joined]);
+            return { users_id: userID, car_pool_opportunity_id: cpoID, on_which_days: onWhichDays, date_joined}
 
         })        
     }
@@ -27,7 +29,8 @@ class CarPoolConnection {
         .withTransaction<true>(async (connection, queryExecutor) => {
             
             const query: string = `DELETE FROM ${ CarPoolConnection.TABLE_NAME } WHERE users_id=? AND car_pool_opportunity_id=?`;
-            return queryExecutor(query, [ cpoID, userID ])
+            await queryExecutor(query, [  userID, cpoID ])
+            return true;
 
         })
     }
@@ -55,11 +58,11 @@ class CarPoolConnection {
                 if(!hasOverlappingCPCsOrCPOs){
                     return true;
                 }else
-                    return Promise.reject(APIError.eForbidden("CarPoolConnection", "The requested Car Pool time range overlaps with a Car Pool you Joined or Created"))
+                    return Promise.reject(APIError.eForbidden("CarPoolConnection", "The requested Car Pool time range overlaps with a Car Pool you Joined or Created").toError())
             }else
-                return Promise.reject(APIError.eForbidden("CarPoolConnection", "The requested Car Pool doesn't have any seats available."));
+                return Promise.reject(APIError.eForbidden("CarPoolConnection", "The requested Car Pool doesn't have any seats available.").toError());
         }else
-            return Promise.reject(APIError.eNotFound("CarPoolConnection", "The requested Car Pool was not found."));
+            return Promise.reject(APIError.eNotFound("CarPoolConnection", "The requested Car Pool was not found.").toError());
         
     }
 
