@@ -9,6 +9,7 @@ src/packages/
 /src/api/build/
 
 
+src/frontend/.env
 /src/frontend/node_modules
 /src/frontend/.pnp
 /src/frontend/.pnp.js

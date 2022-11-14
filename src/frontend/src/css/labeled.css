@@ -1,0 +1,19 @@
+
+
+.container {
+    width: 100%;
+    padding: 0px 16px;
+}
+
+.title {
+    font-size: .8em;
+    color: rgb(138, 138, 138);
+    align-self: start;
+}
+
+.error {
+    font-size: .8em;
+    color: rgb(241, 41, 41);
+    align-self: start;
+    padding: 0px 8px
+}
