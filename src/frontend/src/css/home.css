@@ -5,3 +5,17 @@
     padding: 8px
 
 }
+
+.tab-container{
+    width: 100%;
+    padding: 16px;
+  
+    background-image: radial-gradient(#c9c9c9 20%, transparent 20%),
+    radial-gradient(#d5b5ff 20%, transparent 20%);
+
+  background-position: 0 0, 2px 2px;
+  background-size: 5px 5px;
+  display: flex;
+flex-direction: column;
+justify-items: start;
+  }

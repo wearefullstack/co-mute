@@ -1,0 +1,31 @@
+
+
+.container {
+    width: 100%;
+    padding: 4px;
+    background-color: rgb(241, 241, 241);
+    border-radius: 5px;
+    justify-content: space-evenly;
+}
+
+.selected{
+    background-color: rgb(199, 200, 255);
+}
+
+.deselected {
+
+    background-color: rgba(255, 255, 255, 0.5);
+
+}
+.item:hover {
+    background-color: white;
+}
+
+.item {
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    margin: 0px;
+}
+
