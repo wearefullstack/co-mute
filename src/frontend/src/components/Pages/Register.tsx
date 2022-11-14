@@ -5,6 +5,8 @@ import Labeled from "../Labeled";
 import { Button, notification } from 'antd'
 import { IError, stringExists } from "../../Utils";
 import APIManager from "../../Managers/APIManager";
+import UserManager from "../../Managers/UserManager";
+import { useNavigate } from 'react-router-dom';
 
 interface IForm {
     name: string,
@@ -22,6 +24,7 @@ function Register(){
     const [ form, setForm] = useState<Partial<IForm>>(EMPTY_FORM);
     const [ errors, setErrors] = useState<IError<IForm>>({});
     const [ isLoading, setIsLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const register = ()=>{
         console.log(":reg")
@@ -32,7 +35,10 @@ function Register(){
             
             setIsLoading(true);
             APIManager.getInstance().registerUser(form as IForm)
-            .then(result => console.log(":R", result))
+            .then(({ result }: any) => {
+                UserManager.getInstance().setActiveUser(result);
+                navigate("/");
+            })
             .catch(error => {
                 console.log("e", error);
                 notification.error({
