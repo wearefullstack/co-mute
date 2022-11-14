@@ -41,6 +41,9 @@ class MySQLManager {
                     if (error)
                         reject(error);
                     else {
+                        connection.on("error", (error) => {
+                            console.log("mysql-error", error);
+                        });
                         console.log(chalk_1.default.green("✓ Connected."));
                         resolve(MySQLManager.INSTANCE = new MySQLManager(connection));
                     }
@@ -76,7 +79,7 @@ class MySQLManager {
                             resolve(result);
                     }))
                         .catch((error) => {
-                        this.connection.rollback(_ => { throw error; });
+                        this.connection.rollback(_ => { });
                         reject(error);
                     });
                 }

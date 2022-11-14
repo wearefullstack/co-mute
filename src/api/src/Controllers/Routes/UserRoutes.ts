@@ -9,7 +9,7 @@ import Route from "./Route";
 
 
 export
-class RegisterUserRoute extends Route<IUser> {
+class RegisterUserRoute extends Route<string> {
     public path: string = "/register"
     public validator: ValidationChain[] =
     [   
@@ -21,9 +21,15 @@ class RegisterUserRoute extends Route<IUser> {
     ]
     
 
-    public handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<IUser> {
+    public async  handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<string> {
         const { name, surname, phone, email, password } = request.body;
-        return User.register({ name, surname, phone, email }, password)
+        const user = await  User.register({ name, surname, phone, email }, password);
+
+        try {
+            return JWTManager.getInstance().sign(user);
+        } catch (error) {
+            return Promise.reject(APIError.eServer("UserRoute").log(error));
+        }
     }
 }
 

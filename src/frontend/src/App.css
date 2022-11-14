@@ -1,5 +1,28 @@
 .App {
   text-align: center;
+  
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+input {
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: #a8a8a8 solid;
+  border-width: 1px;
+  min-height: 32px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -26,6 +49,40 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.form{
+  width: 25%;
+  min-width: 300px;
+  height: 80%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: #636363 solid;
+  border-width: 1px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1); 
+  overflow-y: auto;
+}
+
+.form-icon {
+  width: 40%;
+  margin-top: 64px;
+}
+
+.form-title {
+  color: #727272
+}
+
+.main-container{
+  width: 100vw;
+  height: 100vh;
+  background-image: radial-gradient(#c9c9c9 20%, transparent 20%),
+  radial-gradient(#fcfcfc 20%, transparent 20%);
+background-color: #fcfcfc;
+background-position: 0 0, 2px 2px;
+background-size: 5px 5px;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 @keyframes App-logo-spin {

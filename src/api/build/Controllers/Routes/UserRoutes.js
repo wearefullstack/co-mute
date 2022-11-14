@@ -31,8 +31,16 @@ class RegisterUserRoute extends Route_1.default {
         ];
     }
     handle(request) {
-        const { name, surname, phone, email, password } = request.body;
-        return User_1.default.register({ name, surname, phone, email }, password);
+        return __awaiter(this, void 0, void 0, function* () {
+            const { name, surname, phone, email, password } = request.body;
+            const user = yield User_1.default.register({ name, surname, phone, email }, password);
+            try {
+                return AuthenticationManager_1.default.getInstance().sign(user);
+            }
+            catch (error) {
+                return Promise.reject(APIError_1.default.eServer("UserRoute").log(error));
+            }
+        });
     }
 }
 exports.RegisterUserRoute = RegisterUserRoute;

@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { connect } from 'http2';
 import MySql from 'mysql';
 
 
@@ -39,9 +40,14 @@ class  MySQLManager {
             });
 
             console.log(chalk.blue("Ⓘ Connecting to MYSQL Server..."))
+     
             connection.connect((error) => {
+                
                 if(error) reject(error)
                 else {
+                    connection.on("error", (error)=>{
+                        console.log("mysql-error", error);
+                    })
                     console.log(chalk.green("✓ Connected."))
                     resolve(MySQLManager.INSTANCE = new MySQLManager(connection))
                 }
@@ -75,7 +81,7 @@ class  MySQLManager {
                         else resolve(result); 
                     }))
                     .catch((error)=>{
-                        this.connection.rollback(_=> { throw error; });
+                        this.connection.rollback(_=> { });
                         reject(error);
                     })
                 }

@@ -25,9 +25,11 @@ abstract class Controller<TRoutes extends string>{
                 res.status(200).json({ result });
             }).
             catch(error => {
-                res.json({ error })
-                console.log(error);
+                res.status(error.status_code).json({ error })
+                //console.log(error);
+                console.log(2);
             })
+            .catch(error =>{ console.log(1)})
             else
             res.json({error: errors.array()})
         };

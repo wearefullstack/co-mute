@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import MySQLManager from "./Managers/MySQLManager";
 import User, { IUser } from './Models/User';
 import express from 'express';
+import cors from 'cors'
 import UserController from './Controllers/UserController';
 import Model from './Models/Model';
 import CarPoolOpportunity from './Models/CarPoolOpportunity';
@@ -11,6 +12,7 @@ import CarPoolConnectionController from './Controllers/CarPoolConnection';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 dotenv.config();
 
