@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import '../../App.css'
 import regLogo from '../../Images/register.svg';
 import Labeled from "../Labeled";
 import {  notification } from 'antd'
-import { IError, stringExists } from "../../Utils";
+import { handleSystemError, IError, stringExists } from "../../Utils";
 import APIManager from "../../Managers/APIManager";
 import UserManager from "../../Managers/UserManager";
 import { useNavigate } from 'react-router-dom';
@@ -19,10 +19,10 @@ const EMPTY_FORM: IForm = {  email: "", password: "" }
 
 export default
 function Login(){
+    const navigate = useNavigate();
     const [ form, setForm] = useState<Partial<IForm>>(EMPTY_FORM);
     const [ errors, setErrors] = useState<IError<IForm>>({});
     const [ isLoading, setIsLoading] = useState<boolean>(false);
-    const navigate = useNavigate();
 
     const login = ()=>{
         if(isLoading) return;
@@ -31,22 +31,10 @@ function Login(){
         if(!_errors){
             const { email,password} = form as IForm;
             setIsLoading(true);
-            APIManager.getInstance().loginUser(email, password)
-            .then(({ result }: any) => {
-                UserManager.getInstance().setActiveUser(result);
-                navigate("/")
-            })
-            .catch((error: any)=> {
-                console.log("e", error);
-                notification.error({
-                    message: error.message,
-                    description: "",
-                    placement: "top",
-                    duration: 0
-                  });
-            })
-            .finally(() => setIsLoading(false));
 
+            LoginUser(email, password)
+            .then(()=> navigate("/"))
+            .catch(handleSystemError)
 
             setErrors({});
         }else{
@@ -63,9 +51,11 @@ function Login(){
     return (
         <div className="main-container">
             <div className="form">
+
                 <img className="form-icon" src={ regLogo }/>
                 <h2 className="form-title">CO-MUTE</h2>
                 <h2 className="form-sub-title">Login</h2>
+                
                 <Labeled title={"Email *"} error={ errors.email }>
                     <input onChange={ onInputChange("email")} value={ form.email }/>
                 </Labeled>
@@ -108,6 +98,22 @@ function ValidateEmail(value: any) {
     }
   
   }
+
+async function LoginUser(email: string, password: string){
+    try {
+        const { result } = await APIManager.getInstance().loginUser(email, password)
+        UserManager.getInstance().setActiveUser(result);
+        return result;
+    } catch (error: any) {
+        notification.error({
+            message: error.message,
+            description: "",
+            placement: "top",
+            duration: 0
+          });
+        return null;
+    }
+}
 
 
 

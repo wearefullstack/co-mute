@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200&display=swap');
 .App {
   text-align: center;
   
 }
+
+
 
 * {
   box-sizing: border-box;
@@ -51,11 +54,16 @@ input {
   color: #61dafb;
 }
 
+
+
+
+
 .form{
+  font-family: 'Anton', sans-serif;
   width: 25%;
   min-width: 300px;
   height: 80%;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.5);
   border: #636363 solid;
   border-width: 1px;
   border-radius: 5px;
@@ -78,7 +86,12 @@ input {
   color: #727272;
   margin-top: 4px;
   font-size: 1em;
+  font-family: 'Manrope', sans-serif;
 }
+
+
+
+
 .btn:hover {
   background-color: #ffffff;
 }

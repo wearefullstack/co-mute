@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const chalk_1 = __importDefault(require("chalk"));
 const mysql_1 = __importDefault(require("mysql"));
+const APIError_1 = __importDefault(require("../APIError"));
 //singleton class to manage mysql connection
 class MySQLManager {
     constructor(connection) {
@@ -35,8 +36,6 @@ class MySQLManager {
                 process.on('SIGINT', () => {
                     console.log(chalk_1.default.red("Ⓘ Closing connection..."));
                     connection.end();
-                    console.log(chalk_1.default.red("Ⓘconnection closed"));
-                    return 1;
                 });
                 console.log(chalk_1.default.blue("Ⓘ Connecting to MYSQL Server..."));
                 connection.connect((error) => {
@@ -56,13 +55,13 @@ class MySQLManager {
     //helper function for converting the connection.query function into a promise function.
     query(query, args) {
         return new Promise((resolve, reject) => {
-            const q = this.connection.query(query, args, (error, results) => {
-                if (error)
-                    reject(error);
+            this.connection.query(query, args, (error, results) => {
+                if (error) {
+                    reject(APIError_1.default.eServer("MySqlManager").log(error));
+                }
                 else
                     resolve(results);
             });
-            console.log(chalk_1.default.blue("[i] SQL Query:" + q.sql));
         });
     }
     //helper function for creating transactions
@@ -70,7 +69,7 @@ class MySQLManager {
         return new Promise((resolve, reject) => {
             this.connection.beginTransaction((error) => {
                 if (error) {
-                    reject(error);
+                    reject(APIError_1.default.eServer("MySqlManager").log(error));
                 }
                 else {
                     executor(this.connection, this.query.bind(this))

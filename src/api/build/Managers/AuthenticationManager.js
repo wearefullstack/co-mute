@@ -13,21 +13,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const APIError_1 = __importDefault(require("../APIError"));
 class JWTManager {
     constructor(signingKey) {
         this.signingKey = signingKey;
     }
     sign(payload) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("::::PAYLOAD", Object.assign({}, payload));
-            return jsonwebtoken_1.default.sign(Object.assign({}, payload), this.signingKey);
+            try {
+                return jsonwebtoken_1.default.sign(Object.assign({}, payload), this.signingKey);
+            }
+            catch (error) {
+                return Promise.reject(APIError_1.default.eServer("JWT Manager").log(error));
+            }
         });
     }
     verify(token) {
         return __awaiter(this, void 0, void 0, function* () {
-            const payload = jsonwebtoken_1.default.verify(token, this.signingKey);
-            delete payload.iat;
-            return payload;
+            try {
+                const payload = jsonwebtoken_1.default.verify(token, this.signingKey);
+                delete payload.iat;
+                return payload;
+            }
+            catch (error) {
+                return Promise.reject(APIError_1.default.eServer("JWT Manager").log(error));
+            }
         });
     }
     static getInstance() {

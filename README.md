@@ -1,3 +1,51 @@
+# Asanda N. Mkhize
+
+## Please follow this a guide if you want to setup and start the Server API and web appliaction.
+
+## Please Note:
+
+*I chose to do this project using NodeJs(API) and React/React-Dom(Web Application) because it was advised to use something i'm comfortable in. C# is a language in comfortable in but when it come to Web Apllication, React is my Go-To Language and so because of time and wanting to keep the codebase as simple as possible, i went with Javascript and React,*
+
+
+## Setting up The API:
+
+    $ cd path/to/co-mute/src/api
+    $ npm install
+
+## Environment Variables:
+
+1. I'm using MySql on Aws as my SQL server. if you wish to use a local instance, i've included a .env file where you can change the connection parameters( i do release pushing .env files is unsafe but since for now this is our only way of connicating, i had go that route).
+2. I used JSON web token to authentication. if you want to change the signing key, there is a variable for that
+3. You can change the default Server PORT **8289**. *IMPORTANT: Also Change **REACT_APP_API_HOST** in the .env file of the frontend
+
+## Running the API Server:
+
+    $ npm run buildAndRun
+
+
+
+# Setting up the Web Application
+
+## Start Application:
+
+    $ npm start
+
+
+# About The Application
+
+## API Libraries:
+
+
+1. **bcrypt**: Salting and Hashing passwords
+2. **uuid**: generating unique id for the table entries
+3. **json web token**: for authentication and authorizatinn
+4. **dotenv**: working with environment variables
+5. **mysql**: mysql driver for NodeJs
+6. **moment**: validating and comparing Time objects
+
+## UI Libraries
+
+
 # co-mute
 
 ### Please note: You can branch and create a Node.JS, Java or Python implementation if you are not familiar with C#, but Full Stack does use C# as our primary language.

@@ -8,3 +8,7 @@ export function stringExists(str? : string | null){
     }
     return false;
 }
+
+export function handleSystemError(error: any){
+    console.log(error);
+}
