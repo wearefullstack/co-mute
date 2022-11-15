@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import '../../App.css'
 import regLogo from '../../Images/register.svg';
 import Labeled from "../Labeled";
-import {  notification } from 'antd'
+import {  notification, Spin } from 'antd'
 import { handleSystemError, IError, stringExists } from "../../Utils";
 import APIManager from "../../Managers/APIManager";
 import UserManager from "../../Managers/UserManager";
@@ -49,6 +49,8 @@ function Login(){
     }
 
     return (
+        <Spin spinning={ isLoading }>
+
         <div className="main-container">
             <div className="form">
 
@@ -64,9 +66,14 @@ function Login(){
                 </Labeled>
                 <Divider/>
                 <Button onClick={login} title="Login"></Button>
+                <Divider/>
+                <p>
+                    Don't have an account? <strong><a href="/register">Register</a></strong>
+                </p>
               
             </div>
         </div>
+        </Spin>
     );
 }
 

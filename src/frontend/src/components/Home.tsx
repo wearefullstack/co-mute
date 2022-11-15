@@ -23,7 +23,7 @@ function Home(){
             <div className="row header">
                 <h1 style={{ alignSelf: "start", padding: 0, margin: 0, fontFamily: "'Anton', sans-serif"}}>CO-MUTE</h1>
             </div>
-            <Tabs color='red'  style={{ backgroundColor: "#d9d9f8", height: "100%", color: "#ffffff"}} items={items} />;
+            <Tabs color='red'  style={{  backgroundColor: "#d9d9f8", height: "100%", color: "#ffffff"}} items={items} />;
             </div>
         </div>
     )

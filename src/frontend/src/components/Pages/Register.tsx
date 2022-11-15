@@ -2,11 +2,13 @@ import React, { useCallback, useState } from "react";
 import '../../App.css'
 import regLogo from '../../Images/register.svg';
 import Labeled from "../Labeled";
-import { Button, notification } from 'antd'
+import {  notification, Spin } from 'antd'
 import { IError, stringExists } from "../../Utils";
 import APIManager from "../../Managers/APIManager";
 import UserManager from "../../Managers/UserManager";
 import { useNavigate } from 'react-router-dom';
+import Divider from "../Divider";
+import Button from "../Button";
 
 interface IForm {
     name: string,
@@ -27,7 +29,6 @@ function Register(){
     const navigate = useNavigate();
 
     const register = ()=>{
-        console.log(":reg")
         if(isLoading) return;
 
         const _errors = validateForm(form);
@@ -64,6 +65,8 @@ function Register(){
     }
 
     return (
+        <Spin spinning={ isLoading }>
+
         <div className="main-container">
             <div className="form">
                 <img className="form-icon" src={ regLogo }/>
@@ -86,12 +89,15 @@ function Register(){
                 <Labeled title={"Confirm Password *"} error={ errors.confirm_password }>
                     <input onChange={ onInputChange("confirm_password")} value={ form.confirm_password }/>
                 </Labeled>
-                <h2 onClick={register }>click me</h2>
-                <Button onClick={register} style={{ padding: 8, margin: 16, alignSelf: "end"}} type="primary"  loading>
-                    Register
-                 </Button>
+                <Divider/>
+                <Button onClick={register } title="Register"/>
+                <Divider/>
+                <p>
+                    Already have an account? <strong><a href="/login">Login</a></strong>
+                </p>
             </div>
         </div>
+        </Spin>
     );
 }
 
