@@ -30,9 +30,9 @@ class User extends Model<IUser> {
 
             if(user){
                 const passwordsMatch = await bcrypt.compare(password, user.password_hash);
-                return passwordsMatch ? user : Promise.reject(APIError.eForbidden("User").toError());
+                return passwordsMatch ? user : Promise.reject(APIError.eForbidden("User", "Your Email or Password is invalid.").toError());
             }else{
-                return Promise.reject(APIError.eForbidden("User").toError())
+                return Promise.reject(APIError.eForbidden("User", "Your Email or Password is invalid.").toError())
             }
         });
     }

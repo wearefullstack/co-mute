@@ -16,8 +16,8 @@ class RegisterUserRoute extends Route<string> {
         body("name").isString().isLength({ max: 32 }),
         body("surname").isString().isLength({ max: 32 }),
         body("phone").optional({checkFalsy: true}).isString().isLength({ max: 24 }),
-        body("email").isString().isEmail().isLength({ max: 32}),
-        body("password").isString()
+        body("email").isString().isEmail().isLength({ max: 32}).toLowerCase().trim(),
+        body("password").isString().trim()
     ]
     
 
@@ -38,8 +38,8 @@ class LoginUserRoute extends Route<string> {
     public path: string = "/login"
     public validator: ValidationChain[] =
     [   
-        body("email").isString().isEmail().isLength({ max: 32}),
-        body("password").isString()
+        body("email").isString().isEmail().isLength({ max: 32}).toLowerCase().trim(),
+        body("password").isString().trim()
     ]
     
 

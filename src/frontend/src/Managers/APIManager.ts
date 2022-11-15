@@ -23,6 +23,12 @@ class APIManager {
     }
 
 
+    loginUser(email: string, password: string): any{
+        return this.execute("/users/login",  "POST", { email, password });
+    }
+
+
+
     async execute(path : string, method : string, data : any = {}, includeToken = true){
          console.log(path, method, data, includeToken);
         const headers : any =  {};

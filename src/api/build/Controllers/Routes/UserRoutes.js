@@ -26,8 +26,8 @@ class RegisterUserRoute extends Route_1.default {
             express_validator_1.body("name").isString().isLength({ max: 32 }),
             express_validator_1.body("surname").isString().isLength({ max: 32 }),
             express_validator_1.body("phone").optional({ checkFalsy: true }).isString().isLength({ max: 24 }),
-            express_validator_1.body("email").isString().isEmail().isLength({ max: 32 }),
-            express_validator_1.body("password").isString()
+            express_validator_1.body("email").isString().isEmail().isLength({ max: 32 }).toLowerCase().trim(),
+            express_validator_1.body("password").isString().trim()
         ];
     }
     handle(request) {
@@ -49,8 +49,8 @@ class LoginUserRoute extends Route_1.default {
         super(...arguments);
         this.path = "/login";
         this.validator = [
-            express_validator_1.body("email").isString().isEmail().isLength({ max: 32 }),
-            express_validator_1.body("password").isString()
+            express_validator_1.body("email").isString().isEmail().isLength({ max: 32 }).toLowerCase().trim(),
+            express_validator_1.body("password").isString().trim()
         ];
     }
     handle(request) {

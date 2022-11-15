@@ -6,7 +6,7 @@ export interface IUser{
     surname: string,
     phone?: string,
     email: string,
-    date_created?: Date
+    date_created?: string
 }
 
 export default
@@ -42,6 +42,11 @@ class UserManager {
         } catch (error) {
             return null;
         }
+    }
+
+    removeActiveUser(){
+        localStorage.removeItem(UserManager.TOKEN_KEY);
+        this.activeToken = null;
     }
 
     static getInstance(){

@@ -18,7 +18,7 @@ function Splash(){
         if(user){
             navigate("/home")
         }else{
-            navigate("/register")
+            navigate("/login")
         }
     }, []);
     

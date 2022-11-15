@@ -27,10 +27,10 @@ class User extends Model_1.default {
             const user = yield Model_1.default.findOne(email, "users", "email");
             if (user) {
                 const passwordsMatch = yield bcrypt_1.default.compare(password, user.password_hash);
-                return passwordsMatch ? user : Promise.reject(APIError_1.default.eForbidden("User").toError());
+                return passwordsMatch ? user : Promise.reject(APIError_1.default.eForbidden("User", "Your Email or Password is invalid.").toError());
             }
             else {
-                return Promise.reject(APIError_1.default.eForbidden("User").toError());
+                return Promise.reject(APIError_1.default.eForbidden("User", "Your Email or Password is invalid.").toError());
             }
         }));
     }

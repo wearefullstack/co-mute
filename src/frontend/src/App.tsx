@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import Home from './components/Home';
 import Splash from './components/Pages/Splash';
+import Login from './components/Pages/Login';
 
 
 
@@ -20,6 +21,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          <Route path='/login' element={ <Login/> }></Route>
           <Route path='/register' element={ <Register/> }></Route>
           <Route path='/' element={ <Splash/> }></Route>
           <Route path='/:tab' element={ <Home/> }></Route>
