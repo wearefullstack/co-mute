@@ -3,13 +3,13 @@ import { ParamsDictionary } from "express-serve-static-core";
 import { body, ValidationChain } from "express-validator";
 import { ParsedQs } from "qs";
 import CarPoolConnection from "../../Models/CarPoolConnection";
-import { IJoinedCarPoolOpportunity } from "../../Models/CarPoolOpportunity";
+import { ICarPoolOpportunity, IJoinedCarPoolOpportunity } from "../../Models/CarPoolOpportunity";
 import { IUser } from "../../Models/User";
 import Route from "./Route";
 
 
 export
-class JoinRoute extends Route<IJoinedCarPoolOpportunity> {
+class JoinRoute extends Route<ICarPoolOpportunity> {
     public path: string = "/join";
 
     public validator: ValidationChain[] =
@@ -18,7 +18,7 @@ class JoinRoute extends Route<IJoinedCarPoolOpportunity> {
         body("on_which_days").isString().isLength({ max: 28 })
     ]
 
-    public handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<IJoinedCarPoolOpportunity> {
+    public handle(request: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>): Promise<ICarPoolOpportunity> {
         const { id }: IUser  = (request as any).authentication;
         const { cpo_id, on_which_days } = request.body;
 

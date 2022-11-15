@@ -12,13 +12,13 @@ class CarPoolConnection {
 
     static async join(cpoID: string, userID: string, onWhichDays: string){
         return MySQLManager.getInstance()
-        .withTransaction<IJoinedCarPoolOpportunity>(async(connection, queryExecutor) => {
+        .withTransaction<ICarPoolOpportunity>(async(connection, queryExecutor) => {
             const date_joined = new Date();
 
-            await this.checkEligibility(cpoID, userID, onWhichDays);
+            const cpo = await this.checkEligibility(cpoID, userID, onWhichDays);
             const query = `INSERT INTO ${ CarPoolConnection.TABLE_NAME }(users_id, car_pool_opportunity_id, on_which_days, date_joined) VALUES(?,?,?,?)`;
             await queryExecutor(query, [userID, cpoID, onWhichDays, date_joined]);
-            return { users_id: userID, car_pool_opportunity_id: cpoID, on_which_days: onWhichDays, date_joined}
+            return cpo.src; //{ users_id: userID, car_pool_opportunity_id: cpoID, on_which_days: onWhichDays, date_joined}
 
         })        
     }
@@ -40,14 +40,20 @@ class CarPoolConnection {
         return MySQLManager.getInstance()
         .withTransaction<IJoinedCarPoolOpportunity[]>(async(connection, queryExecutor) => {
 
-            const query: string = `SELECT * FROM ${ CarPoolConnection.TABLE_NAME } WHERE users_id=?`;
+            const query: string = `SELECT CPO.*, count(CPC.car_pool_opportunity_id) as joined_users
+            FROM ${ CarPoolOpportunity.TABLE_NAME }  as CPO
+            LEFT JOIN ${ CarPoolConnection.TABLE_NAME } AS CPC ON (CPO.id = CPC.car_pool_opportunity_id)
+            WHERE CPC.users_id=?
+            GROUP BY CPO.id;`;
+
+
             return queryExecutor(query, [ userID ]);
 
         });
     }
 
 
-    private static async checkEligibility(cpoID: string, userID: string, onWhichDays: string): Promise<true> {
+    private static async checkEligibility(cpoID: string, userID: string, onWhichDays: string): Promise<CarPoolOpportunity> {
         const cpo: CarPoolOpportunity | null = await CarPoolOpportunity.FindOne(cpoID);
 
         if(cpo){
@@ -56,7 +62,7 @@ class CarPoolConnection {
                 const { departure_time, expected_arrival_time } = cpo.src;
                 const hasOverlappingCPCsOrCPOs: boolean = await CarPoolOpportunity.hasOverlappingCPCsOrCPOs(departure_time, expected_arrival_time, onWhichDays.split(","), userID);
                 if(!hasOverlappingCPCsOrCPOs){
-                    return true;
+                    return cpo;
                 }else
                     return Promise.reject(APIError.eForbidden("CarPoolConnection", "The requested Car Pool time range overlaps with a Car Pool you Joined or Created").toError())
             }else

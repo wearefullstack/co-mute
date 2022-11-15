@@ -23,7 +23,7 @@ function Home(){
     useEffect(() => {
         setLoading(true);
         APIManager.getInstance()
-        .getCreatedCPOs()
+        .getJoinedCPO()
         .then(results => {
             console.log(":::", results.result);
             setCPOs(results.result);
@@ -37,7 +37,7 @@ function Home(){
         <Divider/>
         <List grid={{ gutter: 16, column: 4 }} dataSource={CPOs} renderItem={renderItem}/>
         <Drawer title="Basic Drawer" placement="right" onClose={()=> setShowSearcher(false)} open={showSearcher}>
-            <Discover/>
+            <Discover onJoinCPO={ onJoinCPO }/>
 </Drawer>
         </div>
 }

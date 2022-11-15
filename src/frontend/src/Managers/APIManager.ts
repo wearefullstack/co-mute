@@ -9,6 +9,7 @@ export const API_ERRORS = {
 export default
 class APIManager {
 
+
     private static INSTANCE: APIManager;
     
     getCreatedCPOs(){
@@ -34,6 +35,18 @@ class APIManager {
 
     loginUser(email: string, password: string): any{
         return this.execute("/users/login",  "POST", { email, password });
+    }
+
+    join(on_which_days: string[],  cpo_id: string){
+        return this.execute("/car_pool_connection/join",  "POST", { on_which_days: on_which_days.join(","), cpo_id });
+    }
+
+    leave( cpo_id: string){
+        return this.execute("/car_pool_connection/leave",  "POST", { cpo_id });
+    }
+
+    getJoinedCPO() {
+        return this.execute("/car_pool_connection/find_by_user_id",  "POST", { });
     }
 
 
