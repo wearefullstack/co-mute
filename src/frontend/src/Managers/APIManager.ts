@@ -8,10 +8,15 @@ export const API_ERRORS = {
 
 export default
 class APIManager {
+
     private static INSTANCE: APIManager;
     
     getCreatedCPOs(){
         return this.execute("/car_pool_opportunity/find_by_owner_id", "POST", {}, true);
+    }
+
+    updateUser(updates: any) {
+        return this.execute("/users/update", "POST", updates);
     }
 
     createCPO(cpo: any){

@@ -1,6 +1,7 @@
-import { Form, Input, Space } from "antd";
+import { Form, Input, message, Space } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from 'react-router-dom'
+import APIManager from "../../Managers/APIManager";
 import UserManager from "../../Managers/UserManager";
 import Button from "../Button";
 import Divider from "../Divider";
@@ -26,6 +27,25 @@ function ProfileTab(){
         })
     }
 
+    function update(){
+        const finalUpdates: any = {};
+
+        if(updates.name.length > 0) finalUpdates.name = updates.name;
+        if(updates.surname.length > 0) finalUpdates.surname = updates.surname;
+        if(updates.phone.length > 0) finalUpdates.phone = updates.phone;
+
+        APIManager.getInstance()
+        .updateUser(finalUpdates)
+        .then(({ result }) => {
+            UserManager.getInstance().setActiveUser(result);
+            message.success("Profile Updated");
+            updatesMeta.current = 0;
+        })
+        .catch(error => {})
+        
+
+    }
+
     function logout(){
         UserManager.getInstance()
         .removeActiveUser();
@@ -43,6 +63,8 @@ function ProfileTab(){
 
     const user = UserManager.getInstance().getActiveUser();
     const joined = user ? (new Date(user.date_created || "").toLocaleDateString("en-US")) : "";
+
+    const canUpdate = updatesMeta.current > 0;
 
     return (
         <div className="tab-container col" style={{ width: "100%", alignItems: "center"}}>
@@ -68,7 +90,7 @@ function ProfileTab(){
             <Divider/>
             <div className="row">
             <Button title="Logout" onClick={ logout }/>
-            <Button title="Update"/>
+            <Button title="Update" onClick={ update }/>
             </div>
             
             </div>
