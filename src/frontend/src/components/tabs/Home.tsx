@@ -33,7 +33,7 @@ function Home(){
     }, []);
 
     function onLeave(pos: number){
-        console.log(pos);
+        
         CPOs.splice(0,1);
         setCPOs([...CPOs]);
     }
