@@ -57,10 +57,10 @@ class CarPoolOpportunity extends Model<ICarPoolOpportunity> {
                     (new CarPoolOpportunity(CPO)).save("Create");
                     return CPO;
                 }else{
-                    return Promise.reject(APIError.eForbidden("This Car Pools time range overlapps with one of your created/join Car Pools", "0x1").toError())
+                    return Promise.reject(APIError.eForbidden("CPO","This Car Pools time range overlapps with one of your created/join Car Pools", "0x1").toError())
                 }            
             }else{
-                return Promise.reject(APIError.eForbidden("Departure Time cannot be after Expected Arrival Time.", '0x0').toError());
+                return Promise.reject(APIError.eForbidden("CPO","Departure Time cannot be after Expected Arrival Time.", '0x0').toError());
             }
         })
     }

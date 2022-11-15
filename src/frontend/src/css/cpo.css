@@ -1,0 +1,66 @@
+
+
+.loc-header {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    font-weight: bold;
+    color: #9c9c9c;
+}
+
+.simple-col {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding: 0px 10px;
+ }
+
+.card{
+    width: 100%;
+    min-height: 200px;
+    background-color: rgb(255, 255, 255, 0.7);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    border: #ffffff solid;
+    border-width: 2px;
+    border-radius: 5px;
+    margin-top: 16px;
+    padding: 8px;
+}
+.info-bar {
+ }
+.time {
+    background-color: #ffffff;
+    padding: 2px 4px;
+    display:inline;
+    border-radius: 5px;
+    font-size:  1em;
+}
+
+.simple-row {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.info-header {
+    max-lines: 1;
+    font-size: 0.7em;
+    text-align: start;
+    font-weight: bold;
+}
+.info-info {
+    width: 100%;
+    font-size: 0.7em;
+    text-align: end;
+}
+
+
+
+.loc-info{
+    color: rgb(73, 73, 73);
+}
+
+.location-container {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 4px;
+}

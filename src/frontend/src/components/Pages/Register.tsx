@@ -37,9 +37,9 @@ function Register(){
             APIManager.getInstance().registerUser(form as IForm)
             .then(({ result }: any) => {
                 UserManager.getInstance().setActiveUser(result);
-                navigate("/");
+                navigate("/")
             })
-            .catch(error => {
+            .catch((error: any)=> {
                 console.log("e", error);
                 notification.error({
                     message: error.message,

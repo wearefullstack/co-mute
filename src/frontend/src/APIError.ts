@@ -16,7 +16,7 @@ export default class APIError {
         public readonly context: any){
     }
 
-    static parse({ statusCode, thrower, name, message, code, context}: any): APIError{
-        return new APIError(statusCode, thrower,name,message, code, context);
+    static parse({ status_code, thrower, name, message, code, context}: any): APIError{
+        return new APIError(status_code, thrower,name,message, code, context);
     }
 }

@@ -9,8 +9,16 @@ export const API_ERRORS = {
 export default
 class APIManager {
     private static INSTANCE: APIManager;
+    
+    getCreatedCPOs(){
+        return this.execute("/car_pool_opportunity/find_by_owner_id", "POST", {}, true);
+    }
 
-    registerUser(user: Omit<IUser, "id" | "date_created">){
+    createCPO(cpo: any){
+        return this.execute("/car_pool_opportunity/create", "POST", {...cpo, days_available: cpo.days_available.join(",")});
+    }
+
+    registerUser(user: Omit<IUser, "id" | "date_created">): any{
         return this.execute("/users/register",  "POST", user);
     }
 
@@ -54,7 +62,7 @@ class APIManager {
             if(response.ok){
                 return result;
             }else{
-                return Promise.reject(APIError.parse(result["error"]));
+                 return Promise.reject(APIError.parse(result["error"]));
             }
         })
     }

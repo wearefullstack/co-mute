@@ -42,11 +42,11 @@ class CarPoolOpportunity extends Model_1.default {
                         return CPO;
                     }
                     else {
-                        return Promise.reject(APIError_1.default.eForbidden("This Car Pools time range overlapps with one of your created/join Car Pools", "0x1").toError());
+                        return Promise.reject(APIError_1.default.eForbidden("CPO", "This Car Pools time range overlapps with one of your created/join Car Pools", "0x1").toError());
                     }
                 }
                 else {
-                    return Promise.reject(APIError_1.default.eForbidden("Departure Time cannot be after Expected Arrival Time.", '0x0').toError());
+                    return Promise.reject(APIError_1.default.eForbidden("CPO", "Departure Time cannot be after Expected Arrival Time.", '0x0').toError());
                 }
             }));
         });
