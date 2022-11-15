@@ -1,4 +1,5 @@
 import JWT from 'jsonwebtoken';
+import APIError from '../APIError';
 
 
 export default 
@@ -9,14 +10,21 @@ class JWTManager {
     constructor(private signingKey: string){}
 
     async sign<TPayload extends object>(payload: TPayload){
-        console.log("::::PAYLOAD", {...payload});
-        return JWT.sign({...payload}, this.signingKey)
+        try {
+            return JWT.sign({...payload}, this.signingKey)
+        } catch (error) {
+            return Promise.reject(APIError.eServer("JWT Manager").log(error));
+        }
     }
 
     async verify(token: string){
-        const payload = JWT.verify(token, this.signingKey);
-        delete (payload as any).iat;
-        return payload;
+        try {
+            const payload = JWT.verify(token, this.signingKey);
+            delete (payload as any).iat;
+            return payload;
+        } catch (error) {
+            return Promise.reject(APIError.eServer("JWT Manager").log(error))
+        }
     }
 
     static getInstance(){

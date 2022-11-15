@@ -1,28 +1,26 @@
 import dotenv from 'dotenv';
 import MySQLManager from "./Managers/MySQLManager";
-import User, { IUser } from './Models/User';
 import express from 'express';
 import cors from 'cors'
 import UserController from './Controllers/UserController';
-import Model from './Models/Model';
-import CarPoolOpportunity from './Models/CarPoolOpportunity';
 import CarPoolOpportunityController from './Controllers/CarPoolOpportunity';
 import CarPoolConnectionController from './Controllers/CarPoolConnection';
+import chalk from 'chalk';
 
 const app = express();
+dotenv.config();
 
 app.use(express.json());
 app.use(cors());
 
-dotenv.config();
 
-
+//Setup: controllers
 const userController: UserController = new UserController();
 const cpoController: CarPoolOpportunityController = new CarPoolOpportunityController();
 const cpcContoller: CarPoolConnectionController = new CarPoolConnectionController();
 
 
-// user
+//Setup: User endpoints:
 const registerControl = userController.control("/register");
 app.post(registerControl.path, ...registerControl.handlers);
 
@@ -33,18 +31,20 @@ const updateControl = userController.control("/update", true);
 app.post(updateControl.path, ...updateControl.handlers);
 
 
-//cpo
+
+//Setup: Car Pool Opportunities(CPOs) endpoints:
 const cpoCreateControl = cpoController.control("/create", true);
 app.post(cpoCreateControl.path, ...cpoCreateControl.handlers);
 
 const cpoFindByOwnerIDControl = cpoController.control("/find_by_owner_id", true);
-console.log("::p", cpoFindByOwnerIDControl.path)
 app.post(cpoFindByOwnerIDControl.path, ...cpoFindByOwnerIDControl.handlers);
 
 const cpoSearchControl = cpoController.control("/search", true);
 app.get(cpoSearchControl.path, ...cpoSearchControl.handlers);
 
-//cpc
+
+
+//Setup: Car Pool Connections(CPCs) endpoints:
 const cpcCreateControl = cpcContoller.control("/join", true);
 app.post(cpcCreateControl.path, ...cpcCreateControl.handlers);
 
@@ -56,47 +56,12 @@ app.post(cpcLeaveController.path, ...cpcLeaveController.handlers);
 
 
 
-
-
-
-
 async function startServer(){
     await MySQLManager.init();
+    const PORT = process.env.PORT || 8289;
 
-    /*const user: User = new User({
-        id: "a",
-        name: "as",
-        surname: "n",
-        phone: "0603627175",
-        email: "b@e.com",
-        password_hash: "#",
-        password_salt: 12
-    });
-    
-    user.save("Update");*/
-
-   /* User.register({
-        name: "as",
-        surname: "n",
-        phone: "0603627175",
-        email: "b@e.codm",
-    }, "test");*/
-
-    /*console.log(await CarPoolOpportunity.Create({
-        days_available: "SAT ,SUN",
-        departure_time: "10:30",
-        destination: "Somewhere",
-        expected_arrival_time: "15:00",
-        origin: "s",
-        available_seats: 2,
-    }, "ccc04116-84fa-4d43-94d5-7d2e08efe97a"));*/
-
-
-
-   // console.log(await CarPoolOpportunities.hasOverlayingJoinedCPOs("7:30", "08:30", "ccc04116-84fa-4d43-94d5-7d2e08efe97a"));
-
-   app.listen(8289, () => {
-    console.log("started..")
+   app.listen(PORT, () => {
+    console.log(chalk.green(`✓ Server started on PORT: ${ PORT }`))
    })
 }
 
