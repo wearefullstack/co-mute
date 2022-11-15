@@ -6,7 +6,7 @@ import { useState } from "react";
 import APIManager from "../../Managers/APIManager";
 
 export default
-function CPO({ onClickAction, item  }: any){
+function CPO({ onClickAction, item, canLeave = true }: any){
     const [{joined, days_available, notes, origin, destination, departure_time, expected_arrival_time, available_seats, joined_users, date_created}, setItem] = useState(item)
 
     const date = new Date(date_created).toLocaleDateString("en-US");
@@ -18,7 +18,9 @@ function CPO({ onClickAction, item  }: any){
     }
 
     
-    const action =  [ <Action onLeave={ onLeave } joined={ joined } cpo_id={ item.id } onClick={() => onClickAction(joined)}/>];
+    const action = canLeave ? [ <Action onLeave={ onLeave } joined={ joined } cpo_id={ item.id } onClick={() => {
+      onClickAction(joined)
+    }}/>] : [];
     
     return (
         <Card actions={action} >
@@ -64,6 +66,7 @@ function Action({ joined, cpo_id, onClick, onLeave }: any){
     const [confirmLoading, setConfirmLoading] = useState(false);
   
     const showPopconfirm = () => {
+        console.log("AAAAA");
     if(joined !== "true"){
         onClick()
     }else

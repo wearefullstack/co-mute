@@ -34,7 +34,7 @@ function CreatedCPOs(){
     return <div className="tab-container">
         <Button onClick={()=> setShowCreator(true)} title="Create"/>
         <Divider/>
-        <List grid={{ gutter: 16, column: 4 }} dataSource={CPOs} renderItem={renderItem}/>
+        <List grid={{ gutter: 16, xs: 1,sm: 1, md: 2,lg: 3, xl:4, xxl:4}} dataSource={CPOs} renderItem={renderItem}/>
         <Modal title="Basic Modal" open={showCreator}  onCancel={()=> setShowCreator(false)} footer={<></>}>
             <CreateCPO onCreate={ onCreateCPO }/>
         </Modal>
@@ -42,9 +42,12 @@ function CreatedCPOs(){
 }
 
 function renderItem(item: any){
+    function onClickAction(){
+
+    }
     return (
         <List.Item>
-            <CPO item={ item } />
+            <CPO item={ item } onClickAction={ onClickAction } canLeave={ false }/>
       </List.Item>
     )
 }
