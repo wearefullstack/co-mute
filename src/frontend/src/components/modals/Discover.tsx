@@ -1,6 +1,7 @@
 import { Input, List, Modal } from "antd";
 import { useEffect, useState } from "react";
 import APIManager from "../../Managers/APIManager";
+import { handleSystemError } from "../../Utils";
 import Button from "../Button";
 import CPO from "../ListItems/CPO";
 import JoinCPO from "./Join";
@@ -20,9 +21,8 @@ function Discover({ onJoinCPO}: any){
         .searchCPOs(searchTerm)
         .then(({ result }) => {
             setCPOs(result);
-            console.log("::R", result)
         })
-        .catch(error => { console.log("::E", error) })
+        .catch(handleSystemError)
         .finally(() => setIsLoading(false))
     }
 
@@ -41,7 +41,6 @@ function Discover({ onJoinCPO}: any){
     },[])
 
     function onCreate(cpo: any){
-        console.log(":C", cpo);
         setJoinCPO(null);
         onJoinCPO(cpo)
     }

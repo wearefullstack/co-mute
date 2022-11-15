@@ -25,29 +25,40 @@ function Home(){
         APIManager.getInstance()
         .getJoinedCPO()
         .then(results => {
-            console.log(":::", results.result);
+            console.log(results)
             setCPOs(results.result);
         })
         .catch(error => {})
         .finally(()=>{ setLoading(false) });
     }, []);
 
+    function onLeave(pos: number){
+        console.log(pos);
+        CPOs.splice(0,1);
+        setCPOs([...CPOs]);
+    }
+ 
     return <div className="tab-container">
         <Button onClick={()=> setShowSearcher(true)} title="Join/Discover"/>
         <Divider/>
-        <List grid={{ gutter: 16, column: 4 }} dataSource={CPOs} renderItem={renderItem}/>
+        <List grid={{ gutter: 16, xs: 1,sm: 1, md: 2,lg: 3, xl:4, xxl:4 }} dataSource={CPOs} renderItem={renderItem(onLeave)}/>
         <Drawer title="Basic Drawer" placement="right" onClose={()=> setShowSearcher(false)} open={showSearcher}>
             <Discover onJoinCPO={ onJoinCPO }/>
 </Drawer>
         </div>
 }
 
-function renderItem(item: any){
-    return (
-        <List.Item>
-            <CPO item={ item } />
-      </List.Item>
-    )
+function renderItem(_onLeave: any){
+
+    return (item: any, pos: number) => {
+        item.joined = "true";
+        return (
+            <List.Item>
+                <CPO item={ item } _onLeave={()=> _onLeave(pos)}/>
+          </List.Item>
+        )
+    }
+   
 }
 
 

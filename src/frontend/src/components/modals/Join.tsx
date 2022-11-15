@@ -1,7 +1,7 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Button, Form, Input, InputNumber, Radio, TimePicker, notification} from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import APIManager from '../../Managers/APIManager';
 import { IError } from '../../Utils';
 import DayPicker from '../DayPicker';
@@ -36,10 +36,10 @@ function JoinCPO({ onCreate, cpo_id, validDays}: any){
     const _errors = validateForm(form);
     if(!_errors){
       setIsLoading(true);
+      
       APIManager.getInstance()
       .join(form.on_which_days, cpo_id)
       .then(result => {
-        console.log(":R:R", result)
         onCreate(result.result)})
       .catch(error => {
         if(error.statusCode === 403){
@@ -56,6 +56,10 @@ function JoinCPO({ onCreate, cpo_id, validDays}: any){
       setErrors(_errors);
     }
   }
+
+  useEffect(() => {
+    setForm(EMPTY_FORM)
+  }, [cpo_id])
 
   return (
     <Form style={{ overflowY: "auto", maxHeight: "60vh"}} layout="vertical"  >

@@ -6,7 +6,7 @@ import { useState } from "react";
 import APIManager from "../../Managers/APIManager";
 
 export default
-function CPO({ onClickAction, item, canLeave = true }: any){
+function CPO({ onClickAction, item, canLeave = true, _onLeave }: any){
     const [{joined, days_available, notes, origin, destination, departure_time, expected_arrival_time, available_seats, joined_users, date_created}, setItem] = useState(item)
 
     const date = new Date(date_created).toLocaleDateString("en-US");
@@ -15,6 +15,7 @@ function CPO({ onClickAction, item, canLeave = true }: any){
 
     function onLeave(){
         setItem((i : any) => ({...i, joined: "false", joined_users: joined_users - 1}));
+         _onLeave && _onLeave();
     }
 
     
