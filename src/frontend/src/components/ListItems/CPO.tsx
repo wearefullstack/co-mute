@@ -1,6 +1,7 @@
 import "../../css/cpo.css"
 import { EnvironmentOutlined } from '@ant-design/icons';
 import DayPicker from "../DayPicker";
+import { Card } from "antd";
 
 export default
 function CPO({ item: {days_available, notes, origin, destination, departure_time, expected_arrival_time, available_seats, joined_users, date_created} }: any){
@@ -8,7 +9,7 @@ function CPO({ item: {days_available, notes, origin, destination, departure_time
     const date = new Date(date_created).toLocaleDateString("en-US");
     const selectedDays = days_available.split(",");
     return (
-        <div className="col card">
+        <Card>
             <Location title="Origin" info={ origin } time={ departure_time}/>
             <Location title="Destination" info={destination} time={ expected_arrival_time }/>
             <DayPicker selectedDays={selectedDays}/>
@@ -16,7 +17,7 @@ function CPO({ item: {days_available, notes, origin, destination, departure_time
             <Info title="Created" info= {date}/>
             <Info title="Notes" info={notes}/>
 
-        </div>
+        </Card>
     )
 }
 

@@ -5,6 +5,7 @@ import Button from "../Button";
 import Divider from "../Divider";
 import CPO from "../ListItems/CPO";
 import CreateCPO from "../modals/CreateCPO";
+import Discover from "../modals/Discover";
 
 
 export default
@@ -32,13 +33,11 @@ function Home(){
     }, []);
 
     return <div className="tab-container">
-        <Button onClick={()=> setShowSearcher(true)} title="Create"/>
+        <Button onClick={()=> setShowSearcher(true)} title="Join/Discover"/>
         <Divider/>
         <List grid={{ gutter: 16, column: 4 }} dataSource={CPOs} renderItem={renderItem}/>
         <Drawer title="Basic Drawer" placement="right" onClose={()=> setShowSearcher(false)} open={showSearcher}>
-<p>Some contents...</p>
-<p>Some contents...</p>
-<p>Some contents...</p>
+            <Discover/>
 </Drawer>
         </div>
 }

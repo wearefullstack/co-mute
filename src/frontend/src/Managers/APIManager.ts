@@ -27,6 +27,10 @@ class APIManager {
         return this.execute("/users/register",  "POST", user);
     }
 
+    searchCPOs(location: string){
+        return this.execute("/car_pool_opportunity/search", "GET", { location })
+    }
+
 
     loginUser(email: string, password: string): any{
         return this.execute("/users/login",  "POST", { email, password });
