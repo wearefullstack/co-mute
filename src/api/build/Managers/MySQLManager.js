@@ -35,6 +35,8 @@ class MySQLManager {
                 process.on('SIGINT', () => {
                     console.log(chalk_1.default.red("Ⓘ Closing connection..."));
                     connection.end();
+                    console.log(chalk_1.default.red("Ⓘconnection closed"));
+                    return 1;
                 });
                 console.log(chalk_1.default.blue("Ⓘ Connecting to MYSQL Server..."));
                 connection.connect((error) => {

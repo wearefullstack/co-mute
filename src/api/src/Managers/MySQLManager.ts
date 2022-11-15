@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { connect } from 'http2';
 import MySql from 'mysql';
+import APIError from '../APIError';
 
 
 export 
@@ -58,11 +58,11 @@ class  MySQLManager {
     //helper function for converting the connection.query function into a promise function.
     query<TResult>(query: string, args?: any){
         return new Promise<TResult>((resolve, reject) => {
-            const q = this.connection.query(query, args, (error, results) => {
-                if(error) reject(error);
-                else resolve(results);
+            this.connection.query(query, args, (error, results) => {
+                if(error){
+                    reject(APIError.eServer("MySqlManager").log(error))
+                }else resolve(results);
             });
-            console.log(chalk.blue("[i] SQL Query:" + q.sql))
         })
     }
 
@@ -73,7 +73,7 @@ class  MySQLManager {
             this.connection.beginTransaction((error) => {
                 
                 if(error){
-                    reject(error);
+                    reject(APIError.eServer("MySqlManager").log(error));
                 }else{
                     executor(this.connection, this.query.bind(this))
                     .then(result => this.connection.commit( error => {
