@@ -106,6 +106,7 @@ input {
 }
 
 .btn {
+  font-family: 'Manrope', sans-serif;
   cursor: pointer;
   background-color: #f2f2f2;
   border: #ffffff solid;

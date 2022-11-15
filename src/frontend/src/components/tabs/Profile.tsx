@@ -1,8 +1,9 @@
-import { Form, Input, message, Space } from "antd";
+import { Form, Input, message, Space, Spin } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import APIManager from "../../Managers/APIManager";
 import UserManager from "../../Managers/UserManager";
+import { handleSystemError } from "../../Utils";
 import Button from "../Button";
 import Divider from "../Divider";
 import Labeled from "../Labeled";
@@ -16,6 +17,7 @@ interface IForm {
 
 export default
 function ProfileTab(){
+    const [ isLoading, setIsLoading] = useState(false);
     const [ updates, setUpdates ] = useState<IForm>({ name: "", surname: "", phone: ""});
     const updatesMeta = useRef(0);
     const navigate = useNavigate();
@@ -34,6 +36,8 @@ function ProfileTab(){
         if(updates.surname.length > 0) finalUpdates.surname = updates.surname;
         if(updates.phone.length > 0) finalUpdates.phone = updates.phone;
 
+        setIsLoading(true);
+
         APIManager.getInstance()
         .updateUser(finalUpdates)
         .then(({ result }) => {
@@ -41,7 +45,8 @@ function ProfileTab(){
             message.success("Profile Updated");
             updatesMeta.current = 0;
         })
-        .catch(error => {})
+        .catch(handleSystemError)
+        .finally(() => setIsLoading(false))
         
 
     }
@@ -64,9 +69,11 @@ function ProfileTab(){
     const user = UserManager.getInstance().getActiveUser();
     const joined = user ? (new Date(user.date_created || "").toLocaleDateString("en-US")) : "";
 
-    const canUpdate = updatesMeta.current > 0;
+    //const canUpdate = updatesMeta.current > 0;
 
     return (
+        <Spin spinning={ isLoading }>
+
         <div className="tab-container col" style={{ width: "100%", alignItems: "center"}}>
              <div className="col" style={{ maxWidth: "500px"}}>
                 <div className="text-logo">
@@ -90,10 +97,11 @@ function ProfileTab(){
             <Divider/>
             <div className="row">
             <Button title="Logout" onClick={ logout }/>
-            <Button title="Update" onClick={ update }/>
+            <Button style={{ marginLeft: "16px" }} title="Update" onClick={ update }/>
             </div>
             
             </div>
         </div>
+        </Spin>
     )
 }
