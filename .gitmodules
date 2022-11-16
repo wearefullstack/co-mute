@@ -1,0 +1,6 @@
+[submodule "comute"]
+	path = comute
+	url = https://github.com/dancanangwenyi/comute
+[submodule "car-pool-lambda-function"]
+	path = car-pool-lambda-function
+	url = https://github.com/dancanangwenyi/car-pool-lambda-function
