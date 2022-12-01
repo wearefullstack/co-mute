@@ -1,8 +1,10 @@
-﻿@{
+﻿@model CoMute.Web.Models.User
+
+@{
     ViewBag.Title = "Register";
 }
 
-<form id="register">
+<form id="register" method="post">
     <h2>Register</h2>
 
     <div id="error" class="row row-margin hidden">
@@ -13,32 +15,38 @@
 
     <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" id="name" class="form-control" placeholder="First name" required autofocus>
+        @*<input type="text" id="name" class="form-control" placeholder="First name" required autofocus>*@
+        @Html.TextBoxFor(model => model.Name, new { @Class = "form-control", id = "name", placeholder = "First name" })
     </div>
 
     <div class="form-group">
         <label for="surname">Surname</label>
-        <input type="text" id="surname" class="form-control" placeholder="Surname" required>
+        @*<input type="text" id="surname" class="form-control" placeholder="Surname" required>*@
+        @Html.TextBoxFor(model => model.Surname, new { @Class = "form-control", id = "name", placeholder = "Last Name" })
     </div>
 
     <div class="form-group">
         <label for="phone">Phone</label>
-        <input type="text" id="phone" class="form-control" placeholder="Phone number" required>
+        @*<input type="text" id="phone" class="form-control" placeholder="Phone number" required>*@
+        @Html.TextBoxFor(model => model.PhoneNumber, new { @Class = "form-control", id = "name", placeholder = "Phone Number" })
     </div>
 
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" placeholder="Email address" required>
+        @*<input type="email" id="email" class="form-control" placeholder="Email address" required>*@
+        @Html.TextBoxFor(model => model.EmailAddress, new { @Class = "form-control", id = "name", placeholder = "Email Address" })
     </div>
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Password" required>
+        @*<input type="password" id="password" class="form-control" placeholder="Password" required>*@
+        @Html.PasswordFor(model => model.Password, new { @Class = "form-control", id = "name", placeholder = "Password" })
     </div>
 
     <div class="form-group">
         <label for="confirm-password">Confirm Password</label>
-        <input type="password" id="confirm-password" class="form-control" placeholder="Confirm password">
+        @*<input type="password" id="confirm-password" class="form-control" placeholder="Confirm password">*@
+        @Html.PasswordFor(model => model.Password, new { @Class = "form-control", id = "name", placeholder = "Confirm Password" })
     </div>
 
     <div class="form-group">
@@ -46,6 +54,6 @@
     </div>
 </form>
 
-@section scripts {
+@*@section scripts {
     <script type="text/javascript" src="~/Content/js/register.js"></script>
-}
+}*@

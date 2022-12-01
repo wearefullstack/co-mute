@@ -1,0 +1,58 @@
+﻿@model CoMute.Web.Models.Carpool
+@{
+    ViewBag.Title = "Leave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Join</h2>
+
+<h4>Are you sure you want to Leave this carpool route?</h4>
+<div>
+    <hr />
+    <p>
+        <span class="font-weight-bold">
+            @Html.DisplayNameFor(model => model.UserName)
+        </span><br />
+
+        @Model.UserName
+    </p>
+    <p>
+        <span class="font-weight-bold">
+            @Html.DisplayNameFor(model => model.Origin)
+        </span><br />
+        @Model.Origin
+    </p>
+    <p>
+        <span class="font-weight-bold">
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </span><br />
+        @Model.DepartureTime
+    </p>
+    <p>
+        <span class="font-weight-bold">
+            @Html.DisplayNameFor(model => model.Destination)
+        </span><br />
+        @Model.Destination
+    </p>
+    <p>
+        <span class="font-weight-bold">
+            @Html.DisplayNameFor(model => model.ETA)
+        </span><br />
+        @Model.ETA
+    </p>
+
+    <p>
+        <span class="font-weight-bold">
+            @Html.DisplayNameFor(model => model.PassengerIds)
+        </span><br />
+        @Model.PassengerIds
+    </p>
+
+    <form method="post">
+        @Html.TextBoxFor(m => m.CarpoolID, new { type = "hidden" })
+        <input type="submit" value="Delete" class="btn btn-success btn-sm" /> |
+        <a asp-controller="Students" asp-action="Index">Back to List</a>
+        @Html.ActionLink("Back To Carpools", "Index")
+    </form>
+
+</div>
