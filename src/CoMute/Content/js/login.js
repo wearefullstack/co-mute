@@ -11,7 +11,7 @@
             return;
         }
 
-        $.post('/api/Authentication', { email: email, password: pswd }, function (data) {
+        $.post('user/login', { email: email, password: pswd }, function (data) {
             // TODO: Navigate away...
         }).fail(function (data) {
             var $alert = $("#error");

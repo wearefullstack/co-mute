@@ -1,0 +1,106 @@
+﻿@model CoMute.Web.Models.ViewModel.CarpoolListViewModel
+@{
+    ViewBag.Title = "Carpool Routes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span> @*to help assistive technology*@
+        </button>
+        @ViewData["Message"]
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Add Carpool Route" , "Add" , "Carpool")
+</p>
+
+<form method="post">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for Owner Name">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Search <i class="bi bi-search"></i></button>
+        </span>
+    </div>
+</form>
+
+
+@if (Model.Carpools.Count() > 0)
+{
+<table class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Owner UserName", "Index", "Carpool",new { sortBy = ViewData["NameSortParam"],searchString = ViewData["CurrentFilter"]} ,null)
+            </th>
+            <th>
+                Origin
+            </th>
+            <th>
+                <a asp-controller="Students" asp-action="Index"
+                   asp-route-sortBy="@ViewData["DateSortParam"]"
+                   asp-route-searchString="@ViewData["CurrentFilter"]">
+                    Destination
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Carpools)
+        {
+            <tr>
+                <td>
+                    @s.UserName.ToString()
+                </td>
+                <td>
+                    @s.Origin
+                </td>
+                <td>
+                    @s.Destination
+                </td>
+                <td>
+                    @if (s.UserID == Model.myId)
+                    {
+                        <a type="button" class="btn btn-outline-primary btn-sm" href='@Url.Action("Edit", "Carpool",new {id = s.CarpoolID })'>Edit <i class="bi bi-pencil-square"></i></a>
+                        <a type="button" class="btn btn-outline-danger btn-sm" href='@Url.Action("DeleteCarpool", "Carpool",new {id = s.CarpoolID })'>Delete Route <i class="bi bi-trash"></i></a>
+                    }
+                    else if (String.IsNullOrEmpty(s.PassengerIds))
+                    {
+                        <a type="button" class="btn btn-outline-secondary btn-sm" href='@Url.Action("Join", "Carpool",new {id = s.CarpoolID })'>Join <i class="bi bi-plus-circle"></i></a>
+                    }
+                    else if (s.PassengerIds.Contains(Model.myId))
+                    {
+                        <a class="btn btn-outline-secondary btn-sm">Joined <i class="bi bi-check-circle"></i></a>
+                        <a type="button" class="btn btn-outline-secondary btn-sm" href='@Url.Action("Leave", "Carpool",new {id = s.CarpoolID })'>Leave <i class="bi bi-box-arrow-right"></i></a>
+                    }
+                    else
+                    {
+                        <a type="button" class="btn btn-outline-secondary btn-sm" href='@Url.Action("Join", "Carpool",new {id = s.CarpoolID })'>Join <i class="bi bi-plus-circle"></i></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+else
+{
+    <div>
+        WOW no routes???<a>Add some.</a>
+    </div>
+}
+
+<a asp-controller="Students" asp-action="Index">Back to Full List</a>
+
+<div page-model="@Model.PagingInfo" page-action="Index"
+     page-searchstring="@ViewData["CurrentFilter"]"
+     page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-secondary"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+</div>

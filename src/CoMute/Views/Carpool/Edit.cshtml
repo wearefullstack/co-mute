@@ -1,0 +1,58 @@
+﻿@model CoMute.Web.Models.Carpool
+@{
+    ViewBag.Heading = ViewBag.Action + " Carpool Route";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    CoMute.Web.Models.User user = new CoMute.Web.Models.User();
+    int iPos = User.Identity.Name.IndexOf('_');
+    user.Name = User.Identity.Name.Substring(0, iPos - 1);
+    user.Surname = User.Identity.Name.Substring(iPos);
+
+}
+
+<h2>@ViewBag.Heading</h2>
+
+<hr />
+<h4>Carpool</h4>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            @Html.TextBoxFor(model => model.CarpoolID, new { @readonly = "true", id = "carpoolID", value = Model.CarpoolID })
+            @Html.TextBoxFor(model => model.UserID, new { @readonly = "true", @Class = "form-control", id = "idUser", value = Model.UserID })
+            @Html.TextBoxFor(model => model.UserName, new { @readonly = "true", @Class = "form-control", id = "name", value = User.Identity.Name})
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Origin)
+                @Html.TextBoxFor(model => model.Origin, new { @Class = "form-control", id = "Origin", type = "text" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DepartureTime)
+                @Html.TextBoxFor(model => model.DepartureTime, new { @Class = "form-control", id = "ETD", type = "datetime-local" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Destination)
+                @Html.TextBoxFor(model => model.Destination, new { @Class = "form-control", id = "Dest", type = "text" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ETA)
+                @Html.TextBoxFor(model => model.ETA, new { @Class = "form-control", id = "ETA", type = "datetime-local" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.iAvailableSeats)
+                @Html.TextBoxFor(model => model.iAvailableSeats, new { @Class = "form-control", id = "ETD", type = "number", min = "1", max = "5" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes)
+                @Html.TextAreaFor(model => model.Notes, new { @Class = "form-control", id = "notes", type = "text", rows = "5", cols = "30" })
+            </div>
+
+
+            <div class="form-group">
+                <br />
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <button asp-action="Index" class="btn btn-outline-secondary">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
