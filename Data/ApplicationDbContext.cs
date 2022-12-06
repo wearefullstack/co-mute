@@ -12,8 +12,8 @@ namespace Co_Mute.Data
        
         public DbSet<Assignments> Assignments { get; set; }
 
-             
-            
+        public DbSet<Oppertunities> Oppertunities { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
