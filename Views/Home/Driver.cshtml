@@ -6,6 +6,8 @@
 
 
 }
+@model Co_Mute.Models.AdministrationViewModels.ProfileViewModel
+
 @inject IViewLocalizer _localizer
 @inject UserManager<ApplicationUser> _userManager
 <head>
@@ -86,54 +88,53 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
+                            <label for="txtOwner" class="control-label">Owner</label>
+                            <input type="text" class="form-control" id="txtOwner" style="width: 100%" readonly value="@Model.FirstName"/>
+                        </div>
+                        <div class="form-group">
                             <label for="txtOrigin" class="control-label">Origin</label>
-                            <input type="text" class="form-control" id="txtOrigin" style="width: 100%" required placeholder="Origin" />
+                            <input type="text" class="form-control" id="txtOrigin" style="width: 100%" required placeholder="Origin"/>
                         </div>
                         <div class="form-group">
                             <label for="arrivalTime">Depart Date</label>
                             <div class="input-group date">
-                                <input type="time" autocomplete="off" class="form-control" id="arrivalTime" required" />
+                                <input type="time" autocomplete="off" class="form-control" id="arrivalTime" required/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="departTime">Expected Arrival Date</label>
                             <div class="input-group date">
-                                <input type="time" autocomplete="off" class="form-control" id="departTime" required" />
+                                <input type="time" autocomplete="off" class="form-control" id="departTime" required/>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cbOwner" class="control-label">Driver/Owner</label>
-                            <select class="select2 form-control" id="cbOwner" style="width: 100%; height: 36px;" required>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label for="cbOwner" class="control-label">Days Available</label>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="monday" />
-                            <label class="custom-control-label" for="monday">Monday</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="tuesday" />
-                            <label class="custom-control-label" for="tuesday">Tuesday</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="wednesday" />
-                            <label class="custom-control-label" for="wednesday">Wednesday</label>
-                        </div>
-                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="thursday" />
-                                <label class="custom-control-label" for="thursday">Thursday</label>
-                        </div>
-                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="friday" />
-                                <label class="custom-control-label" for="friday">Friday</label>
-                        </div>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="saturday" />
+                                <input type="checkbox" class="custom-control-input" id="monday"/>
+                                <label class="custom-control-label" for="monday">Monday</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="tuesday"/>
+                                <label class="custom-control-label" for="tuesday">Tuesday</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="wednesday"/>
+                                <label class="custom-control-label" for="wednesday">Wednesday</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="thursday"/>
+                                <label class="custom-control-label" for="thursday">Thursday</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="friday"/>
+                                <label class="custom-control-label" for="friday">Friday</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="saturday"/>
                                 <label class="custom-control-label" for="saturday">Saturday</label>
                             </div>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="sunday" />
+                                <input type="checkbox" class="custom-control-input" id="sunday"/>
                                 <label class="custom-control-label" for="sunday">Sunday</label>
                             </div>
                         </div>
@@ -141,7 +142,7 @@
                             <label for="txtNotes" class="control-label">Notes</label>
                             <input type="text" class="form-control" id="txtNotes" style="width: 100%" placeholder="Notes..."/>
                         </div>
-                       
+
 
                     </form>
                 </div>
@@ -206,6 +207,7 @@
 
         var model = {
             origin: $('#txtOrigin').val(),
+            name: $('#txtOwner').val(),
             /*arrivalTime: $('#arrivalTime').val(),
             departTime: $('#departTime').val(),*/
             notes: $('#txtNotes').val(),

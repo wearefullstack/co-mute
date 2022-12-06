@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Co_Mute.Data;
+using Co_Mute.Models.AdministrationViewModels;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Co_Mute.Controllers
 {
@@ -26,9 +28,25 @@ namespace Co_Mute.Controllers
             return View();
         }
 
-        public IActionResult Driver()
-        {           
-            return View();
+        public async Task<IActionResult> Driver()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (user != null)
+            {
+
+                return View(new ProfileViewModel()
+                {
+                   
+                    FirstName = user.FirstName + " " + user.LastName,
+
+                });
+
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         public IActionResult MyJoinedOpportunities()
@@ -175,15 +193,19 @@ namespace Co_Mute.Controllers
         {
             if (ModelState.IsValid)
             {
-              var nowdate = DateTime.Now;
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+
+                var nowdate = DateTime.Now;
               var newOpp = new Oppertunities()
               {
                   Id = Guid.NewGuid(),   
                   CreateDate = nowdate,
                   Origin = modal.Origin,
+                  OwnerId = user.Id,
+                  Notes = modal.Notes,
+
                   /*DepartTime = modal.DepartTime,
                   ExpectedArrival = modal.ExpectedArrival, */
-                  Notes = modal.Notes,
                   /*Monday = modal.Monday,
                   Tuesday = modal.Tuesday,
                   Wednesday = modal.Wednesday,
