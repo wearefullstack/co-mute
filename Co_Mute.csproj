@@ -1,0 +1,144 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-Co_Mute-023A9052-1B63-462A-A140-0A375FCB8C08</UserSecretsId>
+    <RootNamespace>Co_Mute</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Submitedassgnments\**" />
+    <Content Remove="wwwroot\Submitedassgnments\**" />
+    <EmbeddedResource Remove="wwwroot\Submitedassgnments\**" />
+    <None Remove="wwwroot\Submitedassgnments\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.96.0" />
+    <PackageReference Include="EPPlus" Version="6.0.8" />
+    <PackageReference Include="glyphicon" Version="1.0.1" />
+    <PackageReference Include="jQuery" Version="3.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\" />
+    <Folder Include="wwwroot\assets\libs\ckeditor\samples\old\image2\assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\extra-libs\extra-libs\block-ui\block-ui.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\c3\c3.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\c3\c3.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\c3\d3.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\calendar\calendar.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\css-chart\css-chart.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net-bs4\css\dataTables.bootstrap4.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net-bs4\css\dataTables.bootstrap4.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net-bs4\js\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net-bs4\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net-bs4\Readme.md" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net\js\jquery.dataTables.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net\License.txt" />
+    <None Include="wwwroot\extra-libs\extra-libs\datatables.net\Readme.md" />
+    <None Include="wwwroot\extra-libs\extra-libs\date-paginator\bootstrap-datepaginator.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\date-paginator\bootstrap-datepaginator.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\date-paginator\date-paginator-custom.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\horizontal-timeline\horizontal-timeline.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\horizontal-timeline\horizontal-timeline.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jqbootstrapvalidation\validation.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery-sessiontimeout\idle\jquery.idletimeout.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery-sessiontimeout\idle\jquery.idletimer.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery-sessiontimeout\idle\session-timeout-idle-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery-sessiontimeout\jquery.sessionTimeout.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery-sessiontimeout\jquery.sessionTimeout.min.simple.modal.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery-sessiontimeout\session-timeout-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery.repeater\dff.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jquery.repeater\repeater-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\gdp-data.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-2.0.2.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-2.0.2.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-asia-mill.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-au-mill.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-ca-lcc.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-de-mill.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-europe-mill-en.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-in-mill.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-uk-mill-en.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-us-aea-en.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-us-il-chicago-mill-en.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jquery-jvectormap-world-mill-en.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\jvector\jvectormap.custom.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\knob\jquery.knob.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\knob\jquery.knob.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\nouislider\noui-slider.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\nouislider\nouislider-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\nouislider\palette-noui.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\prism\prism-old.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\prism\prism.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\prism\prism.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\raty\rating-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\sparkline\sparkline.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\css\demo.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\css\jquery-ui.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\css\lobilist.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\css\lobilist.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\example1\delete.php" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\example1\insert.php" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\example1\update.php" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\js\demo.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\js\jquery-ui.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\js\jquery.ui.touch-punch-improved.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\js\lobibox.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\js\lobilist.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\js\lobilist.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\js\task-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\less\lobilist.less" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\less\mixins.less" />
+    <None Include="wwwroot\extra-libs\extra-libs\taskboard\less\variables.less" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\build\toastr.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\build\toastr.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\demo.html" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\karma.conf.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\content\content\toastr.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\content\scripts\toastr.min.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.0.0.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.0.1.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.0.2.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.0.3.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.1.0.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.1.1.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.1.2.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.1.4.1.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.1.4.2.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.1.4.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.1.5.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.2.0.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.2.1.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.2.2.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.3.0.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.1.3.1.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.2.0.0-rc1.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.2.0.1.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.2.0.2.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\nuget\toastr.2.0.3.nuspec" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\toastr-icon.png" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\dist\toastr.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\toastr\toastr-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview-init.js" />
+    <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview.min.css" />
+    <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview.min.js" />
+    <None Include="wwwroot\images\favicon.jpg" />
+    <None Include="wwwroot\images\smart-e_Logo.jpg" />
+  </ItemGroup>
+
+</Project>

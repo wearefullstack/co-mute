@@ -1,0 +1,210 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+
+
+}
+@inject IViewLocalizer _localizer
+@inject UserManager<ApplicationUser> _userManager
+<head>
+    @inject IViewLocalizer _localizer
+    @inject UserManager<ApplicationUser> UserManager
+    @model Co_Mute.Models.AdministrationViewModels.ProfileViewModel
+
+    <title>Student Dashboard</title>
+    <link href="~/assets/libs/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link href="~/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="~/assets/libs/footable/css/footable.core.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/select2/dist/css/select2.min.css">
+    <link href="~/assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+<body>
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-5 align-self-center">
+                <h3 class="page-title">@_localizer["Car Pool Oppertunities"]</h3>
+                <div class="d-flex align-items-center">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" onclick="javascript:showOppertunityModal();" style="margin-left: 5px;" class="btn btn-sm btn-success float-lg-right"><i class="fas fa-plus"><span> Add Assessment</span></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tblOppertunities" class="table v-middle">
+                            <thead>
+                                <tr>
+                                    <th>@_localizer["Date"]</th>
+                                    <th style="width: 160px;">@_localizer["Depart Time"]</th>
+                                    <th>@_localizer["Expected Arrival"]</th>
+                                    <th style="width: 50px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th>@_localizer["Date"]</th>
+                                    <th>@_localizer["Depart Time"]</th>
+                                    <th>@_localizer["Expected Arrival"]</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="addOppertunityModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create Oppertunity</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="txtAssignmentName" class="control-label">Oppertunity Origin</label>
+                            <input type="text" class="form-control" id="txtAssignmentName" style="width: 100%" required placeholder="Origin" />
+                        </div>
+                        <div class="form-group">
+                            <label for="arrivalDate">Arrival Date</label>
+                            <div class="input-group date">
+                                <input type="datetime-local" autocomplete="off" class="form-control" id="arrivalDate" value="@(DateTime.UtcNow.ToString("yyyy-MM-dd")) required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="expectedDate">Expected Date</label>
+                            <div class="input-group date">
+                                <input type="datetime-local" autocomplete="off" class="form-control" id="expectedDate" value="@(DateTime.UtcNow.ToString("yyyy-MM-dd")) required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cbOwner" class="control-label">Driver/Owner</label>
+                            <select class="select2 form-control" id="cbOwner" style="width: 100%; height: 36px;" required>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtNotes" class="control-label">Notes</label>
+                            <input type="text" class="form-control" id="txtNotes" style="width: 100%" placeholder="Notes..."/>
+                        </div>
+                       
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="btnCreateOppertunity" onclick="createOppertunity()" class="btn btn-outline-success waves-effect waves-light">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<style>
+    var tblOppertunities = $('#tblOppertunities').DataTable({
+            createdRow: function (row, data, dataIndex) {
+                $(row).attr('id', data.id);
+            },
+            "columns": [
+                { "data": "origin" },
+                { "data": "arrivalDate" },
+                { "data": "expectedDate" },
+                { "data": "buttons" }
+            ]
+        });
+
+    $(document).ready(function () {
+            loadOppertunities();
+        });
+
+    function loadOppertunities() {
+        $.ajax({
+                url: '@Url.Action("GetAllOppertunities", "Home")',
+                type: 'GET',
+                success: function (result) {
+
+                    var rows = [];
+
+                    for (var i = 0; i < result.length; i++) {
+
+                        rows.push({
+                            id: result[i].id,
+                               
+   
+                            });
+
+                    }
+
+                        tblOppertunities.rows.add(rows).draw();
+
+                },
+                error: function (jqXHR, exception) {
+                    swal({
+                        title: "ERROR STATUS " + jqXHR.status,
+                        text: "Error Message: " + jqXHR.responseText,
+                        type: "error",
+                        showCancelButton: false,
+                        confirmButtonText: "OK"
+                    });
+                }
+            });
+    }
+
+    function showOppertunityModal() {
+        $('#addOppertunityModal').modal('show');
+        loadOwners();
+    }
+
+    function loadOwners() {
+        
+         $.ajax({
+            url: '@Url.Action("Home", "Owners")',
+            type: 'GET',
+            success: function(result) {
+                $('#cbOwner').empty();
+
+                    $('#cbOwner').append('<option>Select</option>');
+
+               
+            },
+            error: function(jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    
+    }
+    
+</style>

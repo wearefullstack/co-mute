@@ -1,0 +1,350 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Co_Mute.Data
+
+@model Co_Mute.Models.AdministrationViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = null;
+}
+
+
+@*@inject IApplicationSettings _applicationSettings*@
+
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <title>Field Service Login</title>
+    <!-- Custom CSS -->
+    <link rel="icon" type="image/png" sizes="16x16" />
+    @*href="@((await _applicationSettings.CompanyEmblemAsync() != "") ? $"{Url.Action("Emblem", "Logos")}?emblemFileName={await _applicationSettings.CompanyEmblemAsync()}" : "/Assets/Techla/128TechlaCircle.png")">
+   *@ <link href="~/dist/css/style.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.0/particles.min.js"></script>
+
+
+    <style type="text/css">
+        html, body { height: auto }
+
+        body { background-color: #f9f9f9; }
+
+        h1 { text-align: center; }
+
+        .background {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: -1;
+        }
+
+        .banner { background: #009579; }
+
+        .banner__content {
+            padding: 16px;
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            -ms-align-items: center;
+            -o-align-items: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .banner__text {
+            -o-flex-grow: 1;
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            line-height: 1.4;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        
+
+        .banner__text,
+        .banner__close > span { color: #ffffff; }
+
+
+    </style>
+</head>
+
+<body>
+<div class="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="banner" id="banner_id">
+        <div class="banner__content">
+            <div class="banner__text">
+                We use cookies on our website to provide you with the best experience. If you continue browsing, you are consenting to our use of these cookies.
+            </div>
+            <button class="btn-sm btn-outline-light btn" type="button" onclick="javascript:dismissBanner();">Accept & Close</button>
+        </div>
+    </div>
+
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Login box.scss -->
+    <!-- ============================================================== -->
+    @*style="background-image: url('@Url.Content("~/images/login_background.jpg")'); background-size: cover; background-repeat: no-repeat; background-position: center;"*@
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center">
+        <div class="auth-box" style="background-color: rgba(65, 65, 65, 0.7);">
+            <div id="loginform" class="pt-5" style="background-color: rgba(255, 255, 255, 0.0);">
+                <div class="logo">
+                    <span class="db">
+                       @* <img src="@((await _applicationSettings.CompanyLogoAsync() != "") ? $"{Url.Action("Logo", "Logos")}?logoFileName={await _applicationSettings.CompanyLogoAsync()}" : "/Assets/Techla/Techla-horizontal.svg")" style="max-height: 120px;" alt="logo"/> *@
+                    </span>
+                   @* <h5 class="font-medium m-b-20 pt-3 text-light">Sign In to <span class="text-info">@(await _applicationSettings.SignIntoText())</span></h5> *@
+                </div>
+                <!-- Form -->
+                <div class="row">
+                    <div class="col-12">
+
+                        <form class="form-horizontal m-t-20" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="ti-user"></i>
+                                    </span>
+                                </div>
+                                <input asp-for="Email" type="text" style="background-color: rgba(134, 134, 134, 0.6)" class="form-control form-control-lg text-light" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <i class="ti-pencil"></i>
+                                    </span>
+                                </div>
+                                <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"/>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                                <input type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="form-group row" style="margin-top: 80px">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" checked="checked" class="custom-control-input" id="customCheck1">
+                                        <label class="custom-control-label text-light " for="customCheck1">Remember me</label>
+                                        <a href="javascript:void(0)" id="to-recover" class="text-light float-right"><i class="text-light fa fa-lock m-r-5"></i> Forgot pwd?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <div class="col-xs-12 p-b-25">
+                                    <button class="btn btn-block btn-lg btn-outline-info" type="submit">Log In</button>
+                                </div>
+                            </div>
+
+                            @*<div class="form-group m-b-0 m-t-10">
+                                        <div class="col-sm-12 text-center">
+                                            Don't have an account? <a asp-controller="Account" asp-action="Register" class="text-info m-l-5"><b>Sign Up</b></a>
+                                        </div>
+                                    </div>*@
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="recoverform">
+                <div class="logo">
+                    <span class="db">
+                        @*<img src="@((await _applicationSettings.CompanyLogoAsync() != "") ? $"{Url.Action("Logo", "Logos")}?logoFileName={await _applicationSettings.CompanyLogoAsync()}" : "/Assets/Techla/Techla-horizontal.svg")" style="max-height: 120px;" alt="logo"/>*@
+                    </span>
+                    <h5 class="font-medium m-b-20 pt-3 text-light">Recover Password</h5>
+                    <div class="pt-5">
+                        <span class="text-light">Enter your Email and instructions will be sent to you!</span>
+                    </div>
+                </div>
+                <div class="row m-t-20">
+                    <!-- Form -->
+                    <form class="col-12">
+                        <!-- email -->
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <input class="form-control form-control-lg" id="txtEmail" type="email" required="" placeholder="Username">
+                            </div>
+                        </div>
+                        <!-- pwd -->
+                        <div class="row m-t-20 pt-5">
+                            <div class="col-6">
+                                <button class="btn btn-block btn-lg btn-outline-danger" id="btnCancelReset" name="action">Cancel</button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-block btn-lg btn-outline-info" onclick="javascript:sendResetPasswordEmail();" name="action">Send</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    @*<canvas class="background" style="background-image: url('@Url.Content("~/images/login_background.jpg")'); background-size: cover; background-repeat: no-repeat; background-position: center;"></canvas>*@
+    <canvas class="background" style="background-color: rgb(58, 57, 57)"></canvas>
+</div>
+
+
+@await Html.PartialAsync("_ValidationScriptsPartial")
+
+
+<script type="text/javascript">
+    window.onload = function() {
+        var particles = Particles.init({
+            selector: '.background',
+            color: ['#DA0463', '#404B69', '#DBEDF3', '#FFFFFF'],
+            connectParticles: true,
+            maxParticles: 100,
+            speed: 0.5,
+            number: 60
+
+        });
+
+    };
+</script>
+<!-- ============================================================== -->
+<!-- All Required js -->
+<!-- ============================================================== -->
+<script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="~/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="~/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- ============================================================== -->
+<!-- This page plugin js -->
+<!-- ============================================================== -->
+
+<script>
+    $('[data-toggle="tooltip"]').tooltip();
+    $(".preloader").fadeOut();
+
+    $('#to-recover').on("click",
+        function() {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+
+    $('#btnCancelReset').on("click",
+        function() {
+            $("#loginform").slideDown();
+            $("#recoverform").fadeOut();
+        });
+
+
+    $(document).ready(function() {
+
+        if (readGeneralCookie('accept_cookies_fsm') === 'true') {
+            $('#banner_id').remove();
+        }
+
+    });
+
+    function createGeneralCookie(name,value,minutes) {
+
+        var expireDate = "";
+
+        if (minutes) {
+            var date = new Date();
+            date.setTime(date.getTime() + ( minutes * 60 *1000));
+            expireDate = "; expires=" + date.toGMTString();
+        }
+
+        document.cookie = name + "=" + value + expireDate + "; path=/";
+    }
+
+
+    function readGeneralCookie(name) {
+        var nameEq = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)===' ') {
+                c = c.substring(1,c.length);
+            }
+            if (c.indexOf(nameEq) === 0) {
+                return c.substring(nameEq.length,c.length);
+            }
+        }
+        return null;
+    }
+
+
+
+    function dismissBanner() {
+
+        createGeneralCookie('accept_cookies_fsm', 'true', 1000 * 24 * 60);
+
+        $('#banner_id').remove();
+    }
+
+
+    function sendResetPasswordEmail() {
+        var model = {
+            email: $('#txtEmail').val()
+        }
+
+        $.ajax({
+            url: '@Url.Action("ForgotPassword", "Account")',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            success: function(result) {
+
+
+                swal({
+                    title: "EMAIL SEND",
+                    text: "If you have an account you'll receive a email.",
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+
+
+            },
+            error: function(jqXHR, exception) {
+
+                $('#btnCreatePart').prop('disabled', false);
+
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

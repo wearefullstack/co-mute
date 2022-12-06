@@ -1,0 +1,178 @@
+﻿@model Co_Mute.Models.AdministrationViewModels.RegisterViewModel
+
+
+@{
+    Layout = null;
+}
+
+
+
+
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Co_Mute.Data
+
+
+
+
+@inject IViewLocalizer Localizer
+
+
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg">
+    <title>Co-Mute Login</title>
+    <!-- Custom CSS -->
+    <link href="~/dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="main-wrapper">
+
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+
+            </div>
+        </div>
+
+        <div class="auth-wrapper d-flex no-block justify-content-lg-center align-items-center" style="background-image: url('@Url.Content("~/assets/images/big/auth-bg.jpg")'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+
+            <div class="auth-box">
+                <div>
+                    <div class="logo">
+                       
+                        <h3 style="margin-top: 20px" class="font-medium m-b-20">@Localizer["Create New User"]</h3>
+                    </div>
+
+                    <div class="col-12">
+
+                        <div class="wizard-content">
+
+                            <form asp-controller="Account" asp-action="Register" 
+                                 
+                                  method="post" class="validation-wizard wizard-circle m-t-40">
+
+                                <div class="form-group">
+                                    <label asp-for="FirstName"> First Name</label>
+                                    <input asp-for="FirstName" type="text" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Surname"> Last Name</label>
+                                    <input asp-for="Surname" type="text" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Email"> Email Address</label>
+                                    <input asp-for="Email" type="email" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Role">What is your role:</label>
+                                    <select class="custom-select form-control required" id="Role" name="Role">
+                                        <option value="Student">Student</option>
+                                        <option value="Teacher">Teacher</option>
+                                        <option value="HOD">HOD</option>
+                                        <option value="Parent">Parent</option>
+                                        <option value="Administrator">Administrator</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Password"> Password</label>
+                                    <input asp-for="Password" type="password" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="ConfirmPassword"> Confirm Password</label>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control">
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <button class="btn btn-block btn-lg btn-danger " type="button" onclick="btnCancelClicked()">Cancel</button>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <button class="btn btn-block btn-lg btn-info " type="submit">Create</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script> @await Html.PartialAsync("_ValidationScriptsPartial")</script>
+
+
+
+    <script src="~/assets/libs/jquery/dist/jquery.min.js "></script>
+
+    <script src="~/assets/libs/popper.js/dist/umd/popper.min.js "></script>
+    <script src="~/assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
+    @*<script src="~/dist/js/custom.js"></script>
+        <script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>*@
+    <script src="~/assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    @*<script src="~/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js"></script>*@
+
+
+    <script>
+    function btnCancelClicked() {
+        window.location.href = '@Url.Action("Login","Account")';
+    }
+    </script>
+
+    <script>
+        $('[data-toggle="tooltip "]').tooltip();
+        $(".preloader ").fadeOut();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,364 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Co_Mute.Areas.Identity.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Co_Mute";
+    Layout = "_Layout";
+}
+@inject IViewLocalizer _localizer
+@inject UserManager<ApplicationUser> _userManager
+<head>
+    <link href="~/assets/libs/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link href="~/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="~/assets/libs/footable/css/footable.core.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/select2/dist/css/select2.min.css">
+    <link href="~/assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css"/>
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background: rgba(0,0,0,0.4) url('@Url.Content("~/images/carpool.jpeg")'); background-blend-mode:darken; width: 100%; height: 100vh; background-size: cover; background-repeat: no-repeat; background-position: center;">
+        <div class="mid">
+            <p>Travelling made easier</p>
+            <h2>Welcome to Co-Mute</h2>
+            <div class="btn">
+                <a class="simple" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" >Get started</a>
+                <a class="border" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" >Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+   /* body{
+        animation: fadeInAnimation ease 3s;
+        animation-iteration-count: 1;
+        animation-fill-mode:forwards;
+    }*/
+    html{
+        scroll-behavior:smooth;
+    }
+    .mid{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    .mid p{
+        margin-bottom: 1.4rem;
+        color: #add8e6;
+        font-size: 1.3rem;
+    }
+    .mid h2{
+        color: #fff;
+        font-size: 3rem;
+    }
+    .mid .btn{
+        margin-top: 2rem;
+    }
+    .mid .btn a{
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+    .mid .btn a.simple{
+        color: #fff;
+        font-weight: 500;
+        padding: 0.9rem 1.6rem;
+    }
+    .mid .btn a.simple:hover{
+        color: #add8e6;
+    }
+    .mid .btn a.border{
+        color: #add8e6;
+        border: 1px solid #add8e6;
+        font-weight: 500;
+        padding: 0.9rem 1.6rem;
+        border-radius: 3px;
+    }
+    .mid .btn a.border:hover{
+        background: #fff;
+        border: 1px solid #fff;
+    }
+   
+    /*---Media Query---*/
+    @@media screen and (max-width:991px){
+        .mid p{
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        .mid h2{
+            font-size: 2.5rem;
+        }
+        .mid .btn{
+            margin-top: 1.5rem;
+        }
+        .mid .btn a{
+            font-size: 0.9rem;
+        }
+        .mid .btn a.simple{
+            padding: 0.7rem 1.4rem;
+        }
+        .mid .btn a.border{
+            padding: 0.7rem 1.4rem;
+        }
+  
+    }
+    @@media screen and (max-width:768px){
+        .mid p{
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .mid h2{
+            font-size: 2.1rem;
+        }
+        .mid .btn{
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+            align-items:center;
+        }      
+        .mid .btn a.simple{
+            padding: 0.7rem 1.4rem;
+            margin-bottom: 7px;
+        }
+        .mid .btn a.border{
+            padding: 0.7rem 1.4rem;
+        }
+        .details {
+            padding: 5rem 2rem;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .details .one {
+            width: 70%;
+        }
+        .details .one a {
+            font-size: 1rem;
+        }
+        .details .two {
+            border-left:0;
+            padding-left: 0;
+            border-top: 1px solid #666262;
+            width: 70%;
+            margin-top:1.7rem;
+            padding-top: 1.7rem;
+        }       
+        .partners{
+            padding: 5rem 2rem; 
+            flex-direction:column;
+            justify-content:center;
+        }
+        .partners .about{
+            width:70%;
+            margin-bottom: 1.7rem;
+        }
+        .contact {
+            padding: 5rem 2rem;
+            flex-direction: column;
+            justify-content:center;
+            align-items:center;
+        }
+        .contact .form h2 {
+            font-size: 2.5rem;
+           
+           
+        }
+        .contact .map{
+            width:60%;
+        }       
+    }
+    @@media screen and (max-width:496px) {
+        .mid p {
+            margin-bottom: 0.8rem;
+        }
+        .mid h2 {
+            font-size: 1.8rem;
+        }
+        .mid .btn {
+            margin-top: 0.7rem;
+           
+        }       
+        .details {
+            padding: 4rem 1rem;
+           
+        }
+        .details .one {
+            width: 100%;
+        }
+        .details .two {
+          
+            width: 100%;
+           
+        }
+        .partners {
+            padding: 4rem 1rem;
+            
+        }
+        .partners .team1 {
+            width: 100%;
+            margin-bottom:20%;
+        }
+        .partners .about {
+            width: 100%;
+            
+        }
+        .contact {
+            padding: 4rem 1rem;
+           
+        }
+        .contact .form h2 {
+            font-size: 2.5rem;
+        }
+        .contact .map {
+            width: 100%;
+        }
+    }
+</style>
+    @*<script>
+        var swiper = new Swiper(".swiper mySwiper container", {
+            slidesPerView: 1,
+            centeredSlides: false,
+            slidesPerGroupSkip: 1,
+            grabCursor: true,
+            keyboard: {
+                enabled: true,
+            },
+            breakpoints: {
+                769: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2,
+                },
+            },
+            scrollbar: {
+                el: ".swiper-scrollbar",
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>*@
+
+</body>
+
+<div>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js"></script>
+    <script src="~/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="~/dist/js/pages/forms/select2/select2.init.js"></script>
+    <script src="~/assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweet-alert.init.js"></script>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+</div>
+<script>
+    AOS.init();
+    $(document).ready(function () {
+        loadMyForums();
+    });
+    function goToAdmin() {
+        var sub = "Enquiry";
+        var bod = "Good day please would you be so kind as to help with...";
+
+        window.location.assign("mailto:s221524339@mandela.ac.za?Subject=Enquiry&body=Good day please would you be so kind as to help with...");
+    var tblMyForums = $('#tblMyForums').DataTable({
+        createdRow: function (row, data, dataIndex) {
+            $(row).attr('id', data.id);
+        },
+        "columns": [
+            { "data": "date" },
+            { "data": "teacherName" },
+            { "data": "buttons" }
+        ]
+    });
+
+    function onViewForumModal(id) {
+        $.ajax({
+            url: `@Url.Action("GetParentForum", "MyForums")?id=${id}`,
+            type: 'GET',
+            success: function (result) {
+
+                $('#txtForumId').val(result.id);
+                $('#txtTeacher').val(result.teacherName);
+                $('#txtMessage').val(result.message);
+                $('#txtParentId').val(result.parentId)
+
+                $('#current-message-modal').modal('show');
+            },
+            error: function (jqXHR, exception) {
+                Swal.fire({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+
+
+    }
+    function loadMyForums() {
+        $.ajax({
+            url: '@Url.Action("AllParentForums", "MyForums")',
+            type: 'GET',
+            success: function (result) {
+
+                var rows = [];
+
+                for (var i = 0; i < result.length; i++) {
+
+                    rows.push({
+                        id: result[i].id,
+                        date: result[i].date,
+                        teacherName: result[i].teacherName,
+                        buttons: `<div>
+                                    <button type="button" class="btn btn-sm btn-outline-info waves-effect waves-light align-content-end float-lg-right"
+                                     onclick="onViewForumModal('${result[i].id}')"
+                                     style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">
+                                     <span><i class="fas fa-search" aria-hidden="true"></i> View</span>
+                                     </button>
+                                    `
+                    });
+
+                }
+
+                tblMyForums.rows.add(rows).draw();
+
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    }
+</script>

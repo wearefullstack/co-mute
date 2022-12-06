@@ -1,0 +1,365 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Co_Mute.Data
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+@inject UserManager<ApplicationUser> UserManager 
+@model Co_Mute.Models.AdministrationViewModels.ProfileViewModel
+
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "_Layout";
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+
+
+    var user = await UserManager.GetUserAsync(User);
+}
+<head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css" />
+
+    <link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <link href="~/assets/libs/footable/css/footable.bootstrap.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/select2/css/select2.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
+    <link href="~/assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css">
+
+
+
+</head>
+
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+
+<div class="row ">
+    <!-- Column -->
+    <div class="col-lg-12 col-md-12">
+
+        <div class="card-body">
+            <div class="m-t-30" style="text-align: center;">
+
+                <img src="~/images/users/unknown.png" class="rounded-circle" style="cursor: pointer;" width="150" />
+                            
+                <h4 class="card-title m-t-10">@Model.FirstName @Model.Surname</h4>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-timeline-tab" data-toggle="pill" href="#information" role="tab" aria-controls="pills-timeline" aria-selected="true">Information</a>
+            </li>
+           
+        </ul>
+
+
+        <!-- Tabs -->
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="information" role="tabpanel" aria-labelledby="pills-timeline-tab">
+                <div class="card-body">
+                    <form class="form-horizontal">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4 class="card-title">Personal Information</h4>
+                                    <div class="form-group row">
+                                        <label for="txtFirstName" class="col-sm-3 text-right control-label col-form-label">First Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="txtFirstName" placeholder="First Name" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="txtSurname" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="txtSurname" placeholder="Last Name" >
+                                        </div>
+                                    </div>
+                                   
+
+                                </div>
+                                <div class="col-6">
+                                    <h4 class="card-title">Contact Information</h4>
+                                    <div class="form-group row">
+                                        <label for="txtEmail" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" id="txtEmail" placeholder="Email" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="txtPhoneNumber" class="col-sm-3 text-right control-label col-form-label">Phone Number</label>
+                                        <div class="col-sm-9">
+                                            <input  type="text" class="form-control" id="txtPhoneNumber" placeholder="Phone Number"  >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input hidden="hidden" id="txtPersonalInfoId">
+
+                        <div class="card-body">
+                            <div class="form-group m-b-0 text-right">
+                                <button type="button" onclick="javascript:showChangePasswordModal();" class="btn btn-outline-danger waves-effect waves-light float-lg-left">Change Password</button>
+
+                                <button type="button" onclick="javascript:updateProfile();" class="btn btn-outline-info waves-effect waves-light">Save</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>           
+
+        </div>
+    </div>
+    </div>
+    
+        
+        
+<div id="changePasswordModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Change Password</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="card-body">
+                    <form action="javascript:submitResetPassword()" name="changePasswordForm">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 style="color: rgb(85, 142, 244);">Password Rules</h5>
+                                <p style="margin-left: 20px; width: 100%; font-size: 11px; color: rgb(248, 123, 123);">
+
+                                    - at least one non alphanumeric character.<br/>
+
+                                    - at least one lowercase ('a'-'z').<br/>
+
+                                    - at least one uppercase ('A'-'Z').<br/>
+
+                                    - at least a length of 8 characters.<br/>
+                                </p>
+                            </div>
+
+                        </div>
+                        <input hidden="hidden" class="form-control" name="userId" id="userId"/>
+                        <div class="form-group row">
+                            <label class="text-right control-label" for="txtNewPassword">Old Password</label>
+
+                            <input autocomplete="off" required="required" class="form-control" name="oldPassword" type="password" id="txtOldPassword"/>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="text-right control-label" for="txtNewPassword">New Password</label>
+
+                            <input autocomplete="off" required="required" class="form-control" name="newPassword" type="password" id="txtNewPassword"/>
+                        </div>
+                        <div class="form-group row">
+                            <label class=" text-left control-label " for="txtConfirmPassword">Confirm Password</label>
+
+                            <input autocomplete="off" required="required" class="form-control" name="confirmPassword" type="password" id="txtConfirmPassword"/>
+
+                            @* <span id="txtConfirmError" hidden="hidden">Both passwords must match to continue</span>*@
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info waves-effect float-lg-right" data-dismiss="modal">Cancel</button>
+                <button type="button" onclick="javascript:changePassword();" id="btnSaveExpense" class="btn btn-outline-danger waves-effect waves-light  float-lg-right">Change</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js"></script>
+    <script src="~/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="~/dist/js/pages/forms/select2/select2.init.js"></script>
+    <script src="~/assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweet-alert.init.js"></script>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+
+</div>
+
+<script>
+  
+    $(document).ready(function() {
+      
+        
+        
+    });
+    
+
+    
+
+    function changePassword(){
+        if ($('#txtNewPassword').val() === $('#txtConfirmPassword').val() && $('#txtNewPassword').val() !== '') {
+
+                var model = {
+                    oldPassword: $('#txtOldPassword').val(),
+                    password: $('#txtNewPassword').val(),
+                    confirmPassword: $('#txtConfirmPassword').val()
+                }
+
+
+                $.ajax({
+                url: '@Url.Action("ChangePassword", "Profile")',
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(model),
+                success: function(result) {
+
+
+                    $('#changePasswordModal').modal('hide');
+
+
+                    window.location.reload();
+
+                },
+                error: function(jqXHR, exception) {
+
+                    $('#resetPasswordModal').modal('hide');
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: "ERROR STATUS " + jqXHR.status,
+                        text: "Error Message: " + jqXHR.responseText
+                    });
+                }
+            });
+
+            } else {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: "ERROR",
+                        text: "Your passwords need to match to continue with the reset."
+                    });
+
+
+
+            }   
+    
+    }
+
+    function showChangePasswordModal()
+    {
+        $('#txtNewPassword').val('');
+
+        $('#txtConfirmPassword').val('');
+        $('#changePasswordModal').modal('show');
+    
+    }
+
+    function getUserProfile()
+    {
+          $.ajax({
+            url: `@Url.Action("GetUserProfile", "Profile")?id=`+ '@Model.Id',
+            type: 'GET',
+            success: function(result) {
+                 $('#txtPersonalInfoId').val(result.id);
+                 $('#txtFirstName').val(result.firstName);
+                 $('#txtSurname').val(result.lastName);
+                 $('#txtEmail').val(result.email);
+                 $('#txtPhoneNumber').val(result.phoneNumber);
+               
+            },
+            error: function(jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    
+    }
+   
+    function updateProfile(){
+        
+       @* var model = {
+            firstName: $('#txtFirstName').val(),
+            lastName: $('#txtSurname').val(),
+            email:$('#txtEmail').val(),
+            phoneNumber: $('#txtPhoneNumber').val(),
+        };*@
+        $.ajax({
+            url: `@Url.Action("UpdateUserInformation", "Profile")?id=`+'@Model.Id'+`&firstName=`+$('#txtFirstName').val()+`&lastName=`+$('#txtSurname').val()+`&email=`+$('#txtEmail').val()+`&phoneNumber=`+$('#txtPhoneNumber').val(),
+            type: 'POST',
+            /*dataType: 'json',
+            data: JSON.stringify(model),*/
+            contentType: "application/json; charset=utf-8",
+            success: function(result) {
+                
+                toastr.success(`Success`, 'Profile Updated!');
+            },
+            error: function(jqXHR, exception) { 
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    
+    }
+    
+   
+    
+  
+    
+
+    
+
+
+
+</script>
+
+

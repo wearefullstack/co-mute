@@ -1,0 +1,238 @@
+﻿
+@page
+@model Co_Mute.Areas.Identity.Pages.Account.LoginModel
+   
+@{
+ViewData["Title"] = "Log in";
+Layout = null;
+}
+   
+   
+   
+   <!DOCTYPE html>
+   <html dir="ltr">
+   
+   <head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <!-- Tell the browser to be responsive to screen width -->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <!-- Favicon icon -->
+   <link rel="icon" type="image/png" sizes="16x16" href="~/favicon.ico">
+   <title>Co-Mute Login</title>
+   <!-- Custom CSS -->
+   <link href="~/dist/css/style.min.css" rel="stylesheet">
+   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+   <!--[if lt IE 9]>
+   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+   <![endif]-->
+   </head>
+   
+   <body>
+   
+   
+   <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background-image: url('@Url.Content("~/images/carpool.jpeg")'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+   <div class="auth-box on-sidebar">
+   <div id="loginform" class="pt-5">
+   <div class="logo">
+   @*<span class="db"><img style="height: 125px;" src="images/" alt="logo" /></span>*@
+   <h2 class="font-medium m-b-20 pt-3">Sign In to <span style="color: #662d91">Co-Mute</span></h2>
+   </div>
+   <!-- Form -->
+   <div class="row pt-lg-5">
+   <div class="col-12">
+   
+   <section>
+   <form class="form-horizontal m-t-20" id="account" method="post">
+   
+   <div asp-validation-summary="All" class="text-danger"></div>
+   <div class="input-group mb-3">
+   <div class="input-group-prepend">
+   <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+   </div>
+   <input asp-for="Input.Email" type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+   <span asp-validation-for="Input.Email" class="text-danger"></span>
+   </div>
+   <div class="input-group mb-3">
+   <div class="input-group-prepend">
+   <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+   </div>
+   <input asp-for="Input.Password" type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" />
+   <span asp-validation-for="Input.Password" class="text-danger"></span>
+   </div>
+   <div class="form-group row pt-5">
+   <div class="col-md-12">
+   <div class="custom-control custom-checkbox">
+   <input type="checkbox" class="custom-control-input" id="customCheck1">
+   <label class="custom-control-label" for="customCheck1">Remember me</label>
+   <a asp-area="Identity" asp-page="/Account/ForgotPassword" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
+   </div>
+   </div>
+   </div>
+   <div class="form-group text-center">
+   <div class="col-xs-12 p-b-20 pt-3">
+   <button class="btn btn-block btn-lg btn-info" type="submit">Log In</button>
+   </div>
+   </div>
+   
+   <div class="form-group m-b-0 m-t-10">
+       <div class="col-sm-12 text-center">
+           Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><b>Sign Up</b></a>
+       </div>
+       @*<p>
+           <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+       </p>
+       <p>
+           <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+       </p>
+ 
+       <p>
+           <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+       </p>*@
+   </div>
+   </form>
+   </section>
+   
+   
+   </div>
+   </div>
+   </div>
+   <div id="recoverform">
+   <div class="logo">
+   <span class="db"><img src="images/favicon.jpg" alt="logo" /></span>
+   <h5 class="font-medium m-b-20 pt-3">Recover Password</h5>
+   <span>Enter your Email and instructions will be sent to you!</span>
+   </div>
+   <div class="row m-t-20">
+   <!-- Form -->
+   <form class="col-12" action="index.html">
+   <!-- email -->
+   <div class="form-group row">
+   <div class="col-12">
+   <input class="form-control form-control-lg" type="email" required="" placeholder="Username">
+   </div>
+   </div>
+   <!-- pwd -->
+   <div class="row m-t-20">
+   <div class="col-6">
+   <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset</button>
+   </div>
+   <div class="col-6">
+   <button class="btn btn-block btn-lg btn-info" id="btnCancelReset" name="action">Cancel</button>
+   </div>
+   </div>
+   </form>
+   </div>
+   </div>
+   </div>
+   </div>
+   
+   
+   
+   
+   
+   
+   @*
+   <div class="row">
+   <div class="col-md-4">
+   <section>
+   <form id="account" method="post">
+   <h4>Use a local account to log in.</h4>
+   <hr />
+   <div asp-validation-summary="All" class="text-danger"></div>
+   <div class="form-group">
+   <label asp-for="Input.Email"></label>
+   <input asp-for="Input.Email" class="form-control" />
+   <span asp-validation-for="Input.Email" class="text-danger"></span>
+   </div>
+   <div class="form-group">
+   <label asp-for="Input.Password"></label>
+   <input asp-for="Input.Password" class="form-control" />
+   <span asp-validation-for="Input.Password" class="text-danger"></span>
+   </div>
+   <div class="form-group">
+   <div class="checkbox">
+   <label asp-for="Input.RememberMe">
+   <input asp-for="Input.RememberMe" />
+   @Html.DisplayNameFor(m => m.Input.RememberMe)
+   </label>
+   </div>
+   </div>
+   <div class="form-group">
+   <button type="submit" class="btn btn-primary">Log in</button>
+   </div>
+   <div class="form-group">
+   <p>
+   <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+   </p>
+   <p>
+   <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+   </p>
+   </div>
+   </form>
+   </section>
+   </div>
+   
+   </div>*@
+   
+   <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+   <!-- Bootstrap tether Core JavaScript -->
+   <script src="~/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+   <script src="~/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+   
+   
+   
+   
+   </body>
+   </html>
+   
+   @section Scripts  {
+   <partial name="_ValidationScriptsPartial" />
+   }
+   
+   @*
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email">Email</label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">Password</label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+                <div class="form-group">
+                  
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+*@

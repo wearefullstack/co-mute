@@ -1,0 +1,416 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewBag.Title = "My Assignments";
+    Layout = "_Layout";
+}
+@inject UserManager<ApplicationUser> _userManager
+
+@inject IViewLocalizer _localizer
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+
+    <link href="~/assets/libs/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link href="~/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="~/assets/libs/footable/css/footable.core.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/select2/dist/css/select2.min.css">
+    <link href="~/assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css"/>
+    <link rel="stylesheet" type="text/css" href="~/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+</head>
+
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-5 align-self-center">
+            <h3 class="page-title">@_localizer["My Assignments"]</h3>
+            <div class="d-flex align-items-center">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" onclick="javascript:showAssessmentModal();" style="margin-left: 5px;" class="btn btn-sm btn-success float-lg-right"><i class="fas fa-plus"><span> Add Assessment</span></i></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tblAssessments" class="table v-middle">
+                        <thead>
+                        <tr>
+                            <th>@_localizer["Date"]</th>
+                            <th style="width: 160px;">@_localizer["Name"]</th>
+                            <th>@_localizer["Course"]</th>
+                            <th>@_localizer["Mark"]</th>
+                            <th>@_localizer["Weight"]</th>
+                            <th style="width: 50px"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tfoot>
+                        <tr>
+                            <th>@_localizer["Date"]</th>
+                            <th>@_localizer["Name"]</th>
+                            <th>@_localizer["Course"]</th>
+                            <th>@_localizer["Mark"]</th>
+                            <th>@_localizer["Weight"]</th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addAssessmentModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create Assignment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="txtAssignmentName" class="control-label">Assignment Name</label>
+                        <input type="text" class="form-control" id="txtAssignmentName" style="width: 100%" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="expireDate">Hand-in Date</label>
+                            <div class="input-group date">
+                        <input type="datetime-local" autocomplete="off" class="form-control" id="expireDate" value="@(DateTime.UtcNow.ToString("yyyy-MM-dd"))" />
+                            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cbCourse" class="control-label">My Course Name and Grade</label>
+                        <select class="select2 form-control" id="cbCourse" style="width: 100%; height: 36px;">
+                        </select>
+                    </div>
+                        
+                    <div class="form-group">
+                        <label for="txtAssignmnetMark" class="control-label">Assignment Grade</label>
+                        <input type="number" class="form-control" id="txtAssignmnetMark" style="width: 100%"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtAssignmetWeight" class="control-label">Weight</label>
+                        <input type="number" class="form-control" id="txtAssignmetWeight" style="width: 100%"/>
+                    </div>
+                       
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btnCreateAssignment" onclick="createAssignment()" class="btn btn-outline-success waves-effect waves-light">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editAssessmentModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Assignment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="txtEditAssignmentName" class="control-label">Assignment Name</label>
+                        <input type="text" class="form-control" id="txtEditAssignmentName" style="width: 100%"/>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="cbEditCourse" class="control-label">My Course Name and Grade</label>
+                        <select class="select2 form-control" id="cbEditCourse" style="width: 100%; height: 36px;" aria-readonly="true">
+                        </select>
+                    </div>
+                        
+                    <div class="form-group">
+                        <label for="txtEditAssignmnetMark" class="control-label">Assignment Grade</label>
+                        <input type="number" class="form-control" id="txtEditAssignmnetMark" style="width: 100%"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEditAssignmetWeight" class="control-label">Weight</label>
+                        <input type="number" class="form-control" id="txtEditAssignmetWeight" style="width: 100%"/>
+                    </div>
+                    
+                    <input type="hidden" id="editAssessmentId"  />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btnCreateAssignment" onclick="updateAssessment()" class="btn btn-outline-warning waves-effect waves-light">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<div>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js"></script>
+    <script src="~/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="~/dist/js/pages/forms/select2/select2.init.js"></script>
+    <script src="~/assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweet-alert.init.js"></script>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+</div>
+<script>
+
+    function createAssignment(){
+        
+        var model = {
+            name: $('#txtAssignmentName').val(),
+            course: $('#cbCourse').val(),
+            mark: $('#txtAssignmnetMark').val(),
+            weight: $('#txtAssignmetWeight').val(),
+            expireDate: $('#expireDate').val()
+        }        
+        $.ajax({
+            url: '@Url.Action("CreateAssignment", "Assignments")',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            success: function(result) {
+                
+                 $('#addAssessmentModal').modal('hide');
+
+                location.reload();
+
+            },
+            error: function(jqXHR, exception) { 
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+            
+    }
+
+    function showAssessmentModal(){
+        $('#addAssessmentModal').modal('show');
+        loadMyCourses();
+    }
+    
+    function loadMyCourses(){
+        
+         $.ajax({
+            url: '@Url.Action("GetMyCourses", "Assignments")',
+            type: 'GET',
+            success: function(result) {
+                $('#cbCourse').empty();
+
+                $('#cbCourse').append('<option>Select</option>');
+
+                for (var i = 0; i < result.length; i++) {
+                    $('#cbCourse').append('<option value="' + result[i]["id"] + '">' + result[i]["name"] + " - " + result[i]["grade"] +'</option>');
+                }
+            },
+            error: function(jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    
+    }
+
+    $(document).ready(function() {
+        loadAssignments();
+    });
+    var tblAssessments = $('#tblAssessments').DataTable({
+        createdRow: function(row, data, dataIndex) {
+            $(row).attr('id', data.id);
+        },
+        "columns": [
+            { "data": "date" },
+            { "data": "name" },
+            { "data": "course" },
+            { "data": "mark"},
+            { "data": "weight"},
+            { "data": "buttons" }
+        ]
+    });
+    function editAssignment(id)
+    {
+         $.ajax({
+            url: `@Url.Action("GetMyAssignment", "Assignments")?id=${id}`,
+            type: 'GET',
+            success: function(result) {
+                $('#txtEditAssignmentName').val(result.name);
+                 $('#txtEditAssignmetWeight').val(result.weight);
+                 $('#cbEditCourse').val(result.courseId);
+                $('#editAssessmentId').val(result.id);
+
+                $('#editAssessmentModal').modal('show');
+
+            },
+            error: function(jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+        
+    }
+    function updateAssessment()
+    {
+        var model ={
+        id: $('#txtEditAssignmentName').val(),
+        name:$('#editAssessmentId').val(),
+        weight:$('#txtEditAssignmetWeight').val(),
+        courseId:$('#cbEditCourse').val(),
+        
+        };
+        $.ajax({
+                url: '@Url.Action("UpdateMyAssignment", "Assignments")',
+                type: 'POST',
+                data: JSON.stringify(keyModel),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(result) {
+                                        
+
+                    $('#editKeyModal').modal('hide');
+
+                },
+                error: function(jqXHR, exception) {
+                    swal({
+                        title: "ERROR STATUS " + jqXHR.status,
+                        text: "Error Message: " + jqXHR.responseText,
+                        type: "error",
+                        showCancelButton: false,
+                        confirmButtonText: "OK"
+                    });
+
+                }
+            });
+    
+    }
+    function deleteAssignment(id){
+            swal({
+            title: "CONFIRM",
+            text: "Are you sure that you want to remove this assignment?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, remove assignment!"
+        }).then((ok) => {
+
+            if (JSON.stringify(ok) === '{"value":true}') {
+                $.ajax({
+                    url: `@Url.Action("DeleteAssignment", "Assignments")?id=${id}`,
+                    type: 'DELETE',
+                    success: function(result) {
+
+                        toastr.success('Success', 'Assignment is removed');
+                        
+                        location.reload();
+
+
+                    },
+                    error: function(jqXHR, exception) {
+                        swal({
+                            type: "error",
+                            title: "ERROR STATUS " + jqXHR.status,
+                            text: "Error Message: " + jqXHR.responseText,
+                            showCancelButton: false,
+                            confirmButtonText: "OK"
+                        });
+                    }
+                });
+            }
+
+        });
+    
+    }
+    function loadAssignments() {
+        $.ajax({
+            url: '@Url.Action("GetMyAssignments", "Assignments")',
+            type: 'GET',
+            success: function(result) {
+
+                var rows = [];
+
+                for (var i = 0; i < result.length; i++) {
+
+                    rows.push({
+                        id: result[i].id,
+                        date:result[i].date,
+                        name: result[i].name,
+                        course: result[i].courseName,
+                        mark:result[i].mark,
+                        weight:result[i].weight,
+                        buttons: `<div>
+                                <button type="button" class="btn btn-sm btn-outline-danger waves-effect waves-light align-content-end float-lg-right"
+                                style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:deleteAssignment('${result[i].id}');"
+                                data-original-title="Email"><span><i class="fas fa-trash" aria-hidden="true"></i> Delete</span></button>
+                                </div>
+                                @*<button type="button" class="btn btn-sm btn-outline-warning waves-effect waves-light align-content-end float-lg-right"
+                                style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:editAssignment('${result[i].id}');"
+                                data-original-title="Edit"><span><i class="fas fa-users" aria-hidden="true"></i> Edit</span></button></div>*@
+                                
+                                `
+                    });
+
+                }
+
+                tblAssessments.rows.add(rows).draw();
+
+            },
+            error: function(jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    }
+
+
+
+
+
+</script>

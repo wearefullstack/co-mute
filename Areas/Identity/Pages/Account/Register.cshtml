@@ -1,0 +1,108 @@
+﻿@page
+@model Co_Mute.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    
+}
+
+<section class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background: rgba(0,0,0,0.4) url('@Url.Content("~/images/carpool.jpeg")'); background-blend-mode:darken; width: 100%; height: 100vh; background-size: cover; background-repeat: no-repeat; background-position: center;>
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+
+                            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Input.FirstName" class="form-control form-control-lg" placeholder="First Name" />
+                                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Input.LastName" class="form-control form-control-lg" placeholder="Last Name" />
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Input.PhoneNumber" class="form-control form-control-lg" placeholder="Phone Number" />
+                                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Input.Email" class="form-control form-control-lg" placeholder="Email" />
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" asp-for="Input.Password" class="form-control form-control-lg" placeholder="Password" />
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" asp-for="Input.ConfirmPassword" class="form-control form-control-lg" placeholder="Repeat your password" />
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <p class="text-muted mt-5 mb-0l">
+                                        Once you click "Register" you agree to all statements in <a asp-controller="Home"  asp-action="Privacy"class="text-body"><u>Terms of service</u></a>
+                                    </p>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit"
+                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                        Register
+                                    </button>
+                                </div>
+
+                                <p class="text-center text-muted mt-5 mb-0">
+                                    Have already an account?  <a class="fw-bold text-body" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" ><u>Login here</u></a>
+                                </p>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+    /*.gradient-custom-3 {
+            /* fallback for old browsers */
+    background: #84fab0;
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+    }
+
+    */
+
+    .gradient-custom-4 {
+        color: #add8e6;
+        border: 1px solid #add8e6;
+        font-weight: 500;
+        padding: 0.9rem 1.6rem;
+        border-radius: 3px;
+    }
+
+    .gradient-custom-4:hover {
+        background: #fff;
+        border: 1px solid #fff;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
