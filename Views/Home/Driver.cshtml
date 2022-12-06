@@ -239,6 +239,28 @@
         $('#addOppertunityModal').modal('show');
 
     }
+    function addUser(id) {
+        $.ajax({
+            url: '@Url.Action("AddUserToCurrentOppertunity", "Home")?id='+id,
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+
+                toastr.success(`Success`, 'Carpool Added!');
+
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+
+    }
     function loadOppertunities() {
 
         $.ajax({
@@ -261,6 +283,10 @@
                                             style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:onViewClicked('${result[i].id}');"
                                         data-original-title="View"><span><i class="fas fa-search" aria-hidden="true"></i> View</span></button></div>
                                     </div>
+                                        <button type="button" class="btn btn-sm btn-outline-success waves-effect waves-light align-content-end float-lg-right"
+                                                    style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:addUser('${result[i].id}');"
+                                                data-original-title="View"><span><i class="fas fa-plus" aria-hidden="true"></i> join</span></button></div>
+                                        </div>
 
                                     `
                     });

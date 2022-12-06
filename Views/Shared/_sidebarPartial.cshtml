@@ -36,6 +36,8 @@
 </li>
 
 
+@if (User.Identity.IsAuthenticated)
+{
 
     <li class="sidebar-item">
         <a asp-controller="Home" asp-action="Driver" class="sidebar-link">
@@ -47,13 +49,14 @@
         <i class="mdi mdi-dots-horizontal"></i>
         <span class="hide-menu">My Account</span>
     </li>
-    
+
     <li class="sidebar-item">
-    <a asp-controller="Home" asp-action="MyJoinedOpportunities" class="sidebar-link">
+        <a asp-controller="Home" asp-action="MyJoinedOpportunities" class="sidebar-link">
             <i class="fa fa-car"></i>
             <span class="hide-menu">My Joined Opportunities</span>
         </a>
     </li>
+}
     
    
 

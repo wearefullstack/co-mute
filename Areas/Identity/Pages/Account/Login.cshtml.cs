@@ -19,7 +19,6 @@ using Co_Mute.Data;
 
 namespace Co_Mute.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

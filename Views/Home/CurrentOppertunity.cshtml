@@ -122,9 +122,9 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+           @* <div class="col-12">
                 <button type="button" onclick="javascript:addUser();" style="margin-left: 5px;" class="btn btn-sm btn-success float-lg-right"><i class="fas fa-plus"><span> Join Carpool</span></i></button>
-            </div>
+            </div>*@
         </div>
         <div class="table-responsive">
             <table id="tblListings" class="table table-striped" style="width:100%">
@@ -222,28 +222,7 @@
 
     }
 
-    function addUser(){
-        $.ajax({
-            url: '@Url.Action("AddUserToCurrentOppertunity", "Home")?id=@Model.Id',
-            type: 'POST',
-            dataType: 'json',
-            success: function (result) {
-                location.reload();
-                toastr.success(`Success`, 'User Addeds!');
-
-            },
-            error: function (jqXHR, exception) {
-                swal({
-                    title: "ERROR STATUS " + jqXHR.status,
-                    text: "Error Message: " + jqXHR.responseText,
-                    type: "error",
-                    showCancelButton: false,
-                    confirmButtonText: "OK"
-                });
-            }
-        });
     
-    }
     function loadListings() {
         $.ajax({
             url: `@Url.Action("GetCurrentOppertunitiesListing", "Home")?id=@Model.Id`,
