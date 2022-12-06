@@ -46,7 +46,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <button type="button" onclick="javascript:showOppertunityModal();" style="margin-left: 5px;" class="btn btn-sm btn-success float-lg-right"><i class="fas fa-plus"><span> Add Assessment</span></i></button>
+                <button type="button" onclick="javascript:showOppertunityModal();" style="margin-left: 5px;" class="btn btn-sm btn-success float-lg-right"><i class="fas fa-plus"><span> Add Oppertunity</span></i></button>
             </div>
         </div>
         <div class="row">
@@ -56,9 +56,9 @@
                         <table id="tblOppertunities" class="table v-middle">
                             <thead>
                                 <tr>
-                                    <th>@_localizer["Date"]</th>
+                                    <th>@_localizer["Arrival Date"]</th>
                                     <th style="width: 160px;">@_localizer["Depart Time"]</th>
-                                    <th>@_localizer["Expected Arrival"]</th>
+                                    <th>@_localizer["Origin"]</th>
                                     <th style="width: 50px"></th>
                                 </tr>
                             </thead>
@@ -66,9 +66,9 @@
 
                             <tfoot>
                                 <tr>
-                                    <th>@_localizer["Date"]</th>
+                                    <th>@_localizer["Arrival Date"]</th>
                                     <th>@_localizer["Depart Time"]</th>
-                                    <th>@_localizer["Expected Arrival"]</th>
+                                    <th>@_localizer["Origin"]</th>
                                     <th></th>
                                 </tr>
                             </tfoot>
@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-    <div id="addOppertunityModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+@*    <div id="addOppertunityModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -124,87 +124,15 @@
             </div>
         </div>
     </div>
-
+*@
 </body>
 
 <style>
-    var tblOppertunities = $('#tblOppertunities').DataTable({
-            createdRow: function (row, data, dataIndex) {
-                $(row).attr('id', data.id);
-            },
-            "columns": [
-                { "data": "origin" },
-                { "data": "arrivalDate" },
-                { "data": "expectedDate" },
-                { "data": "buttons" }
-            ]
-        });
-
-    $(document).ready(function () {
-            loadOppertunities();
-        });
-
-    function loadOppertunities() {
-        $.ajax({
-                url: '@Url.Action("GetAllOppertunities", "Home")',
-                type: 'GET',
-                success: function (result) {
-
-                    var rows = [];
-
-                    for (var i = 0; i < result.length; i++) {
-
-                        rows.push({
-                            id: result[i].id,
-                               
-   
-                            });
-
-                    }
-
-                        tblOppertunities.rows.add(rows).draw();
-
-                },
-                error: function (jqXHR, exception) {
-                    swal({
-                        title: "ERROR STATUS " + jqXHR.status,
-                        text: "Error Message: " + jqXHR.responseText,
-                        type: "error",
-                        showCancelButton: false,
-                        confirmButtonText: "OK"
-                    });
-                }
-            });
-    }
-
-    function showOppertunityModal() {
-        $('#addOppertunityModal').modal('show');
-        loadOwners();
-    }
-
-    function loadOwners() {
-        
-         $.ajax({
-            url: '@Url.Action("Home", "Owners")',
-            type: 'GET',
-            success: function(result) {
-                $('#cbOwner').empty();
-
-                    $('#cbOwner').append('<option>Select</option>');
-
-               
-            },
-            error: function(jqXHR, exception) {
-                swal({
-                    title: "ERROR STATUS " + jqXHR.status,
-                    text: "Error Message: " + jqXHR.responseText,
-                    type: "error",
-                    showCancelButton: false,
-                    confirmButtonText: "OK"
-                });
-            }
-        });
     
-    }
+    $(document).ready(function() {
+            
+        });
+
+    
     
 </style>

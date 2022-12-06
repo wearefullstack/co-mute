@@ -137,7 +137,6 @@
     <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview-init.js" />
     <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview.min.css" />
     <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview.min.js" />
-    <None Include="wwwroot\images\logo.jpg" />
   </ItemGroup>
 
 </Project>
