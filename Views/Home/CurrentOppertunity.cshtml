@@ -172,6 +172,7 @@
       $(document).ready(function () {
         loadListings();
     });
+    
     var tblListings = $('#tblListings').DataTable({
         createdRow: function (row, data, dataIndex) {
             $(row).attr('id', data.id);

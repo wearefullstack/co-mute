@@ -30,7 +30,12 @@ namespace Co_Mute.Controllers
         {           
             return View();
         }
-        
+
+        public IActionResult MyJoinedOpportunities()
+        {
+            return View();
+
+        }
         public IActionResult Privacy()
         {
             return View();
@@ -115,6 +120,27 @@ namespace Co_Mute.Controllers
                 {
                     Id = u.Id,
                     Name= user.FirstName + " " +user.LastName,
+                    DateJoined = u.UserJoinDate.ToString("yyyy MMMM dd"),
+
+                }).ToListAsync();
+
+            return Json(opp);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetMyJoinedOppoertunities()
+        {
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            var opp = await (
+                from u in _context.Listings
+                join user in _context.Users
+                    on u.UserId equals user.Id
+                where u.UserId == currentUser.Id
+                select new
+                {
+                    Id = u.Id,
+                    Name = user.FirstName + " " + user.LastName,
                     DateJoined = u.UserJoinDate.ToString("yyyy MMMM dd"),
 
                 }).ToListAsync();
