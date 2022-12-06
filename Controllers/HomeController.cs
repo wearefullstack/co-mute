@@ -81,6 +81,26 @@ namespace Co_Mute.Controllers
              return Json(opp);
 
         }
+        public async Task<IActionResult> CurrentOppertunity([FromQuery] Guid id)
+        {
+            var opp = await _context.Oppertunities.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (opp != null)
+            {
+                return View(new CurrentOppertunityPostModal()
+                {
+                    Id = opp.Id,
+                    Origin = opp.Origin,
+                    
+                });
+
+            }
+            else
+            {
+                return View("Error");
+            }
+
+        }
         public async Task<IActionResult> CreateOppertunity([FromBody] CreateOppertunityPostModal modal)
         {
             if (ModelState.IsValid)

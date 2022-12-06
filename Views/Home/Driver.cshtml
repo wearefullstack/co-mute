@@ -185,6 +185,24 @@
             { "data": "buttons" }
         ]
     });
+    function onViewClicked(id) {
+        $.ajax({
+            url: `@Url.Action("CurrentOppertunity", "Home")?id=${id}`,
+            type: 'GET',
+            success: function (result) {
+                window.location.href = `@Url.Action("CurrentOppertunity", "Home")?id=${id}`;
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    }
     function createOppertunity() {
 
         var model = {
@@ -240,7 +258,7 @@
                         origin: result[i].origin,
                         buttons: `<div>
                                         <button type="button" class="btn btn-sm btn-outline-info waves-effect waves-light align-content-end float-lg-right"
-                                        style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:viewOppertunity('${result[i].id}');"
+                                            style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:onViewClicked('${result[i].id}');"
                                         data-original-title="View"><span><i class="fas fa-search" aria-hidden="true"></i> View</span></button></div>
                                     </div>
 
