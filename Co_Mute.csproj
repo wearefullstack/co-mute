@@ -137,8 +137,7 @@
     <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview-init.js" />
     <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview.min.css" />
     <None Include="wwwroot\extra-libs\extra-libs\treeview\dist\bootstrap-treeview.min.js" />
-    <None Include="wwwroot\images\favicon.jpg" />
-    <None Include="wwwroot\images\smart-e_Logo.jpg" />
+    <None Include="wwwroot\images\logo.jpg" />
   </ItemGroup>
 
 </Project>
