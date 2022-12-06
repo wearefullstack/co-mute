@@ -123,6 +123,7 @@ namespace Co_Mute.Controllers
                 return View("Error");
             }
 
+
         }
         public async Task<IActionResult> CreateOppertunity([FromBody] CreateOppertunityPostModal modal)
         {
@@ -154,6 +155,57 @@ namespace Co_Mute.Controllers
             }
 
             return BadRequest("Modal not found");
+        }
+
+        public async Task<IActionResult> AddUserToCurrentOppertunity([FromQuery] Guid id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (user != null)
+            {
+                var opportunity = await _context.Oppertunities.SingleOrDefaultAsync(x => x.Id == id);
+
+                if (opportunity != null)
+                {
+
+                    var newUserList = await _context.Listings.SingleOrDefaultAsync(x => x.UserId == user.Id && x.OpertunityId == opportunity.Id);
+                    if (newUserList == null)
+                    {
+                        var numUserList = await _context.Listings.Where(x => x.OpertunityId == opportunity.Id).ToListAsync();
+                        if (opportunity.NumberOfSeats > numUserList.Count)
+
+                        {
+
+                            var list = new Listing()
+                            {
+                                Id = Guid.NewGuid(),
+                                UserId = user.Id,
+                                OpertunityId = id
+                            };
+
+                            await _context.Listings.AddAsync(list);
+                            await _context.SaveChangesAsync();
+                            return Json(list);
+
+
+                        }
+
+
+                        return BadRequest("There are no seats available");
+
+                    }
+
+                    return BadRequest("You are already in this carpool");
+                  
+
+                }
+                return BadRequest("Opportunity not found");
+
+
+            }
+
+            return BadRequest("User not found");
+            
         }
     }
 }

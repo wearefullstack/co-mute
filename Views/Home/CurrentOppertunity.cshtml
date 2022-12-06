@@ -5,7 +5,7 @@
 
 @model Co_Mute.Models.CurrentOppertunityPostModal
 @{
-    ViewBag.Title = "Current Oppertunity";
+    ViewBag.Title = "Current opportunity";
     Layout = "_Layout";
 
 }
@@ -65,7 +65,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">@_localizer["Current Oppertunity"]</h4>
+                <h4 class="page-title">@_localizer["Current opportunity"]</h4>
                 <div class="d-flex align-items-center">
                 </div>
             </div>
@@ -180,6 +180,29 @@
             { "data": "buttons" }
         ]
     });
+
+    function addUser(){
+        $.ajax({
+            url: '@Url.Action("AddUserToCurrentOppertunity", "Home")?id=@Model.Id',
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                location.reload();
+                toastr.success(`Success`, 'User Addeds!');
+
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    
+    }
     function loadListings() {
         $.ajax({
             url: `@Url.Action("GetCurrentOppertunitiesListing", "Home")?id=@Model.Id`,
@@ -215,22 +238,7 @@
             }
         });
     }
-    @*$(document).ready(function () {
-        loadMyChildsSubject();
-    });
-
-    var tblMyChildsSubjects = $('#tblMyChildsSubjects').DataTable({
-        createdRow: function (row, data, dataIndex) {
-            $(row).attr('id', data.id);
-        },
-        "columns": [
-            { "data": "subjectName" },
-            { "data": "grade" },
-            { "data": "buttons" }
-        ]
-    });
-
-    *@
+    
    
 
 </script>
