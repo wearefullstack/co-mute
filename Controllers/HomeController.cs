@@ -43,6 +43,24 @@ namespace Co_Mute.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> DeleteCarpoolOppertunityUser([FromQuery] Guid id)
+        {
+            var opp = await _context.Listings.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (opp != null)
+            {
+                 _context.Listings.Remove(opp);
+
+                 await _context.SaveChangesAsync();
+
+                 return Json(opp);
+
+            }
+
+            return BadRequest("Opportunity not found");
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Owners()
         {
             var user = await (
@@ -71,6 +89,7 @@ namespace Co_Mute.Controllers
                  {
 
                      Id = u.Id,
+                     DateCreated = u.CreateDate.ToString("yyyy MMMM dd"),
                      ExpectedArrival = u.ExpectedArrival,
                      DepartTime = u.DepartTime,
                      Origin = u.Origin
@@ -95,7 +114,8 @@ namespace Co_Mute.Controllers
                 select new
                 {
                     Id = u.Id,
-                    Name= user.FirstName + " " +user.LastName
+                    Name= user.FirstName + " " +user.LastName,
+                    DateJoined = u.UserJoinDate.ToString("yyyy MMMM dd"),
 
                 }).ToListAsync();
 
@@ -176,11 +196,14 @@ namespace Co_Mute.Controllers
 
                         {
 
+                            var date = DateTime.Now;
+
                             var list = new Listing()
                             {
                                 Id = Guid.NewGuid(),
                                 UserId = user.Id,
-                                OpertunityId = id
+                                OpertunityId = id,
+                                UserJoinDate = date
                             };
 
                             await _context.Listings.AddAsync(list);

@@ -9,11 +9,7 @@
 @inject IViewLocalizer _localizer
 @inject UserManager<ApplicationUser> _userManager
 <head>
-    @inject IViewLocalizer _localizer
-    @inject UserManager<ApplicationUser> UserManager
-    @model Co_Mute.Models.AdministrationViewModels.ProfileViewModel
-
-    <title>Student Dashboard</title>
+  
     <link href="~/assets/libs/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
     <link href="~/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="~/assets/libs/footable/css/footable.core.min.css" rel="stylesheet">
@@ -35,7 +31,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h3 class="page-title">@_localizer["Car Pool Oppertunities"]</h3>
+                <h3 class="page-title">@_localizer["Car Pool Opportunities"]</h3>
                 <div class="d-flex align-items-center">
                 </div>
             </div>
@@ -55,22 +51,24 @@
                     <div class="table-responsive">
                         <table id="tblOppertunities" class="table v-middle">
                             <thead>
-                                <tr>
-                                    <th>@_localizer["Arrival Date"]</th>
-                                    <th style="width: 160px;">@_localizer["Depart Time"]</th>
-                                    <th>@_localizer["Origin"]</th>
-                                    <th style="width: 50px"></th>
-                                </tr>
+                            <tr>
+                                <th>@_localizer["Date Created"]</th>
+                                <th>@_localizer["Arrival Time"]</th>
+                                <th>@_localizer["Depart Time"]</th>
+                                <th>@_localizer["Origin"]</th>
+                                <th style="width: 50px"></th>
+                            </tr>
                             </thead>
                             <tbody>
 
                             <tfoot>
-                                <tr>
-                                    <th>@_localizer["Arrival Date"]</th>
-                                    <th>@_localizer["Depart Time"]</th>
-                                    <th>@_localizer["Origin"]</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th>@_localizer["Date Created"]</th>
+                                <th>@_localizer["Arrival Date"]</th>
+                                <th>@_localizer["Depart Time"]</th>
+                                <th>@_localizer["Origin"]</th>
+                                <th></th>
+                            </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -179,6 +177,7 @@
             $(row).attr('id', data.id);
         },
         "columns": [
+            { "data": "dateCreated" },
             { "data": "arrivalTimes" },
             { "data": "departTime" },
             { "data": "origin" },
@@ -238,7 +237,7 @@
     }
     function showOppertunityModal() {
         $('#addOppertunityModal').modal('show');
-        /*loadMyCourses();*/
+
     }
     function loadOppertunities() {
 
@@ -253,6 +252,7 @@
 
                     rows.push({
                         id: result[i].id,
+                        dateCreated: result[i].dateCreated,
                         expectedArrival: result[i].expectedArrival,
                         departTime: result[i].departTime,
                         origin: result[i].origin,

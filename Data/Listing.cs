@@ -6,5 +6,7 @@
         public Guid OpertunityId { get; set; }
 
         public string UserId { get; set; }
+
+        public DateTime UserJoinDate {get; set; }
     }
 }

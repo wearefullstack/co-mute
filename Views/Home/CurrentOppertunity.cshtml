@@ -131,6 +131,7 @@
                 <thead>
                     <tr>
                         <th>@_localizer["Name"]</th>
+                        <th>@_localizer["Date Joined"]</th>
                         <th style="width: 50px"></th>
                     </tr>
                 </thead>
@@ -140,6 +141,7 @@
                 <tfoot>
                     <tr>
                         <th>@_localizer["Name"]</th>
+                        <th>@_localizer["Date Joined"]</th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -176,10 +178,48 @@
         },
         "columns": [
             { "data": "name" },
-          
+            { "data": "dateJoined" },
             { "data": "buttons" }
         ]
     });
+    
+    function unlinkUser(id) {
+        swal({
+            title: "CONFIRM",
+            text: "Are you sure that you want to remove this user from the carpool?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, remove user!"
+        }).then((ok) => {
+
+            if (JSON.stringify(ok) === '{"value":true}') {
+                $.ajax({
+                    url: `@Url.Action("DeleteCarpoolOppertunityUser", "Home")?id=${id}`,
+                    type: 'DELETE',
+                    success: function (result) {
+
+                        toastr.success('Success', 'User is removed');
+
+                        location.reload();
+
+
+                    },
+                    error: function (jqXHR, exception) {
+                        swal({
+                            type: "error",
+                            title: "ERROR STATUS " + jqXHR.status,
+                            text: "Error Message: " + jqXHR.responseText,
+                            showCancelButton: false,
+                            confirmButtonText: "OK"
+                        });
+                    }
+                });
+            }
+
+        });
+
+    }
 
     function addUser(){
         $.ajax({
@@ -216,10 +256,10 @@
                     rows.push({
                         id: result[i].id,
                         name: result[i].name,
-                        
+                        dateJoined: result[i].dateJoined,
                         buttons: `<div>
                                 <button type="button" class="btn btn-sm btn-outline-warning waves-effect waves-light align-content-end float-lg-right"
-                                onclick="onCourseClicked('${result[i].id}')" style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">
+                                onclick="unlinkUser('${result[i].id}')" style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">
                                 <span><i class="fas fa-search" aria-hidden="true"></i> Unlink</span></button></div>`
                     });
 
