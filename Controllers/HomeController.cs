@@ -47,7 +47,7 @@ namespace Co_Mute.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> DeleteCarpoolOppertunityUser([FromQuery] Guid id)
         {
             var opp = await _context.Listings.SingleOrDefaultAsync(x => x.Id == id);
