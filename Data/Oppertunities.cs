@@ -20,6 +20,7 @@ namespace Co_Mute.Data
         public string Notes { get; set; }
 
         public int NumberOfSeats { get; set; }
+        public string Destination { get; set; }
 
     }
 }

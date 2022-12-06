@@ -28,7 +28,7 @@ namespace Co_Mute.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Driver()
+        public async Task<IActionResult> AllOpportunities()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -203,7 +203,8 @@ namespace Co_Mute.Controllers
                   Origin = modal.Origin,
                   OwnerId = user.Id,
                   Notes = modal.Notes,
-
+                  Destination = modal.Destination,
+                  NumberOfSeats = modal.NumSeats
                   /*DepartTime = modal.DepartTime,
                   ExpectedArrival = modal.ExpectedArrival, */
                   /*Monday = modal.Monday,

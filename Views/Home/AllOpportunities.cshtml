@@ -96,6 +96,10 @@
                             <input type="text" class="form-control" id="txtOrigin" style="width: 100%" required placeholder="Origin"/>
                         </div>
                         <div class="form-group">
+                            <label for="txtDestination" class="control-label">Destination</label>
+                            <input type="text" class="form-control" id="txtDestination" style="width: 100%" required placeholder="Destination" />
+                        </div>
+                        <div class="form-group">
                             <label for="arrivalTime">Depart Date</label>
                             <div class="input-group date">
                                 <input type="time" autocomplete="off" class="form-control" id="arrivalTime" required/>
@@ -109,33 +113,44 @@
                         </div>
                         <div class="form-group">
                             <label for="cbOwner" class="control-label">Days Available</label>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="monday"/>
-                                <label class="custom-control-label" for="monday">Monday</label>
+                            <div class="col-12">
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="monday"/>
+                                    <label class="custom-control-label" for="monday">Monday</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="tuesday"/>
+                                    <label class="custom-control-label" for="tuesday">Tuesday</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="wednesday"/>
+                                    <label class="custom-control-label" for="wednesday">Wednesday</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="thursday"/>
+                                    <label class="custom-control-label" for="thursday">Thursday</label>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="tuesday"/>
-                                <label class="custom-control-label" for="tuesday">Tuesday</label>
+                            <div class="col-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="friday"/>
+                                    <label class="custom-control-label" for="friday">Friday</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="saturday"/>
+                                    <label class="custom-control-label" for="saturday">Saturday</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="sunday"/>
+                                    <label class="custom-control-label" for="sunday">Sunday</label>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="wednesday"/>
-                                <label class="custom-control-label" for="wednesday">Wednesday</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="thursday"/>
-                                <label class="custom-control-label" for="thursday">Thursday</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="friday"/>
-                                <label class="custom-control-label" for="friday">Friday</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="saturday"/>
-                                <label class="custom-control-label" for="saturday">Saturday</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="sunday"/>
-                                <label class="custom-control-label" for="sunday">Sunday</label>
+                            <div class="form-group">
+                                <label for="numSeats">Available Seats</label>
+                                <div class="input-group date">
+                                    <input type="number" autocomplete="off" class="form-control" id="numSeats" required />
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -208,9 +223,11 @@
         var model = {
             origin: $('#txtOrigin').val(),
             name: $('#txtOwner').val(),
+            destination: $('#txtDestination').val(),
             /*arrivalTime: $('#arrivalTime').val(),
             departTime: $('#departTime').val(),*/
             notes: $('#txtNotes').val(),
+            numSeats: $('#numSeats').val(),
         }
         $.ajax({
             url: '@Url.Action("CreateOppertunity", "Home")',

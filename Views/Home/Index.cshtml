@@ -227,34 +227,7 @@
         }
     }
 </style>
-    @*<script>
-        var swiper = new Swiper(".swiper mySwiper container", {
-            slidesPerView: 1,
-            centeredSlides: false,
-            slidesPerGroupSkip: 1,
-            grabCursor: true,
-            keyboard: {
-                enabled: true,
-            },
-            breakpoints: {
-                769: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                },
-            },
-            scrollbar: {
-                el: ".swiper-scrollbar",
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-        });
-    </script>*@
+
 
 </body>
 
@@ -276,89 +249,5 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 </div>
 <script>
-    AOS.init();
-    $(document).ready(function () {
-        loadMyForums();
-    });
-    function goToAdmin() {
-        var sub = "Enquiry";
-        var bod = "Good day please would you be so kind as to help with...";
-
-        window.location.assign("mailto:s221524339@mandela.ac.za?Subject=Enquiry&body=Good day please would you be so kind as to help with...");
-    var tblMyForums = $('#tblMyForums').DataTable({
-        createdRow: function (row, data, dataIndex) {
-            $(row).attr('id', data.id);
-        },
-        "columns": [
-            { "data": "date" },
-            { "data": "teacherName" },
-            { "data": "buttons" }
-        ]
-    });
-
-    function onViewForumModal(id) {
-        $.ajax({
-            url: `@Url.Action("GetParentForum", "MyForums")?id=${id}`,
-            type: 'GET',
-            success: function (result) {
-
-                $('#txtForumId').val(result.id);
-                $('#txtTeacher').val(result.teacherName);
-                $('#txtMessage').val(result.message);
-                $('#txtParentId').val(result.parentId)
-
-                $('#current-message-modal').modal('show');
-            },
-            error: function (jqXHR, exception) {
-                Swal.fire({
-                    title: "ERROR STATUS " + jqXHR.status,
-                    text: "Error Message: " + jqXHR.responseText,
-                    type: "error",
-                    showCancelButton: false,
-                    confirmButtonText: "OK"
-                });
-            }
-        });
-
-
-    }
-    function loadMyForums() {
-        $.ajax({
-            url: '@Url.Action("AllParentForums", "MyForums")',
-            type: 'GET',
-            success: function (result) {
-
-                var rows = [];
-
-                for (var i = 0; i < result.length; i++) {
-
-                    rows.push({
-                        id: result[i].id,
-                        date: result[i].date,
-                        teacherName: result[i].teacherName,
-                        buttons: `<div>
-                                    <button type="button" class="btn btn-sm btn-outline-info waves-effect waves-light align-content-end float-lg-right"
-                                     onclick="onViewForumModal('${result[i].id}')"
-                                     style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">
-                                     <span><i class="fas fa-search" aria-hidden="true"></i> View</span>
-                                     </button>
-                                    `
-                    });
-
-                }
-
-                tblMyForums.rows.add(rows).draw();
-
-            },
-            error: function (jqXHR, exception) {
-                swal({
-                    title: "ERROR STATUS " + jqXHR.status,
-                    text: "Error Message: " + jqXHR.responseText,
-                    type: "error",
-                    showCancelButton: false,
-                    confirmButtonText: "OK"
-                });
-            }
-        });
-    }
+  
 </script>
