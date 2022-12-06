@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-@*    <div id="addOppertunityModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div id="addOppertunityModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -88,19 +88,19 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="txtAssignmentName" class="control-label">Oppertunity Origin</label>
-                            <input type="text" class="form-control" id="txtAssignmentName" style="width: 100%" required placeholder="Origin" />
+                            <label for="txtOrigin" class="control-label">Origin</label>
+                            <input type="text" class="form-control" id="txtOrigin" style="width: 100%" required placeholder="Origin" />
                         </div>
                         <div class="form-group">
-                            <label for="arrivalDate">Arrival Date</label>
+                            <label for="arrivalTime">Depart Date</label>
                             <div class="input-group date">
-                                <input type="datetime-local" autocomplete="off" class="form-control" id="arrivalDate" value="@(DateTime.UtcNow.ToString("yyyy-MM-dd")) required" />
+                                <input type="time" autocomplete="off" class="form-control" id="arrivalTime" required" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="expectedDate">Expected Date</label>
+                            <label for="departTime">Expected Arrival Date</label>
                             <div class="input-group date">
-                                <input type="datetime-local" autocomplete="off" class="form-control" id="expectedDate" value="@(DateTime.UtcNow.ToString("yyyy-MM-dd")) required" />
+                                <input type="time" autocomplete="off" class="form-control" id="departTime" required" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -108,7 +108,37 @@
                             <select class="select2 form-control" id="cbOwner" style="width: 100%; height: 36px;" required>
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label for="cbOwner" class="control-label">Days Available</label>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="monday" />
+                            <label class="custom-control-label" for="monday">Monday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="tuesday" />
+                            <label class="custom-control-label" for="tuesday">Tuesday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="wednesday" />
+                            <label class="custom-control-label" for="wednesday">Wednesday</label>
+                        </div>
+                         <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="thursday" />
+                                <label class="custom-control-label" for="thursday">Thursday</label>
+                        </div>
+                         <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="friday" />
+                                <label class="custom-control-label" for="friday">Friday</label>
+                        </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="saturday" />
+                                <label class="custom-control-label" for="saturday">Saturday</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="sunday" />
+                                <label class="custom-control-label" for="sunday">Sunday</label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="txtNotes" class="control-label">Notes</label>
                             <input type="text" class="form-control" id="txtNotes" style="width: 100%" placeholder="Notes..."/>
@@ -124,15 +154,114 @@
             </div>
         </div>
     </div>
-*@
+
 </body>
 
-<style>
-    
-    $(document).ready(function() {
-            
+<div>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker-custom.js"></script>
+    <script src="~/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="~/dist/js/pages/forms/select2/select2.init.js"></script>
+    <script src="~/assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweet-alert.init.js"></script>
+    <script src="~/assets/libs/moment/moment.js"></script>
+    <script src="~/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+</div>
+<script>
+    $(document).ready(function () {
+        loadOppertunities();
+    });
+    var tblOppertunities = $('#tblOppertunities').DataTable({
+        createdRow: function (row, data, dataIndex) {
+            $(row).attr('id', data.id);
+        },
+        "columns": [
+            { "data": "arrivalTimes" },
+            { "data": "departTime" },
+            { "data": "origin" },
+            { "data": "buttons" }
+        ]
+    });
+    function createOppertunity() {
+
+        var model = {
+            origin: $('#txtOrigin').val(),
+            /*arrivalTime: $('#arrivalTime').val(),
+            departTime: $('#departTime').val(),*/
+            notes: $('#txtNotes').val(),
+        }
+        $.ajax({
+            url: '@Url.Action("CreateOppertunity", "Home")',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                $('#addOppertunityModal').modal('hide');
+
+                location.reload();
+
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
         });
 
-    
-    
-</style>
+    }
+    function showOppertunityModal() {
+        $('#addOppertunityModal').modal('show');
+        /*loadMyCourses();*/
+    }
+    function loadOppertunities() {
+
+        $.ajax({
+            url: '@Url.Action("GetAllOppertunities", "Home")',
+            type: 'GET',
+            success: function (result) {
+
+                var rows = [];
+
+                for (var i = 0; i < result.length; i++) {
+
+                    rows.push({
+                        id: result[i].id,
+                        expectedArrival: result[i].expectedArrival,
+                        departTime: result[i].departTime,
+                        origin: result[i].origin,
+                        buttons: `<div>
+                                        <button type="button" class="btn btn-sm btn-outline-info waves-effect waves-light align-content-end float-lg-right"
+                                        style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:viewOppertunity('${result[i].id}');"
+                                        data-original-title="View"><span><i class="fas fa-search" aria-hidden="true"></i> View</span></button></div>
+                                    </div>
+
+                                    `
+                    });
+
+                }
+
+                tblOppertunities.rows.add(rows).draw();
+
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+
+    }
+</script>

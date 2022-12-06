@@ -4,16 +4,18 @@ using Co_Mute.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace SmarCo_Mutet_E.Data.Migrations
+namespace Co_Mute.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206152623_[CL20221206d]")]
+    partial class CL20221206d
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,12 +66,6 @@ namespace SmarCo_Mutet_E.Data.Migrations
                     b.Property<DateTime>("ExpectedArrival")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Friday")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Monday")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -80,21 +76,6 @@ namespace SmarCo_Mutet_E.Data.Migrations
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Saturday")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Sunday")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Thursday")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Tuesday")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Wednesday")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

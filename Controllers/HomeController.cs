@@ -65,21 +65,52 @@ namespace Co_Mute.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllOppertunities()
         {
-            /* var opp = await (
+             var opp = await (
                  from u in _context.Oppertunities
-
                  select new
                  {
 
                      Id = u.Id,
-
+                     ExpectedArrival = u.ExpectedArrival,
+                     DepartTime = u.DepartTime,
+                     Origin = u.Origin
 
 
                  }).ToListAsync();
 
-             return Json(opp);*/
+             return Json(opp);
 
-            return Ok();       
+        }
+        public async Task<IActionResult> CreateOppertunity([FromBody] CreateOppertunityPostModal modal)
+        {
+            if (ModelState.IsValid)
+            {
+              var nowdate = DateTime.Now;
+              var newOpp = new Oppertunities()
+              {
+                  Id = Guid.NewGuid(),   
+                  CreateDate = nowdate,
+                  Origin = modal.Origin,
+                  /*DepartTime = modal.DepartTime,
+                  ExpectedArrival = modal.ExpectedArrival, */
+                  Notes = modal.Notes,
+                  /*Monday = modal.Monday,
+                  Tuesday = modal.Tuesday,
+                  Wednesday = modal.Wednesday,
+                  Thursday = modal.Thursday,
+                  Friday = modal.Friday,
+                  Saturday = modal.Saturday,
+                  Sunday = modal.Sunday,*/
+              };
+
+                            
+               await _context.Oppertunities.AddAsync(newOpp);
+               await _context.SaveChangesAsync();
+               return Json(newOpp);
+                 
+            }
+
+            return BadRequest("Modal not found");
         }
     }
 }
