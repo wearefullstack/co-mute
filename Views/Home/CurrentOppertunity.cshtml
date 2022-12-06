@@ -120,12 +120,17 @@
             </div>
 
         </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="button" onclick="javascript:addUser();" style="margin-left: 5px;" class="btn btn-sm btn-success float-lg-right"><i class="fas fa-plus"><span> Join Carpool</span></i></button>
+            </div>
+        </div>
         <div class="table-responsive">
-            <table id="tblOppertunityPassangers" class="table table-striped" style="width:100%">
+            <table id="tblListings" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
                         <th>@_localizer["Name"]</th>
-                        <th>@_localizer["Surname"]</th>
                         <th style="width: 50px"></th>
                     </tr>
                 </thead>
@@ -135,7 +140,6 @@
                 <tfoot>
                     <tr>
                         <th>@_localizer["Name"]</th>
-                        <th>@_localizer["Surname"]</th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -163,7 +167,54 @@
 </div>
 
 <script>
+      $(document).ready(function () {
+        loadListings();
+    });
+    var tblListings = $('#tblListings').DataTable({
+        createdRow: function (row, data, dataIndex) {
+            $(row).attr('id', data.id);
+        },
+        "columns": [
+            { "data": "name" },
+          
+            { "data": "buttons" }
+        ]
+    });
+    function loadListings() {
+        $.ajax({
+            url: `@Url.Action("GetCurrentOppertunitiesListing", "Home")?id=@Model.Id`,
+            type: 'GET',
+            success: function (result) {
 
+                var rows = [];
+
+                for (var i = 0; i < result.length; i++) {
+
+                    rows.push({
+                        id: result[i].id,
+                        name: result[i].name,
+                        
+                        buttons: `<div>
+                                <button type="button" class="btn btn-sm btn-outline-warning waves-effect waves-light align-content-end float-lg-right"
+                                onclick="onCourseClicked('${result[i].id}')" style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">
+                                <span><i class="fas fa-search" aria-hidden="true"></i> Unlink</span></button></div>`
+                    });
+
+                }
+
+                tblListings.rows.add(rows).draw();
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+    }
     @*$(document).ready(function () {
         loadMyChildsSubject();
     });
@@ -179,41 +230,7 @@
         ]
     });
 
-    function loadMyChildsSubject() {
-        $.ajax({
-            url: `@Url.Action("GetMyChildsSubjects", "MyChild")?studentId=@Model.Id`,
-            type: 'GET',
-            success: function (result) {
-
-                var rows = [];
-
-                for (var i = 0; i < result.length; i++) {
-
-                    rows.push({
-                        id: result[i].id,
-                        subjectName: `<a href="@Url.Action("CourseDetails", "Courses")?id=${result[i].subjectId}">${result[i].subjectName}</a>`,
-                        grade: result[i].grade,
-                        buttons: `<div>
-                            <button type="button" class="btn btn-sm btn-outline-info waves-effect waves-light align-content-end float-lg-right"
-                            onclick="onCourseClicked('${result[i].courseId}')" style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">
-                            <span><i class="fas fa-search" aria-hidden="true"></i> View</span></button></div>`
-                    });
-
-                }
-
-                tblMyChildsSubjects.rows.add(rows).draw();
-            },
-            error: function (jqXHR, exception) {
-                swal({
-                    title: "ERROR STATUS " + jqXHR.status,
-                    text: "Error Message: " + jqXHR.responseText,
-                    type: "error",
-                    showCancelButton: false,
-                    confirmButtonText: "OK"
-                });
-            }
-        });
-    }*@
+    *@
    
 
 </script>

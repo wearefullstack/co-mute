@@ -81,6 +81,27 @@ namespace Co_Mute.Controllers
              return Json(opp);
 
         }
+        [HttpGet]
+        public async Task<IActionResult> GetCurrentOppertunitiesListing([FromQuery] Guid id)
+        {
+
+            var opp = await (
+                from u in _context.Listings
+                join op in _context.Oppertunities
+                on u.OpertunityId equals op.Id
+                join user in _context.Users
+                on u.UserId equals user.Id
+                where u.OpertunityId == id
+                select new
+                {
+                    Id = u.Id,
+                    Name= user.FirstName + " " +user.LastName
+
+                }).ToListAsync();
+
+            return Json(opp);
+
+        }
         public async Task<IActionResult> CurrentOppertunity([FromQuery] Guid id)
         {
             var opp = await _context.Oppertunities.SingleOrDefaultAsync(x => x.Id == id);
