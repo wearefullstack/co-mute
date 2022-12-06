@@ -87,10 +87,12 @@ namespace Co_Mute.Controllers
 
             if (opp != null)
             {
+                
                 return View(new CurrentOppertunityPostModal()
                 {
                     Id = opp.Id,
                     Origin = opp.Origin,
+                    NumberOfSeats = opp.NumberOfSeats
                     
                 });
 

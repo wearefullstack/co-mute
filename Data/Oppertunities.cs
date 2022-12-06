@@ -19,5 +19,7 @@ namespace Co_Mute.Data
         public bool Saturday { get; set; } 
         public string Notes { get; set; }
 
+        public int NumberOfSeats { get; set; }
+
     }
 }
