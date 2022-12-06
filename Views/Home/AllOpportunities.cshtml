@@ -228,6 +228,14 @@
             departTime: $('#departTime').val(),*/
             notes: $('#txtNotes').val(),
             numSeats: $('#numSeats').val(),
+            monday: $('#monday').is(":checked"),
+            tuesday: $('#tuesday').is(":checked"),
+            wednesday: $('#wednesday').is(":checked"),
+            thursday: $('#thursday').is(":checked"),
+            friday: $('#friday').is(":checked"),
+            saturday: $('#saturday').is(":checked"),
+            sunday: $('#sunday').is(":checked"),
+
         }
         $.ajax({
             url: '@Url.Action("CreateOppertunity", "Home")',

@@ -196,6 +196,10 @@ namespace Co_Mute.Controllers
                 var user = await _userManager.GetUserAsync(HttpContext.User);
 
                 var nowdate = DateTime.Now;
+               /* if (modal.Origin == "" || modal.Destination == ""|| modal.NumSeats ==0  )
+                {
+                    return BadRequest("")
+                }*/
               var newOpp = new Oppertunities()
               {
                   Id = Guid.NewGuid(),   
@@ -204,16 +208,16 @@ namespace Co_Mute.Controllers
                   OwnerId = user.Id,
                   Notes = modal.Notes,
                   Destination = modal.Destination,
-                  NumberOfSeats = modal.NumSeats
+                  NumberOfSeats = modal.NumSeats,
                   /*DepartTime = modal.DepartTime,
                   ExpectedArrival = modal.ExpectedArrival, */
-                  /*Monday = modal.Monday,
+                  Monday = modal.Monday,
                   Tuesday = modal.Tuesday,
                   Wednesday = modal.Wednesday,
                   Thursday = modal.Thursday,
                   Friday = modal.Friday,
                   Saturday = modal.Saturday,
-                  Sunday = modal.Sunday,*/
+                  Sunday = modal.Sunday,
               };
 
                             
