@@ -256,25 +256,21 @@ namespace Co_Mute.Controllers
                 var nowdate = DateTime.Now;
 
 
-                  /*var listMyCars = await _context.Oppertunities.Where(X => X.OwnerId == user.Id).ToListAsync();
+                  var listMyCars = await _context.Oppertunities.Where(X => X.OwnerId == user.Id).ToListAsync();
 
                   foreach (var list in listMyCars)
                   {
-                      DateTime modalDepartTime = DateTime.ParseExact(modal.DepartTime, "HH:mm:ss",
-                          CultureInfo.InvariantCulture); 
-                      DateTime modalArrivalTime = DateTime.ParseExact(modal.DepartTime, "HH:mm:ss",
-                          CultureInfo.InvariantCulture);
+                      DateTime modalDepartTime = DateTime.Parse(modal.DepartTime);
+                      DateTime modalArrivalTime = DateTime.Parse(modal.ArrivalTime);
 
-                      DateTime DepartTime = DateTime.ParseExact(list.DepartTime, "HH:mm:ss",
-                          CultureInfo.InvariantCulture);
-                      DateTime ArrivalTime = DateTime.ParseExact(list.ExpectedArrival, "HH:mm:ss",
-                          CultureInfo.InvariantCulture);
-                    if (DepartTime < modalDepartTime && ArrivalTime > modalArrivalTime)
+                      DateTime DepartTime = DateTime.Parse(list.DepartTime);
+                      DateTime ArrivalTime = DateTime.Parse(list.ExpectedArrival);
+                      if (DepartTime < modalDepartTime || ArrivalTime < modalArrivalTime)
                       {
                           return BadRequest("You cannot book this session as you are already booked somewhere else");
                       }
                     else
-                    {*/
+                    {
                         var newOpp = new Oppertunities()
                         {
                             Id = Guid.NewGuid(),
@@ -308,10 +304,10 @@ namespace Co_Mute.Controllers
                             Origin = newOpp.Origin,
 
                         });
-                  //  }
+                    }
                
                     
-             //  }
+              }
 
               
 
