@@ -98,7 +98,7 @@ namespace Co_Mute.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     //return LocalRedirect(returnUrl);
-                    return RedirectToAction("AllOpportunities","Home");
+                    return RedirectToAction("MyJoinedOpportunities", "Home");
                 }
                 if (result.RequiresTwoFactor)
                 {

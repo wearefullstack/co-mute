@@ -6,24 +6,6 @@
 @using Microsoft.Extensions.Options
 
 
-@inject IOptions<RequestLocalizationOptions> LocOptions
-@inject UserManager<ApplicationUser> _userManager
-
-@{
-    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-
-    var cultureItems = LocOptions.Value.SupportedUICultures
-        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
-        .ToList();
-    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    var isAdmin = await _userManager.GetUserAsync(User);
-
-}
-
-@*This is a test
-*@
-
-@inject IViewLocalizer _localizer
 <head>
     <link rel="stylesheet" href=
           "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
@@ -39,8 +21,8 @@
 
 <li class="sidebar-item">
     <a asp-controller="Home" asp-action="All" class="sidebar-link">
-        <i class="icon-Home-2"></i>
-        <span class="hide-menu">@_localizer["All Opportunities"]</span>
+        <i class="fa fa-list"></i>
+        <span class="hide-menu">All Opportunities</span>
     </a>
 </li>
     
@@ -51,7 +33,7 @@
 <li class="sidebar-item">
     <a asp-controller="Home" asp-action="AllOpportunities" class="sidebar-link">
         <i class="icon-Home-2"></i>
-        <span class="hide-menu">@_localizer["All My Created Opportunities"]</span>
+        <span class="hide-menu">All My Created Opportunities</span>
     </a>
 </li>
 

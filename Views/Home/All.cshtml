@@ -11,7 +11,7 @@
 @inject IViewLocalizer _localizer
 @inject UserManager<ApplicationUser> _userManager
 <head>
-  
+
     <link href="~/assets/libs/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
     <link href="~/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="~/assets/libs/footable/css/footable.core.min.css" rel="stylesheet">
@@ -33,7 +33,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h3 class="page-title">@_localizer["My Car Pool Opportunities"]</h3>
+                <h3 class="page-title">@_localizer["All Car Pool Opportunities"]</h3>
                 <div class="d-flex align-items-center">
                 </div>
             </div>
@@ -42,35 +42,35 @@
 
 
     <div class="container-fluid">
-       @* <div class="row">
+        <div class="row">
             <div class="col-12">
                 <button type="button" onclick="javascript:showOppertunityModal();" style="margin-left: 5px;" class="btn btn-sm btn-success float-lg-right"><i class="fas fa-plus"><span> Add opportunity</span></i></button>
             </div>
-        </div>*@
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="tblOppertunities" class="table v-middle">
                             <thead>
-                            <tr>
-                                <th>@_localizer["Date Created"]</th>
-                                <th>@_localizer["Arrival Time"]</th>
-                                <th>@_localizer["Depart Time"]</th>
-                                <th>@_localizer["Origin"]</th>
-                                <th style="width: 50px"></th>
-                            </tr>
+                                <tr>
+                                    <th>@_localizer["Date Created"]</th>
+                                    <th>@_localizer["Arrival Time"]</th>
+                                    <th>@_localizer["Depart Time"]</th>
+                                    <th>@_localizer["Origin"]</th>
+                                    <th style="width: 50px"></th>
+                                </tr>
                             </thead>
                             <tbody>
 
                             <tfoot>
-                            <tr>
-                                <th>@_localizer["Date Created"]</th>
-                                <th>@_localizer["Arrival Date"]</th>
-                                <th>@_localizer["Depart Time"]</th>
-                                <th>@_localizer["Origin"]</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th>@_localizer["Date Created"]</th>
+                                    <th>@_localizer["Arrival Date"]</th>
+                                    <th>@_localizer["Depart Time"]</th>
+                                    <th>@_localizer["Origin"]</th>
+                                    <th></th>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -89,11 +89,11 @@
                     <form>
                         <div class="form-group">
                             <label for="txtOwner" class="control-label">Owner</label>
-                            <input type="text" class="form-control" id="txtOwner" style="width: 100%" readonly value="@Model.FirstName"/>
+                            <input type="text" class="form-control" id="txtOwner" style="width: 100%" readonly value="@Model.FirstName" />
                         </div>
                         <div class="form-group">
                             <label for="txtOrigin" class="control-label">Origin</label>
-                            <input type="text" class="form-control" id="txtOrigin" style="width: 100%" required placeholder="Origin"/>
+                            <input type="text" class="form-control" id="txtOrigin" style="width: 100%" required placeholder="Origin" />
                         </div>
                         <div class="form-group">
                             <label for="txtDestination" class="control-label">Destination</label>
@@ -102,13 +102,13 @@
                         <div class="form-group">
                             <label for="arrivalTime">Depart Date</label>
                             <div class="input-group date">
-                                <input type="time" autocomplete="off" class="form-control" id="arrivalTime" required/>
+                                <input type="time" autocomplete="off" class="form-control" id="arrivalTime" required />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="departTime">Arrival Date</label>
                             <div class="input-group date">
-                                <input type="time" autocomplete="off" class="form-control" id="departTime" required/>
+                                <input type="time" autocomplete="off" class="form-control" id="departTime" required />
                             </div>
                         </div>
                         <div class="form-group">
@@ -116,33 +116,33 @@
                             <div class="col-12">
 
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="monday"/>
+                                    <input type="checkbox" class="custom-control-input" id="monday" />
                                     <label class="custom-control-label" for="monday">Monday</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="tuesday"/>
+                                    <input type="checkbox" class="custom-control-input" id="tuesday" />
                                     <label class="custom-control-label" for="tuesday">Tuesday</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="wednesday"/>
+                                    <input type="checkbox" class="custom-control-input" id="wednesday" />
                                     <label class="custom-control-label" for="wednesday">Wednesday</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="thursday"/>
+                                    <input type="checkbox" class="custom-control-input" id="thursday" />
                                     <label class="custom-control-label" for="thursday">Thursday</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="friday"/>
+                                    <input type="checkbox" class="custom-control-input" id="friday" />
                                     <label class="custom-control-label" for="friday">Friday</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="saturday"/>
+                                    <input type="checkbox" class="custom-control-input" id="saturday" />
                                     <label class="custom-control-label" for="saturday">Saturday</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="sunday"/>
+                                    <input type="checkbox" class="custom-control-input" id="sunday" />
                                     <label class="custom-control-label" for="sunday">Sunday</label>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
                         </div>
                         <div class="form-group">
                             <label for="txtNotes" class="control-label">Notes</label>
-                            <input type="text" class="form-control" id="txtNotes" style="width: 100%" placeholder="Notes..."/>
+                            <input type="text" class="form-control" id="txtNotes" style="width: 100%" placeholder="Notes..." />
                         </div>
 
 
@@ -218,10 +218,57 @@
             }
         });
     }
-    
+    function createOppertunity() {
+
+        var model = {
+            origin: $('#txtOrigin').val(),
+            name: $('#txtOwner').val(),
+            destination: $('#txtDestination').val(),
+            arrivalTime: $('#arrivalTime').val(),
+            departTime: $('#departTime').val(),
+            notes: $('#txtNotes').val(),
+            numSeats: $('#numSeats').val(),
+            monday: $('#monday').is(":checked"),
+            tuesday: $('#tuesday').is(":checked"),
+            wednesday: $('#wednesday').is(":checked"),
+            thursday: $('#thursday').is(":checked"),
+            friday: $('#friday').is(":checked"),
+            saturday: $('#saturday').is(":checked"),
+            sunday: $('#sunday').is(":checked"),
+
+        }
+        $.ajax({
+            url: '@Url.Action("CreateOppertunity", "Home")',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                $('#addOppertunityModal').modal('hide');
+
+                location.reload();
+
+            },
+            error: function (jqXHR, exception) {
+                swal({
+                    title: "ERROR STATUS " + jqXHR.status,
+                    text: "Error Message: " + jqXHR.responseText,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "OK"
+                });
+            }
+        });
+
+    }
+    function showOppertunityModal() {
+        $('#addOppertunityModal').modal('show');
+
+    }
     function addUser(id) {
         $.ajax({
-            url: '@Url.Action("AddUserToCurrentOppertunity", "Home")?id='+id,
+            url: '@Url.Action("AddUserToCurrentOppertunity", "Home")?id=' + id,
             type: 'POST',
             dataType: 'json',
             success: function (result) {
@@ -244,7 +291,7 @@
     function loadOppertunities() {
 
         $.ajax({
-            url: '@Url.Action("GetAllOppertunities", "Home")',
+            url: '@Url.Action("AllOppertunities", "Home")',
             type: 'GET',
             success: function (result) {
 
@@ -259,13 +306,13 @@
                         departTime: result[i].departTime,
                         origin: result[i].origin,
                         buttons: `<div>
-                                        <button type="button" class="btn btn-sm btn-outline-info waves-effect waves-light align-content-end float-lg-right"
-                                            style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:onViewClicked('${result[i].id}');"
-                                        data-original-title="View"><span><i class="fas fa-search" aria-hidden="true"></i> View</span></button></div>
-                                    </div>
-                                        
+                                            
+                                            <button type="button" class="btn btn-sm btn-outline-success waves-effect waves-light align-content-end float-lg-right"
+                                                        style="margin-right: 3px" data-toggle="tooltip" onclick="javascript:addUser('${result[i].id}');"
+                                                    data-original-title="View"><span><i class="fas fa-plus" aria-hidden="true"></i> join</span></button></div>
+                                            </div>
 
-                                    `
+                                        `
                     });
 
                 }

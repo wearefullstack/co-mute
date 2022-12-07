@@ -28,6 +28,26 @@ namespace Co_Mute.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> All()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (user != null)
+            {
+
+                return View(new ProfileViewModel()
+                {
+
+                    FirstName = user.FirstName + " " + user.LastName,
+
+                });
+
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
 
         public async Task<IActionResult> AllOpportunities()
         {
@@ -127,6 +147,27 @@ namespace Co_Mute.Controllers
 
         }
         [HttpGet]
+        public async Task<IActionResult> AllOppertunities()
+        {
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var opp = await (
+                from u in _context.Oppertunities
+                select new
+                {
+
+                    Id = u.Id,
+                    DateCreated = u.CreateDate.ToString("yyyy MMMM dd"),
+                    ArrivalTime = u.ExpectedArrival,
+                    DepartTime = u.DepartTime,
+                    Origin = u.Origin
+
+
+                }).ToListAsync();
+
+            return Json(opp);
+
+        }
+        [HttpGet]
         public async Task<IActionResult> GetCurrentOppertunitiesListing([FromQuery] Guid id)
         {
 
@@ -142,7 +183,7 @@ namespace Co_Mute.Controllers
                     Id = u.Id,
                     Name= user.FirstName + " " +user.LastName,
                     DateJoined = u.UserJoinDate.ToString("yyyy MMMM dd"),
-
+                  
                 }).ToListAsync();
 
             return Json(opp);
@@ -157,12 +198,17 @@ namespace Co_Mute.Controllers
                 from u in _context.Listings
                 join user in _context.Users
                     on u.UserId equals user.Id
+                join op in _context.Oppertunities
+                    on u.OpertunityId equals op.Id
                 where u.UserId == currentUser.Id
                 select new
                 {
                     Id = u.Id,
                     Name = user.FirstName + " " + user.LastName,
                     DateJoined = u.UserJoinDate.ToString("yyyy MMMM dd"),
+                    Destination = op.Destination,
+                    ArrivalTime = op.ExpectedArrival,
+                    DepartTime = op.DepartTime,
 
                 }).ToListAsync();
 
@@ -175,14 +221,22 @@ namespace Co_Mute.Controllers
 
             if (opp != null)
             {
-                
-                return View(new CurrentOppertunityPostModal()
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == opp.OwnerId);
+                if (user != null)
                 {
-                    Id = opp.Id,
-                    Origin = opp.Origin,
-                    NumberOfSeats = opp.NumberOfSeats
-                    
-                });
+                    return View(new CurrentOppertunityPostModal()
+                    {
+                        Id = opp.Id,
+                        Origin = opp.Origin,
+                        NumberOfSeats = opp.NumberOfSeats,
+                        Owner =user.FirstName + " " + user.LastName,
+
+
+                    });
+                }
+
+                return BadRequest("User not found");
+              
 
             }
             else
@@ -200,41 +254,54 @@ namespace Co_Mute.Controllers
 
                 var nowdate = DateTime.Now;
 
-                
-            
-              var newOpp = new Oppertunities()
-              {
-                  Id = Guid.NewGuid(),   
-                  CreateDate = nowdate,
-                  Origin = modal.Origin,
-                  OwnerId = user.Id,
-                  Notes = modal.Notes,
-                  Destination = modal.Destination,
-                  NumberOfSeats = modal.NumSeats,
-                  Monday = modal.Monday,
-                  Tuesday = modal.Tuesday,
-                  Wednesday = modal.Wednesday,
-                  Thursday = modal.Thursday,
-                  Friday = modal.Friday,
-                  Saturday = modal.Saturday,
-                  Sunday = modal.Sunday,
-                  DepartTime = modal.DepartTime,
-                  ExpectedArrival = modal.ArrivalTime,
-              };
+              /*  var listMyCars = await _context.Oppertunities.Where(X => X.OwnerId == user.Id).ToListAsync();
 
-                            
-               await _context.Oppertunities.AddAsync(newOpp);
-               await _context.SaveChangesAsync();
+                foreach (var list in listMyCars)
+                {
+                    var convertDepartDate = Convert.ToDateTime(modal.DepartTime);
+                    var convertArrivalDate = Convert.ToDateTime(modal.ArrivalTime);
+                    if (Convert.ToDateTime(list.DepartTime) < convertDepartDate && Convert.ToDateTime(list.ExpectedArrival) > convertArrivalDate)
+                    {
+                        return BadRequest("You cannot book this session as you are already booked somewhere else");
+                    }*/
 
-               return Json(new
-               {
-                   Id= newOpp.Id,
-                   CreatedDate= newOpp.CreateDate,
-                   ArrivalTime = newOpp.ExpectedArrival,
-                   DepartTime = newOpp.DepartTime,
-                   Origin = newOpp.Origin,
+                        var newOpp = new Oppertunities()
+                        {
+                            Id = Guid.NewGuid(),
+                            CreateDate = nowdate,
+                            Origin = modal.Origin,
+                            OwnerId = user.Id,
+                            Notes = modal.Notes,
+                            Destination = modal.Destination,
+                            NumberOfSeats = modal.NumSeats,
+                            Monday = modal.Monday,
+                            Tuesday = modal.Tuesday,
+                            Wednesday = modal.Wednesday,
+                            Thursday = modal.Thursday,
+                            Friday = modal.Friday,
+                            Saturday = modal.Saturday,
+                            Sunday = modal.Sunday,
+                            DepartTime = modal.DepartTime,
+                            ExpectedArrival = modal.ArrivalTime,
+                        };
 
-               });
+
+                        await _context.Oppertunities.AddAsync(newOpp);
+                        await _context.SaveChangesAsync();
+
+                        return Json(new
+                        {
+                            Id = newOpp.Id,
+                            CreatedDate = newOpp.CreateDate,
+                            ArrivalTime = newOpp.ExpectedArrival,
+                            DepartTime = newOpp.DepartTime,
+                            Origin = newOpp.Origin,
+
+                        });
+                    
+               // }
+
+              
 
             }
 

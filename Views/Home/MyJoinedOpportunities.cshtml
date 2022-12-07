@@ -48,7 +48,9 @@
                         <thead>
                         <tr>
                             <th>@_localizer["Date Joined"]</th>
-                            <th>@_localizer["Origin"]</th>
+                            <th>@_localizer["Arrival Time"]</th>
+                            <th>@_localizer["Depart Time"]</th>
+                            <th>@_localizer["Destination"]</th>
                             <th style="width: 50px"></th>
                         </tr>
                         </thead>
@@ -56,8 +58,10 @@
 
                         <tfoot>
                         <tr>
-                            <th>@_localizer["Date Created"]</th>
-                            <th>@_localizer["Origin"]</th>
+                            <th>@_localizer["Date Joined"]</th>
+                            <th>@_localizer["Arrival Time"]</th>
+                            <th>@_localizer["Depart Time"]</th>
+                            <th>@_localizer["Destination"]</th>
                             <th></th>
                         </tr>
                         </tfoot>
@@ -94,8 +98,10 @@
             $(row).attr('id', data.id);
         },
         "columns": [
-            { "data": "name" },
             { "data": "dateJoined" },
+            { "data": "arrivalTime" },
+            { "data": "departTime" },
+            { "data": "destination" },
             { "data": "buttons" }
         ]
     });
@@ -112,8 +118,10 @@
 
                     rows.push({
                         id: result[i].id,
-                        name: result[i].name,
                         dateJoined: result[i].dateJoined,
+                        arrivalTime: result[i].arrivalTime,
+                        departTime: result[i].departTime,
+                        destination: result[i].destination,
                         buttons: `<div>
                                     <button type="button" class="btn btn-sm btn-outline-warning waves-effect waves-light align-content-end float-lg-right"
                                     onclick="unlinkUser('${result[i].id}')" style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">

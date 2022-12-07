@@ -120,6 +120,7 @@
             </div>
 
         </div>
+        <h4 class="page-title">@_localizer["List of all passengers"]</h4>
 
         <div class="row">
            @* <div class="col-12">
@@ -132,7 +133,6 @@
                     <tr>
                         <th>@_localizer["Name"]</th>
                         <th>@_localizer["Date Joined"]</th>
-                        <th style="width: 50px"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,7 +142,6 @@
                     <tr>
                         <th>@_localizer["Name"]</th>
                         <th>@_localizer["Date Joined"]</th>
-                        <th></th>
                     </tr>
                 </tfoot>
             </table>
@@ -180,7 +179,6 @@
         "columns": [
             { "data": "name" },
             { "data": "dateJoined" },
-            { "data": "buttons" }
         ]
     });
     
@@ -237,10 +235,7 @@
                         id: result[i].id,
                         name: result[i].name,
                         dateJoined: result[i].dateJoined,
-                        buttons: `<div>
-                                <button type="button" class="btn btn-sm btn-outline-warning waves-effect waves-light align-content-end float-lg-right"
-                                onclick="unlinkUser('${result[i].id}')" style="margin-right: 3px" data-toggle="tooltip" data-original-title="View">
-                                <span><i class="fas fa-search" aria-hidden="true"></i> Unlink</span></button></div>`
+                        
                     });
 
                 }
