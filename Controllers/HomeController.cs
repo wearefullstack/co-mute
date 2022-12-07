@@ -153,6 +153,8 @@ namespace Co_Mute.Controllers
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             var opp = await (
                 from u in _context.Oppertunities
+                join r in _context.Users
+                    on u.OwnerId equals r.Id
                 select new
                 {
 
@@ -160,7 +162,7 @@ namespace Co_Mute.Controllers
                     DateCreated = u.CreateDate.ToString("yyyy MMMM dd"),
                     ArrivalTime = u.ExpectedArrival,
                     DepartTime = u.DepartTime,
-                    Origin = u.Origin
+                    Driver = r.FirstName + " " + r.LastName,
 
 
                 }).ToListAsync();
@@ -367,7 +369,6 @@ namespace Co_Mute.Controllers
                     {
                         var numUserList = await _context.Listings.Where(x => x.OpertunityId == opportunity.Id).ToListAsync();
                         if (opportunity.NumberOfSeats > numUserList.Count)
-
                         {
 
                             var date = DateTime.Now;

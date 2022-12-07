@@ -57,7 +57,7 @@
                                     <th>@_localizer["Date Created"]</th>
                                     <th>@_localizer["Arrival Time"]</th>
                                     <th>@_localizer["Depart Time"]</th>
-                                    <th>@_localizer["Origin"]</th>
+                                    <th>@_localizer["Driver"]</th>
                                     <th style="width: 50px"></th>
                                 </tr>
                             </thead>
@@ -68,7 +68,7 @@
                                     <th>@_localizer["Date Created"]</th>
                                     <th>@_localizer["Arrival Date"]</th>
                                     <th>@_localizer["Depart Time"]</th>
-                                    <th>@_localizer["Origin"]</th>
+                                    <th>@_localizer["Driver"]</th>
                                     <th></th>
                                 </tr>
                             </tfoot>
@@ -196,7 +196,7 @@
             { "data": "dateCreated" },
             { "data": "arrivalTime" },
             { "data": "departTime" },
-            { "data": "origin" },
+            { "data": "driver" },
             { "data": "buttons" }
         ]
     });
@@ -304,7 +304,7 @@
                         dateCreated: result[i].dateCreated,
                         arrivalTime: result[i].arrivalTime,
                         departTime: result[i].departTime,
-                        origin: result[i].origin,
+                        driver: result[i].driver,
                         buttons: `<div>
                                             
                                             <button type="button" class="btn btn-sm btn-outline-success waves-effect waves-light align-content-end float-lg-right"
