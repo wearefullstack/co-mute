@@ -114,7 +114,7 @@ namespace Co_Mute.Controllers
 
                      Id = u.Id,
                      DateCreated = u.CreateDate.ToString("yyyy MMMM dd"),
-                     ExpectedArrival = u.ExpectedArrival,
+                     ArrivalTime = u.ExpectedArrival,
                      DepartTime = u.DepartTime,
                      Origin = u.Origin
 
@@ -214,23 +214,24 @@ namespace Co_Mute.Controllers
                   Friday = modal.Friday,
                   Saturday = modal.Saturday,
                   Sunday = modal.Sunday,
-                  /*DepartTime = Convert.ToDateTime(modal.DepartTime),
-                 ExpectedArrival = Convert.ToDateTime(modal.ArrivalTime), */
+                  DepartTime = modal.DepartTime,
+                  ExpectedArrival = modal.ArrivalTime,
               };
 
                             
                await _context.Oppertunities.AddAsync(newOpp);
                await _context.SaveChangesAsync();
+
                return Json(new
                {
                    Id= newOpp.Id,
                    CreatedDate= newOpp.CreateDate,
-                   /*ArrivalTime = newOpp.ExpectedArrival,
-                   DepartTime = newOpp.DepartTime,*/
+                   ArrivalTime = newOpp.ExpectedArrival,
+                   DepartTime = newOpp.DepartTime,
                    Origin = newOpp.Origin,
 
                });
-                 
+
             }
 
             return BadRequest("Modal not found");

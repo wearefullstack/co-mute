@@ -4,8 +4,8 @@ namespace Co_Mute.Data
     public class Oppertunities
     {
         public Guid Id { get; set; }
-        public DateTime DepartTime { get; set; }
-        public DateTime ExpectedArrival { get; set; }
+        public string DepartTime { get; set; }
+        public string ExpectedArrival { get; set; }
         public DateTime CreateDate { get; set; }
         public string Origin { get; set; }
         public string OwnerId { get; set; }
