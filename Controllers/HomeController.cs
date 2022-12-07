@@ -196,10 +196,7 @@ namespace Co_Mute.Controllers
                 var user = await _userManager.GetUserAsync(HttpContext.User);
 
                 var nowdate = DateTime.Now;
-               /* if (modal.Origin == "" || modal.Destination == ""|| modal.NumSeats ==0  )
-                {
-                    return BadRequest("")
-                }*/
+            
               var newOpp = new Oppertunities()
               {
                   Id = Guid.NewGuid(),   
@@ -209,8 +206,7 @@ namespace Co_Mute.Controllers
                   Notes = modal.Notes,
                   Destination = modal.Destination,
                   NumberOfSeats = modal.NumSeats,
-                  /*DepartTime = modal.DepartTime,
-                  ExpectedArrival = modal.ExpectedArrival, */
+                 
                   Monday = modal.Monday,
                   Tuesday = modal.Tuesday,
                   Wednesday = modal.Wednesday,
@@ -218,6 +214,8 @@ namespace Co_Mute.Controllers
                   Friday = modal.Friday,
                   Saturday = modal.Saturday,
                   Sunday = modal.Sunday,
+                  DepartTime = modal.DepartTime,
+                 //ExpectedArrival = modal.ExpectedArrival, 
               };
 
                             
@@ -225,7 +223,7 @@ namespace Co_Mute.Controllers
                await _context.SaveChangesAsync();
                return Json(newOpp);
                  
-            }
+              }
 
             return BadRequest("Modal not found");
         }
