@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Co_Mute.Models;
 using System.Diagnostics;
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Co_Mute.Data;
@@ -254,17 +255,26 @@ namespace Co_Mute.Controllers
 
                 var nowdate = DateTime.Now;
 
-              /*  var listMyCars = await _context.Oppertunities.Where(X => X.OwnerId == user.Id).ToListAsync();
 
-                foreach (var list in listMyCars)
-                {
-                    var convertDepartDate = Convert.ToDateTime(modal.DepartTime);
-                    var convertArrivalDate = Convert.ToDateTime(modal.ArrivalTime);
-                    if (Convert.ToDateTime(list.DepartTime) < convertDepartDate && Convert.ToDateTime(list.ExpectedArrival) > convertArrivalDate)
-                    {
-                        return BadRequest("You cannot book this session as you are already booked somewhere else");
-                    }*/
+                  /*var listMyCars = await _context.Oppertunities.Where(X => X.OwnerId == user.Id).ToListAsync();
 
+                  foreach (var list in listMyCars)
+                  {
+                      DateTime modalDepartTime = DateTime.ParseExact(modal.DepartTime, "HH:mm:ss",
+                          CultureInfo.InvariantCulture); 
+                      DateTime modalArrivalTime = DateTime.ParseExact(modal.DepartTime, "HH:mm:ss",
+                          CultureInfo.InvariantCulture);
+
+                      DateTime DepartTime = DateTime.ParseExact(list.DepartTime, "HH:mm:ss",
+                          CultureInfo.InvariantCulture);
+                      DateTime ArrivalTime = DateTime.ParseExact(list.ExpectedArrival, "HH:mm:ss",
+                          CultureInfo.InvariantCulture);
+                    if (DepartTime < modalDepartTime && ArrivalTime > modalArrivalTime)
+                      {
+                          return BadRequest("You cannot book this session as you are already booked somewhere else");
+                      }
+                    else
+                    {*/
                         var newOpp = new Oppertunities()
                         {
                             Id = Guid.NewGuid(),
@@ -298,8 +308,10 @@ namespace Co_Mute.Controllers
                             Origin = newOpp.Origin,
 
                         });
+                  //  }
+               
                     
-               // }
+             //  }
 
               
 
