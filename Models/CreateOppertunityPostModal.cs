@@ -15,7 +15,7 @@
         public bool Friday { get; set; }
         public bool Saturday { get; set; }
 
-        //public DateTime DepartTime { get; set; }
-        public DateTime ExpectedArrival { get; set; }
+        public DateTime DepartTime { get; set; }
+        //public DateTime ExpectedArrival { get; set; }
     }
 }
