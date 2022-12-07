@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Co_Mute.Data;
 using Co_Mute.Models.AdministrationViewModels;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace Co_Mute.Controllers
 {
@@ -206,7 +207,6 @@ namespace Co_Mute.Controllers
                   Notes = modal.Notes,
                   Destination = modal.Destination,
                   NumberOfSeats = modal.NumSeats,
-                 
                   Monday = modal.Monday,
                   Tuesday = modal.Tuesday,
                   Wednesday = modal.Wednesday,
@@ -214,16 +214,24 @@ namespace Co_Mute.Controllers
                   Friday = modal.Friday,
                   Saturday = modal.Saturday,
                   Sunday = modal.Sunday,
-                  DepartTime = modal.DepartTime,
-                 //ExpectedArrival = modal.ExpectedArrival, 
+                  /*DepartTime = Convert.ToDateTime(modal.DepartTime),
+                 ExpectedArrival = Convert.ToDateTime(modal.ArrivalTime), */
               };
 
                             
                await _context.Oppertunities.AddAsync(newOpp);
                await _context.SaveChangesAsync();
-               return Json(newOpp);
+               return Json(new
+               {
+                   Id= newOpp.Id,
+                   CreatedDate= newOpp.CreateDate,
+                   /*ArrivalTime = newOpp.ExpectedArrival,
+                   DepartTime = newOpp.DepartTime,*/
+                   Origin = newOpp.Origin,
+
+               });
                  
-              }
+            }
 
             return BadRequest("Modal not found");
         }

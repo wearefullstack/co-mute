@@ -149,7 +149,7 @@
                             <div class="form-group">
                                 <label for="numSeats">Available Seats</label>
                                 <div class="input-group date">
-                                    <input type="number" autocomplete="off" class="form-control" min="0" id="numSeats" required />
+                                    <input type="number" autocomplete="off" class="form-control" min="1" id="numSeats" required />
                                 </div>
                             </div>
                         </div>
@@ -194,7 +194,7 @@
         },
         "columns": [
             { "data": "dateCreated" },
-            { "data": "arrivalTimes" },
+            { "data": "arrivalTime" },
             { "data": "departTime" },
             { "data": "origin" },
             { "data": "buttons" }
@@ -302,7 +302,7 @@
                     rows.push({
                         id: result[i].id,
                         dateCreated: result[i].dateCreated,
-                        expectedArrival: result[i].expectedArrival,
+                        arrivalTime: result[i].arrivalTime,
                         departTime: result[i].departTime,
                         origin: result[i].origin,
                         buttons: `<div>
