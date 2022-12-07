@@ -37,17 +37,23 @@
 
 
 
-
-    <li class="sidebar-item">
-        <a asp-controller="Home" asp-action="AllOpportunities" class="sidebar-link">
-            <i class="icon-Home-2"></i>
-            <span class="hide-menu">@_localizer["All Opportunities"]</span>
-        </a>
-    </li>
-    <li class="nav-small-cap">
-        <i class="mdi mdi-dots-horizontal"></i>
-        <span class="hide-menu">My Account</span>
-    </li>
+<li class="sidebar-item">
+    <a asp-controller="Home" asp-action="All" class="sidebar-link">
+        <i class="icon-Home-2"></i>
+        <span class="hide-menu">@_localizer["All Opportunities"]</span>
+    </a>
+</li>
+    
+<li class="nav-small-cap">
+    <i class="mdi mdi-dots-horizontal"></i>
+    <span class="hide-menu">My Account</span>
+</li>
+<li class="sidebar-item">
+    <a asp-controller="Home" asp-action="AllOpportunities" class="sidebar-link">
+        <i class="icon-Home-2"></i>
+        <span class="hide-menu">@_localizer["All My Created Opportunities"]</span>
+    </a>
+</li>
 
     <li class="sidebar-item">
         <a asp-controller="Home" asp-action="MyJoinedOpportunities" class="sidebar-link">

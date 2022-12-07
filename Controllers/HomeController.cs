@@ -199,6 +199,8 @@ namespace Co_Mute.Controllers
                 var user = await _userManager.GetUserAsync(HttpContext.User);
 
                 var nowdate = DateTime.Now;
+
+                
             
               var newOpp = new Oppertunities()
               {
