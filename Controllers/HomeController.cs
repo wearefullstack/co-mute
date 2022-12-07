@@ -107,8 +107,10 @@ namespace Co_Mute.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllOppertunities()
         {
-             var opp = await (
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var opp = await (
                  from u in _context.Oppertunities
+                 where u.OwnerId == currentUser.Id
                  select new
                  {
 
