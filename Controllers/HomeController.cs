@@ -258,19 +258,60 @@ namespace Co_Mute.Controllers
 
                   var listMyCars = await _context.Oppertunities.Where(X => X.OwnerId == user.Id).ToListAsync();
 
-                  foreach (var list in listMyCars)
+                  if (listMyCars.Count > 0)
                   {
-                      DateTime modalDepartTime = DateTime.Parse(modal.DepartTime);
-                      DateTime modalArrivalTime = DateTime.Parse(modal.ArrivalTime);
-
-                      DateTime DepartTime = DateTime.Parse(list.DepartTime);
-                      DateTime ArrivalTime = DateTime.Parse(list.ExpectedArrival);
-                      if (DepartTime < modalDepartTime || ArrivalTime < modalArrivalTime)
+                      foreach (var list in listMyCars)
                       {
-                          return BadRequest("You cannot book this session as you are already booked somewhere else");
-                      }
-                    else
-                    {
+                          DateTime modalDepartTime = DateTime.Parse(modal.DepartTime);
+                          DateTime modalArrivalTime = DateTime.Parse(modal.ArrivalTime);
+
+                          DateTime DepartTime = DateTime.Parse(list.DepartTime);
+                          DateTime ArrivalTime = DateTime.Parse(list.ExpectedArrival);
+                          if (DepartTime < modalDepartTime || ArrivalTime < modalArrivalTime)
+                          {
+                              return BadRequest(
+                                  "You cannot book this session as you are already booked somewhere else");
+                          }
+                          {
+                              var newOpp = new Oppertunities()
+                              {
+                                  Id = Guid.NewGuid(),
+                                  CreateDate = nowdate,
+                                  Origin = modal.Origin,
+                                  OwnerId = user.Id,
+                                  Notes = modal.Notes,
+                                  Destination = modal.Destination,
+                                  NumberOfSeats = modal.NumSeats,
+                                  Monday = modal.Monday,
+                                  Tuesday = modal.Tuesday,
+                                  Wednesday = modal.Wednesday,
+                                  Thursday = modal.Thursday,
+                                  Friday = modal.Friday,
+                                  Saturday = modal.Saturday,
+                                  Sunday = modal.Sunday,
+                                  DepartTime = modal.DepartTime,
+                                  ExpectedArrival = modal.ArrivalTime,
+                              };
+
+
+                              await _context.Oppertunities.AddAsync(newOpp);
+                              await _context.SaveChangesAsync();
+
+                              return Json(new
+                              {
+                                  Id = newOpp.Id,
+                                  CreatedDate = newOpp.CreateDate,
+                                  ArrivalTime = newOpp.ExpectedArrival,
+                                  DepartTime = newOpp.DepartTime,
+                                  Origin = newOpp.Origin,
+
+                              });
+                          }
+                    }
+
+                  }
+                  else
+                  {
                         var newOpp = new Oppertunities()
                         {
                             Id = Guid.NewGuid(),
@@ -304,13 +345,7 @@ namespace Co_Mute.Controllers
                             Origin = newOpp.Origin,
 
                         });
-                    }
-               
-                    
-              }
-
-              
-
+                  }
             }
 
             return BadRequest("Modal not found");
