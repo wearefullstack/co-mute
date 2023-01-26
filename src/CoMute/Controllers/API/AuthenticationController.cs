@@ -1,4 +1,6 @@
-﻿using CoMute.Web.Models.Dto;
+﻿using CoMute.Web.Data;
+using CoMute.Web.Models.Dto;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -7,14 +9,27 @@ namespace CoMute.Web.Controllers.API
 {
     public class AuthenticationController : ApiController
     {
+        dbCoMuteEntities db = new dbCoMuteEntities();
+
         /// <summary>
-        /// Logs a user into the application.
+        /// Respond to Http request when loggin in user
         /// </summary>
-        /// <param name="loginRequest">The user's login details</param>
+        /// <param name="loginRequest"></param>
         /// <returns></returns>
         public HttpResponseMessage Post(LoginRequest loginRequest)
         {
-            return Request.CreateResponse(HttpStatusCode.NotFound);
+            var user = db.tblRegisters.Where(zz => zz.Email == loginRequest.Email && zz.Password == loginRequest.Password).FirstOrDefault();
+
+            if (user != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+
         }
     }
 }

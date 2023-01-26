@@ -37,7 +37,7 @@
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");
-            $p.text('Registration failed');
+            $p.text('Registration Failed');
             $alert.removeClass('hidden');
 
             setTimeout(function () {

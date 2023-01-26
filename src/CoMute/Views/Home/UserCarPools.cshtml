@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CoMute.Web.Data.tblUserCarPool>
+
+@{
+    ViewBag.Title = "UserCarPools";
+}
+
+<h2>UserCarPools</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Depart_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Days_Avail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Avail_Seats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner_Leader)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tblRegister.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Depart_Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Origin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Days_Avail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Avail_Seats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner_Leader)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tblRegister.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CarPoolID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CarPoolID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CarPoolID })
+        </td>
+    </tr>
+}
+
+</table>

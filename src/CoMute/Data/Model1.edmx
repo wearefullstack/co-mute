@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbCoMuteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblRegister">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="255" />
+          <Property Name="Phone" Type="nchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUserCarPools">
+          <Key>
+            <PropertyRef Name="CarPoolID" />
+          </Key>
+          <Property Name="CarPoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Depart_Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Origin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Days_Avail" Type="int" Nullable="false" />
+          <Property Name="Destination" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Avail_Seats" Type="int" Nullable="false" />
+          <Property Name="Owner/Leader" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="255" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblUserCarPools_tblRegister">
+          <End Role="tblRegister" Type="Self.tblRegister" Multiplicity="1" />
+          <End Role="tblUserCarPools" Type="Self.tblUserCarPools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRegister">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblUserCarPools">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbCoMuteModelStoreContainer">
+          <EntitySet Name="tblRegister" EntityType="Self.tblRegister" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserCarPools" EntityType="Self.tblUserCarPools" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblUserCarPools_tblRegister" Association="Self.FK_tblUserCarPools_tblRegister">
+            <End Role="tblRegister" EntitySet="tblRegister" />
+            <End Role="tblUserCarPools" EntitySet="tblUserCarPools" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbCoMuteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblRegister">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblUserCarPools" Relationship="dbCoMuteModel.FK_tblUserCarPools_tblRegister" FromRole="tblRegister" ToRole="tblUserCarPool" />
+        </EntityType>
+        <EntityContainer Name="dbCoMuteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblRegisters" EntityType="Self.tblRegister" />
+          <EntitySet Name="tblUserCarPools" EntityType="dbCoMuteModel.tblUserCarPool" />
+          <AssociationSet Name="FK_tblUserCarPools_tblRegister" Association="dbCoMuteModel.FK_tblUserCarPools_tblRegister">
+            <End Role="tblRegister" EntitySet="tblRegisters" />
+            <End Role="tblUserCarPool" EntitySet="tblUserCarPools" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblUserCarPool">
+          <Key>
+            <PropertyRef Name="CarPoolID" />
+          </Key>
+          <Property Name="CarPoolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Depart_Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Origin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Days_Avail" Type="Int32" Nullable="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Avail_Seats" Type="Int32" Nullable="false" />
+          <Property Name="Owner_Leader" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblRegister" Relationship="dbCoMuteModel.FK_tblUserCarPools_tblRegister" FromRole="tblUserCarPool" ToRole="tblRegister" />
+        </EntityType>
+        <Association Name="FK_tblUserCarPools_tblRegister">
+          <End Type="dbCoMuteModel.tblRegister" Role="tblRegister" Multiplicity="1" />
+          <End Type="dbCoMuteModel.tblUserCarPool" Role="tblUserCarPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRegister">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblUserCarPool">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbCoMuteModelStoreContainer" CdmEntityContainer="dbCoMuteEntities">
+          <EntitySetMapping Name="tblRegisters">
+            <EntityTypeMapping TypeName="dbCoMuteModel.tblRegister">
+              <MappingFragment StoreEntitySet="tblRegister">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserCarPools">
+            <EntityTypeMapping TypeName="dbCoMuteModel.tblUserCarPool">
+              <MappingFragment StoreEntitySet="tblUserCarPools">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Owner_Leader" ColumnName="Owner/Leader" />
+                <ScalarProperty Name="Avail_Seats" ColumnName="Avail_Seats" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Days_Avail" ColumnName="Days_Avail" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Depart_Time" ColumnName="Depart_Time" />
+                <ScalarProperty Name="CarPoolID" ColumnName="CarPoolID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
