@@ -30,15 +30,26 @@ namespace CoMute.Web.Controllers.Web
             return View();
         }
 
+        
+        /// <summary>
+        /// Http response to display view: user's car pools
+        /// </summary>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult UserCarPools()
+        {
+            return View(db.tblUserCarPools.ToList());
+        }
+
         /// <summary>
         /// Method to send login request data
-        /// Temporary login credentials: email-amber.bruil@gmail.com || password: Lemonjuice144! (note password is not hashed)
         /// </summary>
         /// <param name="loginRequest"></param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Index(LoginRequest loginRequest)
         {
+
             var user = db.tblRegisters.Where(zz => zz.Email == loginRequest.Email && zz.Password == loginRequest.Password).FirstOrDefault();
 
             if (user == null)
@@ -50,12 +61,14 @@ namespace CoMute.Web.Controllers.Web
             {
                 TempData["ID"] = user.UserID;
                 Session["ID"] = user.UserID;
+
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("http://localhost:59598/api/Authentication");
+                   
+                    client.BaseAddress = new Uri("http://localhost:59598/api/authentication");
 
                     //HTTP POST
-                    var postTask = client.PostAsJsonAsync("Authentication", loginRequest);
+                    var postTask = client.PostAsJsonAsync("authentication", loginRequest);
                     postTask.Wait();
 
                     var result = postTask.Result;
@@ -65,12 +78,10 @@ namespace CoMute.Web.Controllers.Web
                     }
                 }
                 return View(loginRequest);
-
+            
             }
         }
 
-        //TODO: Fix POST issue '(404) Not Found' when attempting to register a new user,
-        //Temporary login credentials: email-amber.bruil@gmail.com || password: Lemonjuice144! (note password is not hashed)
         /// <summary>
         /// Method to send the registration data
         /// </summary>
@@ -101,12 +112,7 @@ namespace CoMute.Web.Controllers.Web
 
         }
 
-
-        public ActionResult UserCarPools()
-        {
-            return View(db.tblUserCarPools.ToList());
-
-        }
+        
 
     }
 }

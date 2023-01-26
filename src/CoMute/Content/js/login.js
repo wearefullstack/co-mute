@@ -12,7 +12,7 @@
         }
 
         $.post('/api/Authentication', { email: email, password: pswd }, function (data) {
-            // TODO: Navigate away...
+            window.location.href = "/home/usercarpools"
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");

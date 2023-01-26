@@ -1,7 +1,9 @@
-﻿@{
+﻿@model CoMute.Web.Models.Dto.LoginRequest
+
+@{
     ViewBag.Title = "Home";
 }
-
+@*
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <form id="login">
@@ -17,8 +19,27 @@
     <div class="col-md-4 col-md-offset-4 alert alert-danger">
         <p></p>
     </div>
+</div> *@
+
+<h2 style="margin-left:43%">Sign In</h2>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <form id="login" method="post">
+            Please enter the following:
+            @Html.TextBoxFor(m => m.Email, new { @Class = "form-control", id = "email", placeholder = "Email" })
+            <div></div>
+            @Html.PasswordFor(model => model.Password, new { @Class = "form-control", id = "password", placeholder = "Password" })
+            <div></div>
+            <button class="btn btn-primary btn-block" type="submit" id="sign-in">Sign in</button>
+        </form>
+    </div>
 </div>
 
-@section scripts {
-    <script type="text/javascript" src="~/Content/js/login.js"></script>
-}
+
+<div id="error" class="row row-margin hidden">
+    <div class="col-md-4 col-md-offset-4 alert alert-danger">
+        <p></p>
+    </div>
+</div>
+

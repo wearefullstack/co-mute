@@ -238,6 +238,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\aweawda\" />
     <Folder Include="Views\CarPool\" />
   </ItemGroup>
   <PropertyGroup>
