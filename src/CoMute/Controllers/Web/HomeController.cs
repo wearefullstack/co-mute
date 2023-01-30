@@ -29,30 +29,6 @@ namespace CoMute.Web.Controllers.Web
         {
             return View();
         }
-   
-        /*
-        /// <summary>
-        /// Http response to display view: user's car pools
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult UserCarPools()
-        {
-            return View(db.tblUserCarPools.ToList());
-        }
-
-        public ActionResult AddCarPool([Bind(Exclude = "CarPoolID")] tblUserCarPool carpoolToCreate)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            db.tblUserCarPools.Add(carpoolToCreate);
-
-            db.SaveChanges();
-
-            return RedirectToAction("UserCarPools");
-        }*/
 
         /// <summary>
         /// Method to send login request data

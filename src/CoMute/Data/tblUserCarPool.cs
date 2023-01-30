@@ -17,12 +17,16 @@ namespace CoMute.Web.Data
         public int CarPoolID { get; set; }
         public System.TimeSpan Depart_Time { get; set; }
         public string Origin { get; set; }
-        public int Days_Avail { get; set; }
+        public Nullable<int> Days_Avail { get; set; }
         public string Destination { get; set; }
         public int Avail_Seats { get; set; }
         public string Owner_Leader { get; set; }
         public string Notes { get; set; }
         public int UserID { get; set; }
+        public System.TimeSpan Arrival_Time { get; set; }
+        public System.DateTime Date_Created { get; set; }
+        public System.DateTime Date_Joined { get; set; }
+        public int PassengerPoolID { get; set; }
     
         public virtual tblRegister tblRegister { get; set; }
     }

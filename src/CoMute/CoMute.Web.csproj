@@ -135,7 +135,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AuthenticationController.cs" />
-    <Compile Include="Controllers\API\CarpoolsController.cs" />
+    <Compile Include="Controllers\API\CreateCarpoolController.cs" />
+    <Compile Include="Controllers\Web\CarpoolsController.cs" />
     <Compile Include="Controllers\API\RegistrationController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
@@ -163,7 +164,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Carpool.cs" />
+    <Compile Include="Models\Dto\Carpool.cs" />
     <Compile Include="Models\Dto\LoginRequest.cs" />
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
     <Compile Include="Models\User.cs" />
@@ -229,6 +230,7 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Carpools\Index.cshtml" />
     <Content Include="Views\Carpools\AddCarpool.cshtml" />
+    <Content Include="Views\Carpools\CreateCarpool.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -239,7 +241,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\AddCarpool\" />
+    <Folder Include="Views\CreateCarpool\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
