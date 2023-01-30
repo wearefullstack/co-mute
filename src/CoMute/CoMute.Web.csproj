@@ -135,7 +135,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AuthenticationController.cs" />
-    <Compile Include="Controllers\API\CarPoolController.cs" />
+    <Compile Include="Controllers\API\CarpoolsController.cs" />
     <Compile Include="Controllers\API\RegistrationController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
@@ -163,6 +163,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Carpool.cs" />
     <Compile Include="Models\Dto\LoginRequest.cs" />
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
     <Compile Include="Models\User.cs" />
@@ -226,7 +227,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Home\UserCarPools.cshtml" />
+    <Content Include="Views\Carpools\Index.cshtml" />
+    <Content Include="Views\Carpools\AddCarpool.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -237,10 +239,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\aweawda\" />
-    <Folder Include="Views\CarPool\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
