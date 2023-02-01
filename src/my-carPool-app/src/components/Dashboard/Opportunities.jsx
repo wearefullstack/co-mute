@@ -29,6 +29,9 @@ function Oppertunities() {
     },
     ...
   ];*/ 
+
+  // The search bar will be able to look through the data and render only the item that's been found.
+  // The tags will be a filter method
   
   return (
     <div>
