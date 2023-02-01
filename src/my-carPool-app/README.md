@@ -1,6 +1,6 @@
 # co-mute
 
 ### Live Project: 
-https://xj-carpool-app.netlify.app/login
+https://xj-carpool-app.netlify.app/
 
  
