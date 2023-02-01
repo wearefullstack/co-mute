@@ -25,8 +25,8 @@ namespace CoMute.Web.Data
         public int UserID { get; set; }
         public System.TimeSpan Arrival_Time { get; set; }
         public System.DateTime Date_Created { get; set; }
-        public System.DateTime Date_Joined { get; set; }
-        public int PassengerPoolID { get; set; }
+        public Nullable<System.DateTime> Date_Joined { get; set; }
+        public string PassengerPoolID { get; set; }
     
         public virtual tblRegister tblRegister { get; set; }
     }

@@ -20,7 +20,7 @@
           <Key>
             <PropertyRef Name="CarPoolID" />
           </Key>
-          <Property Name="CarPoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarPoolID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Depart_Time" Type="time" Precision="7" Nullable="false" />
           <Property Name="Arrival_Time" Type="time" Precision="7" Nullable="false" />
           <Property Name="Origin" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -30,9 +30,9 @@
           <Property Name="Owner/Leader" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Notes" Type="varchar" MaxLength="255" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Date_Created" Type="datetime" Nullable="false" />
-          <Property Name="Date_Joined" Type="datetime" Nullable="false" />
-          <Property Name="PassengerPoolID" Type="int" Nullable="false" />
+          <Property Name="Date_Created" Type="date" Nullable="false" />
+          <Property Name="Date_Joined" Type="date" />
+          <Property Name="PassengerPoolID" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblUserCarPools_tblRegister">
           <End Role="tblRegister" Type="Self.tblRegister" Multiplicity="1" />
@@ -93,9 +93,9 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblRegister" Relationship="dbCoMuteModel.FK_tblUserCarPools_tblRegister" FromRole="tblUserCarPool" ToRole="tblRegister" />
           <Property Name="Arrival_Time" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Date_Created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Date_Joined" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PassengerPoolID" Type="Int32" Nullable="false" />
+          <Property Name="Date_Created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Joined" Type="DateTime" Precision="0" />
+          <Property Name="PassengerPoolID" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblUserCarPools_tblRegister">
           <End Type="dbCoMuteModel.tblRegister" Role="tblRegister" Multiplicity="1" />

@@ -27,7 +27,5 @@ namespace CoMute.Web.Data
     
         public virtual DbSet<tblRegister> tblRegisters { get; set; }
         public virtual DbSet<tblUserCarPool> tblUserCarPools { get; set; }
-
-        public System.Data.Entity.DbSet<CoMute.Web.Models.Dto.Carpool> Carpools { get; set; }
     }
 }

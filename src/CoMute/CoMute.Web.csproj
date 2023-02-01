@@ -136,6 +136,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AuthenticationController.cs" />
     <Compile Include="Controllers\API\CreateCarpoolController.cs" />
+    <Compile Include="Controllers\API\GetCarpoolsController.cs" />
     <Compile Include="Controllers\Web\CarpoolsController.cs" />
     <Compile Include="Controllers\API\RegistrationController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
@@ -229,7 +230,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Carpools\Index.cshtml" />
-    <Content Include="Views\Carpools\AddCarpool.cshtml" />
     <Content Include="Views\Carpools\CreateCarpool.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -242,8 +242,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\AddCarpool\" />
-    <Folder Include="Views\CreateCarpool\" />
+    <Folder Include="Views\GetCarpools\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -16,18 +16,19 @@ namespace CoMute.Web.Controllers.API
     {
         dbCoMuteEntities db = new dbCoMuteEntities();
 
-        public HttpResponseMessage CreateCarpool(Carpool pool)
+        public HttpResponseMessage CreateCarpool(Carpool p)
         {
             var carpool = new tblUserCarPool
             {
-                Origin = pool.Origin,
-                Avail_Seats = (int)pool.AvailSeats,
-                Days_Avail = pool.DaysAvail,
-                Depart_Time = (TimeSpan)pool.DepartTime,
-                Arrival_Time = (TimeSpan)pool.ArrivalTime,
-                Destination = pool.Destination,
+                Origin = p.Origin,
+                Avail_Seats = (int)p.AvailSeats,
+                Days_Avail = p.DaysAvail,
+                Depart_Time = (TimeSpan)p.DepartTime,
+                Arrival_Time = (TimeSpan)p.ArrivalTime,
+                Destination = p.Destination,
                 Date_Created = DateTime.Now.Date,
-                Notes = pool.Notes,
+                Date_Joined = DateTime.Now.Date,
+                Notes = p.Notes,
             };
 
             db.tblUserCarPools.Add(carpool);
