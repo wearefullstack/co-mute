@@ -34,7 +34,7 @@ function Dashboard() {
       <div className="w-full flex justify-center items-center mb-3 px-3">
           {show === "Profile" && <Profile />}
           {show === "Register" && <Register />}
-          {show === "Oppertunities" && <Opportunities />}
+          {show === "Opportunities" && <Opportunities />}
       </div>
     </div>
   );
