@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Register from './Register'
 import Profile from './Profile'
-import Oppertunities from "./Oppertunities";
+import Opportunities from "./Opportunities";
 
 function Dashboard() {
   const [show, setShow] = useState("");
@@ -23,7 +23,7 @@ function Dashboard() {
             <a className="hover:cursor-pointer hover:bg-green-500 rounded-full py-2 px-6 hover:text-white active:text-lg" onClick={() => handleClick("Register")}>Register Oppertunity</a>
           </li>
           <li className="py-2 mb-8">
-            <a className="hover:cursor-pointer  hover:bg-green-500 rounded-full py-2 px-6 hover:text-white active:text-lg" onClick={() => handleClick("Oppertunities")}>Oppertunities</a>
+            <a className="hover:cursor-pointer  hover:bg-green-500 rounded-full py-2 px-6 hover:text-white active:text-lg" onClick={() => handleClick("Opportunities")}>Opportunities</a>
           </li>
           <li className="pt-3">
             <Link className="bg-green-400 py-2 px-4 rounded-full hover:bg-green-600 hover:text-white active:text-lg" to="/signup">Logout</Link>
@@ -34,7 +34,7 @@ function Dashboard() {
       <div className="w-full flex justify-center items-center mb-3 px-3">
           {show === "Profile" && <Profile />}
           {show === "Register" && <Register />}
-          {show === "Oppertunities" && <Oppertunities />}
+          {show === "Oppertunities" && <Opportunities />}
       </div>
     </div>
   );
