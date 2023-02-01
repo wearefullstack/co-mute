@@ -1,4 +1,4 @@
-
+import OpportunityList from "./OpportunityDB";
 
 function Oppertunities() {
 
@@ -46,46 +46,7 @@ function Oppertunities() {
       </div>
 
       {/* <!-- Opportunity divs --> */}
-      <div className="w-80 p-4 rounded-lg mb-4 flex justify-between bg-green-300 transition-all duration-200 ease-in-out hover:scale-110">
-        <div>
-          <p className="font-bold">Driver: John Doe</p>
-          <p>Seats: 2 out of 4</p>
-        </div>
-        <button className="bg-white px-4 py-2 rounded-lg text-black font-bold">
-          Join
-        </button>
-      </div>
-
-      <div className="w-80 p-4 rounded-lg mb-4 flex justify-between bg-green-300 transition-all duration-200 ease-in-out hover:scale-110">
-        <div>
-          <p className="font-bold">Driver: Jane Doe</p>
-          <p>Seats: 4 out of 4</p>
-        </div>
-        <button className="bg-green-700 px-4 py-2 rounded-lg font-bold text-white">
-          Full
-        </button>
-      </div>
-
-      <div className="w-80 p-4 rounded-lg mb-4 flex justify-between bg-green-300 transition-all duration-200 ease-in-out hover:scale-110">
-        <div>
-          <p className="font-bold">Driver: Alice Johnson</p>
-          <p>Seats: 2 out of 4</p>
-          <p>Created: 1 February 2022</p>
-        </div>
-        <button className="bg-green-700 px-4 py-2 rounded-lg font-bold text-white">
-          Created
-        </button>
-      </div>
-
-      <div className="w-80 p-4 rounded-lg flex justify-between bg-green-300 transition-all duration-200 ease-in-out hover:scale-110">
-        <div>
-          <p className="font-bold">Driver: John Smith</p>
-          <p>Seats: 1 out of 4</p>
-        </div>
-        <button className="bg-white px-4 py-2 rounded-lg text-black font-bold">
-          Join
-        </button>
-      </div>
+      <OpportunityList />
     </div>
   );
 }
