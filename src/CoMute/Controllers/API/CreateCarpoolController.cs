@@ -20,15 +20,19 @@ namespace CoMute.Web.Controllers.API
         {
             var carpool = new tblUserCarPool
             {
+                CarPoolID = p.CarpoolID,
                 Origin = p.Origin,
                 Avail_Seats = (int)p.AvailSeats,
                 Days_Avail = p.DaysAvail,
                 Depart_Time = (TimeSpan)p.DepartTime,
                 Arrival_Time = (TimeSpan)p.ArrivalTime,
                 Destination = p.Destination,
+                Owner_Leader = p.OwnerLeader,
+                UserID = p.UserID,
                 Date_Created = DateTime.Now.Date,
                 Date_Joined = DateTime.Now.Date,
                 Notes = p.Notes,
+                PassengerPoolID = p.PassengerPoolID,
             };
 
             db.tblUserCarPools.Add(carpool);
