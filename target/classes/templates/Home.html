@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Home</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Co-Mute</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link"  th:href="@{/Home/{theId}(theId=${theUserId})}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/Home/ViewAllCarpool/{theId}(theId=${theUserId})}">View All Car Pool</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="#">About</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container text-center">
+    <div>
+        <h1>Car Pool Opportunities Joined</h1>
+    </div>
+    <br>
+    <a th:href="@{/Home/Createcarpool/{theId}(theId=${theUserId})}"><button type="button" class="btn btn-danger">CREATE NEW POOL OPPORTUNITY</button></a>
+    <br><br>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th> ID</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Origin</th>
+                <th>Days Available</th>
+                <th>Destination</th>
+                <th>Number Available Seats</th>
+                <th>Owner</th>
+                <th>Notes</th>
+                <th>Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="carPool: ${listCarPool}">
+                <td th:text="${carPool.id}"> ID</td>
+                <td th:text="${carPool.depTime}">Departure Time</td>
+                <td th:text="${carPool.arrTime}">Arrival Time</td>
+                <td th:text="${carPool.origin}">Origin</td>
+                <td th:text="${carPool.numDayAvail}">Days Available</td>
+                <td th:text="${carPool.destination}">Destination</td>
+                <td th:text="${carPool.numAvailSeats}">Number Available Seats</td>
+                <td th:text="${carPool.owner}">Owner</td>
+                <td th:text="${carPool.notes}">Notes</td>
+                <td><button type="button" class="btn btn-danger">REMOVE</button></td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="error" class="d-flex justify-content-center" >
+            <div class="col-md-4 col-md-offset-4 alert alert-danger">
+                <p th:text="${errorMsg}">Test</p>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>
