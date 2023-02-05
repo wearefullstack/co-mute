@@ -31,7 +31,6 @@ namespace CoMute.Web.Controllers.API
             return View(db.tblUserCarPools.ToList());
         }
 
-
         /// <summary>
         /// Http response for returning create carpool view
         /// </summary>
@@ -49,6 +48,8 @@ namespace CoMute.Web.Controllers.API
         [HttpPost]
         public ActionResult CreateCarpool([Bind(Exclude = "CarPoolID")] tblUserCarPool carpoolToCreate)
         {
+            //NOTE: Currently unsuccesful to add a carpool to database as code contains JSON parse error for retrieving user's full name (check line 117)
+
             var userID = (int)System.Web.HttpContext.Current.Session["ID"];
 
             if (userID is int)
@@ -83,6 +84,7 @@ namespace CoMute.Web.Controllers.API
                                 carpoolToCreate.UserID = Int32.Parse(userID.ToString());
                                 carpoolToCreate.Owner_Leader = GetOwner(userID);
                                 carpoolToCreate.PassengerPoolID = "PP" + userID.ToString();
+
                                 client2.BaseAddress = new Uri("http://localhost:59598/api/CreateCarpool");
 
                                 //New POST request
@@ -113,7 +115,7 @@ namespace CoMute.Web.Controllers.API
         }
 
 
-        //TODO: Fix getting userID from Session
+        //TODO: Fix parse error- SyntaxError "[object object]" is not valid JSON
         #region private helpers
         /// <summary>
         /// Method to return current user's Full name

@@ -16,17 +16,28 @@ namespace CoMute.Web.Controllers.Web
     {
         dbCoMuteEntities db = new dbCoMuteEntities();
 
-
+        /// <summary>
+        /// HTTP response to display home index view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// HTTP response to display about view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult About()
         {
             return View();
         }
 
+        /// <summary>
+        /// HttP response to display registration view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Register()
         {
             return View();
