@@ -11,16 +11,21 @@ using System.Web.Http;
 
 namespace CoMute.Web.Controllers.API
 {
-
+    //------------------------------------------- CreateCarpoolController : Amber Bruil ---------------------------------------------------------//
     public class CreateCarpoolController : ApiController
     {
         dbCoMuteEntities db = new dbCoMuteEntities();
 
+        /// <summary>
+        /// Adding carpool to table
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public HttpResponseMessage CreateCarpool(Carpool p)
         {
+            
             var carpool = new tblUserCarPool
             {
-                CarPoolID = p.CarpoolID,
                 Origin = p.Origin,
                 Avail_Seats = (int)p.AvailSeats,
                 Days_Avail = p.DaysAvail,
@@ -31,14 +36,16 @@ namespace CoMute.Web.Controllers.API
                 UserID = p.UserID,
                 Date_Created = DateTime.Now.Date,
                 Date_Joined = DateTime.Now.Date,
-                Notes = p.Notes,
+                Notes = p.Notes, 
                 PassengerPoolID = p.PassengerPoolID,
             };
+
 
             db.tblUserCarPools.Add(carpool);
             db.SaveChanges();
 
-            return Request.CreateResponse(HttpStatusCode.Created, carpool);
+            return Request.CreateResponse(HttpStatusCode.Created, p);
         }
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
 }

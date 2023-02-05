@@ -1,4 +1,5 @@
-﻿using CoMute.Web.Data;
+﻿
+using CoMute.Web.Data;
 using CoMute.Web.Models.Dto;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ using System.Web.Mvc;
 
 namespace CoMute.Web.Controllers.API
 {
+
+    //------------------------------------------- RegistrationController (Api) : Amber Bruil ---------------------------------------------------------//
     public class RegistrationController : ApiController
     {
 
@@ -40,4 +43,5 @@ namespace CoMute.Web.Controllers.API
         }
         #endregion CRUD
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
 }

@@ -6,6 +6,7 @@ using System.Web;
 
 namespace CoMute.Web.Models.Dto
 {
+    //------------------------------------------- Carpool : Amber Bruil ---------------------------------------------------------//
     public class Carpool
     {
         public int CarpoolID { get; set; }
@@ -32,4 +33,6 @@ namespace CoMute.Web.Models.Dto
         public string PassengerPoolID { get; set; }
         public string Notes { get; set; }
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
+
 }

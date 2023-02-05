@@ -9,13 +9,20 @@ using System.Web.Mvc;
 
 namespace CoMute.Web.Controllers.API
 {
+    //------------------------------------------- GetCarpoolsController (Api) : Amber Bruil ---------------------------------------------------------//
     public class GetCarpoolsController : ApiController
     {
         dbCoMuteEntities db = new dbCoMuteEntities();
 
+        /// <summary>
+        /// Method to iterate through carpools table (check for existing carpools
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public object GetCarPool(int id)
         {
             db.Configuration.ProxyCreationEnabled = false;
+
             var carpool = db.tblUserCarPools.Select(c => new Carpool
             {
                 CarpoolID = c.CarPoolID,
@@ -31,10 +38,8 @@ namespace CoMute.Web.Controllers.API
                 PassengerPoolID = c.PassengerPoolID,
             }).Where(c => c.UserID == id).ToList();
 
-
-
             return carpool;
-
         }
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
 }

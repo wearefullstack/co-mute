@@ -1,4 +1,5 @@
 ﻿using CoMute.Web.Data;
+using CoMute.Web.Models;
 using CoMute.Web.Models.Dto;
 using Microsoft.Win32;
 using System;
@@ -14,11 +15,11 @@ using System.Web.Razor.Parser;
 
 namespace CoMute.Web.Controllers.API
 {
+    //------------------------------------------- CarpoolsController : Amber Bruil ---------------------------------------------------------//
     public class CarpoolsController : Controller
     {
 
         dbCoMuteEntities db = new dbCoMuteEntities();
-
 
         /// <summary>
         /// Http response to display view: user's car pools
@@ -31,23 +32,24 @@ namespace CoMute.Web.Controllers.API
         }
 
 
+        /// <summary>
+        /// Http response for returning create carpool view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateCarpool()
         {
             return View();
         }
-
-        
+    
         /// <summary>
         /// Method to add a carpool to the database
         /// </summary>
         /// <param name="carpoolToCreate"></param>
         /// <returns></returns>
-
         [HttpPost]
         public ActionResult CreateCarpool([Bind(Exclude = "CarPoolID")] tblUserCarPool carpoolToCreate)
         {
             var userID = (int)System.Web.HttpContext.Current.Session["ID"];
-            string ownerName = GetOwner((int)userID);
 
             if (userID is int)
             {
@@ -79,7 +81,7 @@ namespace CoMute.Web.Controllers.API
                             using (var client2 = new HttpClient())
                             {
                                 carpoolToCreate.UserID = Int32.Parse(userID.ToString());
-                                carpoolToCreate.Owner_Leader = ownerName;
+                                carpoolToCreate.Owner_Leader = GetOwner(userID);
                                 carpoolToCreate.PassengerPoolID = "PP" + userID.ToString();
                                 client2.BaseAddress = new Uri("http://localhost:59598/api/CreateCarpool");
 
@@ -111,6 +113,7 @@ namespace CoMute.Web.Controllers.API
         }
 
 
+        //TODO: Fix getting userID from Session
         #region private helpers
         /// <summary>
         /// Method to return current user's Full name
@@ -128,4 +131,5 @@ namespace CoMute.Web.Controllers.API
         #endregion
 
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
 }

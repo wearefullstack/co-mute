@@ -11,11 +11,16 @@ using System.Web.Http;
 
 namespace CoMute.Web.Controllers.API
 {
+    //------------------------------------------- UserController (Api) : Amber Bruil ---------------------------------------------------------//
     public class UserController : ApiController
     {
         dbCoMuteEntities db = new dbCoMuteEntities();
 
-
+        /// <summary>
+        /// Http response POST
+        /// </summary>
+        /// <param name="registrationRequest"></param>
+        /// <returns></returns>
         [Route("user/add")]
         public HttpResponseMessage Post(RegistrationRequest registrationRequest)
         {
@@ -29,6 +34,11 @@ namespace CoMute.Web.Controllers.API
             return Request.CreateResponse(HttpStatusCode.Created, user);
         }
 
+        /// <summary>
+        /// Adding user to database
+        /// </summary>
+        /// <param name="registrationRequest"></param>
+        /// <returns></returns>
         [Route("register")]
         [HttpPost]
         public HttpResponseMessage Register(RegistrationRequest registrationRequest)
@@ -47,4 +57,5 @@ namespace CoMute.Web.Controllers.API
             return Request.CreateResponse(HttpStatusCode.Created, user);
         }
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
 }

@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace CoMute.Web.Controllers.API
 {
+    //------------------------------------------- AuthenticationController (Api) : Amber Bruil ---------------------------------------------------------//
     public class AuthenticationController : ApiController
     {
         dbCoMuteEntities db = new dbCoMuteEntities();
@@ -32,4 +33,5 @@ namespace CoMute.Web.Controllers.API
 
         }
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
 }

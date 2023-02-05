@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 
 namespace CoMute.Web.Controllers.Web
 {
+    //------------------------------------------- HomeController : Amber Bruil ---------------------------------------------------------//
     public class HomeController : Controller
     {
         dbCoMuteEntities db = new dbCoMuteEntities();
@@ -59,7 +61,7 @@ namespace CoMute.Web.Controllers.Web
                     //HTTP POST
                     var postTask = client.PostAsJsonAsync("authentication", loginRequest);
                     postTask.Wait();
-
+                    
                     var result = postTask.Result;
                     if (result.IsSuccessStatusCode)
                     {
@@ -71,6 +73,7 @@ namespace CoMute.Web.Controllers.Web
             }
         }
 
+        //TODO: Encrypt passwords
         /// <summary>
         /// Method to send the registration data
         /// </summary>
@@ -101,7 +104,6 @@ namespace CoMute.Web.Controllers.Web
 
         }
 
-        
-
     }
+    //--------------------------------------------------- 0o00ooo End of File ooo00o0 --------------------------------------------------------//
 }
