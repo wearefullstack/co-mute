@@ -1,0 +1,31 @@
+@{
+    ViewBag.Title = "Login";
+}
+
+<form id="login">
+    <h2>Login</h2>
+
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" placeholder="Email address" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Password" required>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="log-in">Login</button>
+    </div>
+</form>
+
+@section scripts {
+    <script type="text/javascript" src="~/Content/js/login.js"></script>
+}

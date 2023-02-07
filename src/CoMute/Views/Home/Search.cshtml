@@ -1,0 +1,26 @@
+@{
+    ViewBag.Title = "Search";
+}
+
+<form id="search">
+    <h2>Search Carpool Opportunity</h2>
+
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="search">Search Bar</label>
+        <input type="text" id="search" class="form-control" placeholder="Enter a search phrase" required>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="search">Search</button>
+    </div>
+</form>
+
+@section scripts {
+    <script type="text/javascript" src="~/Content/js/search.js"></script>
+}

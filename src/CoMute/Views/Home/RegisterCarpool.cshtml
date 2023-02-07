@@ -1,0 +1,61 @@
+@{
+    ViewBag.Title = "New Carpool";
+}
+
+<form id="registerCarpool">
+    <h2>New Carpool</h2>
+
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="departureTime">Departure Time</label>
+        <input type="text" id="departureTime" class="form-control" placeholder="Departure Time" required autofocus>
+    </div>
+
+    <div class="form-group">
+        <label for="expectedArrivalTime">Expected Arrival Time</label>
+        <input type="text" id="expectedArrivalTime" class="form-control" placeholder="Expected Arrival Time" required>
+    </div>
+
+    <div class="form-group">
+        <label for="origin">Origin</label>
+        <input type="text" id="origin" class="form-control" placeholder="Origin" required>
+    </div>
+
+    <div class="form-group">
+        <label for="daysAvailable">Days Available</label>
+        <input type="text" id="daysAvailable" class="form-control" placeholder="Days Available" required>
+    </div>
+
+    <div class="form-group">
+        <label for="destination">Destination</label>
+        <input type="text" id="destination" class="form-control" placeholder="Destination" required>
+    </div>
+
+    <div class="form-group">
+        <label for="availableSeats">Available Seats</label>
+        <input type="text" id="availableSeats" class="form-control" placeholder="Available Seats">
+    </div>
+
+    <div class="form-group">
+        <label for="owner-leader">Owner / Leader</label>
+        <input type="text" id="ownerleader" class="form-control" placeholder="Owner / Leader">
+    </div>
+
+    <div class="form-group">
+        <label for="notes">Owner / Leader</label>
+        <input type="text" id="notes" class="form-control" placeholder="Notes">
+    </div>    
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="newcarpool">Register Carpool</button>
+    </div>
+</form>
+
+@section scripts {
+    <script type="text/javascript" src="~/Content/js/registerCarpool.js"></script>
+}
