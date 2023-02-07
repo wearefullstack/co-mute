@@ -18,7 +18,42 @@ namespace CoMute.Web.Controllers.Web
             return View();
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         public ActionResult Register()
+        {
+            return View();
+        }
+
+        public ActionResult RegisterCarPool()
+        {
+            return View();
+        }
+
+        public ActionResult JoinLeaveCarPool()
+        {
+            return View();
+        }
+
+        public ActionResult Profile()
+        {
+            return View();
+        }
+
+        public ActionResult ViewCreated()
+        {
+            return View();
+        }
+
+        public ActionResult ViewJoined()
+        {
+            return View();
+        }
+
+        public ActionResult Search()
         {
             return View();
         }
