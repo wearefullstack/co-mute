@@ -1,0 +1,82 @@
+﻿@model CoMuteProject.Models.Car_Pool
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Car_Pool</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Departure_Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departure_Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Arrival_Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Arrival_Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Origin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Origin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Days_Available)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Days_Available)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Destination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Available_Seats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Available_Seats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<CoMuteProject.Models.Car_Pool>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Car Pools</h2>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Departure_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Arrival_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Days_Available)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Available_Seats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Departure_Time)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Date_Created)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Arrival_Time)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Origin)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Days_Available)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Destination)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Available_Seats)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Owner)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Notes)
+    </td>
+    @if (User.IsInRole("Admin"))
+    {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    }
+    <td>
+        <a href="~/Bookings_Car_Pools/Create/@item.Id">Book</a>
+    </td>
+</tr>
+}
+
+</table>

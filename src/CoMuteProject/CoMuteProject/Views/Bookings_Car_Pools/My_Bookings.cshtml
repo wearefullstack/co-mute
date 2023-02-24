@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CoMuteProject.Models.Bookings_Car_Pools>
+
+@{
+    ViewBag.Title = "My_Bookings";
+}
+
+<h2>My Bookings</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Car_Pool.Origin)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Car_Pool.Departure_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Car_Pool.Price)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Car_Pool.Origin)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Car_Pool.Departure_Time)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Car_Pool.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Time)
+    </td>
+    <td>
+        @Html.ActionLink("Cancel", "Delete", new { id = item.Id })
+    </td>
+</tr>
+}
+
+</table>
