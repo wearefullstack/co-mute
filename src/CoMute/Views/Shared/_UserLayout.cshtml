@@ -16,13 +16,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Co-Mute", "Login", "User", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Co-Mute", "UserProfile", "User", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Register", "Register", "User")</li>
-                    <li>@Html.ActionLink("Search", "Index", "Search")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("My Profile", "UserProfile", "User")</li>
+                    <li>@Html.ActionLink("Join/Leave Car-pool Opportunity", "JoinLeave", "Car")</li>
+                    <li>@Html.ActionLink("Travel Opportunities", "SearchCar", "Car")</li>
+                    <li>@Html.ActionLink("Created Car-pool Opportunities", "GetCar", "Car")</li>
+                    <li>@Html.ActionLink("Car-pool Opportunities Joined", "GetCarJoined", "Car")</li>
+                    <li>@Html.ActionLink("New Car-pool Opportunity", "CarRegister", "Car")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "User")</li>
                 </ul>
             </div>
         </div>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CoMute.Web.Models.carreg>
+
+@{
+    ViewBag.Title = "JoinLeave";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Join or Leave Car-pool Opportunity</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Expected_Arrival_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Available_Seats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner_Leader)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Expected_Arrival_Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Origin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Available_Seats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner_Leader)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.ActionLink("Join", "Edit", new { id=item.Departure_Time }) |
+            @Html.ActionLink("Leave", "Delete", new { id=item.Departure_Time })
+        </td>
+    </tr>
+}
+
+</table>

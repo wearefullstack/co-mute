@@ -1,0 +1,100 @@
+﻿@model CoMute.Web.Models.carreg
+
+@{
+    ViewBag.Title = "Car-pool Register";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Car-pool Register</title>
+</head>
+<body>
+    <h2>Car-pool Register</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Departure_Time, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Departure_Time, new { htmlAttributes = new { @type = "text", @id = "departure-time", @class = "form-control", @placeholder = "Departure Time", @required = " ", @autofocus = " " } })
+            @Html.ValidationMessageFor(model => model.Departure_Time, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Expected_Arrival_Time, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Expected_Arrival_Time, new { htmlAttributes = new { @type = "text", @id = "expected-arrival-time", @class = "form-control", @placeholder = "Expected Arrival Time", @required = " " } })
+            @Html.ValidationMessageFor(model => model.Expected_Arrival_Time, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Origin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Origin, new { htmlAttributes = new {@type = "text", @id = "origin", @class = "form-control", @placeholder = "Origin", @required = " " } })
+            @Html.ValidationMessageFor(model => model.Origin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <label for="days-available">Days available</label>
+        </div>
+        <div class="col-md-10">
+            <input type="text" id="days-available" class="form-control" placeholder="Days available" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Destination, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Destination, new { htmlAttributes = new {@type = "text", @id = "destination", @class = "form-control", @placeholder = "Destination", @required = " " } })
+            @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Available_Seats, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Available_Seats, new { htmlAttributes = new {@type = "text", @id = "available-seats", @class = "form-control", @placeholder = "Available seats", @required = " " } })
+            @Html.ValidationMessageFor(model => model.Available_Seats, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Owner_Leader, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Owner_Leader, new { htmlAttributes = new {@type = "text", @id = "owner/leader", @class = "form-control", @placeholder = "Owner/Leader", @required = " " } })
+            @Html.ValidationMessageFor(model => model.Owner_Leader, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Notes, new { htmlAttributes = new {@type = "text", @id = "notes", @class = "form-control", @placeholder = "Notes" } })
+            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-primary" type="submit" id="sign-in">Register</button>
+        </div>
+    </div>
+</div>
+    }
+
+    @section scripts {
+        <script type="text/javascript" src="~/Content/js/register.js"></script>
+    }
+</body>
+</html>

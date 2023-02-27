@@ -8,6 +8,7 @@ namespace CoMute.Web.Controllers.Web
 {
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
