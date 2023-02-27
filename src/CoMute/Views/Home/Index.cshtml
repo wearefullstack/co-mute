@@ -1,7 +1,7 @@
-﻿@{
-    ViewBag.Title = "Home";
-}
+﻿@{ ViewBag.Title = "Home"; }
 
+@if (Session["userGuid"] == null)
+{
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <form id="login">
@@ -13,12 +13,19 @@
     </div>
 </div>
 
-<div id="error" class="row row-margin hidden">
-    <div class="col-md-4 col-md-offset-4 alert alert-danger">
-        <p></p>
-    </div>
-</div>
+                <div id="error" class="row row-margin hidden">
+                    <div class="col-md-4 col-md-offset-4 alert alert-danger">
+                        <p></p>
+                    </div>
+                </div>
 
-@section scripts {
-    <script type="text/javascript" src="~/Content/js/login.js"></script>
-}
+                                @section scripts {
+                                    <script type="text/javascript" src="~/Content/js/login.js"></script>
+                                    @*<script type="text/javascript" src="~/Content/js/session.js"></script>*@
+
+
+                                } }
+                                            else
+                                            {
+                                                //Navigate to user dashboard
+                                            }

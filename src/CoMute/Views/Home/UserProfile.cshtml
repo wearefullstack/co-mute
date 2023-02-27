@@ -1,0 +1,60 @@
+﻿@*@model CoMute.Web.Models.Dto.RegistrationRequest*@
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<h2>UserProfile</h2>
+
+<form id="userProfile">
+
+
+    <div id="error" class="row row-margin hidden">
+        <div class="col-md-4 col-md-offset-4 alert alert-danger">
+            <p></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="FirstName" class="form-control" placeholder="First name" @*value="@Model.Name"*@ required autofocus>
+    </div>
+
+    <div class="form-group">
+            <label for="surname">Surname</label>
+            <input type="text" id="surname" name="Surname" class="form-control" placeholder="Surname" @*value="@Model.Surname"*@ required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="Phone" class="form-control" placeholder="Phone number" @*value="@Model.PhoneNumber"*@ >
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" disabled name="Email" class="form-control" placeholder="Email address" @*value="@Model.EmailAddress"*@ required>
+        </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="Password" class="form-control" placeholder="Password" required>
+    </div>
+
+    @*<div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" class="form-control" placeholder="Confirm password">
+    </div>*@
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="update-user">Update</button>
+    </div>
+</form>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Content/js/profile.js"></script>
+}

@@ -6,8 +6,13 @@
     <title>@ViewBag.Title - Co-Mute</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+
 </head>
 <body>
+
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -16,18 +21,71 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Co-Mute", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Co-Mute", "JoinedCarPools", "CarPool", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("My Profile", "Profile", "User")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
-                    <li>@Html.ActionLink("Search", "Index", "Search")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                <ul tabid="dashboard" class="nav navbar-nav">
+                    @*@if (Context.Session["userGuid"] != null)
+        {*@
+                    <li id="menu-item-profile" class="menu-item" data-value="item-profile">@Html.ActionLink("My Profile", "UserProfile", "Home")</li>
+                    @*<li class="menu-item" data-value="item-available">@Html.ActionLink("Available Pools", "AvailableCarPools", "CarPool")</li>*@
+                    <li class="menu-item" data-value="item-search">@Html.ActionLink("Search", "SearchCarPools", "CarPool")</li>
+                    @*<li class="menu-item" data-value="item-logout">@Html.ActionLink("Logout", "index", "Home")</li>*@
+                    @*}
+        else
+        {*@
+                    <li class="menu-item" data-value="item-register">@Html.ActionLink("Register", "Register", "Home")</li>
+                    @*}
+        }*@
+
+
+                    <li class="menu-item" data-value="item4">@Html.ActionLink("About", "About", "Home")</li>
+
+                    <li class="menu-item" data-value="item-logout" style="display:none;">@Html.ActionLink("<i class='fa fa-sign-out'></i> Logout", "Logout", "Account")</li>
+
+                    @*<li>
+                        <div class="dropdown">
+                            <button class="dropbtn"  id="username" data-value="username"></button>
+                            <div class="dropdown-content">
+
+                                <a href="@Url.Action("Logout", "Account")"><i class="fa fa-sign-out"></i> Logout</a>
+                            </div>
+                        </div>
+                    </li>*@
+
+                   
+
                 </ul>
             </div>
         </div>
     </div>
+    <script>
+        // get the localStorage value
+        const isLoggedIn = localStorage.getItem('userGuid');
+
+        // loop through each menu item and disable if user is not logged in
+        $('.menu-item').each(function () {
+            const menuItemValue = $(this).data('value'); // assuming you have a data attribute 'data-value' on each menu item
+            if (isLoggedIn === null && (menuItemValue === 'item1' || menuItemValue === 'item2')) { // replace 'someMenuItemValue' with the value of the menu item you want to disable
+                /*$(this).addClass('disabled');*/
+                $(this).hide();
+            }
+            if (isLoggedIn != null && (menuItemValue === 'item4')) { // replace 'someMenuItemValue' with the value of the menu item you want to disable
+                /*$(this).addClass('disabled');*/
+                $(this).hide();
+            }
+        });
+
+        $('.menu-item[data-value="item-logout"] a').on('click', function (e) {
+            e.preventDefault();
+            isLoggedIn = null;
+            //localStorage.setItem('isLoggedIn', false);
+            //window.location.href = $(this).attr('href');
+
+           
+            window.location = "Home/Index";
+        });
+    </script>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -39,5 +97,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
+@section scripts {
+    @*<script type="text/javascript" src="~/Content/js/session.js"></script>*@
+}

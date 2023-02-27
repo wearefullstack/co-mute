@@ -1,8 +1,11 @@
 ﻿
+using System;
+
 namespace CoMute.Web.Models.Dto
 {
     public class RegistrationRequest
     {
+        public Guid UserGuid { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string EmailAddress { get; set; }

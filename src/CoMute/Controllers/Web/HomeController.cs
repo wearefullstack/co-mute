@@ -22,5 +22,21 @@ namespace CoMute.Web.Controllers.Web
         {
             return View();
         }
+
+        public ActionResult UserProfile()
+        {
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            
+
+            // set the IsLoggedIn flag to false
+            Session["IsLoggedIn"] = false;
+
+            // redirect the user to the login page
+            return RedirectToAction("Index", "Account");
+        }
     }
 }

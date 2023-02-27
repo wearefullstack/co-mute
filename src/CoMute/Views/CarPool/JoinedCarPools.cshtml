@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CoMute.Web.Models.CarPool>
+
+@{
+    ViewBag.Title = "JoinedCarPools";
+}
+
+<h2>JoinedCarPools</h2>
+
+
+<div>
+    <table id="tblCarpools" class="display" width="100%">
+        <thead>
+            <tr>
+                <th hidden>
+                    UserGuid
+                </th>
+                <th>
+                    Origin
+                </th>
+                <th>
+                    Destination
+                </th>
+                <th>
+                    DepartureTime
+                </th>
+                <th>
+                    ExpectedArrivalTime
+                </th>
+                <th>
+                    AvailableSeats
+                </th>
+                <th>
+                    Notes
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Joined Date
+                </th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+    </table>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Content/js/joinedCarPool.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
+    @*<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />*@
+}

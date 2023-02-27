@@ -9,7 +9,14 @@ namespace CoMute.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.dataTables.min.js",
+                        "~/Scripts/dataTables.buttons.min.js",
+                        "~/Scripts/dataTables.select.min.js",
+                        "~/Scripts/dataTables.searchPanes.min.js",
+                        "~/Scripts/session.js"
+
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
