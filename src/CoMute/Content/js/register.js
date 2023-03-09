@@ -33,7 +33,19 @@
         }
 
         $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
-            window.location.href = '/home/index';
+            var $alert = $('#success');
+            var $p = $alert.find("p");
+            $p.text('Registration Successful');
+            $alert.removeClass('hidden');
+
+            window.scrollTo(0, 0);            
+
+            setTimeout(function () {
+                $p.text('');
+                $alert.addClass('hiddne');
+                window.location.href = '/home/index';
+            }, 3000);
+            
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");
