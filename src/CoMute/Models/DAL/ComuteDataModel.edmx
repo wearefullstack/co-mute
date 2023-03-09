@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ComuteDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CarpoolsJoined">
+          <Key>
+            <PropertyRef Name="CarpoolJoinedID" />
+          </Key>
+          <Property Name="CarpoolJoinedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserJoinID" Type="int" Nullable="false" />
+          <Property Name="TheCarPoolID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarpoolsTable">
+          <Key>
+            <PropertyRef Name="CarpoolID" />
+          </Key>
+          <Property Name="CarpoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnerID" Type="int" Nullable="false" />
+          <Property Name="Origin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DaysAvailable" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AvailableSeats" Type="int" Nullable="false" />
+          <Property Name="DepartureTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="ExpectedTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Notes" Type="text" />
+        </EntityType>
+        <EntityType Name="UsersList">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CarpoolsJoined_CarpoolsTable">
+          <End Role="CarpoolsTable" Type="Self.CarpoolsTable" Multiplicity="1" />
+          <End Role="CarpoolsJoined" Type="Self.CarpoolsJoined" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarpoolsTable">
+              <PropertyRef Name="CarpoolID" />
+            </Principal>
+            <Dependent Role="CarpoolsJoined">
+              <PropertyRef Name="TheCarPoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarpoolsJoined_UsersList">
+          <End Role="UsersList" Type="Self.UsersList" Multiplicity="1" />
+          <End Role="CarpoolsJoined" Type="Self.CarpoolsJoined" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersList">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="CarpoolsJoined">
+              <PropertyRef Name="UserJoinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarpoolsTable_UsersList">
+          <End Role="UsersList" Type="Self.UsersList" Multiplicity="1" />
+          <End Role="CarpoolsTable" Type="Self.CarpoolsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersList">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="CarpoolsTable">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ComuteDBModelStoreContainer">
+          <EntitySet Name="CarpoolsJoined" EntityType="Self.CarpoolsJoined" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarpoolsTable" EntityType="Self.CarpoolsTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersList" EntityType="Self.UsersList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CarpoolsJoined_CarpoolsTable" Association="Self.FK_CarpoolsJoined_CarpoolsTable">
+            <End Role="CarpoolsTable" EntitySet="CarpoolsTable" />
+            <End Role="CarpoolsJoined" EntitySet="CarpoolsJoined" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarpoolsJoined_UsersList" Association="Self.FK_CarpoolsJoined_UsersList">
+            <End Role="UsersList" EntitySet="UsersList" />
+            <End Role="CarpoolsJoined" EntitySet="CarpoolsJoined" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarpoolsTable_UsersList" Association="Self.FK_CarpoolsTable_UsersList">
+            <End Role="UsersList" EntitySet="UsersList" />
+            <End Role="CarpoolsTable" EntitySet="CarpoolsTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ComuteDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CarpoolsJoined">
+          <Key>
+            <PropertyRef Name="CarpoolJoinedID" />
+          </Key>
+          <Property Name="CarpoolJoinedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserJoinID" Type="Int32" Nullable="false" />
+          <Property Name="TheCarPoolID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarpoolsTable" Relationship="Self.FK_CarpoolsJoined_CarpoolsTable" FromRole="CarpoolsJoined" ToRole="CarpoolsTable" />
+          <NavigationProperty Name="UsersList" Relationship="Self.FK_CarpoolsJoined_UsersList" FromRole="CarpoolsJoined" ToRole="UsersList" />
+        </EntityType>
+        <EntityType Name="CarpoolsTable">
+          <Key>
+            <PropertyRef Name="CarpoolID" />
+          </Key>
+          <Property Name="CarpoolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <Property Name="Origin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DaysAvailable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AvailableSeats" Type="Int32" Nullable="false" />
+          <Property Name="DepartureTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="ExpectedTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CarpoolsJoineds" Relationship="Self.FK_CarpoolsJoined_CarpoolsTable" FromRole="CarpoolsTable" ToRole="CarpoolsJoined" />
+          <NavigationProperty Name="UsersList" Relationship="Self.FK_CarpoolsTable_UsersList" FromRole="CarpoolsTable" ToRole="UsersList" />
+        </EntityType>
+        <EntityType Name="UsersList">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CarpoolsJoineds" Relationship="Self.FK_CarpoolsJoined_UsersList" FromRole="UsersList" ToRole="CarpoolsJoined" />
+          <NavigationProperty Name="CarpoolsTables" Relationship="Self.FK_CarpoolsTable_UsersList" FromRole="UsersList" ToRole="CarpoolsTable" />
+        </EntityType>
+        <Association Name="FK_CarpoolsJoined_CarpoolsTable">
+          <End Role="CarpoolsTable" Type="Self.CarpoolsTable" Multiplicity="1" />
+          <End Role="CarpoolsJoined" Type="Self.CarpoolsJoined" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarpoolsTable">
+              <PropertyRef Name="CarpoolID" />
+            </Principal>
+            <Dependent Role="CarpoolsJoined">
+              <PropertyRef Name="TheCarPoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarpoolsJoined_UsersList">
+          <End Role="UsersList" Type="Self.UsersList" Multiplicity="1" />
+          <End Role="CarpoolsJoined" Type="Self.CarpoolsJoined" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersList">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="CarpoolsJoined">
+              <PropertyRef Name="UserJoinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CarpoolsTable_UsersList">
+          <End Role="UsersList" Type="Self.UsersList" Multiplicity="1" />
+          <End Role="CarpoolsTable" Type="Self.CarpoolsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersList">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="CarpoolsTable">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ComuteDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CarpoolsJoineds" EntityType="Self.CarpoolsJoined" />
+          <EntitySet Name="CarpoolsTables" EntityType="Self.CarpoolsTable" />
+          <EntitySet Name="UsersLists" EntityType="Self.UsersList" />
+          <AssociationSet Name="FK_CarpoolsJoined_CarpoolsTable" Association="Self.FK_CarpoolsJoined_CarpoolsTable">
+            <End Role="CarpoolsTable" EntitySet="CarpoolsTables" />
+            <End Role="CarpoolsJoined" EntitySet="CarpoolsJoineds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarpoolsJoined_UsersList" Association="Self.FK_CarpoolsJoined_UsersList">
+            <End Role="UsersList" EntitySet="UsersLists" />
+            <End Role="CarpoolsJoined" EntitySet="CarpoolsJoineds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CarpoolsTable_UsersList" Association="Self.FK_CarpoolsTable_UsersList">
+            <End Role="UsersList" EntitySet="UsersLists" />
+            <End Role="CarpoolsTable" EntitySet="CarpoolsTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ComuteDBModelStoreContainer" CdmEntityContainer="ComuteDBEntities">
+          <EntitySetMapping Name="CarpoolsJoineds">
+            <EntityTypeMapping TypeName="ComuteDBModel.CarpoolsJoined">
+              <MappingFragment StoreEntitySet="CarpoolsJoined">
+                <ScalarProperty Name="CarpoolJoinedID" ColumnName="CarpoolJoinedID" />
+                <ScalarProperty Name="UserJoinID" ColumnName="UserJoinID" />
+                <ScalarProperty Name="TheCarPoolID" ColumnName="TheCarPoolID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarpoolsTables">
+            <EntityTypeMapping TypeName="ComuteDBModel.CarpoolsTable">
+              <MappingFragment StoreEntitySet="CarpoolsTable">
+                <ScalarProperty Name="CarpoolID" ColumnName="CarpoolID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="DaysAvailable" ColumnName="DaysAvailable" />
+                <ScalarProperty Name="AvailableSeats" ColumnName="AvailableSeats" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="ExpectedTime" ColumnName="ExpectedTime" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersLists">
+            <EntityTypeMapping TypeName="ComuteDBModel.UsersList">
+              <MappingFragment StoreEntitySet="UsersList">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

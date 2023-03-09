@@ -1,4 +1,5 @@
 ﻿using CoMute.Web.Models;
+using CoMute.Web.Models.DAL;
 using CoMute.Web.Models.Dto;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,23 @@ namespace CoMute.Web.Controllers.API
 {
     public class UserController : ApiController
     {
-        [Route("user/add")]
+        //[Route("user/add")]
         public HttpResponseMessage Post(RegistrationRequest registrationRequest)
         {
-            var user = new User()
+            var user = new UsersList()
             {
                 Name = registrationRequest.Name,
                 Surname = registrationRequest.Surname,
-                EmailAddress = registrationRequest.EmailAddress
+                EmailAddress = registrationRequest.EmailAddress,
+                PhoneNumber = registrationRequest.PhoneNumber,
+                Password = registrationRequest.Password
             };
+
+
+
+            ComuteDBEntities db = new ComuteDBEntities();
+            db.UsersLists.Add(user);
+            db.SaveChanges();
 
             return Request.CreateResponse(HttpStatusCode.Created, user);
         }

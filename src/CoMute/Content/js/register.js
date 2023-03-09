@@ -33,7 +33,7 @@
         }
 
         $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
-            // TODO: Navigate away...
+            window.location.href = '/home/index';
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");
