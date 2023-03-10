@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Antlr.Runtime.Tree;
+using CoMute.Web.Models;
+using CoMute.Web.Models.DAL;
+using CoMute.Web.Models.Dto;
 
 namespace CoMute.Web.Controllers.Web
 {
@@ -16,7 +20,12 @@ namespace CoMute.Web.Controllers.Web
 
         public ActionResult Profile()
         {
-            return View();
+            ComuteDBEntities db = new ComuteDBEntities();
+            int idNum = 1;
+
+            UsersList user = db.UsersLists.FirstOrDefault(x => x.UserID == idNum);
+
+            return View(user);
         }
     }
 }

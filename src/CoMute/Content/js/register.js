@@ -32,7 +32,7 @@
             return;
         }
 
-        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
+        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, mailAddress: email, password: pswd }, function (data) {
             var $alert = $('#success');
             var $p = $alert.find("p");
             $p.text('Registration Successful');
