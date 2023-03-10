@@ -6,6 +6,17 @@
 }
 
 <h2>Profile</h2>
+<div id="error" class="row row-margin hidden">
+    <div class="col-md-4 col-md-offset-4 alert alert-danger">
+        <p></p>
+    </div>
+</div>
+
+<div id="success" class="row row-margin hidden">
+    <div class="col-md-4 col-md-offset-4 alert alert-success">
+        <p></p>
+    </div>
+</div>
 
 
 @using (Html.BeginForm())
@@ -60,7 +71,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="button" value="Save" class="btn btn-default" id="saveChanges" />
-                <input type="button" value="Edit" class="btn btn-default" id="allowEdit"/>
+                <input type="button" value="Edit" class="btn btn-default" id="allowEdit" />
             </div>
         </div>
     </div>
