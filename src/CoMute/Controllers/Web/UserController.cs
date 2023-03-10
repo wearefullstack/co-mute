@@ -6,19 +6,15 @@ using System.Web.Mvc;
 
 namespace CoMute.Web.Controllers.Web
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
+        // GET: User
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            return View();
-        }
-
-        public ActionResult Register()
+        public ActionResult Profile()
         {
             return View();
         }

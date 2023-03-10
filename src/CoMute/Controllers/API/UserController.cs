@@ -13,6 +13,9 @@ namespace CoMute.Web.Controllers.API
     public class UserController : ApiController
     {
         //[Route("user/add")]
+        //Adds user into the database and saves the changes to thte database
+        //The Post comes from the "register.js" file In the Conent Folder under the js folder
+        //The DB model is found in the Model folder, under the DAL foler.
         public HttpResponseMessage Post(RegistrationRequest registrationRequest)
         {
             var user = new UsersList()
