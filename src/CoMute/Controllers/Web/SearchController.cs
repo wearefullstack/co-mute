@@ -12,7 +12,9 @@ namespace CoMute.Web.Controllers.Web
         // GET: Search
         public ActionResult Index()
         {            
-            return View();
+            ComuteDBEntities db = new ComuteDBEntities();
+
+            return View(db.CarpoolsTables);
         }
 
         public ActionResult CreateCarpool()

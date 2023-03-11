@@ -21,6 +21,13 @@ namespace CoMute.Web.Controllers.API
 
             if(user != null && user.UserID!=0)
             {
+                LoggedInUser.Id = user.UserID;
+                LoggedInUser.Name = user.Name;
+                LoggedInUser.Surname = user.Surname;
+                LoggedInUser.Email = user.EmailAddress;
+                LoggedInUser.PhoneNumber = user.PhoneNumber;
+                LoggedInUser.Password = user.Password;
+
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             else

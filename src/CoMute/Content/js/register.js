@@ -42,7 +42,7 @@
 
             setTimeout(function () {
                 $p.text('');
-                $alert.addClass('hiddne');
+                $alert.addClass('hidden');
                 window.location.href = '/home/index';
             }, 3000);
             

@@ -21,7 +21,13 @@ namespace CoMute.Web.Controllers.Web
         public ActionResult Profile()
         {
             ComuteDBEntities db = new ComuteDBEntities();
-            int idNum = 1;
+            int idNum = 0;
+            idNum = LoggedInUser.Id;
+
+            if (idNum == 0)
+            {
+               return RedirectToAction("Index", "Home");
+            }
 
             UsersList user = db.UsersLists.FirstOrDefault(x => x.UserID == idNum);
 

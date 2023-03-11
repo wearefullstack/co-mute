@@ -1,8 +1,91 @@
-﻿
+﻿@model IEnumerable<CoMute.Web.Models.DAL.CarpoolsTable>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Seach</h2>
+<h2>Search for Car-Pool Oppurtunity</h2>
 
+<div id="error" class="row row-margin hidden">
+    <div class="col-md-4 col-md-offset-4 alert alert-danger">
+        <p></p>
+    </div>
+</div>
+
+<div id="success" class="row row-margin hidden">
+    <div class="col-md-4 col-md-offset-4 alert alert-success">
+        <p></p>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Create New", "CreateCarpool")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Origin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DaysAvailable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableSeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpectedTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UsersList.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Origin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysAvailable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpectedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsersList.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Join Carpool", null, new { id = item.CarpoolID }, new { @class = " linkJoin btn btn-default" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Content/js/join.js"></script>
+}

@@ -14,7 +14,29 @@ namespace CoMute.Web.Controllers.API
     {
         public HttpResponseMessage Post(RegistrationRequest registrationRequest)
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
+            ComuteDBEntities db = new ComuteDBEntities();
+            UsersList user = db.UsersLists.FirstOrDefault(x=>x.UserID == LoggedInUser.Id);
+            if (user != null && user.UserID != 0)
+            {
+                try
+                {
+                    user.Name = registrationRequest.Name;
+                    user.Surname = registrationRequest.Surname;
+                    user.PhoneNumber = registrationRequest.PhoneNumber;
+                    user.EmailAddress = registrationRequest.EmailAddress;
+                    user.Password = registrationRequest.Password;
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
     }
 }

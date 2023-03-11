@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AuthenticationController.cs" />
+    <Compile Include="Controllers\API\JoinController.cs" />
     <Compile Include="Controllers\API\ProfileController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dto\CarpoolCreationRequest.cs" />
+    <Compile Include="Models\Dto\CarPoolID.cs" />
     <Compile Include="Models\DAL\CarpoolsJoined.cs">
       <DependentUpon>ComuteDataModel.tt</DependentUpon>
     </Compile>
@@ -164,6 +167,7 @@
     </Compile>
     <Compile Include="Models\Dto\LoginRequest.cs" />
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
+    <Compile Include="Models\LoggedInUser.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -171,6 +175,7 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\Site.css" />
+    <Content Include="Content\js\join.js" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\profile.js" />
     <Content Include="Content\js\register.js" />
@@ -222,13 +227,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Search\CreateCarpool.cshtml" />
     <Content Include="Views\Search\ViewCarpool.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\Search\CreateCarpool.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Join\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
