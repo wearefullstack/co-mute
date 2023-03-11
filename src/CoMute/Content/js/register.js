@@ -3,36 +3,36 @@
         ev.preventDefault();
 
         var name = $('#name').val();
-        if (!name) {
+        if (name==null) {
             return;
         }
 
         var surname = $('#surname').val();
-        if (!surname) {
+        if (surname == null) {
             return;
         }
 
         var phone = $('#phone').val();
-        if (!phone) {
+        if (phone == null) {
             return;
         }
 
         var email = $('#email').val();
-        if (!email) {
+        if (email == null) {
             return;
         }
 
         var pswd = $('#password').val();
-        if (!pswd) {
+        if (pswd == null) {
             return;
         }
 
         var cpswd = $('#confirm-password').val();
-        if (!email) {
+        if (cpswd == null && cpswd != pswd) {
             return;
         }
 
-        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, mailAddress: email, password: pswd }, function (data) {
+        $.post('/api/user', { name: name, surname: surname, phoneNumber: phone, emailAddress: email, password: pswd }, function (data) {
             var $alert = $('#success');
             var $p = $alert.find("p");
             $p.text('Registration Successful');

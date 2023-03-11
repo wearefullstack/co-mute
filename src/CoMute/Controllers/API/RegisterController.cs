@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace CoMute.Web.Controllers.API
 {
-    public class UserController : ApiController
+    public class RegisterController : ApiController
     {
         //[Route("user/add")]
         //Adds user into the database and saves the changes to thte database
@@ -27,17 +27,11 @@ namespace CoMute.Web.Controllers.API
                 Password = registrationRequest.Password
             };
 
-            try
-            {
-                ComuteDBEntities db = new ComuteDBEntities();
-                db.UsersLists.Add(user);
-                db.SaveChanges();
-            }
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
-            }
+
+            ComuteDBEntities db = new ComuteDBEntities();
+            db.UsersLists.Add(user);
+            db.SaveChanges();
 
             return Request.CreateResponse(HttpStatusCode.Created, user);
         }
