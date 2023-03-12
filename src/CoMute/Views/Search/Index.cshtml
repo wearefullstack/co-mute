@@ -18,74 +18,81 @@
         <p></p>
     </div>
 </div>
-
-<p>
+<pc class=" btn btn-default">
     @Html.ActionLink("Create New", "CreateCarpool")
-</p>
+</pc>
+<div class="col-md-4 col-md-offset-4">
+    <input type="search" id="searchTerm" class="form-control" placeholder="Search..." autofocus>
+</div>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Origin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Destination)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DaysAvailable)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AvailableSeats)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DepartureTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpectedTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Notes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UsersList.Name)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Origin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Destination)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DaysAvailable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvailableSeats)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpectedTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsersList.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Join Carpool", null, new { id = item.CarpoolID }, new { @class = " linkJoin btn btn-default" })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.UsersList.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Origin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaysAvailable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpectedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    
+    <tbody id="viewOfCarpool">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsersList.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Origin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DaysAvailable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableSeats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpectedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.ActionLink("Join Carpool", null, new { id = item.CarpoolID }, new { @class = " linkJoin btn btn-default" })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
 
 @section Scripts {
     <script type="text/javascript" src="~/Content/js/join.js"></script>
+    <script type="text/javascript" src="~/Content/js/search.js"></script>
 }

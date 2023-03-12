@@ -181,6 +181,7 @@
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\profile.js" />
     <Content Include="Content\js\register.js" />
+    <Content Include="Content\js\search.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Models\DAL\ComuteDataModel.Context.tt">
