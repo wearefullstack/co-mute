@@ -20,7 +20,22 @@ namespace CoMute.Web.Controllers.API
             table.Destination = request.Destination;
             table.DaysAvailable = request.DaysAvailable;
             table.AvailableSeats = request.AvailableSeats;
+            table.DepartureTime = request.DepartureTime;
+            table.ExpectedTime = request.ExpectedTime;
             table.Notes = request.TheNotes;
+            table.OwnerID = LoggedInUser.Id;
+
+            try
+            {
+                ComuteDBEntities db = new ComuteDBEntities();
+                db.CarpoolsTables.Add(table);
+                db.SaveChanges();
+            }
+            catch 
+            {
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable);
+            }
+
             return Request.CreateResponse(HttpStatusCode.Accepted);
         }
     }

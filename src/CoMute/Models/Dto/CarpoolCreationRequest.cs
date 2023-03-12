@@ -9,8 +9,8 @@ namespace CoMute.Web.Models.Dto
         public string Destination { get; set;}
         public string DaysAvailable { get; set; }
         public int AvailableSeats { get; set; }
-        public string DepartureTime { get; set; }
-        public string ExpectedTime { get; set; }
+        public TimeSpan DepartureTime { get; set; }
+        public TimeSpan ExpectedTime { get; set; }
         public string TheNotes { get; set; }
     }
 }

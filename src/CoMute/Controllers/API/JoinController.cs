@@ -42,7 +42,7 @@ namespace CoMute.Web.Controllers.API
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
             return Request.CreateResponse(HttpStatusCode.Accepted);
