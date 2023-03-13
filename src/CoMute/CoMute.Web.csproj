@@ -139,6 +139,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarPoolDataSetToView.cs" />
     <Compile Include="Models\Dto\CarpoolCreationRequest.cs" />
     <Compile Include="Models\Dto\CarPoolID.cs" />
     <Compile Include="Models\DAL\CarpoolsJoined.cs">
@@ -230,10 +231,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Search\ViewCarpool.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Search\CreateCarpool.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\ViewCarpoolCreated.cshtml" />
+    <Content Include="Views\Search\ViewCarpoolJoined.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

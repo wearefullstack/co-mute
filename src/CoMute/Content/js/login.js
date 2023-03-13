@@ -12,7 +12,7 @@
         }
 
         $.post('/api/Authentication', { email: email, password: pswd }, function (data) {
-            window.location.href = '/home/about';
+            window.location.href = '/Search/Index';
         }).fail(function (data) {
             var $alert = $("#error");
             var $p = $alert.find("p");

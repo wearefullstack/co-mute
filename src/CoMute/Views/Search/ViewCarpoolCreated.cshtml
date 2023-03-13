@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CoMute.Web.Models.CarPoolDataSetToView>
+@{
+    ViewBag.Title = "ViewCarpoolCreated";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Carpools Created</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Name)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Origin)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Destination)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Days)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Seats)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.DepartTime)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.ExpectTime)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.Notes)
+            </td>
+        </tr>
+    </thead>
+
+    <tbody id="viewOfCarpoolCreated">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Origin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Days)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpectTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
