@@ -106,13 +106,12 @@ namespace CoMute.Web.Models.DAL
             }
             return bool1;//return bool1 value.
         }
-
+        //Still not finish as it gives an SQL error
         public static void registerCarPool(registerCarPoolRequest registerCarPoolRequest)
         {
             //Using the SqlConnection with the connection string.
             using (SqlConnection con = new SqlConnection(connectionS))
             {
-                //The command that implements the storage procedure that adds values to  User table
                 SqlCommand cmd = new SqlCommand("AddCarPool", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 //add the values with the parameters given in the stored procedure
