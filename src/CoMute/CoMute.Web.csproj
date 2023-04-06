@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -121,13 +123,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\API\AuthenticationController.cs" />
+    <Compile Include="Controllers\API\HomeController.cs" />
+    <Compile Include="Controllers\API\CarPoolController.cs" />
     <Compile Include="Controllers\API\UserController.cs" />
+    <Compile Include="Controllers\Web\CarPoolController.cs" />
     <Compile Include="Controllers\Web\HomeController.cs" />
+    <Compile Include="Controllers\Web\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Car_Pool.cs" />
+    <Compile Include="Models\DAL\DAL.cs" />
     <Compile Include="Models\Dto\LoginRequest.cs" />
+    <Compile Include="Models\Dto\registerCarPoolRequest.cs" />
     <Compile Include="Models\Dto\RegistrationRequest.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -168,10 +176,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\CarPool\CarPoolList.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\CarPool\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
