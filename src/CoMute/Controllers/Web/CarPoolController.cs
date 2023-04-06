@@ -1,4 +1,5 @@
 ﻿using CoMute.Web.Models;
+using CoMute.Web.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,21 @@ namespace CoMute.Web.Controllers.Web
             return View();
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+
         public ActionResult CarPoolList()
         {
             IEnumerable<Car_Pool> carPools = null;
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:59598/api/home");
+                client.BaseAddress = new Uri("http://localhost:59598/api/carPool");
                 //HTTP GET
-                var responseTask = client.GetAsync("home");
+                var responseTask = client.GetAsync("carPool");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -45,6 +52,32 @@ namespace CoMute.Web.Controllers.Web
                 }
             }
             return View(carPools);
+        }
+
+        [HttpPost]
+        public ActionResult Create(registerCarPoolRequest registerCarPoolRequest)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:59598/api/carpool");
+
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<registerCarPoolRequest>("carpool", registerCarPoolRequest);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return View("~/Views/CarPool/Create.cshtml");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+                    return View(registerCarPoolRequest);
+                }
+            }
+
         }
     }
 }

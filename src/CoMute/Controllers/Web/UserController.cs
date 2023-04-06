@@ -23,10 +23,15 @@ namespace CoMute.Web.Controllers.Web
                 var responseTask = client.GetAsync("user?EmailAdress=" + HomeController.email);
                 responseTask.Wait();
 
+                currentUser.EmailAddress = HomeController
+                            .email;
+
+
+                currentUser.UserID = 10000;
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-
+                    
                 }
                 else //web api sent error response 
                 {

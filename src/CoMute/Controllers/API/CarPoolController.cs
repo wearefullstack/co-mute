@@ -45,7 +45,8 @@ namespace CoMute.Web.Controllers.API
         {
             if (ModelState.IsValid)
             {
-                //DAL.registerCarPool(registerCarPoolRequest);
+                registerCarPoolRequest.owner = Web.UserController.currentUser.UserID;
+                DAL.registerCarPool(registerCarPoolRequest);
 
                 return Ok();
             }

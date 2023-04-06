@@ -12,7 +12,7 @@ namespace CoMute.Web.Models.Dto
 
         public string origin { get; set; }
 
-        public DateTime[] daysAvailable { get; set; }
+        public int daysAvailable { get; set; }
 
         public string destination { get; set; }
 
