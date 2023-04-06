@@ -4,24 +4,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoMute.UI.Models
+namespace CoMute.UI.Models.Users
 {
-    public class RegisterRequest
+    public class RegisterModel
     {
         [Required]
         public string Name { get; set; }
-
         [Required]
         public string Surname { get; set; }
 
-#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-        public string? Phone { get; set; }
-#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+        [Required]
+        public string UserName { get; set; }
+
+        public string Phone { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
         [Required]
         public string Password { get; set; }
     }

@@ -349,6 +349,29 @@ namespace CoMute.API.Services.Opportunity
 
                     searchOpportunities = r.ToList();
                 }
+
+                if(search.SearchType == "ALL" )
+                {
+                    var r = await cnn.QueryAsync<SearchOpportunityModel>($@"  Select  cpo.OpportunityId ,
+			                                                                            UserId ,
+			                                                                            UserName,
+			                                                                            OpportunityName
+			                                                                            DepartureTime,
+			                                                                            ArrivalTime,
+			                                                                            Origin,
+			                                                                            DaysAvailable,
+			                                                                            Destination,
+			                                                                            AvailableSeats,
+			                                                                            Notes,
+			                                                                            IsLeader,
+			                                                                            CreatedDate ,
+			                                                                            JoinDate 
+                                                                              FROM CoMute.dbo.CarPoolOpportunity cpo inner join 
+                                                                                   CoMute.dbo.UserOpportunity up  on cpo.OpportunityId = up.OpportunityId inner join
+	                                                                               CoMute.dbo.AspNetUsers u on u.Id = up.UserId", commandTimeout: 0);
+
+                    searchOpportunities = r.ToList();
+                }
             }
             return searchOpportunities;
         }

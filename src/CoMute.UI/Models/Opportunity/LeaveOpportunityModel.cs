@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoMute.UI.Models
+namespace CoMute.UI.Models.Opportunity
 {
-    public class LoginRequest
+    public class LeaveOpportunityModel
     {
         [Required]
-        public string? Username { get; set; }
+        public int OpportunityId { get; set; }
+
         [Required]
-        public string? Password { get; set; }
+        public string UserId { get; set; }
     }
 }

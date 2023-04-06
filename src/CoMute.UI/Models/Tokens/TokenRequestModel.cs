@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoMute.API.Models.Tokens
+namespace CoMute.UI.Models.Tokens
 {
     public class TokenRequestModel
     {
