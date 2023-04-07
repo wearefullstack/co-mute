@@ -9,6 +9,36 @@ body {
     background: linear-gradient(#141e30, #243b55);
 }
 
+input[type=submit] {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
+
+    input[type=submit]:hover {
+        background: #03e9f4;
+        color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 100px #03e9f4;
+    }
+input[type= submit] {
+    width: 32%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: 1px #fff;
+    outline: none;
+    background: transparent;
+}
 .background {
     background: linear-gradient(#141e30, #243b55);
 }

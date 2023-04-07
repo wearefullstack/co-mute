@@ -1,30 +1,59 @@
-﻿
+﻿@model CoMute.UI.Models.Tokens.TokenRequestModel
 @{
     Layout = null;
 }
 @*<h1>Login Page - to Log a user into CoMute app</h1>
-<h2>This will be binded to the login model using razor and will connect to a login controller method that will send a request to the login API endPoint <br />
-    once logged in the user will go onto their home oage with thre profile, and list of Car pool opportunities</h2>*@
+    <h2>This will be binded to the login model using razor and will connect to a login controller method that will send a request to the login API endPoint <br />
+        once logged in the user will go onto their home oage with thre profile, and list of Car pool opportunities</h2>*@
 <head>
     <link rel="stylesheet" href="~/css/Account.css">
 </head>
+
 <div class="login-box">
     <h2>Co-Mute Login</h2>
-    <form>
-        <div class="user-box">
-            <input type="text" name="" required="">
-            <label>Username</label>
+    <form asp-action="LoginRequest" asp-controller="Account">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="user-box form-group">
+            <input type="email" asp-for="Email" required="required">
+            <label asp-for="Email">Email</label>
+            <span class="text-danger" asp-validation-for="Email"></span>
         </div>
-        <div class="user-box">
-            <input type="password" name="" required="">
-            <label>Password</label>
+        <div class="user-box form-group">
+            <input type="password" asp-for="Password" required="required">
+            <label asp-for="Password">Password</label>
+            <span class="text-danger" asp-validation-for="Password"></span>
         </div>
-        <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Submit
-        </a>
+        @*<a id="submit_link">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Login
+            </a>*@
+        <div class="row">
+            <div class="col" style="float: left; width: 65%; padding-right: 15%">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+            <div class="col" style="float:right;">
+                <a asp-action="Register" asp-controller="Account">Sign Up?</a>
+            </div>
+        </div>
+        <div>@ViewBag.message</div>
     </form>
 </div>
+@section Scripts{ 
+    <script type="text/javascript">
+        function openSuccessModal(message) {
+            var myDiv = document.getElementById("successBody");
+            myDiv.innerHTML = message;
+            $("#successModal").modal('show');
+        }
+
+        $(document).ready(function () {
+            var msg = @TempData["Registermessage"];
+
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+}

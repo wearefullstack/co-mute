@@ -1,6 +1,9 @@
 ﻿using CoMute.UI.Models;
+using CoMute.UI.Models.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,6 +23,9 @@ namespace CoMute.UI.Controllers
 
         public IActionResult Index()
         {
+            var data = HttpContext.Session.GetString("JWToken");
+            var converted = JsonConvert.DeserializeObject<AuthenticationModel>(data);
+            ViewBag.token = converted.UserName;
             return View();
         }
 

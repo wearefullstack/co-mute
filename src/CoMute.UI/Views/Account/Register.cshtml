@@ -1,54 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CoMute.UI.Models.Users.RegisterModel
 @{
     Layout = null;
 }
-@*<h1>
-        Register Page - used to register a user onto comute and will be binded to a form using razor syntax, that connects to a post method called Register </br>
-        This post register method will connect to the register endpoint of the API and once registered, it will take you back to login page to login
-    </h1>*@
-
 <head>
     <link rel="stylesheet" href="~/css/Account.css">
 </head>
 <div class="login-box">
     <h2>Co-Mute Register</h2>
-    <form>
+    <form asp-action="RegisterRequest" asp-controller="Account">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
         <div class="container text-center">
             <div class="row">
                 <div class="col">
-                    <div class="user-box" >
-                        <input type="text" name="" required="required">
-                        <label>Name</label>
+                    <div class="user-box">
+                        <input type="text" asp-for="Name" required="required">
+                        <label asp-for="Name">Name</label>
+                        <span class="text-danger" asp-validation-for="Name"></span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="user-box">
-                        <input type="text" name="" required="required">
-                        <label>Surname</label>
+                        <input type="text" asp-for="Surname" required="required">
+                        <label asp-for="Surname">Surname</label>
+                        <span class="text-danger" asp-validation-for="Surname"></span>
                     </div>
-                </div>             
+                </div>
             </div>
-        </div>          
-        <div class="user-box">
-            <input type="tel" name="" required="required">
-            <label>Phone</label>
         </div>
         <div class="user-box">
-            <input type="email" name="" required="required">
-            <label>Email</label>
+            <input type="tel" asp-for="Phone" required="required">
+            <label asp-for="Phone">Phone</label>
+            <span class="text-danger" asp-validation-for="Phone"></span>
         </div>
         <div class="user-box">
-            <input type="password" name="" required="required">
-            <label>Password</label>
+            <input type="email" asp-for="Email" required="required">
+            <label asp-for="Email">Email</label>
+            <span class="text-danger" asp-validation-for="Email"></span>
         </div>
-        <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Submit
-        </a>
+        <div class="user-box">
+            <input type="password" asp-for="Password" required="required">
+            <label asp-for="Password">Password</label>
+            <span class="text-danger" asp-validation-for="Password"></span>
+        </div>
+        <div class="row">
+            <div class="col" style="float: left; width: 90%; padding-right: 10%">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+            <div class="col" style="float:right;padding-left:25%">
+                <a asp-action="Login" asp-controller="Account">Back to Login</a>
+            </div>
+        </div>
     </form>
 </div>

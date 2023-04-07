@@ -45,9 +45,19 @@ namespace CoMute.UI.Services.Users
             throw new NotImplementedException();
         }
 
-        public Task<string> RegisterAsync(RegisterModel model)
+        public async Task<string> RegisterAsync(RegisterModel model)
         {
-            throw new NotImplementedException();
+            string result = "FAILED.";
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            response = await APIHelper.ApiClient.PostAsync(APIHelper.ApiClient.BaseAddress + "user/register", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<string>(data);
+            }
+            return result;
         }
 
         public Task<string> UpdateUserProfileAsync(ProfileModel profileModel)

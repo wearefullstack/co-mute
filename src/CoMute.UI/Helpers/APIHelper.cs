@@ -30,6 +30,7 @@ namespace CoMute.UI.Helpers
             ApiClient.BaseAddress = new Uri(domain);
             ApiClient.DefaultRequestHeaders.Accept.Clear();
             ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CoMute.API.Models.Tokens;
 using CoMute.API.Models.Users;
 using CoMute.API.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace CoMute.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -20,6 +22,7 @@ namespace CoMute.API.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(RegisterModel model)
         {
@@ -37,6 +40,7 @@ namespace CoMute.API.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpPost("token")]
         public async Task<IActionResult> GetTokenAsync(TokenRequestModel model)
         {
@@ -54,12 +58,14 @@ namespace CoMute.API.Controllers
         }
 
         [HttpPost("GetUserProfile")]
+        [Authorize(Roles = "User,Lead,LeadUser")]
         public async Task<IActionResult> GetUserProfileAsync(string userId)
         {
             var result = await _userService.GetUserProfileAsync(userId);
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpPost("UpdateUserProfile")]
         public async Task<ActionResult> UpdateUserProfileAsync(ProfileModel model)
         {
@@ -83,6 +89,7 @@ namespace CoMute.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("addrole")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRoleAsync(AddRoleModel model)
         {
             var result = await _userService.AddRoleAsync(model);

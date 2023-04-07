@@ -31,6 +31,7 @@ namespace CoMute.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("GetOpportunityByUser")]
+        [Authorize(Roles = "User,Lead,LeadUser")]
         public async Task<ActionResult<IEnumerable<SearchOpportunityModel>>> GetOpportunityByUserAsync(string userId)
         {
             if(string.IsNullOrEmpty(userId))
