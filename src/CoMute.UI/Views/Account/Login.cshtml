@@ -2,14 +2,49 @@
 @{
     Layout = null;
 }
-@*<h1>Login Page - to Log a user into CoMute app</h1>
-    <h2>This will be binded to the login model using razor and will connect to a login controller method that will send a request to the login API endPoint <br />
-        once logged in the user will go onto their home oage with thre profile, and list of Car pool opportunities</h2>*@
 <head>
     <link rel="stylesheet" href="~/css/Account.css">
-</head>
+    <script type="text/javascript">
+        function openSuccessModal(message) {
+            var myDiv = document.getElementById("#successBody");
+            myDiv.innerHTML = message;
+            $("#successModal").modal('show');
+        }
 
+        $(document).ready(function () {
+            var msg = @TempData["Registermessage"];
+
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+</head>
 <div class="login-box">
+    @if (TempData["Registermessage"] != null)
+    {
+        <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+            <strong>You have registered successfully</strong>
+            <span />
+        </div>
+    }
+    @if (TempData["RegisterFailed"] != null)
+    {
+        <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
+            <strong>Login Failed</strong>
+            <span />
+        </div>
+    }
+    <script>
+        setTimeout(() => {
+            const box = document.getElementById('box');
+
+            // 👇️ removes element from DOM
+            box.style.display = 'none';
+
+            // 👇️ hides element (still takes up space on page)
+            // box.style.visibility = 'hidden';
+        }, 3000); //
+    </script>
     <h2>Co-Mute Login</h2>
     <form asp-action="LoginRequest" asp-controller="Account">
         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
@@ -41,19 +76,6 @@
         <div>@ViewBag.message</div>
     </form>
 </div>
-@section Scripts{ 
-    <script type="text/javascript">
-        function openSuccessModal(message) {
-            var myDiv = document.getElementById("successBody");
-            myDiv.innerHTML = message;
-            $("#successModal").modal('show');
-        }
+@section Scripts{
 
-        $(document).ready(function () {
-            var msg = @TempData["Registermessage"];
-
-            if (msg)
-                openSuccessModal(msg);
-        });
-    </script>
 }

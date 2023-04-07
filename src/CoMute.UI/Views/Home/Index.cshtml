@@ -1,9 +1,45 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor accessor;
 <head>
     <link rel="stylesheet" href="~/css/Account.css">
 </head>
+@if (TempData["RegisterFailed"] != null)
+{
+    <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
+        <strong>Login Failed</strong>
+        <span />
+    </div>
+}
+
+@if (TempData["RegisterSuccess"] != null)
+{
+    <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+        @if (accessor.HttpContext.Session.GetString("UserName") != null && accessor.HttpContext.Session.GetString("UserName") != "")
+        {
+            <strong>You have successfully logged in @accessor.HttpContext.Session.GetString("UserName")</strong>
+        }
+        else
+        {
+            <strong>You have successfully logged in.</strong>
+        }
+        <span />
+    </div>
+}
+
+<script>
+        setTimeout(() => {
+            const box = document.getElementById('box');
+
+            // 👇️ removes element from DOM
+            box.style.display = 'none';
+
+            // 👇️ hides element (still takes up space on page)
+            // box.style.visibility = 'hidden';
+        }, 3000); //
+</script>
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p style="color:white">@ViewBag.token </p>

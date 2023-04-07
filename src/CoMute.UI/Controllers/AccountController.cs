@@ -18,7 +18,7 @@ namespace CoMute.UI.Controllers
         private readonly IUserService userService;
         private readonly IConfiguration configuration;
 
-        public AccountController(IUserService userService,IConfiguration configuration)
+        public AccountController(IUserService userService, IConfiguration configuration)
         {
             this.userService = userService;
             this.configuration = configuration;
@@ -32,19 +32,31 @@ namespace CoMute.UI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> LoginRequestAsync(TokenRequestModel tokenRequest)
-        {          
+        {
             if (!ModelState.IsValid)
+            {
+                TempData["RegisterFailed"] = "Login Form Data is incorrect";
+                TempData["RegisterSuccess"] = null;
                 return Redirect("~/Account/Login");
+            }
 
             var login = await userService.GetTokenAsync(tokenRequest);
             if (login.Message.Contains("FAILED."))
             {
+                TempData["RegisterFailed"] = $"{login.Message}";
+                TempData["RegisterSuccess"] = null;
                 ViewBag.message = $"{login.Message}";
-                return Redirect("~/Account/Login");
+                return Redirect("~/Account/Login"); ;
+            }
+            else
+            {
+                TempData["RegisterFailed"] = null;
+                TempData["RegisterSuccess"] = $"{login.Message}";
             }
 
             HttpContext.Session.SetString("JWToken", JsonConvert.SerializeObject(login));
             HttpContext.Session.SetString("UserName", login.UserName);
+            HttpContext.Session.SetString("UserId", login.UserId);
 
             return Redirect("~/Home/Index");
         }
@@ -57,25 +69,32 @@ namespace CoMute.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterRequestAsync(RegisterModel registerModel)
         {
-            if(!string.IsNullOrEmpty(registerModel.Name) || !string.IsNullOrEmpty(registerModel.Surname))
-            registerModel.UserName = registerModel.Name + "." + registerModel.Surname;
+            if (!string.IsNullOrEmpty(registerModel.Name) || !string.IsNullOrEmpty(registerModel.Surname))
+                registerModel.UserName = registerModel.Name + "." + registerModel.Surname;
 
             if (!ModelState.IsValid)
+            {
+                TempData["RegisterFailed"] = $"Registration Failed due to incorrect form values";
                 return Redirect("~/Account/Register");
+            }
 
             var register = await userService.RegisterAsync(registerModel);
             if (register.Contains("FAILED."))
             {
-                TempData["Registermessage"] = $"{register}";
+                TempData["RegisterFailed"] = $"{register}";
+                TempData["Registermessage"] = null;
                 return Redirect("~/Account/Register");
             }
             else
+            {
                 TempData["Registermessage"] = $"{register}";
+                TempData["RegisterFailed"] = null;
+            }
 
             return Redirect("~/Account/Login");
         }
 
-        public IActionResult Profile()
+        public IActionResult Profile(string Id)
         {
             return View();
         }
