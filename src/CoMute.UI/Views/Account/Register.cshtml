@@ -9,10 +9,21 @@
     @if (TempData["RegisterFailed"] != null)
     {
         <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
-            <strong>Registration Failure</strong>
+            <strong>@TempData["RegisterFailed"]</strong>
             <span />
         </div>
     }
+    <script>
+        setTimeout(() => {
+            const box = document.getElementById('box');
+
+            // 👇️ removes element from DOM
+            box.style.display = 'none';
+
+            // 👇️ hides element (still takes up space on page)
+            // box.style.visibility = 'hidden';
+        }, 3000); //
+    </script>
     <h2>Co-Mute Register</h2>
     <form asp-action="RegisterRequest" asp-controller="Account">
         <div class="text-danger" asp-validation-summary="ModelOnly"></div>

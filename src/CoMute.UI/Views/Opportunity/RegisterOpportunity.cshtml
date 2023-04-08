@@ -1,0 +1,94 @@
+﻿@model CoMute.UI.Models.Opportunity.RegisterOpportunityModel
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/css/Account.css">
+</head>
+
+<div class="login-box">
+    @if (TempData["RegisterFailed"] != null)
+    {
+        <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
+            <strong>@TempData["RegisterFailed"]</strong>
+            <span />
+        </div>
+    }
+    <script>
+        setTimeout(() => {
+            const box = document.getElementById('box');
+
+            // 👇️ removes element from DOM
+            box.style.display = 'none';
+
+            // 👇️ hides element (still takes up space on page)
+            // box.style.visibility = 'hidden';
+        }, 3000); //
+    </script>
+    <h2>Co-Mute Register Opportunity</h2>
+    <form asp-action="RegisterOpportunity" asp-controller="Opportunity">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <div class="user-box">
+                        <input type="datetime-local" asp-for="DepartureTime" required="required">
+                        <label asp-for="DepartureTime">Departure</label>
+                        <span class="text-danger" asp-validation-for="DepartureTime"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="user-box">
+                        <input type="datetime-local" asp-for="ArrivalTime" required="required">
+                        <label asp-for="ArrivalTime">Expected Arrival</label>
+                        <span class="text-danger" asp-validation-for="ArrivalTime"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-box">
+            <input type="text" asp-for="Origin" required="required">
+            <label asp-for="Origin">Origin</label>
+            <span class="text-danger" asp-validation-for="Origin"></span>
+        </div>
+        <div class="user-box">
+            <input type="text" asp-for="Destination" required="required">
+            <label asp-for="Destination">Destination</label>
+            <span class="text-danger" asp-validation-for="Destination"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="user-box">
+                        <input type="number" min="1" asp-for="DaysAvailable" required="required">
+                        <label asp-for="DaysAvailable">Days Available</label>
+                        <span class="text-danger" asp-validation-for="DaysAvailable"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="user-box">
+                        <input type="number" min="1" asp-for="AvailableSeats" required="required">
+                        <label asp-for="AvailableSeats">Available Seats</label>
+                        <span class="text-danger" asp-validation-for="AvailableSeats"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-box">
+            <div class="mb-3">
+                <textarea class="form-control" style="width:100%" asp-for="Notes" id="exampleFormControlTextarea1" rows="5" placeholder="Notes..." ></textarea>
+                <span class="text-danger" asp-validation-for="Notes"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="float: left; width: 90%; padding-right: 10%">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+            <div class="col" style="float:right;padding-left:25%">
+                <a asp-action="Index" asp-controller="Home">Back to Home</a>
+            </div>
+        </div>
+    </form>
+</div>

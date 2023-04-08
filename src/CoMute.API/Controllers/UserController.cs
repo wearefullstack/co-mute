@@ -89,7 +89,7 @@ namespace CoMute.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("addrole")]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]//[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRoleAsync(AddRoleModel model)
         {
             var result = await _userService.AddRoleAsync(model);

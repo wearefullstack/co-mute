@@ -20,5 +20,6 @@ namespace CoMute.UI.Models.Opportunity
         public DateTime JoinDate { get; set; }
         public DateTime DepartureTime { get; set; }
         public DateTime ArrivalTime { get; set; }
+        public string Token { get; set; }
     }
 }

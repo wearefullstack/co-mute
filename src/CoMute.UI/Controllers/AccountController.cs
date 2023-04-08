@@ -31,6 +31,7 @@ namespace CoMute.UI.Controllers
         }
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> LoginRequestAsync(TokenRequestModel tokenRequest)
         {
             if (!ModelState.IsValid)
@@ -57,6 +58,7 @@ namespace CoMute.UI.Controllers
             HttpContext.Session.SetString("JWToken", JsonConvert.SerializeObject(login));
             HttpContext.Session.SetString("UserName", login.UserName);
             HttpContext.Session.SetString("UserId", login.UserId);
+            HttpContext.Session.SetString("Roles", JsonConvert.SerializeObject(login.Roles));
 
             return Redirect("~/Home/Index");
         }
@@ -67,6 +69,7 @@ namespace CoMute.UI.Controllers
         }
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> RegisterRequestAsync(RegisterModel registerModel)
         {
             if (!string.IsNullOrEmpty(registerModel.Name) || !string.IsNullOrEmpty(registerModel.Surname))
@@ -75,6 +78,7 @@ namespace CoMute.UI.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["RegisterFailed"] = $"Registration Failed due to incorrect form values";
+                TempData["Registermessage"] = null;
                 return Redirect("~/Account/Register");
             }
 

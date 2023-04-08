@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor accessor;
+@using Newtonsoft.Json;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,16 +16,28 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 background">
             <div class="container">
-                <a class="navbar-brand " style="color:white" asp-area="" asp-controller="Home" asp-action="Index">CO-MUTE</a>
+                <a class="navbar-brand " style="color:white;float:left" asp-area="" asp-controller="Home" asp-action="Index">CO-MUTE</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" style="color:white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        @if (accessor.HttpContext.Session.GetString("Roles") != null && accessor.HttpContext.Session.GetString("Roles") != "")
+                        {
+                            var roles = accessor.HttpContext.Session.GetString("Roles");
+                            var roleData = JsonConvert.DeserializeObject<List<string>>(roles);
+                            foreach (var r in roleData)
+                            {
+                                if (r.ToString().ToLower().Contains("Lead".ToLower()) || r.ToString().ToLower().Contains("LeadUser".ToLower()))
+                                {
+                                    <li class="nav-item" style="width:100%">
+                                        <a class="nav-link" style="color: white; width: 100%" asp-area="" asp-controller="Opportunity" asp-action="RegisterOpportunity">Register Opportunity</a>
+                                    </li>
+                                    break;
+                                }
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link" style="color:white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -34,26 +48,26 @@
                                     Welcome @accessor.HttpContext.Session.GetString("UserName")
                                 </a>
                             }
-                            </li>
+                        </li>
                     </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+                <div class="container">
+                    <main role = "main" class="pb-3">
 
-            <!--Success Dialog-->
-            <div id="successModal" class="modal fade" role="dialog">
-                <div class="modal-dialog" >
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Register</h2>
-                            <button class="close" type="button" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div id="successBody" class="modal-body alert alert-success">
-                            User Registration Successful :)
-                        </div>
+                        <!--Success Dialog-->
+                        <div id = "successModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog" >
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2>Register</h2>
+                                        <button class="close" type="button" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div id = "successBody" class="modal-body alert alert-success">
+                                        User Registration Successful :)
+</div>
                         <div class="modal-footer">
                             &nbsp;
                             <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>

@@ -1,5 +1,6 @@
 ﻿using CoMute.UI.Models;
 using CoMute.UI.Models.Authentication;
+using CoMute.UI.Services.Opportunity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,17 +16,25 @@ namespace CoMute.UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IOpportunityService opportunityService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IOpportunityService opportunityService)
         {
             _logger = logger;
+            this.opportunityService = opportunityService;
         }
 
         public IActionResult Index()
         {
             var data = HttpContext.Session.GetString("JWToken");
-            var converted = JsonConvert.DeserializeObject<AuthenticationModel>(data);
-            ViewBag.token = converted.UserName;
+            if (string.IsNullOrEmpty(data))
+                return Redirect("~/Account/Login");
+            else
+            {
+                var converted = JsonConvert.DeserializeObject<AuthenticationModel>(data); 
+            }
+
+            var displayOpportunities = opportunityService.GetOpportunityAsync();
             return View();
         }
 
