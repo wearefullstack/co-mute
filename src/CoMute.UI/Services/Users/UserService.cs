@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,9 +41,21 @@ namespace CoMute.UI.Services.Users
             return authenticationModel;
         }
 
-        public Task<ProfileModel> GetUserProfileAsync(string userId)
+        public async Task<ProfileModel> GetUserProfileAsync(string userId,string token)
         {
-            throw new NotImplementedException();
+            APIHelper.ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            response = await APIHelper.ApiClient.GetAsync(APIHelper.ApiClient.BaseAddress + $"user/GetUserProfile?userId={userId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var profile = JsonConvert.DeserializeObject<ProfileModel>(content);
+                return profile;
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
         }
 
         public async Task<string> RegisterAsync(RegisterModel model)
@@ -60,9 +73,23 @@ namespace CoMute.UI.Services.Users
             return result;
         }
 
-        public Task<string> UpdateUserProfileAsync(ProfileModel profileModel)
+        public async Task<string> UpdateUserProfileAsync(ProfileModel profileModel)
         {
-            throw new NotImplementedException();
+            string result = "FAILED.Update user Profile";
+            var json = JsonConvert.SerializeObject(profileModel);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            APIHelper.ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", profileModel.Token);
+            response = await APIHelper.ApiClient.PostAsync(APIHelper.ApiClient.BaseAddress + "user/UpdateUserProfile", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<string>(data);
+            }
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                result = "UNAUTHORIZED.Update failed. Unauthorized User";
+
+            return result;
         }
     }
 }

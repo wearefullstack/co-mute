@@ -1,4 +1,5 @@
 ﻿using CoMute.UI.Helpers;
+using CoMute.UI.Models.Authentication;
 using CoMute.UI.Models.Tokens;
 using CoMute.UI.Models.Users;
 using CoMute.UI.Services.Users;
@@ -57,6 +58,7 @@ namespace CoMute.UI.Controllers
 
             HttpContext.Session.SetString("JWToken", JsonConvert.SerializeObject(login));
             HttpContext.Session.SetString("UserName", login.UserName);
+            HttpContext.Session.SetString("Email", string.IsNullOrEmpty(login.Email) ? login.UserName : login.Email);
             HttpContext.Session.SetString("UserId", login.UserId);
             HttpContext.Session.SetString("Roles", JsonConvert.SerializeObject(login.Roles));
 
@@ -98,9 +100,46 @@ namespace CoMute.UI.Controllers
             return Redirect("~/Account/Login");
         }
 
-        public IActionResult Profile(string Id)
+        public async Task<IActionResult> ProfileAsync(string Id)
         {
-            return View();
+            var data = HttpContext.Session.GetString("JWToken");
+            if (string.IsNullOrEmpty(data))
+                return Redirect("~/Account/Login");
+
+            var converted = JsonConvert.DeserializeObject<AuthenticationModel>(data);
+
+            var getUserDetails = await userService.GetUserProfileAsync(converted.UserId, converted.Token);
+            if (getUserDetails == null)
+                return BadRequest("Unauthenticated User");
+
+            return View(getUserDetails);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProfileAsync(ProfileModel profile)
+        {
+            var data = HttpContext.Session.GetString("JWToken");
+            if (string.IsNullOrEmpty(data))
+                return Redirect("~/Account/Login");
+
+            var converted = JsonConvert.DeserializeObject<AuthenticationModel>(data);
+
+            profile.Token = converted.Token;
+            profile.UserId = converted.UserId;
+            var getUserDetails = await userService.UpdateUserProfileAsync(profile);
+            if(getUserDetails.ToLower().Contains("FAILED.".ToLower()))
+            {
+                TempData["ProfileSuccess"] = null;
+                TempData["ProfileFailed"] = $"{getUserDetails}";
+                return Redirect($"~/Account/Profile/{converted.UserId}");
+            }
+            else
+            {
+                TempData["ProfileFailed"] = null;
+                TempData["ProfileSuccess"] = $"{getUserDetails}";
+            }
+
+            return Redirect("~/Home/Index");
         }
     }
 }

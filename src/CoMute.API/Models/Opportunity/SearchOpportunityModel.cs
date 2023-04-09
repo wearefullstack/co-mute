@@ -10,6 +10,7 @@ namespace CoMute.API.Models.Opportunity
         public int OpportunityId { get; set; }
         public string UserId { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
         public string OpportunityName { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }

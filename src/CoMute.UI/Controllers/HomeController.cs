@@ -24,18 +24,17 @@ namespace CoMute.UI.Controllers
             this.opportunityService = opportunityService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
             var data = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(data))
                 return Redirect("~/Account/Login");
-            else
-            {
-                var converted = JsonConvert.DeserializeObject<AuthenticationModel>(data); 
-            }
 
-            var displayOpportunities = opportunityService.GetOpportunityAsync();
-            return View();
+           var converted = JsonConvert.DeserializeObject<AuthenticationModel>(data); 
+
+
+            var displayOpportunities = await opportunityService.GetOpportunityByUserAsync(converted.UserId,converted.Token);
+            return View(displayOpportunities);
         }
 
         public IActionResult Privacy()

@@ -40,7 +40,7 @@ namespace CoMute.UI.Services.Opportunity
         public async Task<IEnumerable<SearchOpportunityModel>> GetOpportunityByUserAsync(string userId,string token)
         {
             APIHelper.ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
-            response = await APIHelper.ApiClient.GetAsync(APIHelper.ApiClient.BaseAddress + $"Opportunity/GetOpportunityByUser/{userId}");
+            response = await APIHelper.ApiClient.GetAsync(APIHelper.ApiClient.BaseAddress + $"Opportunity/GetOpportunityByUser?userId={userId}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -54,14 +54,43 @@ namespace CoMute.UI.Services.Opportunity
             }
         }
 
-        public Task<string> JoinOpportunityAsync(JoinOpportunityModel model)
+        public async Task<string> JoinOpportunityAsync(JoinOpportunityModel model)
         {
-            throw new NotImplementedException();
+            string result = "FAILED.Unable to Join this opportunity";
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            APIHelper.ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", model.Token);
+            response = await APIHelper.ApiClient.PostAsync(APIHelper.ApiClient.BaseAddress + "Opportunity/joinOpportunity", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<string>(data);
+            }
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                result = "UNAUTHORIZED.Registeration failed. Unauthorized User";
+
+            return result;
         }
 
-        public Task<string> LeaveOpportunityAsync(LeaveOpportunityModel leaveOpportunity)
+        public async Task<string> LeaveOpportunityAsync(LeaveOpportunityModel leaveOpportunity)
         {
-            throw new NotImplementedException();
+
+            string result = "FAILED.Unable to Leave this opportunity";
+            var json = JsonConvert.SerializeObject(leaveOpportunity);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            APIHelper.ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", leaveOpportunity.Token);
+            response = await APIHelper.ApiClient.PostAsync(APIHelper.ApiClient.BaseAddress + "Opportunity/leaveOpportunity", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<string>(data);
+            }
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                result = "UNAUTHORIZED.Leave failed. Unauthorized User";
+
+            return result;
         }
 
         public async Task<string> RegisterOpportunityAsync(RegisterOpportunityModel model)

@@ -1,0 +1,124 @@
+﻿@model CoMute.UI.Models.Opportunity.SearchOpportunityModel
+@if (TempData["JoinFailed"] != null)
+{
+    <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
+        <strong>@TempData["JoinFailed"]</strong>
+        <span />
+    </div>
+}
+<script>
+    setTimeout(() => {
+        const box = document.getElementById('box');
+
+        // 👇️ removes element from DOM
+        box.style.display = 'none';
+
+        // 👇️ hides element (still takes up space on page)
+        // box.style.visibility = 'hidden';
+    }, 3000); //
+</script>
+<form asp-action="LeaveOpportunity" asp-controller="Opportunity">
+    <section style="background-color: #eee;">
+        <input type="hidden" asp-for="@Model.OpportunityId" />
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <p class="active"><a>Are you sure you want to Leave @Model.OpportunityName?</a></p>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <h5 class="my-3">@Model.OpportunityName</h5>
+                            <div class="d-flex justify-content-center mb-2">
+                                <input type="submit" class="btn btn-danger" value="Leave" />
+                                <a class="btn btn-secondary ms-1" asp-action="Index" asp-controller="Home">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Opportunity Code</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.OpportunityName</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Departure</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Convert.ToDateTime(@Model.DepartureTime).ToString("dd/MM/yyyy HH:mm tt")</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Arrival</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Convert.ToDateTime(@Model.ArrivalTime).ToString("dd/MM/yyyy HH:mm tt")</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Origin</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.Origin</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Destination</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.Destination</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Days Available</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.DaysAvailable</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Seats Available</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.AvailableSeats</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Created</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Convert.ToDateTime(@Model.CreatedDate).ToString("dd/MM/yyyy HH:mm tt")</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

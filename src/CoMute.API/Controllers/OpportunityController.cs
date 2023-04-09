@@ -29,7 +29,6 @@ namespace CoMute.API.Controllers
             return result.ToList();
         }
 
-        [AllowAnonymous]
         [HttpGet("GetOpportunityByUser")]
         [Authorize(Roles = "User,Lead,LeadUser")]
         public async Task<ActionResult<IEnumerable<SearchOpportunityModel>>> GetOpportunityByUserAsync(string userId)

@@ -3,40 +3,162 @@
 }
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor accessor;
-<head>
-    <link rel="stylesheet" href="~/css/Account.css">
-</head>
-@if (TempData["RegisterFailed"] != null)
-{
-    <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
-        <strong>Login Failed</strong>
-        <span />
-    </div>
-}
-@if (TempData["RegisterSuccess"] != null)
-{
-    <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
-        @if (accessor.HttpContext.Session.GetString("UserName") != null && accessor.HttpContext.Session.GetString("UserName") != "")
+@model IEnumerable<CoMute.UI.Models.Opportunity.SearchOpportunityModel>
+    <!doctype html>
+    <html lang="en">
+    <head>
+        @*<link rel="stylesheet" href="~/css/Account.css">*@
+        <!-- Required meta tags -->
+        <!--<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="~/css/iconmoon.css">
+
+        <link rel="stylesheet" href="~/css/owl.carousal.css">-->
+
+        <!-- Bootstrap CSS -->
+        <!--<link rel="stylesheet" href="~/css/demoBootstrap.css">-->
+
+        <!-- Style -->
+        <!--<link rel="stylesheet" href="~/css/Table.css">-->
+    </head>
+ 
+
+    <body>
+
+        @if (TempData["RegisterFailed"] != null)
         {
-            <strong>You have successfully logged in @accessor.HttpContext.Session.GetString("UserName")</strong>
+            <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
+                <strong>Login Failed</strong>
+                <span />
+            </div>
         }
-        else
+        @if (TempData["RegisterSuccess"] != null)
         {
-            <strong>You have successfully logged in.</strong>
+            <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+                @if (accessor.HttpContext.Session.GetString("UserName") != null && accessor.HttpContext.Session.GetString("UserName") != "")
+                {
+                    <strong>You have successfully logged in @accessor.HttpContext.Session.GetString("UserName")</strong>
+                }
+                else
+                {
+                    <strong>You have successfully logged in.</strong>
+                }
+                <span />
+            </div>
         }
-        <span />
-    </div>
-}
+        @if (TempData["ProfileSuccess"] != null)
+        {
+            <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+                <strong>@TempData["ProfileSuccess"]</strong>
+                <span />
+            </div>
+        }
+        @if (TempData["RegisterOpportunitySuccess"] != null)
+        {
+            <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+                <strong>@TempData["RegisterOpportunitySuccess"]</strong>
+                <span />
+            </div>
+        }
+        @if (TempData["LeaveSuccess"] != null)
+        {
+            <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+                <strong>@TempData["LeaveSuccess"]</strong>
+                <span />
+            </div>
+        }
+        @if (TempData["LeaveFailed"] != null)
+        {
+            <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
+                <strong>@TempData["LeaveFailed"]</strong>
+                <span />
+            </div>
+        }
+        @if (TempData["JoinSuccess"] != null)
+        {
+            <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+                <strong>@TempData["JoinSuccess"]</strong>
+                <span />
+            </div>
+        }
+        <script>
+            setTimeout(() => {
+                const box = document.getElementById('box');
 
-<script>
-        setTimeout(() => {
-            const box = document.getElementById('box');
+                // 👇️ removes element from DOM
+                box.style.display = 'none';
 
-            // 👇️ removes element from DOM
-            box.style.display = 'none';
+                // 👇️ hides element (still takes up space on page)
+                // box.style.visibility = 'hidden';
+            }, 3000); //
+        </script>
+        <div class="content">
 
-            // 👇️ hides element (still takes up space on page)
-            // box.style.visibility = 'hidden';
-        }, 3000); //
-</script>
+            <div class="container">
+                <h2 class="mb-3">Joined Car-Pool Opportunities for: <strong>@accessor.HttpContext.Session.GetString("Email")</strong></h2>
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sign Up</th>
+                                <th scope="col">Time Frame</th>
+                                <th scope="col">Origin</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Days Available</th>
+                                <th scope="col">Available Seats</th>
+                                <th scope="col">Created Date</th>
+                                <th scope="col">Joined Date</th>
+                                <th scope="col">Created By</th>
+                                <th scope="col">Lead Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var O in Model)
+                            {
+                                <tr scope="row">
+                                    <th scope="row">
+                                        <label class="control ">
+                                            <a asp-action="LeaveOpportunity" asp-controller="Opportunity" asp-route-id="@O.OpportunityId" class="btn btn-danger">Leave</a>
+                                        </label>
+                                    </th>
+                                    <td>
+                                        Departure: @Convert.ToDateTime(@O.DepartureTime).ToString("dd/MM/yyyy HH:mm")
+                                        <small class="d-block">Arrival: @Convert.ToDateTime(@O.ArrivalTime).ToString("dd/MM/yyyy HH:mm")</small>
+                                    </td>
+                                    <td>@O.Origin</td>
+                                    <td>@O.Destination</td>
+                                    <td>@O.DaysAvailable</td>
+                                    <td>@O.AvailableSeats</td>
+                                    <td>@Convert.ToDateTime(@O.CreatedDate).ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@O.JoinDate</td>
+                                    <td>@O.Email</td>
+                                    @if (O.IsLeader == "Leader")
+                                    {
+                                        <td>Lead/Owner</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Joined</td>
+                                    }
+                                </tr>
+                                <tr class="spacer"><td colspan="100"></td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
+
+            </div>
+
+        </div>
+
+
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

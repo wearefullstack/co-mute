@@ -1,9 +1,11 @@
-﻿using CoMute.API.Models.Tokens;
+﻿using CoMute.API.Models.Authentication;
+using CoMute.API.Models.Tokens;
 using CoMute.API.Models.Users;
 using CoMute.API.Services.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,7 +93,7 @@ namespace CoMute.API.Controllers
         [HttpPost("addrole")]
         [AllowAnonymous]//[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRoleAsync(AddRoleModel model)
-        {
+        {            
             var result = await _userService.AddRoleAsync(model);
             return Ok(result);
         }

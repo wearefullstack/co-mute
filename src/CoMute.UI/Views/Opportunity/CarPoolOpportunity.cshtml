@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CoMute.UI.Models.Opportunity.SearchOpportunityModel>
+@if (TempData["JoinSuccess"] != null)
+{
+    <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+        <strong>@TempData["JoinSuccess"]</strong>
+        <span />
+    </div>
+}
+<script>
+    setTimeout(() => {
+        const box = document.getElementById('box');
+
+        // 👇️ removes element from DOM
+        box.style.display = 'none';
+
+        // 👇️ hides element (still takes up space on page)
+        // box.style.visibility = 'hidden';
+    }, 3000); //
+</script>
+<!doctype html>
+<html lang="en">
+<body>
+    <div class="content">
+
+        <div class="container">
+            <h2 class="mb-3">Car-Pool Opportunities</h2>
+
+            <div class="table-responsive custom-table-responsive">
+
+                <table class="table custom-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sign Up</th>
+                            <th scope="col">Time Frame</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">Origin</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Days Available</th>
+                            <th scope="col">Available Seats</th>
+                            <th scope="col">Created Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var O in Model)
+                        {
+                            <tr scope="row">
+                                <th scope="row">
+                                    <label class="control">
+                                        <a asp-action="JoinOpportunity" asp-controller="Opportunity" asp-route-id="@O.OpportunityId" class="btn btn-primary">Join</a>
+                                    </label>
+                                </th>
+                                <td style="width:100%">
+                                    Departure: @Convert.ToDateTime(@O.DepartureTime).ToString("dd/MM/yyyy HH:mm")
+                                    <small class="d-block">Arrival: @Convert.ToDateTime(@O.ArrivalTime).ToString("dd/MM/yyyy HH:mm")</small>
+                                </td>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <td>@O.Origin</td>
+                                <td>@O.Destination</td>
+                                <td>@O.DaysAvailable</td>
+                                <td>@O.AvailableSeats</td>
+                                <td>@Convert.ToDateTime(@O.CreatedDate).ToString("dd/MM/yyyy HH:mm")</td>
+                            </tr>
+                            <tr class="spacer"><td colspan="100"></td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

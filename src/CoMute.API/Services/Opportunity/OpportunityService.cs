@@ -33,14 +33,10 @@ namespace CoMute.API.Services.Opportunity
         /// <returns></returns>
         public async Task<IEnumerable<SearchOpportunityModel>> GetOpportunityAsync()
         {
-            var opportunities = await (from up in _dbContext.UserOpportunity
-                                       join o in _dbContext.CarPoolOpportunity on up.OpportunityId equals o.OpportunityId
-                                       join u in _dbContext.Users on up.UserId equals u.Id
+            var opportunities = await (from o in  _dbContext.CarPoolOpportunity 
                                        select new SearchOpportunityModel 
                                        {
-                                          OpportunityId  = up.OpportunityId ,
-                                          UserId = up.UserId,
-                                          UserName = u.Name + " " + u.Surname,
+                                          OpportunityId  = o.OpportunityId ,
                                           OpportunityName = o.OpportunityName, 
                                           DepartureTime = o.DepartureTime.ToString(),
                                           ArrivalTime = o.ArrivalTime.ToString(),
@@ -49,9 +45,7 @@ namespace CoMute.API.Services.Opportunity
                                           Destination  = o.Destination,
                                           AvailableSeats = o.AvailableSeats,
                                           Notes = o.Notes,
-                                          IsLeader = up.IsLeader ? "Leader": "Joined",
-                                          CreatedDate = o.CreatedDate.ToString(),
-                                          JoinDate = up.JoinDate.ToString()
+                                          CreatedDate = o.CreatedDate.ToString()
                                         }).ToListAsync();
             return opportunities;
         }
@@ -72,6 +66,7 @@ namespace CoMute.API.Services.Opportunity
                                            OpportunityId = up.OpportunityId,
                                            UserId = up.UserId,
                                            UserName = u.Name + " " + u.Surname,
+                                           Email = u.CustomEmail,
                                            OpportunityName = o.OpportunityName,
                                            DepartureTime = o.DepartureTime.ToString(),
                                            ArrivalTime = o.ArrivalTime.ToString(),
@@ -259,6 +254,7 @@ namespace CoMute.API.Services.Opportunity
                     var r = await cnn.QueryAsync<SearchOpportunityModel>($@"  Select  cpo.OpportunityId ,
 			                                                                            UserId ,
 			                                                                            UserName,
+                                                                                        Email as u.CustomEmail,
 			                                                                            OpportunityName
 			                                                                            DepartureTime,
 			                                                                            ArrivalTime,
@@ -283,6 +279,7 @@ namespace CoMute.API.Services.Opportunity
                     var r = await cnn.QueryAsync<SearchOpportunityModel>($@"  Select  cpo.OpportunityId ,
 			                                                                            UserId ,
 			                                                                            UserName,
+                                                                                        Email as u.CustomEmail,
 			                                                                            OpportunityName
 			                                                                            DepartureTime,
 			                                                                            ArrivalTime,
@@ -307,6 +304,7 @@ namespace CoMute.API.Services.Opportunity
                     var r = await cnn.QueryAsync<SearchOpportunityModel>($@"  Select  cpo.OpportunityId ,
 			                                                                            UserId ,
 			                                                                            UserName,
+                                                                                        Email as u.CustomEmail,
 			                                                                            OpportunityName
 			                                                                            DepartureTime,
 			                                                                            ArrivalTime,
@@ -331,6 +329,7 @@ namespace CoMute.API.Services.Opportunity
                     var r = await cnn.QueryAsync<SearchOpportunityModel>($@"  Select  cpo.OpportunityId ,
 			                                                                            UserId ,
 			                                                                            UserName,
+                                                                                        Email as u.CustomEmail,
 			                                                                            OpportunityName
 			                                                                            DepartureTime,
 			                                                                            ArrivalTime,
@@ -355,6 +354,7 @@ namespace CoMute.API.Services.Opportunity
                     var r = await cnn.QueryAsync<SearchOpportunityModel>($@"  Select  cpo.OpportunityId ,
 			                                                                            UserId ,
 			                                                                            UserName,
+                                                                                        Email as u.CustomEmail,
 			                                                                            OpportunityName
 			                                                                            DepartureTime,
 			                                                                            ArrivalTime,
