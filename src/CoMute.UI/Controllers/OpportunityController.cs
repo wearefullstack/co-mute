@@ -85,13 +85,21 @@ namespace CoMute.UI.Controllers
             return Redirect("~/Home/Index");
         }
 
-        public async Task<IActionResult> CarPoolOpportunityAsync()
-        {
+        public async Task<IActionResult> CarPoolOpportunityAsync( string searchString)
+        {          
             var data = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(data))
                 return Redirect("~/Account/Login");
+           
+            ViewData["CurrentFilter"] = searchString;
 
             var displayOpportunities = await opportunityService.GetOpportunityAsync();
+ 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                displayOpportunities = displayOpportunities.Where(s => s.Origin.ToLower().Contains(searchString.ToLower())
+                                       || s.Destination.ToLower().Contains(searchString.ToLower()));
+            }
             return View(displayOpportunities);
         }
 

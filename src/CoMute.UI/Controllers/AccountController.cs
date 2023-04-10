@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CoMute.UI.Controllers
@@ -85,7 +86,7 @@ namespace CoMute.UI.Controllers
             }
 
             var register = await userService.RegisterAsync(registerModel);
-            if (register.Contains("FAILED."))
+            if (register.ToLower().Contains("FAILED".ToLower()))
             {
                 TempData["RegisterFailed"] = $"{register}";
                 TempData["Registermessage"] = null;
@@ -126,6 +127,7 @@ namespace CoMute.UI.Controllers
 
             profile.Token = converted.Token;
             profile.UserId = converted.UserId;
+            profile.UserName = Regex.Replace(profile.Name.Trim() + profile.Surname.Trim(), @"\s+", "");
             var getUserDetails = await userService.UpdateUserProfileAsync(profile);
             if(getUserDetails.ToLower().Contains("FAILED.".ToLower()))
             {
@@ -140,6 +142,17 @@ namespace CoMute.UI.Controllers
             }
 
             return Redirect("~/Home/Index");
+        }
+
+        public IActionResult AddRole()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddRole(AddRoleModel addRole)
+        {
+            return View();
         }
     }
 }

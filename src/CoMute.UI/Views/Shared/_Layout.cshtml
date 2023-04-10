@@ -27,15 +27,62 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 background">
-            <div class="container">
-                <a class="navbar-brand " style="float:left" asp-area="" asp-controller="Home" asp-action="Index">CO-MUTE</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 background">
+        <div class="container">
+            <a class="navbar-brand " style="float:left" asp-area="" asp-controller="Home" asp-action="Index">CO-MUTE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    @if (accessor.HttpContext.Session.GetString("Roles") != null && accessor.HttpContext.Session.GetString("Roles") != "")
+                    {
+                        var roles = accessor.HttpContext.Session.GetString("Roles");
+                        var roleData = JsonConvert.DeserializeObject<List<string>>(roles);
+                        foreach (var r in roleData)
+                        {
+                            if (r.ToString().ToLower().Contains("Lead".ToLower()) || r.ToString().ToLower().Contains("LeadUser".ToLower()))
+                            {
+                                <li class="nav-item" style="width:100%">
+                                    <a class="nav-link" style="width: 100%" asp-area="" asp-controller="Opportunity" asp-action="RegisterOpportunity">Register Opportunity</a>
+                                </li>
+                                break;
+                            }
+                        }
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Opportunity" asp-action="CarPoolOpportunity">Car-Pool</a>
+                    </li>
+                    <li class="nav-item" style="padding-left:75%;width:100%">
+                        @if (accessor.HttpContext.Session.GetString("Email") != null && accessor.HttpContext.Session.GetString("Email") != "")
+                        {
+                            <a class="nav-link" style="width:100%" asp-controller="Account" asp-action="Profile" asp-route-id="@accessor.HttpContext.Session.GetString("UserId")">
+                                Welcome @accessor.HttpContext.Session.GetString("Email")
+                            </a>
+                        }
+                    </li>
+                </ul>
+                        </div>
+                    </div>
+                </nav>*@
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" style="width:100px" asp-controller="Home" asp-action="Index">CO-MUTE</a>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" style="width:100px" aria-current="page" asp-controller="Opportunity" asp-action="CarPoolOpportunity">Car-Pool</a>
+                        </li>
                         @if (accessor.HttpContext.Session.GetString("Roles") != null && accessor.HttpContext.Session.GetString("Roles") != "")
                         {
                             var roles = accessor.HttpContext.Session.GetString("Roles");
@@ -44,29 +91,26 @@
                             {
                                 if (r.ToString().ToLower().Contains("Lead".ToLower()) || r.ToString().ToLower().Contains("LeadUser".ToLower()))
                                 {
-                                    <li class="nav-item" style="width:100%">
-                                        <a class="nav-link" style="width: 100%" asp-area="" asp-controller="Opportunity" asp-action="RegisterOpportunity">Register Opportunity</a>
+                                    <li class="nav-item" >
+                                        <a class="nav-link" style="width:200px" asp-area="" asp-controller="Opportunity" asp-action="RegisterOpportunity">Register Opportunity</a>
                                     </li>
                                     break;
                                 }
                             }
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Opportunity" asp-action="CarPoolOpportunity">Car-Pool</a>
-                        </li>
-                        <li class="nav-item" style="padding-left:75%;width:100%">
+                        }                       
+                        <li class="nav-item" style="width:100%">
                             @if (accessor.HttpContext.Session.GetString("Email") != null && accessor.HttpContext.Session.GetString("Email") != "")
                             {
                                 <a class="nav-link" style="width:100%" asp-controller="Account" asp-action="Profile" asp-route-id="@accessor.HttpContext.Session.GetString("UserId")">
-                                    Welcome @accessor.HttpContext.Session.GetString("Email")
+                                    <p style="width:500px;float:right">Welcome <strong style="color:brown">@accessor.HttpContext.Session.GetString("Email")</strong></p>
                                 </a>
                             }
                         </li>
                     </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </header>
+                </div>
+            </div>
+        </nav>
+    </header>
                 <div class="container">
                     <main role = "main" class="pb-3">
 
@@ -80,7 +124,7 @@
                                     </div>
                                     <div id = "successBody" class="modal-body alert alert-success">
                                         User Registration Successful :)
-</div>
+ </div>
                         <div class="modal-footer">
                             &nbsp;
                             <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>

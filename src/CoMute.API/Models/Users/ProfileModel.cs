@@ -24,7 +24,7 @@ namespace CoMute.API.Models.Users
         public string CustomPhone { get; set; }
         [Required]
         public string CustomEmail { get; set; }
-        [Required]
+ 
         public string Password { get; set; }
     }
 }

@@ -127,29 +127,26 @@ namespace CoMute.API.Services.Users
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
-            {
-                return $"No Accounts Registered with {model.Email}.";
-            }            
+                return $"FAILED.No Accounts Registered with {model.Email}.";         
 
-            if (await _userManager.CheckPasswordAsync(user, model.Password))
-            {
+            //if (await _userManager.CheckPasswordAsync(user, model.Password))
+            //{
                 var roleExists = Enum.GetNames(typeof(Authorization.Roles)).Any(x => x.ToLower() == model.Role.ToLower());
                 var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
 
                 var existingRole = rolesList.Where(x => x.Contains(model.Role)).Count() ;
 
                 if(roleExists && existingRole > 0)
-                    return $"{model.Role} was already assigned to the user with email {model.Email}.";
+                    return $"FAILED.{model.Role} was already assigned to the user with email {model.Email}.";
 
                 if (roleExists)
                 {
                     var validRole = Enum.GetValues(typeof(Authorization.Roles)).Cast<Authorization.Roles>().Where(x => x.ToString().ToLower() == model.Role.ToLower()).FirstOrDefault();
                     await _userManager.AddToRoleAsync(user, validRole.ToString());
-                    return $"Added {model.Role} to user {model.Email}.";
-                }
-                return $"Role {model.Role} not found.";
-            }
-            return $"Incorrect Credentials for user {user.Email}.";
+                    return $"SUCCESS.Added {model.Role} to user {model.Email}.";
+                }else
+                   return $"FAILED.Role {model.Role} not found.";
+           //} 
         }
 
         public async Task<ProfileModel> GetUserProfileAsync(string userId)
@@ -178,7 +175,7 @@ namespace CoMute.API.Services.Users
             if (userDetails == null) 
               return "FAILED.Could not find user on the system";            
 
-            var users = userDetails;
+
             userDetails.Id = profileModel.UserId;
             userDetails.Name = profileModel.Name;
             userDetails.Surname = profileModel.Surname;
@@ -187,18 +184,22 @@ namespace CoMute.API.Services.Users
             userDetails.PhoneNumber = profileModel.CustomPhone;
             userDetails.CustomEmail = profileModel.CustomEmail;
             userDetails.Email = profileModel.CustomEmail;
+            var users = userDetails;
+            //userDetails.PasswordHash = profileModel.Password;
             //userDetails.Password = profileModel.Password;
 
-
-
-           
+            var updateOpportunityUser = opportunityDbContext.Users.Update(users);
+            await opportunityDbContext.SaveChangesAsync();
             // var result = await _userManager.UpdateAsync(users);
             //if(!result.Succeeded)
             //     return "FAILED.Could not update Profile";
-            await _userManager.UpdateAsync(users);
-            //await opportunityDbContext.SaveChangesAsync();
+            var u = await _userManager.UpdateAsync(users);
+            if(u.Succeeded)
+                return "SUCCESS.Profile Updated Successfully";
+            else
+                return "FAILED.Unable to Update User";
+            //
 
-            return "SUCCESS.Profile Updated Successfully";
         }
     }
 }

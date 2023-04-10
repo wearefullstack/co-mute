@@ -59,7 +59,7 @@ namespace CoMute.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("GetUserProfile")]
+        [HttpGet("GetUserProfile")]
         [Authorize(Roles = "User,Lead,LeadUser")]
         public async Task<IActionResult> GetUserProfileAsync(string userId)
         {
@@ -67,8 +67,8 @@ namespace CoMute.API.Controllers
             return Ok(result);
         }
 
-        [AllowAnonymous]
         [HttpPost("UpdateUserProfile")]
+        [Authorize(Roles = "User,Lead,LeadUser,Admin")]
         public async Task<ActionResult> UpdateUserProfileAsync(ProfileModel model)
         {
             if (!ModelState.IsValid)

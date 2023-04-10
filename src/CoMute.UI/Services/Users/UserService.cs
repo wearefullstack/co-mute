@@ -21,9 +21,23 @@ namespace CoMute.UI.Services.Users
             this.response = response;
         }
 
-        public Task<string> AddRoleAsync(AddRoleModel model)
+        public async Task<string> AddRoleAsync(AddRoleModel model)
         {
-            throw new NotImplementedException();
+            string result = "FAILED. to Update user role";
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            APIHelper.ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", model.Token);
+            response = await APIHelper.ApiClient.PostAsync(APIHelper.ApiClient.BaseAddress + "user/addrole", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<string>(data);
+            }
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                result = "UNAUTHORIZED.Update failed. Unauthorized User";
+
+            return result;
         }
 
         public async Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model)

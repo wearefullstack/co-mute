@@ -3,26 +3,98 @@
     Layout = null;
 }
 <head>
-    <link rel="stylesheet" href="~/css/Account.css">
-    <script type="text/javascript">
-        function openSuccessModal(message) {
-            var myDiv = document.getElementById("#successBody");
-            myDiv.innerHTML = message;
-            $("#successModal").modal('show');
+    @*<link rel="stylesheet" href="~/css/Account.css">*@
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <style>
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
         }
 
-        $(document).ready(function () {
-            var msg = @TempData["Registermessage"];
+            .form-signin .form-signin-heading, .form-signin .checkbox {
+                margin-bottom: 10px;
+            }
 
-            if (msg)
-                openSuccessModal(msg);
-        });
-    </script>
+            .form-signin .checkbox {
+                font-weight: normal;
+            }
+
+            .form-signin .form-control {
+                position: relative;
+                font-size: 16px;
+                height: auto;
+                padding: 10px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+                .form-signin .form-control:focus {
+                    z-index: 2;
+                }
+
+            .form-signin input[type="text"] {
+                margin-bottom: -1px;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .form-signin input[type="password"] {
+                margin-bottom: 10px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+
+        .account-wall {
+            margin-top: 20px;
+            padding: 40px 0px 20px 0px;
+            background-color: #f7f7f7;
+            -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-title {
+            color: #555;
+            font-size: 18px;
+            font-weight: 400;
+            display: block;
+        }
+
+        .profile-img {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 10px;
+            display: block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .need-help {
+            margin-top: 10px;
+        }
+
+        .new-account {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .avatar {
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
-<div class="login-box">
-    @if (TempData["Registermessage"] != null)
-    {
-        <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+<!--<-->@*div class="login-box">*@ 
+ @if (TempData["Registermessage"] != null) 
+ { 
+     <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
             <strong>You have registered successfully</strong>
             <span />
         </div>
@@ -45,7 +117,7 @@
             // box.style.visibility = 'hidden';
         }, 3000); //
     </script>
-    <h2>Co-Mute Login</h2>
+    <!--<h2>Co-Mute Login</h2>
     <form asp-action="LoginRequest" asp-controller="Account">
         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
         <div class="user-box form-group">
@@ -57,7 +129,7 @@
             <input type="password" asp-for="Password" required="required">
             <label asp-for="Password">Password</label>
             <span class="text-danger" asp-validation-for="Password"></span>
-        </div>
+        </div>-->
         @*<a id="submit_link">
                 <span></span>
                 <span></span>
@@ -65,7 +137,7 @@
                 <span></span>
                 Login
             </a>*@
-        <div class="row">
+        <!--<div class="row">
             <div class="col" style="float: left; width: 65%; padding-right: 15%">
                 <input type="submit" value="Login" class="btn btn-primary" />
             </div>
@@ -74,8 +146,31 @@
             </div>
         </div>
         <div>@ViewBag.message</div>
-    </form>
+    </form>-->
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Co-Mute Login</h1>
+            <div class="account-wall">
+                <img class="profile-img" src="https://i.stack.imgur.com/YQu5k.png"
+                    alt="" />
+                <form class="form-signin"  asp-action="LoginRequest" asp-controller="Account">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <input class="form-control" type="email" asp-for="Email" placeholder="Email" required="required" autofocus>
+                    <span class="text-danger" asp-validation-for="Email"></span>
+                    <span />
+                    <input class="form-control" type="password" asp-for="Password" placeholder="Password" required="required">
+                    <span class="text-danger" asp-validation-for="Password"></span>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        Sign in
+                    </button>                   
+                </form>
+            </div>
+            <a class="text-center new-account" asp-action="Register" asp-controller="Account">Create an account </a>
+        </div>
+    </div>
 </div>
+@*</div>*@
 @section Scripts{
 
 }
