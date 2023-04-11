@@ -91,20 +91,23 @@
                             {
                                 if (r.ToString().ToLower().Contains("Lead".ToLower()) || r.ToString().ToLower().Contains("LeadUser".ToLower()))
                                 {
-                                    <li class="nav-item" >
+                                    <li class="nav-item">
                                         <a class="nav-link" style="width:200px" asp-area="" asp-controller="Opportunity" asp-action="RegisterOpportunity">Register Opportunity</a>
                                     </li>
                                     break;
                                 }
                             }
-                        }                       
+                        }
                         <li class="nav-item" style="width:100%">
                             @if (accessor.HttpContext.Session.GetString("Email") != null && accessor.HttpContext.Session.GetString("Email") != "")
                             {
                                 <a class="nav-link" style="width:100%" asp-controller="Account" asp-action="Profile" asp-route-id="@accessor.HttpContext.Session.GetString("UserId")">
-                                    <p style="width:500px;float:right">Welcome <strong style="color:brown">@accessor.HttpContext.Session.GetString("Email")</strong></p>
+                                    <p style="width:100%;float:right">Welcome <strong style="color:brown">@accessor.HttpContext.Session.GetString("Email")</strong></p>
                                 </a>
                             }
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="width:100px" aria-current="page" asp-controller="Account" asp-action="Login">Sign Out</a>
                         </li>
                     </ul>
                 </div>

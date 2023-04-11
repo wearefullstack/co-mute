@@ -91,70 +91,77 @@
         }
     </style>
 </head>
-<!--<-->@*div class="login-box">*@ 
- @if (TempData["Registermessage"] != null) 
- { 
-     <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
-            <strong>You have registered successfully</strong>
-            <span />
-        </div>
-    }
-    @if (TempData["RegisterFailed"] != null)
-    {
-        <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
-            <strong>Login Failed</strong>
-            <span />
-        </div>
-    }
-    <script>
-        setTimeout(() => {
-            const box = document.getElementById('box');
+<!--<-->@*div class="login-box">*@
+@if (TempData["Registermessage"] != null)
+{
+    <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+        <strong>You have registered successfully</strong>
+        <span />
+    </div>
+}
+@if (TempData["RegisterFailed"] != null)
+{
+    <div id="box" class="alert alert-danger" style="text-align: center;color:white;background-color:red">
+        <strong>Login Failed</strong>
+        <span />
+    </div>
+}
+@if (TempData["ProfileSuccess"] != null)
+{
+    <div id="box" class="alert alert-success" style="text-align: center;color:white;background-color:green">
+        <strong>@TempData["ProfileSuccess"]</strong>
+        <span />
+    </div>
+}
+<script>
+    setTimeout(() => {
+        const box = document.getElementById('box');
 
-            // 👇️ removes element from DOM
-            box.style.display = 'none';
+        // 👇️ removes element from DOM
+        box.style.display = 'none';
 
-            // 👇️ hides element (still takes up space on page)
-            // box.style.visibility = 'hidden';
-        }, 3000); //
-    </script>
-    <!--<h2>Co-Mute Login</h2>
-    <form asp-action="LoginRequest" asp-controller="Account">
-        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-        <div class="user-box form-group">
-            <input type="email" asp-for="Email" required="required">
-            <label asp-for="Email">Email</label>
-            <span class="text-danger" asp-validation-for="Email"></span>
+        // 👇️ hides element (still takes up space on page)
+        // box.style.visibility = 'hidden';
+    }, 3000); //
+</script>
+<!--<h2>Co-Mute Login</h2>
+<form asp-action="LoginRequest" asp-controller="Account">
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="user-box form-group">
+        <input type="email" asp-for="Email" required="required">
+        <label asp-for="Email">Email</label>
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="user-box form-group">
+        <input type="password" asp-for="Password" required="required">
+        <label asp-for="Password">Password</label>
+        <span class="text-danger" asp-validation-for="Password"></span>
+    </div>-->
+@*<a id="submit_link">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Login
+    </a>*@
+<!--<div class="row">
+        <div class="col" style="float: left; width: 65%; padding-right: 15%">
+            <input type="submit" value="Login" class="btn btn-primary" />
         </div>
-        <div class="user-box form-group">
-            <input type="password" asp-for="Password" required="required">
-            <label asp-for="Password">Password</label>
-            <span class="text-danger" asp-validation-for="Password"></span>
-        </div>-->
-        @*<a id="submit_link">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                Login
-            </a>*@
-        <!--<div class="row">
-            <div class="col" style="float: left; width: 65%; padding-right: 15%">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-            <div class="col" style="float:right;">
-                <a asp-action="Register" asp-controller="Account">Sign Up?</a>
-            </div>
+        <div class="col" style="float:right;">
+            <a asp-action="Register" asp-controller="Account">Sign Up?</a>
         </div>
-        <div>@ViewBag.message</div>
-    </form>-->
-    <div class="container">
+    </div>
+    <div>@ViewBag.message</div>
+</form>-->
+<div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <h1 class="text-center login-title">Co-Mute Login</h1>
             <div class="account-wall">
                 <img class="profile-img" src="https://i.stack.imgur.com/YQu5k.png"
-                    alt="" />
-                <form class="form-signin"  asp-action="LoginRequest" asp-controller="Account">
+                     alt="" />
+                <form class="form-signin" asp-action="LoginRequest" asp-controller="Account">
                     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                     <input class="form-control" type="email" asp-for="Email" placeholder="Email" required="required" autofocus>
                     <span class="text-danger" asp-validation-for="Email"></span>
@@ -163,7 +170,7 @@
                     <span class="text-danger" asp-validation-for="Password"></span>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">
                         Sign in
-                    </button>                   
+                    </button>
                 </form>
             </div>
             <a class="text-center new-account" asp-action="Register" asp-controller="Account">Create an account </a>

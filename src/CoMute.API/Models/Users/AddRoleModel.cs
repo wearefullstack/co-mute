@@ -10,9 +10,11 @@ namespace CoMute.API.Models.Users
     {
         [Required]
         public string Email { get; set; }
-        [Required]
-        public string Password { get; set; }
+        //[Required]
+        //public string Password { get; set; }
         [Required]
         public string Role { get; set; }
+        public string userId { get; set; }
+        public string roleId { get; set; }
     }
 }

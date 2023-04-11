@@ -76,7 +76,7 @@ namespace CoMute.UI.Controllers
         public async Task<IActionResult> RegisterRequestAsync(RegisterModel registerModel)
         {
             if (!string.IsNullOrEmpty(registerModel.Name) || !string.IsNullOrEmpty(registerModel.Surname))
-                registerModel.UserName = registerModel.Name + "." + registerModel.Surname;
+                registerModel.UserName = Regex.Replace(registerModel.Name.Trim() + registerModel.Surname.Trim(), @"\s+", "");
 
             if (!ModelState.IsValid)
             {
@@ -141,7 +141,7 @@ namespace CoMute.UI.Controllers
                 TempData["ProfileSuccess"] = $"{getUserDetails}";
             }
 
-            return Redirect("~/Home/Index");
+            return Redirect("~/Account/Login");
         }
 
         public IActionResult AddRole()

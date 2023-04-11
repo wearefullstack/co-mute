@@ -85,7 +85,7 @@ namespace CoMute.UI.Controllers
             return Redirect("~/Home/Index");
         }
 
-        public async Task<IActionResult> CarPoolOpportunityAsync( string searchString)
+        public async Task<IActionResult> CarPoolOpportunityAsync(string searchString)
         {          
             var data = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(data))
@@ -162,6 +162,7 @@ namespace CoMute.UI.Controllers
             {
                 TempData["JoinFailed"] = null;
                 TempData["JoinSuccess"] = $"{success}";
+                HttpContext.Session.SetString("OpportunityType", joinOpportunity.IsLeader ? "Created" : "Joined");
             }
 
             return Redirect("~/Home/Index");

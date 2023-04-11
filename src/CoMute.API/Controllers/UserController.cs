@@ -91,10 +91,39 @@ namespace CoMute.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("addrole")]
-        [AllowAnonymous]//[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddRoleAsync(AddRoleModel model)
         {            
             var result = await _userService.AddRoleAsync(model);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Method not implemented because of time constraints
+        /// THIS METHOD WILL UPDATE ANY ROLES ASSIGNED TO REGISTERED USERS ON THE SYSTEM AND WILL ONLY BE ACCESSIBLE TO A USER WITH AN ADMIN ROLE
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPut("updaterole")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateRoleAsync(AddRoleModel model)
+        {
+            var result = await _userService.UpdateRoleAsync(model);
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Method not implemented because of time constraints
+        /// THIS METHOD WILL REMOVE ANY ROLES ASSIGNED TO REGISTERED USERS ON THE SYSTEM AND WILL ONLY BE ACCESSIBLE TO A USER WITH AN ADMIN ROLE
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPut("deleterole")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteRoleAsync(AddRoleModel model)
+        {
+            var result = await _userService.DeleteRoleAsync(model);
             return Ok(result);
         }
     }

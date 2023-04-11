@@ -13,6 +13,8 @@ namespace CoMute.API.Services.Users
         Task<string> RegisterAsync(RegisterModel model);
         Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model);
         Task<string> AddRoleAsync(AddRoleModel model);
+        Task<string> UpdateRoleAsync(AddRoleModel model);
+        Task<string> DeleteRoleAsync(AddRoleModel model);
         Task<ProfileModel> GetUserProfileAsync(string userId);
         Task<string> UpdateUserProfileAsync(ProfileModel profileModel);
     }

@@ -10,18 +10,97 @@
         @*<link rel="stylesheet" href="~/css/Account.css">*@
         <!-- Required meta tags -->
         <!--<meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" href="~/css/iconmoon.css">
+    <link rel="stylesheet" href="~/css/iconmoon.css">
 
-        <link rel="stylesheet" href="~/css/owl.carousal.css">-->
-
+    <link rel="stylesheet" href="~/css/owl.carousal.css">-->
         <!-- Bootstrap CSS -->
         <!--<link rel="stylesheet" href="~/css/demoBootstrap.css">-->
-
         <!-- Style -->
         <!--<link rel="stylesheet" href="~/css/Table.css">-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .topnav {
+                overflow: hidden;
+                background-color: #e9e9e9;
+            }
+
+                .topnav a {
+                    float: left;
+                    display: block;
+                    color: black;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                    font-size: 17px;
+                }
+
+                    .topnav a:hover {
+                        background-color: #ddd;
+                        color: black;
+                    }
+
+                    .topnav a.active {
+                        background-color: #2196F3;
+                        color: white;
+                    }
+
+                .topnav .search-container {
+                    float: right;
+                }
+
+                .topnav input[type=text] {
+                    padding: 6px;
+                    margin-top: 8px;
+                    font-size: 17px;
+                    border: none;
+                }
+
+                .topnav .search-container button {
+                    float: right;
+                    padding: 6px 10px;
+                    margin-top: 8px;
+                    margin-right: 16px;
+                    background: #ddd;
+                    font-size: 17px;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                    .topnav .search-container button:hover {
+                        background: #ccc;
+                    }
+
+            @@media screen and (max-width: 600px) {
+                .topnav .search-container {
+                    float: none;
+                }
+
+                    .topnav a, .topnav input[type=text], .topnav .search-container button {
+                        float: none;
+                        display: block;
+                        text-align: left;
+                        width: 100%;
+                        margin: 0;
+                        padding: 14px;
+                    }
+
+                .topnav input[type=text] {
+                    border: 1px solid #ccc;
+                }
+            }
+        </style>
     </head>
  
 
@@ -97,8 +176,23 @@
         <div class="content">
 
             <div class="container">
-                <h2 class="mb-3">Joined Car-Pool Opportunities for: <strong>@accessor.HttpContext.Session.GetString("Email")</strong></h2>
+                <h2 class="mb-3">Created/Joined Car -Pool Opportunities for: <strong>@accessor.HttpContext.Session.GetString("Email")</strong></h2>
                 <div class="table-responsive custom-table-responsive">
+                    <div class="topnav">
+                        <div class="search-container">
+                            <form asp-action="Index" asp-controller="Home" method="get">
+                                <p>
+                                    Search by Origin/Destination: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                                    <button type="submit" value="Search" class="btn btn-default">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                        </svg>
+                                    </button> |
+                                    <a style="float:left" asp-action="Index" asp-controller="Home">Back to Full List</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
                     <table class="table custom-table">
                         <thead>
                             <tr>

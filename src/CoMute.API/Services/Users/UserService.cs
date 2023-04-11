@@ -34,6 +34,7 @@ namespace CoMute.API.Services.Users
         public async Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model)
         {
             var authenticationModel = new AuthenticationModel();
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
@@ -57,6 +58,8 @@ namespace CoMute.API.Services.Users
             }
             authenticationModel.IsAuthenticated = false;
             authenticationModel.Message = $"FAILED.Incorrect Credentials for user {user.Email}.";
+ 
+           
             return authenticationModel;
         }
         private async Task<JwtSecurityToken> CreateJwtToken(User user)
@@ -181,7 +184,7 @@ namespace CoMute.API.Services.Users
             userDetails.Surname = profileModel.Surname;
             userDetails.UserName = profileModel.UserName;
             userDetails.CustomPhone = profileModel.CustomPhone;
-            userDetails.PhoneNumber = profileModel.CustomPhone;
+            //userDetails.PhoneNumber = profileModel.CustomPhone;
             userDetails.CustomEmail = profileModel.CustomEmail;
             userDetails.Email = profileModel.CustomEmail;
             var users = userDetails;
@@ -200,6 +203,28 @@ namespace CoMute.API.Services.Users
                 return "FAILED.Unable to Update User";
             //
 
+        }
+
+        /// <summary>
+        /// Method not implemented because of time constraints
+        /// THIS METHOD WILL UPDATE ANY ROLES ASSIGNED TO REGISTERED USERS ON THE SYSTEM AND WILL ONLY BE ACCESSIBLE TO A USER WITH AN ADMIN ROLE
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Task<string> UpdateRoleAsync(AddRoleModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Method not implemented because of time constraints
+        /// THIS METHOD WILL REMOVE ANY ROLES ASSIGNED TO REGISTERED USERS ON THE SYSTEM AND WILL ONLY BE ACCESSIBLE TO A USER WITH AN ADMIN ROLE
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Task<string> DeleteRoleAsync(AddRoleModel model)
+        {
+            throw new NotImplementedException();
         }
     }
 }
