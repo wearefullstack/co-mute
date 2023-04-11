@@ -21,3 +21,6 @@ Please make sure to push your branch to GitHub once you are satisfied with your 
 Looking forward to hearing from you. When you are done, just mail codetest@fullstack.co.za and let us know your branch name. 
 
  
+---------------------------------------
+
+I created the API part of the requirement using JWT Authentication and Swagger for documentation.
